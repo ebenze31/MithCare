@@ -104,5 +104,8 @@
                 </div>
             </div>
         </div>
+        <div style="margin-bottom:-20px;">
+            @include ('counter')
+        </div>
     </body>
 </html>

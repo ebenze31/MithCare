@@ -91,7 +91,7 @@
                 </div>
 
                 <h2>
-                    <i class="fa-solid fa-timer"></i>&nbsp;&nbsp; ..MithCare is Coming Soon.. &nbsp;&nbsp;<i class="fa-solid fa-timer"></i>
+                    <i class="fa-solid fa-timer"></i>&nbsp;&nbsp; ..MithCare is Coming Soon..<i class="fa-duotone fa-face-thinking"></i> &nbsp;&nbsp;<i class="fa-solid fa-timer"></i>
                 </h2>
 
                 <div class="links">

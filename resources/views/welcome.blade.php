@@ -99,7 +99,7 @@
 
                 <div class="links">
                     <a href="https://www.viicheck.com/">ViiCHECK</a>
-                    <a href="https://www.peddyhub.com/">PEDDyHUB</a>
+                    <a href="https://www.peddyhub.com/">PEDDyHUB DEER</a>
                     <a href="https://2b-green.com/">2B-Green</a>
                 </div>
             </div>

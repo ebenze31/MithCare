@@ -88,19 +88,17 @@
             <div class="content">
                 <div class="title m-b-md">
                     <img width="250" src="{{ url('img/logo mithcare/logo mithcare.png') }}">
-                    <h5>MithCare is Coming Soonnnn</h5>
                 </div>
 
-                <!-- <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div> -->
+                <h2>
+                    <i class="fa-solid fa-timer"></i>&nbsp;&nbsp; ..MithCare is Coming Soon.. &nbsp;&nbsp;<i class="fa-solid fa-timer"></i>
+                </h2>
+
+                <div class="links">
+                    <a href="https://www.viicheck.com/">ViiCHECK</a>
+                    <a href="https://www.peddyhub.com/">PEDDyHUB</a>
+                    <a href="https://2b-green.com/">2B-Green</a>
+                </div>
             </div>
         </div>
     </body>

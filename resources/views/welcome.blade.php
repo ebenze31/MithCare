@@ -12,7 +12,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- icon -->
-        <link href="https://kit-pro.fontawesome.com/releases/v6.0.0/css/pro.min.css" rel="stylesheet">
+        <link href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" rel="stylesheet">
 
 
         <!-- Styles -->
@@ -91,8 +91,11 @@
                 </div>
 
                 <h2>
-                    <i class="fa-solid fa-timer"></i>&nbsp;&nbsp; ..MithCare is Coming Soon..<i class="fa-duotone fa-face-thinking"></i> &nbsp;&nbsp;<i class="fa-solid fa-timer"></i>
+                    <i class="fa-solid fa-timer"></i>&nbsp;&nbsp; ..MithCare is Coming Soon.. &nbsp;&nbsp;<i class="fa-solid fa-timer"></i>
                 </h2>
+                <h3>
+                    <i class="fa-duotone fa-face-thinking"></i>
+                </h3>
 
                 <div class="links">
                     <a href="https://www.viicheck.com/">ViiCHECK</a>

@@ -88,7 +88,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     <img width="250" src="{{ url('img/logo mithcare/logo mithcare.png') }}">
-                    <h5>Mith Care is Coming Soonnnn</h5>
+                    <h5>MithCare is Coming Soonnnn</h5>
                 </div>
 
                 <!-- <div class="links">

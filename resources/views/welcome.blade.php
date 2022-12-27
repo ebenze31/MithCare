@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- icon Favicons -->
-        <link rel="shortcut icon" href="{{ url('img/logo mithcare/logo mithcare.png') }}" type="image/x-icon" />
+        <link rel="shortcut icon" href="{{ url('img/logo mithcare/x-icon.png') }}" type="image/x-icon" />
 
         <title>Mith Care</title>
 

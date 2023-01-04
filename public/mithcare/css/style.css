@@ -5784,10 +5784,10 @@ input[type=radio] {
   transform: translate(-50%, -50%);
 }
 
-.clients-light .client img {
+/* .clients-light .client img {
   -webkit-filter: brightness(100);
           filter: brightness(100);
-}
+} */
 
 .clients-light .client img:first-of-type {
   opacity: 0.98;

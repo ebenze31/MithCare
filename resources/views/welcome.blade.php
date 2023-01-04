@@ -1112,32 +1112,32 @@
             <div class="slick-carousel clients-light mt-20"
               data-slick='{"slidesToShow": 3, "arrows": false, "dots": false, "autoplay": true,"autoplaySpeed": 2000, "infinite": true, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 3}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 2}}]}'>
               <div class="client">
-                <img src="assets/images/clients/1.png" alt="client">
-                <img src="assets/images/clients/1.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/1.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/2.png" alt="client">
-                <img src="assets/images/clients/2.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/2.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/2.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/3.png" alt="client">
-                <img src="assets/images/clients/3.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/3.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/3.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/4.png" alt="client">
-                <img src="assets/images/clients/4.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/4.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/4.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/5.png" alt="client">
-                <img src="assets/images/clients/5.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/5.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/5.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/6.png" alt="client">
-                <img src="assets/images/clients/6.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/6.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/6.png" alt="client">
               </div><!-- /.client -->
               <div class="client">
-                <img src="assets/images/clients/7.png" alt="client">
-                <img src="assets/images/clients/7.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/7.png" alt="client">
+                <img src="https://www.viicheck.com/img/stickerline/PNG/7.png" alt="client">
               </div><!-- /.client -->
             </div><!-- /.carousel -->
           </div><!-- /.col-lg-5 -->

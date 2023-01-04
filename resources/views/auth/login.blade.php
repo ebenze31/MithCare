@@ -29,7 +29,7 @@
                                                         
                                                 
 
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 mt-10">
                                                         <h4 class="contact-panel__title text-center">เข้าสู่ระบบ </h4>
                                                     </div>
                                                         
@@ -58,7 +58,7 @@
                                                             @enderror
                                                         </div>
                                                     </div><!-- /.col-lg-6 -->
-
+                                                    <hr>
                                                     <div class="col-12">
 
                                                         <button type="submit" class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10">

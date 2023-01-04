@@ -3644,7 +3644,7 @@ input[type=radio] {
 }
 
 @media (max-width: 1199px) {
-  .header-topbar {
+  .social-icons {
     display: none;
   }
 }

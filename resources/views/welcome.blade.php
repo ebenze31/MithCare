@@ -1004,6 +1004,8 @@
       </div><!-- /.container -->
     </section><!-- /.gallery 2 -->
 
+   
+
     <!-- ==========================
         contact layout 3
     =========================== -->
@@ -1140,6 +1142,9 @@
                 <img src="https://www.viicheck.com/img/stickerline/PNG/7.png" alt="client">
               </div><!-- /.client -->
             </div><!-- /.carousel -->
+
+    
+
           </div><!-- /.col-lg-5 -->
         </div><!-- /.row -->
       </div><!-- /.container -->

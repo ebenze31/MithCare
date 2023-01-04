@@ -186,74 +186,45 @@
                             <li class="nav__item">
                                 <a href="contact-us.html" class="nav__item-link">ติดต่อ</a>
                             </li><!-- /.nav-item -->
+
+                            <li class="nav__item">
+                                @guest
+                                    <a class="btn btn__primary btn__rounded ml-30 mt-xl-3" href="{{ route('login') }}">{{ __('เข้าสู่ระบบ') }}</a>
+                                @else
+                                <li class="nav__item has-dropdown">
+                                    <a href="#" data-toggle="dropdown" class=" btn btn__primary btn__rounded mt-xl-3"> {{ Auth::user()->name }}</a>
+                                    <ul class="dropdown-menu">
+
+                                        <li class="nav__item">
+                                            
+                                            <a class="nav__item-link text-center" href="#" >
+                                                <i class="fa-solid fa-user"></i>โปรไฟล์
+                                            </a>
+                                        </li>
+                                        <hr style="width: 75%;">
+                                        <li class="nav__item">
+                                            <a class="nav__item-link text-center" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                <i class="fa-solid fa-right-from-bracket"></i>{{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li><!-- /.nav-item -->
+
+                                        
+
+                                    </ul><!-- /.dropdown-menu -->
+                                </li><!-- /.nav-item -->
+                                @endguest
+
+                            </li><!-- /.nav-item -->
+
                         </ul><!-- /.navbar-nav -->
                         <button class="close-mobile-menu d-block d-lg-none"><i class="fas fa-times"></i></button>
                     </div><!-- /.navbar-collapse -->
-                    <div class="d-none d-xl-flex align-items-center position-relative ml-30">
-                        <div class="miniPopup-departments-trigger">
-                            <span class="menu-lines" id="miniPopup-departments-trigger-icon"><span></span></span>
-                            <a href="departments.html">Departments</a>
-                        </div>
-                        <ul id="miniPopup-departments" class="miniPopup miniPopup-departments dropdown-menu">
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Neurology Clinic</a>
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Cardiology Clinic</a>
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Pathology Clinic</a>
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Laboratory Clinic</a>
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Pediatric Clinic</a>
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="department-single.html" class="nav__item-link">Cardiac Clinic</a>
-                            </li><!-- /.nav-item -->
-                        </ul> <!-- /.miniPopup-departments -->
-
-                        <!-- Authentication Links -->
-                        @guest
-
-                        <a class="btn btn__primary btn__rounded ml-30" href="{{ route('login') }}">{{ __('Login') }}</a>
-
-                        <!-- @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif -->
-                        @else
-
-                        <li class="nav__item has-dropdown">
-                            <a href="#" data-toggle="dropdown" class=" btn btn__primary btn__rounded ml-30"> {{ Auth::user()->name }}</a>
-                            <ul class="dropdown-menu">
-
-                                <li class="nav__item">
-                                    
-                                    <a class="nav__item-link text-center" href="#" >
-                                        <i class="fa-solid fa-user"></i>โปรไฟล์
-                                    </a>
-                                </li>
-                                <hr style="width: 75%;">
-                                <li class="nav__item">
-                                    <a class="nav__item-link text-center" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        <i class="fa-solid fa-right-from-bracket"></i>{{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li><!-- /.nav-item -->
-
-                                
-
-                            </ul><!-- /.dropdown-menu -->
-                        </li><!-- /.nav-item -->
-                        @endguest
+                    
 
 
                     </div>

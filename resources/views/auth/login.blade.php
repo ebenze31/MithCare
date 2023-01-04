@@ -12,10 +12,9 @@
 
 
 
-                <div class="col-lg-9 col-6 mx-auto">
+                <div class="col-lg-9 col-12 mx-auto">
                     <form class="custom-form donate-form" method="POST" action="{{ route('login') }}" role="form">
                         @csrf
-
                         <section class="contact-layout1 pt-0 ">
                             <div class="container">
 

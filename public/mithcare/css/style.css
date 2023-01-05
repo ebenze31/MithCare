@@ -114,8 +114,13 @@ button {
 .hr {
   color: #007bff;
   background-color: #007bff;
-  height: 2px;
-  border-width: 2px;
+  height: 1px;
+  border-width: 1px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.main-shadow {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 10px 0 rgba(0, 0, 0, 0.15);
 }
 
 select {

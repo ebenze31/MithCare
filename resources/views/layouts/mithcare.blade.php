@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="Medcity - Medical Healthcare HTML5 Template">
-    <link href="assets/images/favicon/favicon.png" rel="icon">
+    <link href="{{asset('/img/logo_mithcare/x-icon.png')}}" rel="icon">
     <title>MithCare</title>
 
 
@@ -105,7 +105,7 @@
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">หน้าแรก</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
-                                        <a href="index.html" class="nav__item-link">Home Main</a>
+                                        <a href="{{ url('/') }}" class="nav__item-link">Home Main</a>
                                     </li><!-- /.nav-item -->
                                     <li class="nav__item">
                                         <a href="home-modern.html" class="nav__item-link">Home Modern</a>

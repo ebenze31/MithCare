@@ -12,27 +12,29 @@
           <div class="col-12">
             <h1 class="pagetitle__heading" >User Name</h1>
             <nav>
-                 <!-- แสดงเฉพาะคอม -->
-                <div class="d-none d-lg-block"> 
+                <!-- แสดงเฉพาะคอม -->
+               <div class="d-none d-lg-block"> 
                   <ol class=" breadcrumb mb-0 ">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">Profile</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">โปรไฟล์</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/profile/edit')}}" style="font-size: 30px;">แก้ไขโปรไฟล์</a></li>  
                   </ol>
                 </div> <!--d-none d-lg-block -->
-                
-                  <!-- แสดงเฉพาะมือถือ -->
+
+                <!-- แสดงเฉพาะมือถือ -->
                 <div class="d-block d-md-none">
                   <ol class=" breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 20px;">Profile</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 20px;">โปรไฟล์</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/profile/edit')}}" style="font-size: 30px;">แก้ไขโปรไฟล์</a></li>   
                   </ol>
-                 </div> <!--d-block d-md-none -->
+                </div> <!--d-block d-md-none -->
             </nav>
           </div><!-- /.col-12 -->
         </div><!-- /.row -->
       </div><!-- /.container -->
     </section><!-- /.page-title -->
-    
+
     <section class="pt-120 pb-80">
       <div class="container">
         <div class="row">
@@ -45,9 +47,7 @@
                   </div><!-- /.member-img -->
                   <div class="member__info">
                     <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">ชื่อ สกุล</a></h2>
-                    <button  class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10" >
-                      <a style="font-size: 20px; color:#ffffff;" href="{{ url('/profile/'. $user->id . '/edit') }}">แก้ไขโปรไฟล์</a>
-                    </button>
+                    <!-- <button class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10" style="font-size: 20px;">แก้ไขโปรไฟล์</button> -->
                     <!-- <p class="member__job">Cardiology Specialist</p>
                     <p class="member__desc">Brian specializes in treating skin, hair, nail, and mucous membrane. He also
                       address cosmetic issues, helping to revitalize the appearance of the skin</p> -->
@@ -135,66 +135,15 @@
           <div class="col-sm-12 col-md-12 col-lg-8">
             
             <ul class="details-list list-unstyled mb-60 mt-40">
-              <li>
-                <h5 class="details__title" style="font-size: 30px;">ชื่อเล่น</h5>
-                <div class="details__content">
-                  <p class="mb-0" style="font-size: 30px;">{{ $user->name}}</p>
-                </div>
-              </li>
-              <li>
-                <h5 class="details__title" style="font-size: 30px;">อีเมล</h5>
-                <div class="details__content">
-                  <p class="mb-0" style="font-size: 30px;">{{ $user->email}}</p>
-                </div>
-              </li>       
-              <li>
-                <h5 class="details__title" style="font-size: 30px;">วันเกิด</h5>
-                <div class="details__content">
-                  <p class="mb-0" style="font-size: 30px;">12/12/2541</p>
-                </div>
-              </li>
-              <li>
-                <h5 class="details__title" style="font-size: 30px;">เพศ</h5>
-                <div class="details__content">
-                  <p class="mb-0" style="font-size: 30px;">หญิง</p>
-                </div>
-              </li>
-              <li>
-                <h5 class="details__title" style="font-size: 30px;">ที่อยู่</h5>
-                <div class="details__content">
-                  <p class="mb-0" style="font-size: 30px;">505/1 T.Nongmoo A.Wihandang P.Saraburi</p>
-                </div>
-              </li>
-              <!-- <li>
-                <h5 class="details__title">เพศ</h5>
-                <div class="details__content">
-                  <ก class="list-items list-items-layout2 list-unstyled mb-0">
-                    <li>Cardiac Imaging – Non-invasive.</li>
-                    <li>Cardiac Rehabilitation and Exercise.</li>
-                    <li>Hypertrophic Cardiomyopathy.</li>
-                    <li>Inherited Heart Diseases.</li>
-                  </ก>
-                </div>
-              </li> -->
+                <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+
+                            @include ('profile.profile_form', ['formMode' => 'edit'])
+
+                </form> <!--form edit_profile -->
+            </ul><!-- /.widget-content -->
              
-            <div class="widget widget-help bg-secondary mt-40">
-                <div class="bg-img"><img src="#" alt="background"></div>
-                <h2 style="color: #ffffff;">จัดการบ้าน</h2>
-                <ul class="widget-content">
-                  <!-- <div class="widget__icon">
-                    <i class="icon-call3"></i>
-                  </div> -->
-                  <li class="widget__title">ลูกบ้าน1</li>
-                  <li class="widget__title">ลูกบ้าน1</li>
-                  <li class="widget__title">ลูกบ้าน1</li>
-                  <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                    or medical enquiry call us.
-                  </p> -->
-                  <!-- <a href="tel:+201061245741" class="phone__number">
-                    <i class="icon-detail"></i> <span>สมาชิกในบ้าน</span>
-                  </a> -->
-                </ี><!-- /.widget-content -->
-              </div><!-- /.widget-help -->
+           
 
           
             

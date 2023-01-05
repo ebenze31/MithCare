@@ -111,6 +111,13 @@ button {
   background-color: transparent;
 }
 
+.hr {
+  color: #007bff;
+  background-color: #007bff;
+  height: 2px;
+  border-width: 2px;
+}
+
 select {
   background-color: transparent;
 }
@@ -2188,7 +2195,7 @@ input[type=radio] {
 
 .breadcrumb-item {
   position: relative;
-  font-size: 14px;
+  font-size: 30px;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
@@ -2201,7 +2208,7 @@ input[type=radio] {
 @media (min-width: 320px) and (max-width: 767px) {
   .breadcrumb-item a,
   .breadcrumb-item + .breadcrumb-item {
-    font-size: 12px;
+    font-size: 20px;
   }
 }
 

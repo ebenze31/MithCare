@@ -1,7 +1,7 @@
 @extends('layouts.mithcare')
 
 @section('content')
-<div class="container">
+<div class="container"> <br> <hr class="hr" >
     <div class="row justify-content-center">
         <div class="col-md-8">
 
@@ -10,7 +10,7 @@
 
             <div class="row">
 
-
+          
 
                 <div class="col-lg-9 col-12 mx-auto">
                     <form class="custom-form donate-form" method="POST" action="{{ route('login') }}" role="form">
@@ -22,8 +22,9 @@
                                                                                                   
                                     <div class="col-12">
                                         <div class="contact-panel d-flex flex-wrap">
-
-                                        <img class="d-none d-md-block" style=" width: 100%; height: 100%;" src="{{asset('/img/logo_mithcare/group-people-volunteering-foodbank-poor-people.jpg')}}">                                                                                   
+                                    <center>
+                                        <img class="d-none d-md-block " style=" width: 50%; " src="{{asset('/img/logo_mithcare/x-icon.png')}}">  
+                                    </center>                                                                                 
                                             <form class="contact-panel__form" method="post" action="assets/php/contact.php" id="contactForm" novalidate="novalidate">
                                                 <div class="row">
                                                         
@@ -58,7 +59,7 @@
                                                             @enderror
                                                         </div>
                                                     </div><!-- /.col-lg-6 -->
-                                                    <hr>
+                                                    <br> <hr class="hr" >
                                                     <div class="col-12">
 
                                                         <button type="submit" class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10">
@@ -69,14 +70,10 @@
 
                                         </div><!-- /.col-lg-12 -->
                                         <hr>
-                                        <div class="col-sm-12 col-md-12 col-lg-12 mt-50">
-                                            <div class="form-group">
-
-                                                <button style="background-color: #21C608;" class="form-control @error('password') is-invalid @enderror">
-                                                    <img src="{{ asset('/img/icon_Social/icon-line.png')}}" style="border-radius: 30px;background-color: #ffff; margin-top:5px; margin-bottom:5px" width="10%" class="center main-shadow " alt="logo">&nbsp;&nbsp; เข้าสู่ระบบด้วย LINE
-                                                </button>
-
-                                            </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12 mt-50">                                       
+                                                <span style="background-color: #21C608;" class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10">
+                                                    <img src="{{ asset('/img/icon_Social/icon-line.png')}}" style="border-radius: 30px;background-color: #ffff; margin-top:5px; margin-bottom:5px" width="10%" class="center main-shadow " >&nbsp;&nbsp; เข้าสู่ระบบด้วย LINE
+                                                </span>                                        
                                         </div><!-- /.col-lg-12 -->
 
                                     </div><!-- /.row -->

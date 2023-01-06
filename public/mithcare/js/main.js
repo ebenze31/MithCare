@@ -296,7 +296,7 @@ $(function () {
     });
 
     /*==========  NiceSelect Plugin  ==========*/
-    $('select').niceSelect();
+    // $('select').niceSelect();
 
     /*==========   Range Slider  ==========*/
     var $rangeSlider = $("#rangeSlider"),

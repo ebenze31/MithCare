@@ -102,12 +102,12 @@
     </select>
 </div>
 <div class="form-group">
-    <select id="input_amphoe">
+    <select id="input_amphoe" class="form-control">
         <option value="">กรุณาเลือกเขต/อำเภอ</option>
     </select>
 </div>
 <div class="form-group">
-    <select id="input_tambon">
+    <select id="input_tambon" class="form-control">
         <option value="">กรุณาเลือกแขวง/ตำบล</option>
     </select>
 </div>
@@ -136,24 +136,30 @@
     function showAmphoes() {
         let input_province = document.querySelector("#input_province");
         let url = "{{ url('/api/amphoes') }}?province=" + input_province.value;
-        console.log(url);
-        // if(input_province.value == "") return;
+        // console.log(url);
+
         fetch(url)
             .then(response => response.json())
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 //UPDATE SELECT OPTION
                 let input_amphoe = document.querySelector("#input_amphoe");
-                input_amphoe.innerHTML = '';
-             
+                input_amphoe.innerHTML = "";
+                
+                let option_start = document.createElement("option");
+                    option_start.text = "กรุณาเลือกเขต/อำเภอ";
+                    option_start.selected = true;
+                    input_amphoe.appendChild(option_start);
+
                 for (let item of result) {
+                    // console.log(item.amphoe);  
                     let option = document.createElement("option");
-                    option.text = item.amphoe;
-                    option.value = item.amphoe;
-                    input_amphoe.appendChild(option);
+                        option.text = item.amphoe;
+                        option.value = item.amphoe;
+                        input_amphoe.appendChild(option);
                 }
                 //QUERY AMPHOES
-                // showTambons();
+                showTambons();
             });
     }
 
@@ -205,13 +211,13 @@
             });
     }
     //EVENTS
-    document.querySelector('#input_province').addEventListener('change', (event) => {
-        showAmphoes();
-    });
-    document.querySelector('#input_amphoe').addEventListener('change', (event) => {
-        showTambons();
-    });
-    document.querySelector('#input_tambon').addEventListener('change', (event) => {
-        showZipcode();
-    });
+    // document.querySelector('#input_province').addEventListener('change', (event) => {
+    //     showAmphoes();
+    // });
+    // document.querySelector('#input_amphoe').addEventListener('change', (event) => {
+    //     showTambons();
+    // });
+    // document.querySelector('#input_tambon').addEventListener('change', (event) => {
+    //     showZipcode();
+    // });
 </script>

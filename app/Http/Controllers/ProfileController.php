@@ -13,23 +13,7 @@ class ProfileController extends Controller
     {
         $id = Auth::id();
         $user = User::findOrFail($id);
-        $province = "กระบี่";
-        
-        $amphoes = DB::table('lat_longs')
-        ->select('amphoe_th')
-        ->where('changwat_th', 'like', "%$province%")
-        ->groupBy('amphoe_th')
-        ->orderBy('amphoe_th','asc')
-        ->get();
-
-        echo"<pre>";
-
-        print_r($amphoes);
-
-        echo"<pre>";
-
-        exit();
-
+       
 
         return view('profile.profile_index' , compact('user'));
     }

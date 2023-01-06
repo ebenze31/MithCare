@@ -13,24 +13,31 @@ class TambonController extends Controller
             ->get();
         return $provinces;
     }
-    public function getAmphoes($province)
+    public function getAmphoes(Request $request)
     {  
-        return $province;
-        $amphoes = DB::table('lat_longs')
-            ->select('amphoe_th')
-            ->where('changwat_th', 'like', "%$province%")
-            ->groupBy('amphoe_th')
-            ->orderBy('amphoe_th','asc')
+        $province = $request->get('province');
+        $amphoes = Tambon::select('amphoe')
+            ->where('province', 'like', "%$province%")
+            ->distinct()
             ->get();
-
-            echo"<pre>";
-
-            print_r($amphoes);
-
-            echo"<pre>";
-
-            exit();
         return $amphoes;
+
+        // return $province;
+        // $amphoes = DB::table('lat_longs')
+        //     ->select('amphoe_th')
+        //     ->where('changwat_th', 'like', "%$province%")
+        //     ->groupBy('amphoe_th')
+        //     ->orderBy('amphoe_th','asc')
+        //     ->get();
+
+        //     echo"<pre>";
+
+        //     print_r($amphoes);
+
+        //     echo"<pre>";
+
+        //     exit();
+        // return $amphoes;
     }
     public function getTambons(Request $request)
     {

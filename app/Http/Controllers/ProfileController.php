@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Tambon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -11,6 +13,22 @@ class ProfileController extends Controller
     {
         $id = Auth::id();
         $user = User::findOrFail($id);
+        $province = "กระบี่";
+        
+        $amphoes = DB::table('lat_longs')
+        ->select('amphoe_th')
+        ->where('changwat_th', 'like', "%$province%")
+        ->groupBy('amphoe_th')
+        ->orderBy('amphoe_th','asc')
+        ->get();
+
+        echo"<pre>";
+
+        print_r($amphoes);
+
+        echo"<pre>";
+
+        exit();
 
 
         return view('profile.profile_index' , compact('user'));
@@ -18,12 +36,21 @@ class ProfileController extends Controller
 
     public function edit(Request $request,$id)
     {
+
+
       
         if (Auth::id()  == $id){
 
             $user = User::findOrFail($id);
 
-            return view('profile.profile_edit', compact('user'));
+           
+                $provinces = Tambon::select('province')->distinct()->get();
+                $amphoes = Tambon::select('amphoe')->distinct()->get();
+                $tambons = Tambon::select('tambon')->distinct()->get();
+         
+         
+
+            return view('profile.profile_edit', compact('user','provinces','amphoes','tambons'));
 
          }else{
             return view('404');
@@ -43,5 +70,7 @@ class ProfileController extends Controller
 
                                       
     }
+
+
 
 }

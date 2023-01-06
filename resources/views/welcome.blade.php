@@ -8,7 +8,7 @@
       <div class="slick-carousel m-slides-0"
         data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700,"fade": true,"cssEase": "linear"}'>
         <div class="slide-item align-v-h">
-          <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-03.png')}}" alt="slide img"></div>
+          <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="slide img"></div>
           <div class="container">
             <div class="row align-items-center">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">

@@ -45,7 +45,7 @@
                   </div><!-- /.member-img -->
                   <div class="member__info">
                     <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">ชื่อ สกุล</a></h2>
-                    <button  class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10" >
+                    <button  class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10 main-shadow " >
                       <a style="font-size: 20px; color:#ffffff;" href="{{ url('/profile/'. $user->id . '/edit') }}">แก้ไขโปรไฟล์</a>
                     </button>
                     <!-- <p class="member__job">Cardiology Specialist</p>
@@ -93,7 +93,7 @@
                 </div><!-- /.widget-content -->
               </div><!-- /.widget-help -->
 
-              <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
+              <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius">
                 <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
                 <div class="widget-content">
                   <!-- <div class="widget__icon">

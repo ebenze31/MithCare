@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Tambon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,5 +27,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
 Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update');
+
+////// ที่อยู่ ///////////
+// Route::get('/profile/{id}/edit', function () {
+//     $provinces = Tambon::select('province')->distinct()->get();
+//     $amphoes = Tambon::select('amphoe')->distinct()->get();
+//     $tambons = Tambon::select('tambon')->distinct()->get();
+//     return view("profile/profile_form", compact('provinces','amphoes','tambons'));
+// });
 
 

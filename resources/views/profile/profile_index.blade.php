@@ -6,7 +6,7 @@
        page title 
     =========================== -->
 <section class="page-title page-title-layout5">
-  <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง.png')}}" width="90%" alt="background"></div>
+  <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -18,7 +18,7 @@
               <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">Home</a></li>
               <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">Profile</a></li>
             </ol>
-          </div> <!--d-none d-lg-block -->25
+          </div> <!--d-none d-lg-block -->
           <!-- แสดงเฉพาะมือถือ -->
           <div class="d-block d-md-none">
             <ol class=" breadcrumb mb-0">
@@ -51,52 +51,42 @@
               </div><!-- /.member-info -->
             </div><!-- /.member -->
           </div><!-- /.widget-member -->
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
-            <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-            <div class="widget-content">
-              <!-- <div class="widget__icon">
-                    <i class="icon-call3"></i>
-                  </div> -->
-              <h2 class="widget__title" style="font-size: 30px;">บัตร 1</h2>
-              <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                    or medical enquiry call us.
-                  </p> -->
-              <a href="tel:+201061245741" class="phone__number">
-                <i class="icon-detail"></i> <span>Details</span>
-              </a>
-            </div><!-- /.widget-content -->
+          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
+            <!-- /.zoom_picture-only-pc -->
+              <div class="product__img d-none d-lg-block">         
+                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">     
+              </div><!-- /.product__img -->
+            <!-- /.-only-mobile -->
+              <div class="d-block d-md-none">         
+                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+              </div><!-- /.product__img -->
+
+          </div><!-- /.widget-member -->
+
+          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
+              <!-- /.zoom_picture-only-pc -->
+            <div class="product__img d-none d-lg-block"> 
+              <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+            </div><!-- /.product__img -->
+
+             <!-- /.-only-mobile -->
+             <div class="d-block d-md-none">         
+                <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+              </div><!-- /.product__img -->
+
           </div><!-- /.widget-help -->
 
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
-            <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-            <div class="widget-content">
-              <!-- <div class="widget__icon">
-                    <i class="icon-call3"></i>
-                  </div> -->
-              <h2 class="widget__title" style="font-size: 30px;">บัตร 2</h2>
-              <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                    or medical enquiry call us.
-                  </p> -->
-              <a href="tel:+201061245741" class="phone__number">
-                <i class="icon-detail"></i> <span>Details</span>
-              </a>
-            </div><!-- /.widget-content -->
-          </div><!-- /.widget-help -->
+          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
+              <!-- /.zoom_picture-only-pc -->
+            <div class="product__img d-none d-lg-block"> 
+              <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+            </div><!-- /.product__img -->
 
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius">
-            <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-            <div class="widget-content">
-              <!-- <div class="widget__icon">
-                    <i class="icon-call3"></i>
-                  </div> -->
-              <h2 class="widget__title" style="font-size: 30px;">บัตร 3</h2>
-              <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                    or medical enquiry call us.
-                  </p> -->
-              <a href="tel:+201061245741" class="phone__number">
-                <i class="icon-detail"></i> <span>Details</span>
-              </a>
-            </div><!-- /.widget-content -->
+             <!-- /.-only-mobile -->
+             <div class="d-block d-md-none">         
+                <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+              </div><!-- /.product__img -->
+            
           </div><!-- /.widget-help -->
 
 
@@ -120,7 +110,7 @@
           <li>
             <h5 class="details__title" style="font-size: 25px;">วันเกิด</h5>
             <div class="details__content">
-              <p class="mb-0" style="font-size: 25px;">{{$user->birthday}}</p>
+              <p class="mb-0" style="font-size: 25px;">{{ $user->birthday}}</p>
             </div>
           </li>
           <li>
@@ -132,7 +122,7 @@
           <li>
             <h5 class="details__title" style="font-size: 25px;">ที่อยู่</h5>
             <div class="details__content">
-              <p class="mb-0" style="font-size: 25px;">{{$user->address}} {{$user->sub_district}} {{$user->district}} {{$user->province}} </p>
+              <p class="mb-0" style="font-size: 25px;">{{$user->address}} ต.{{$user->sub_district}} อ.{{$user->district}} จ.{{$user->province}} </p>
             </div>
           </li>
           <!-- <li>
@@ -147,23 +137,27 @@
                 </div>
               </li> -->
 
-          <div class="widget widget-help bg-secondary mt-40">
+          <div class="widget widget-help bg-secondary mt-40 main-shadow">
             <div class="bg-img"><img src="#" alt="background"></div>
-            <h2 style="color: #ffffff;">จัดการบ้าน</h2>
-            <ul class="widget-content">
-              <!-- <div class="widget__icon">
-                    <i class="icon-call3"></i>
-                  </div> -->
-              <li class="widget__title">ลูกบ้าน1</li>
-              <li class="widget__title">ลูกบ้าน1</li>
-              <li class="widget__title">ลูกบ้าน1</li>
-              <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                    or medical enquiry call us.
-                  </p> -->
-              <!-- <a href="tel:+201061245741" class="phone__number">
-                    <i class="icon-detail"></i> <span>สมาชิกในบ้าน</span>
-                  </a> -->
-              </ี><!-- /.widget-content -->
+              <div class="row">
+                <h2 style="color: #ffffff;" class="col-6 ">จัดการบ้าน</h2>
+                 <a href="#" data-toggle="dropdown" class=" nav__item-link active fa-solid fa-bars"><i class="fa-solid fa-bars"></i></a>
+              
+                    <li class="nav__item has-dropdown col-6" >
+                        <ul class="dropdown-menu">
+                            <li class="nav__item">
+                                <a href="{{ url('/') }}" class="nav__item-link">เพิ่มสมาชิก</a>
+                            </li><!-- /.nav-item -->
+                          
+                        </ul><!-- /.dropdown-menu -->
+                    </li><!-- /.nav-item -->
+              </div><!-- row -->
+              
+              <ul class="widget-content">         
+                <li class="widget__title">ลูกบ้าน1</li>
+                <li class="widget__title">ลูกบ้าน1</li>
+                <li class="widget__title">ลูกบ้าน1</li>  
+              </ul><!-- /.widget-content -->
           </div><!-- /.widget-help -->
 
 

@@ -6,7 +6,7 @@
        page title 
     =========================== -->
     <section class="page-title page-title-layout5">
-      <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง.png')}}" width="90%" alt="background"></div>
+      <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -55,50 +55,34 @@
               <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
+                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
-                            <!-- <div class="widget__icon">
-                              <i class="icon-call3"></i>
-                            </div> -->
-                            <h2 class="widget__title" style="font-size: 30px;">บัตร 1</h2>
-                          
+                          <div class="widget-content">                           
+                            <h2 class="widget__title" style="font-size: 30px;">บัตร 1</h2>   
                             <div class="form-group ">
                                   <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="" >
-                            </div>        
-                                  
+                            </div>                                       
                           </div><!-- /.widget-content -->
                         </div><!-- /.widget-help -->
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
+                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
-                            <!-- <div class="widget__icon">
-                              <i class="icon-call3"></i>
-                            </div> -->
+                          <div class="widget-content">                          
                             <h2 class="widget__title" style="font-size: 30px;">บัตร 2</h2>
-                            <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                              or medical enquiry call us.
-                            </p> -->
-                            <a href="tel:+201061245741" class="phone__number">
-                              <i class="icon-detail"></i> <span>Details</span>
-                            </a>
+                            <div class="form-group ">
+                                  <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="" >
+                            </div>   
                           </div><!-- /.widget-content -->
                         </div><!-- /.widget-help -->
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient">
+                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
                           <div class="widget-content">
-                            <!-- <div class="widget__icon">
-                              <i class="icon-call3"></i>
-                            </div> -->
+                           
                             <h2 class="widget__title" style="font-size: 30px;">บัตร 3</h2>
-                            <!-- <p class="widget__desc">Please feel welcome to contact our friendly reception staff with any general
-                              or medical enquiry call us.
-                            </p> -->
-                            <a href="tel:+201061245741" class="phone__number">
-                              <i class="icon-detail"></i> <span>Details</span>
-                            </a>
+                            <div class="form-group ">
+                                  <input class="form-control" name="health_card_3" type="file" id="health_card_3" value="" >
+                            </div>   
                           </div><!-- /.widget-content -->
                         </div><!-- /.widget-help -->
 

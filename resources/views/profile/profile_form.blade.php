@@ -81,7 +81,7 @@
     <div class="row ">
 
 
-        <div class="form-group col-12 col-md-12">
+        <div class="form-group col-12 col-md-4">
             <select id="input_province" name="province" onChange="showAmphoes();" value="{{ isset($user->province) ? $user->province : ''}}" class="form-control">
 
                 @if(!empty($user->province))
@@ -95,7 +95,7 @@
             </select>
         </div> <!--///  จังหวัด /// -->
 
-        <div class="form-group col-12 col-md-12">
+        <div class="form-group col-12 col-md-4">
             <select id="input_amphoe" name="district" onChange="showTambons();" class="form-control">
                 @if(!empty($user->district))
                 <option value="{{$user->district}}" selected disabled>{{$user->district}}</option>
@@ -105,7 +105,7 @@
             </select>
         </div> <!--///  อำเภอ /// -->
 
-        <div class="form-group col-12 col-md-12">
+        <div class="form-group col-12 col-md-4">
             <select id="input_tambon" name="sub_district" value="{{ isset($user->sub_district) ? $user->sub_district : ''}}" class="form-control">
 
                 @if(!empty($user->sub_district))
@@ -118,11 +118,11 @@
 
         <div class="form-group col-12 col-md-12">
             <textarea class="form-control " name="address" id="" cols="30" rows="2" placeholder="ใส่รายละเอียดที่อยู่">
-                @if(!empty($user->address))
-                {{$user->address}}
-                @else
-                รายละเอียดที่อยู่
-                @endif
+@if(!empty($user->address))
+{{$user->address}}
+@else
+รายละเอียดที่อยู่
+@endif
             </textarea>
 
         </div> <!--///  ที่อยู่ /// -->
@@ -145,8 +145,9 @@
 
 
 <script>
-    
-        
+
+    var count_select_a = 1;
+    var count_select_t = 1;
     document.addEventListener('DOMContentLoaded', (event) => {
         // console.log("START");
         let old_province = document.querySelector("#input_province");
@@ -169,17 +170,19 @@
                 // console.log(result);
                 //UPDATE SELECT OPTION
                 let input_amphoe = document.querySelector("#input_amphoe");
+                let old_amphoe = input_amphoe.value;
+                input_amphoe.innerHTML = "";
+           
+                if (old_amphoe && count_select_a === 1) {
 
-                if (input_amphoe.value) {
                     let option_start = document.createElement("option");
-                    option_start.value = input_amphoe.value;
-                    option_start.text = input_amphoe.value;
+                    option_start.value = old_amphoe;
+                    option_start.text = old_amphoe;
                     option_start.selected = true;
                     option_start.disabled = true;
                     input_amphoe.appendChild(option_start);
-                }else{
-                    input_amphoe.innerHTML = "";
-
+                } else {
+                   
                     let option_start = document.createElement("option");
                     option_start.text = "กรุณาเลือกอำเภอ";
                     option_start.selected = true;
@@ -194,7 +197,8 @@
                     input_amphoe.appendChild(option);
                 }
                 //QUERY AMPHOES
-                showTambons();
+                count_select_a = count_select_a + 1;
+                showTambons();               
             });
     }
 
@@ -211,17 +215,18 @@
                 // console.log(result);
                 //UPDATE SELECT OPTION
                 let input_tambon = document.querySelector("#input_tambon");
+                let old_tambon = input_tambon.value;
+                input_tambon.innerHTML = "";
 
-                if (input_tambon.value) {
+                if (old_tambon && count_select_t === 1) {
                     let option_start = document.createElement("option");
-                    option_start.value = input_tambon.value;
-                    option_start.text = input_tambon.value;
+                    option_start.value = old_tambon;
+                    option_start.text = old_tambon;
                     option_start.selected = true;
                     option_start.disabled = true;
                     input_tambon.appendChild(option_start);
-                }else{
-                    input_tambon.innerHTML = "";
-
+                } else {
+                
                     let option_start = document.createElement("option");
                     option_start.text = "กรุณาเลือกตำบล";
                     option_start.selected = true;
@@ -236,7 +241,7 @@
                     input_tambon.appendChild(option);
                 }
                 //QUERY AMPHOES
-
+                count_select_t = count_select_t + 1;
             });
     }
 </script>

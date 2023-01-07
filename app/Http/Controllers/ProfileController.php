@@ -46,6 +46,16 @@ class ProfileController extends Controller
     {
       
             $requestData = $request->all();
+
+            if ($request->hasFile('health_card_1')) {
+                $requestData['health_card_1'] = $request->file('health_card_1')->store('uploads', 'public');     
+            }
+            if ($request->hasFile('health_card_2')) {           
+                $requestData['health_card_2'] = $request->file('health_card_2')->store('uploads', 'public');          
+            }
+            if ($request->hasFile('health_card_3')) {
+                $requestData['health_card_3'] = $request->file('health_card_3')->store('uploads', 'public');
+            }
         
             $user = User::findOrFail($id);
             $user->update($requestData);

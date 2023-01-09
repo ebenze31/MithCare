@@ -1,18 +1,8 @@
 @extends('layouts.mithcare')
 
 @section('content')
-<style>
-.modal {
-  background: rgba(0, 0, 0, 0.5); 
-}
-.modal-backdrop {
-  display: none;
-}
-</style>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
-</button>
+
+
 
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
@@ -83,26 +73,29 @@
                         <div class="col-3 h6">
 
                             <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn btn-info btn-sm"><i class="fa-solid fa-door-open"></i>
-                                    ขอเข้าร่วม</button></a>
+                                    รายละเอียด</button></a>
 
-                            
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
+                            </button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">ขอเข้าร่วม</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
+                                            <input class="form-control" placeholder="ใส่รหัสห้อง">
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button> -->
+                                            <button type="button" class="btn btn-primary">เข้าร่วม</button>
                                         </div>
                                     </div>
                                 </div>
@@ -203,4 +196,3 @@
                 </div>
             </div>
         </div> -->
-        

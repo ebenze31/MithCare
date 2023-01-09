@@ -42,4 +42,6 @@ Route::get('room_join', 'RoomController@room_join');
 Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
 Route::get('room_find/{id}/edti', 'RoomController@room_edit')->name('room_find_edit');
 
+Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
+
 // Route::get('/room/{id}/edit', 'RoomController@edit')->name('room_edit');

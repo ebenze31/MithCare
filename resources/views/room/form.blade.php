@@ -1,11 +1,11 @@
 <div class="row">
     <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}} col-6">
-        <label for="name" class="control-label">{{ 'Name' }}</label>
+        <label for="name" class="control-label">{{ 'ชื่อบ้าน' }}</label>
         <input required class="form-control" name="name" type="text" id="name" value="{{ isset($room->name) ? $room->name : ''}}" >
         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group {{ $errors->has('pass') ? 'has-error' : ''}} col-6">
-        <label for="pass" class="control-label">{{ 'Pass' }}</label>
+        <label for="pass" class="control-label">{{ 'รหัสบ้าน' }}</label>
         <input class="form-control" name="pass" type="text" id="pass" value="{{ isset($room->pass) ? $room->pass : ''}}" >
         {!! $errors->first('pass', '<p class="help-block">:message</p>') !!}
     </div>

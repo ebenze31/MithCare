@@ -113,4 +113,25 @@ class RoomController extends Controller
         return view('room.room_find.room_find_index', compact('room'));
     }
 
+            //////////////////////////
+            //    ห้องสำหรับแอดมิน    //
+            /////////////////////////
+
+
+    public function room_admin_index(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = 5;
+
+        if (!empty($keyword)) {
+            $room = Room::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('pass', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $room = Room::latest()->paginate($perPage);
+        }
+
+        return view('room.room_admin.room_admin_index', compact('room'));
+    }
+
 }

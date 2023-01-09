@@ -24,6 +24,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
+    <style>
+        .modal {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .modal-backdrop {
+            display: none;
+        }
+    </style>
+
 
 </head>
 
@@ -88,7 +97,7 @@
                 </div><!-- /.container -->
             </div><!-- /.header-top -->
 
-           
+
 
 
             <nav class="navbar navbar-expand-lg sticky-navbar">
@@ -257,8 +266,8 @@
 
 
 
-    <hr width="90%">
-        <div class="footer-secondary" >
+        <hr width="90%">
+        <div class="footer-secondary">
             <div class="container">
                 <div class="row ">
 

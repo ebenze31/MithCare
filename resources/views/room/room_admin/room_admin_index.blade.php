@@ -46,9 +46,7 @@
             <div class="contact-panel col-md-9 mb-2">
                 <h2>จัดการบ้าน</h2>
                 <div class="row d-flex justify-content-between">
-                    <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 25px;">
-                        <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้าน
-                    </a>
+                    
                     <!-- <a href="{{ url('/room_join') }}" class="btn btn-info btn-sm main-shadow main-radius " style="font-size: 25px;">
                         <i class="fa-solid fa-right-to-bracket"></i>เข้าร่วมบ้าน
                     </a> -->

@@ -1,7 +1,14 @@
 @extends('layouts.mithcare')
 
 @section('content')
-
+<style>
+.modal {
+  background: rgba(0, 0, 0, 0.5); 
+}
+.modal-backdrop {
+  display: none;
+}
+</style>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
         <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
@@ -196,3 +203,4 @@
                 </div>
             </div>
         </div> -->
+        

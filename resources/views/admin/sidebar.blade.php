@@ -1,17 +1,24 @@
-<div class="col-md-3">
-    <div class="card">
-        <div class="card-header">
-            Sidebar
+ <!--//////// Sidebar ////////-->
+        <div class="contact-panel col-md-3 mb-2">
+            <div class="contact-panel__form">
+                <div class="contact-panel__title h4" style="color: black;">
+                    เมนู
+                </div>
+                <hr>
+                <div class="ontact-panel__desc">
+                    <ul class="nav" role="tablist">
+                        <li role="presentation">
+                            <a href="{{ url('/room') }}" class="h5 " >
+                                จัดการบ้าน
+                            </a>
+                        </li>
+                        <li role="presentation" class="col-12">
+                            <a href="{{ url('/room_find') }}" class="h5 " >
+                                ค้นหาบ้าน
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <div class="card-body">
-            <ul class="nav" role="tablist">
-                <li role="presentation">
-                    <a href="{{ url('/admin') }}">
-                        Dashboard
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+        <!--////// End Sidebar /////////-->

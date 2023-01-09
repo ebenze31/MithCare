@@ -1,33 +1,49 @@
 @extends('layouts.mithcare')
 
 @section('content')
+
+
+<section class="page-title page-title-layout5">
+        <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="pagetitle__heading">deer</h1>
+                    <nav>
+                        <!-- แสดงเฉพาะคอม -->
+                        <div class="d-none d-lg-block">
+                            <ol class=" breadcrumb mb-0 ">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room/create') }}" style="font-size: 30px;">สร้างบ้าน</a></li>
+                            </ol>
+                        </div> <!--d-none d-lg-block -->
+                        <!-- แสดงเฉพาะมือถือ -->
+                        <div class="d-block d-md-none">
+                            <ol class=" breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room/create') }}" style="font-size: 20px;">สร้างบ้าน</a></li>
+                            </ol>
+                        </div> <!--d-block d-md-none -->
+                    </nav>
+                </div><!-- /.col-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+</section><!-- /.page-title -->
+
+<section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
                 <!--//////// Sidebar ////////-->
-            <div class="contact-panel col-md-3 mb-2">
-                <div class="contact-panel__form">
-                    <div class="contact-panel__title h4" style="color: black;">
-                        เมนู
-                    </div>
-
-                    <div class="ontact-panel__desc">
-                        <ul class="nav" role="tablist">
-                            <li role="presentation">
-                                <a href="{{ url('/room') }}" class="h5 " >
-                                    บ้านของฉัน
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+           @include('admin.sidebar')
             <!--////// End Sidebar /////////-->
 
             <div class="contact-panel col-md-9 mb-2">
              
-                    <h2 >สร้างบ้านใหม่</h2>
+                    <h3 >สร้างบ้านใหม่</h3>
                     <div class="container">
-                        <a href="{{ url('/room') }}" ><button class="btn btn-warning btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
+                        <a href="{{ url('/room') }}" ><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
                         <br />
                         <br />
 
@@ -51,4 +67,5 @@
             </div>
         </div>
     </div>
+</section><!-- กันสั่น -->
 @endsection

@@ -14,7 +14,7 @@
                             <ol class=" breadcrumb mb-0 ">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
                                 <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
-                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room_join') }}" style="font-size: 30px;">เข้าร่วมบ้าน</a></li>
                             </ol>
                         </div> <!--d-none d-lg-block -->
                         <!-- แสดงเฉพาะมือถือ -->
@@ -22,7 +22,7 @@
                             <ol class=" breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
                                 <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
-                                <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room_join') }}" style="font-size: 20px;">เข้าร่วมบ้าน</a></li>
                             </ol>
                         </div> <!--d-block d-md-none -->
                     </nav>
@@ -34,37 +34,35 @@
 <section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
-             <!--//////// Sidebar ////////-->
-             @include('admin.sidebar')
+                <!--//////// Sidebar ////////-->
+           @include('admin.sidebar')
             <!--////// End Sidebar /////////-->
 
             <div class="contact-panel col-md-9 mb-2">
-                
-                    <h3 >บ้านไอดีที่ {{ $room->id }} ของฉัน</h3>
-                    <div class="h5">
-                        <a href="{{ url('/room') }}" title="Back"><button class="btn btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm main-shadow main-radius"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+             
+                    <h3 >เข้าร่วมบ้าน</h3>
+                    <div class="container">
+                        <a href="{{ url('/room') }}" ><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
+                        <br />
+                        <br />
 
-                        <form method="POST" action="{{ url('room' . '/' . $room->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        <form method="POST" action="{{ url('/room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่ไหม')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </form>
-                        <br/>
-                        <br/>
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $room->id }}</td>
-                                    </tr>
-                                    <tr><th> Name </th><td> {{ $room->name }} </td></tr><tr><th> Pass </th><td> {{ $room->pass }} </td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            @include ('room.form_join')
+
+                        </form>
+
                     </div>
-                
+            
             </div>
         </div>
     </div>

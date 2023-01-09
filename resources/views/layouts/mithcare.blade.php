@@ -29,9 +29,9 @@
 
 <body>
     <div class="wrapper">
-        <div class="preloader">
+        <!-- <div class="preloader">
             <div class="loading"><span></span><span></span><span></span><span></span></div>
-        </div><!-- /.preloader -->
+        </div>   /.preloader -->
 
         <!-- =========================
         Header
@@ -212,7 +212,7 @@
                                             <i class="fa-solid fa-user"></i> โปรไฟล์
                                         </a>
                                         <a class="nav__item-link text-center" href="{{url('/room')}}">
-                                            <i class="fa-solid fa-home"></i> จัดการบ้าน
+                                            <i class="fa-solid fa-home"></i> ครอบครัวของฉัน
                                         </a>
                                     </li>
                                     <hr style="width: 75%;">

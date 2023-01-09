@@ -140,15 +140,14 @@
           <div class="widget widget-help bg-secondary mt-40 main-shadow">
             <div class="bg-img"><img src="#" alt="background"></div>
               <div class="row">
-                <h2 style="color: #ffffff;" class="col-6 ">จัดการบ้าน</h2>
-                 <a href="#" data-toggle="dropdown" class=" nav__item-link active fa-solid fa-bars"><i class="fa-solid fa-bars"></i></a>
+                <h2 style="color: #ffffff;" class="col-10 ">ครอบครัวของฉัน</h2>
+                 <a href="#" data-toggle="dropdown" class=" nav__item-link active fa-solid fa-bars"></a>
               
                     <li class="nav__item has-dropdown col-6" >
                         <ul class="dropdown-menu">
-                            <li class="nav__item">
-                                <a href="{{ url('/room') }}" class="nav__item-link">จัดการบ้าน</a>
-                            </li><!-- /.nav-item -->
-                          
+                     
+                                <a href="{{ url('/room') }}" class="nav__item-link">บ้านของฉัน</a>
+                    
                         </ul><!-- /.dropdown-menu -->
                     </li><!-- /.nav-item -->
               </div><!-- row -->

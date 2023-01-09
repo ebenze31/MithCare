@@ -1,15 +1,49 @@
-@extends('layouts.app')
+@extends('layouts.mithcare')
 
 @section('content')
+
+<section class="page-title page-title-layout5">
+        <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="pagetitle__heading">deer</h1>
+                    <nav>
+                        <!-- แสดงเฉพาะคอม -->
+                        <div class="d-none d-lg-block">
+                            <ol class=" breadcrumb mb-0 ">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">แก้ไขบ้าน</a></li>
+                            </ol>
+                        </div> <!--d-none d-lg-block -->
+                        <!-- แสดงเฉพาะมือถือ -->
+                        <div class="d-block d-md-none">
+                            <ol class=" breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="#">แก้ไขบ้าน</a></li>
+                            </ol>
+                        </div> <!--d-block d-md-none -->
+                    </nav>
+                </div><!-- /.col-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+</section><!-- /.page-title -->
+
+<section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+               <!--//////// Sidebar ////////-->
+               @include('admin.sidebar')
+            <!--////// End Sidebar /////////-->
 
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Edit Room #{{ $room->id }}</div>
+            <div class="contact-panel col-md-9 mb-2">
+                
+                    <h3 >แก้ไข ห้อง #{{ $room->id }}</h3>
                     <div class="card-body">
-                        <a href="{{ url('/room') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/room') }}" title="Back"><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ</button></a>
                         <br />
                         <br />
 
@@ -30,8 +64,9 @@
                         </form>
 
                     </div>
-                </div>
+            
             </div>
         </div>
     </div>
+ </section><!-- กันสั่น -->
 @endsection

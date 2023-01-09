@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -13,6 +13,8 @@ class RoomController extends Controller
  
     public function index(Request $request)
     {
+        // $id = Auth::id();
+
         $keyword = $request->get('search');
         $perPage = 5;
 
@@ -22,6 +24,9 @@ class RoomController extends Controller
                 ->latest()->paginate($perPage);
         } else {
             $room = Room::latest()->paginate($perPage);
+          
+            // $room = Room::where('user_id','=', $id)
+            // ->latest()->paginate($perPage);
         }
 
         return view('room.index', compact('room'));
@@ -31,6 +36,11 @@ class RoomController extends Controller
     public function create()
     {
         return view('room.create');
+    }
+
+    public function room_join()
+    {
+        return view('room.join');
     }
 
    
@@ -79,4 +89,26 @@ class RoomController extends Controller
 
         return redirect('room')->with('flash_message', 'Room deleted!');
     }
+
+            //////////////////////////
+            //      ค้นหาบ้าน        //
+            /////////////////////////
+
+
+    public function room_find_index(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = 5;
+
+        if (!empty($keyword)) {
+            $room = Room::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('pass', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage);
+        } else {
+            $room = Room::latest()->paginate($perPage);
+        }
+
+        return view('room.room_find.room_find_index', compact('room'));
+    }
+
 }

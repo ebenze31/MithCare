@@ -35,14 +35,18 @@
     <div class="container">
         <div class="row">
                <!--//////// Sidebar ////////-->
-               @include('admin.sidebar')
+            @if(Auth::check() && Auth::user()->role == "isAdmin")
+                @include('sidebar.admin_sidebar')
+            @else
+                @include('sidebar.user_sidebar')
+            @endif
             <!--////// End Sidebar /////////-->
 
             <div class="contact-panel col-md-9 mb-2">
                 
                     <h3 >แก้ไข ห้อง #{{ $room->id }}</h3>
                     <div class="card-body">
-                        <a href="{{ url('/room') }}" title="Back"><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
+                        <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
                             <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ</button></a>
                         <br />
                         <br />

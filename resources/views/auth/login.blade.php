@@ -70,7 +70,11 @@
                                                     <span style="background-color: #21C608;" class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10 main-shadow">
                                                         <img src="{{ asset('/img/icon_Social/icon-line.png')}}" style="border-radius: 30px;background-color: #ffff; margin-top:5px; margin-bottom:5px" width="10%" class="center main-shadow " >&nbsp;&nbsp; เข้าสู่ระบบด้วย LINE
                                                     </span> 
-                                       
+                                                    <br>
+                                                    <br>
+                                                    <center>
+                                                        <a href="{{ route('register') }}">สมัครสมาชิก</a>
+                                                    </center>
                                                 </div><!-- /.col-lg-12 -->
                                             </div><!-- /.row -->
 

@@ -329,6 +329,13 @@
                 nav: true
             });
         });
+
+
+        function goBack() {
+            window.history.back()
+        }
+
+        $('#myModal').appendTo("body")
     </script>
 
 </body>

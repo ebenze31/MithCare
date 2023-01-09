@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
+use App\User;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
@@ -13,10 +13,12 @@ class RoomController extends Controller
  
     public function index(Request $request)
     {
-        // $id = Auth::id();
+        $id = Auth::id();
 
         $keyword = $request->get('search');
         $perPage = 5;
+
+        $user = User::findOrFail($id);     
 
         if (!empty($keyword)) {
             $room = Room::where('name', 'LIKE', "%$keyword%")

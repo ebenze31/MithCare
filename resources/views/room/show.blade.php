@@ -35,14 +35,18 @@
     <div class="container">
         <div class="row">
              <!--//////// Sidebar ////////-->
-             @include('admin.sidebar')
+            @if(Auth::check() && Auth::user()->role == "isAdmin")
+                @include('sidebar.admin_sidebar')
+            @else
+                @include('sidebar.user_sidebar')
+            @endif
             <!--////// End Sidebar /////////-->
 
             <div class="contact-panel col-md-9 mb-2">
                 
                     <h3 >บ้านไอดีที่ {{ $room->id }} ของฉัน</h3>
                     <div class="h5">
-                        <a href="{{ url('/room') }}" title="Back"><button class="btn btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                    <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm main-shadow main-radius"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                         <form method="POST" action="{{ url('room' . '/' . $room->id) }}" accept-charset="UTF-8" style="display:inline">

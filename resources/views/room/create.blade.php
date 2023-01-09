@@ -35,15 +35,19 @@
 <section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
-                <!--//////// Sidebar ////////-->
-           @include('admin.sidebar')
+               <!--//////// Sidebar ////////-->
+            @if(Auth::check() && Auth::user()->role == "isAdmin")
+                @include('sidebar.admin_sidebar')
+            @else
+                @include('sidebar.user_sidebar')
+            @endif
             <!--////// End Sidebar /////////-->
 
             <div class="contact-panel col-md-9 mb-2">
              
                     <h3 >สร้างบ้านใหม่</h3>
                     <div class="container">
-                        <a href="{{ url('/room') }}" ><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
+                        <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
                         <br />
                         <br />
 

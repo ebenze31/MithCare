@@ -35,11 +35,16 @@
         <div class="row">
 
             <!--//////// Sidebar ////////-->
-            @include('admin.sidebar')
+            @if(Auth::check() && Auth::user()->role == "isAdmin")
+                @include('sidebar.admin_sidebar')
+            @else
+                @include('sidebar.user_sidebar')
+            @endif
             <!--////// End Sidebar /////////-->
 
+
             <div class="contact-panel col-md-9 mb-2">
-            <h2>จัดการบ้าน</h2>
+                <h2>จัดการบ้าน</h2>
                 <div class="row d-flex justify-content-between">
                     <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 25px;">
                         <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้าน
@@ -65,8 +70,8 @@
                     <div class="row">
                         @foreach($room as $item)
 
-                        <div class="col-4 h6">{{ $loop->iteration }}</div>
-                        <div class="col-4 h6">{{ $item->name }}</div>
+                        <div class="col-4 h6">{{ $loop->iteration }}</div><br><br>
+                        <div class="col-4 h6">{{ $item->name }}</div><br><br>
                         <!-- <div class="col-3 h6">{{ $item->pass }}</div> -->
                         <div class="col-4">
                             <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn-old btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true">
@@ -82,7 +87,7 @@
                             </form>
 
                         </div>
-
+                     
                         @endforeach
                     </div>
 

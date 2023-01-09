@@ -208,9 +208,11 @@
                                 <ul class="dropdown-menu">
 
                                     <li class="nav__item">
-
                                         <a class="nav__item-link text-center" href="{{url('/profile')}}">
-                                            <i class="fa-solid fa-user"></i>โปรไฟล์
+                                            <i class="fa-solid fa-user"></i> โปรไฟล์
+                                        </a>
+                                        <a class="nav__item-link text-center" href="{{url('/room')}}">
+                                            <i class="fa-solid fa-home"></i> จัดการบ้าน
                                         </a>
                                     </li>
                                     <hr style="width: 75%;">

@@ -36,4 +36,6 @@ Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update')
 //     return view("profile/profile_form", compact('provinces','amphoes','tambons'));
 // });
 
+Route::resource('room', 'RoomController');
 
+// Route::get('/room/{id}/edit', 'RoomController@edit')->name('room_edit');

@@ -146,7 +146,7 @@
                     <li class="nav__item has-dropdown col-6" >
                         <ul class="dropdown-menu">
                             <li class="nav__item">
-                                <a href="{{ url('/') }}" class="nav__item-link">เพิ่มสมาชิก</a>
+                                <a href="{{ url('/room') }}" class="nav__item-link">จัดการบ้าน</a>
                             </li><!-- /.nav-item -->
                           
                         </ul><!-- /.dropdown-menu -->

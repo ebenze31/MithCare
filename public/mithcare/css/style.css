@@ -1444,6 +1444,30 @@ h6 {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
+.btn-old {
+  text-transform: capitalize;
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 17px;
+  height: 35px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
 
 .btn:focus, .btn.active, .btn:active {
   -webkit-box-shadow: none;
@@ -8433,8 +8457,8 @@ textarea.form-control {
   line-height: 50px;
   border-radius: 50px;
   margin-bottom: 0;
-}
-
+} 
+  
 /* Shopping Cart */
 .cart-table {
   margin-bottom: 50px;

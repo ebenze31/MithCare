@@ -27,19 +27,17 @@
 
         <div class="contact-panel col-md-9 mb-2">
           
-            <div class="row">
+            <div class="row d-flex justify-content-between">
                 <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 25px;">
                     <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้าน
                 </a>
 
-                <form  method="GET" action="{{ url('/room') }}" accept-charset="UTF-8"  class="form-inline my-2 my-lg-0 float-right" role="search">
+                <form  method="GET" action="{{ url('/room') }}" accept-charset="UTF-8"  class="form-inline my-2 my-lg-0 float-end" styl role="search">
                     <input type="text" class="form-control" style="float: right;" placeholder="Search...">
                     <!-- <button class="btn" type="submit"><i class="icon-search"></i></button> -->
                 </form>
             </div>
                 <hr width="97%">
-             
-            
                 <div class="container ">
                         <div class="row">               
                                 <div class="col-3 h5">ลำดับ</div>
@@ -54,18 +52,17 @@
                                     <div class="col-3 h6">{{ $loop->iteration }}</div>
                                     <div class="col-3 h6">{{ $item->name }}</div>
                                     <div class="col-3 h6">{{ $item->pass }}</div>
-                                    <div class="col-3 h6">
-                                                                    
-                                        <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true">                             
+                                    <div class="col-3">
+                                        <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn-old btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true">                             
                                         </i> View</button></a>
 
-                                        <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm">
+                                        <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn-old btn-primary btn-sm">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                                         <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                            <button type="submit" class="btn-old btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                         </form>
                                      
                                     </div>
@@ -83,6 +80,7 @@
     </div>
 </div>
 </section>
+
 @endsection
 
 

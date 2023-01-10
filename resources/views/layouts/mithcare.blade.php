@@ -12,10 +12,14 @@
 
     <!-- icon -->
 
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     <link href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" rel="stylesheet">
 
     <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap">
 
     <link href="{{ asset('mithcare/css/libraries.css') }}" rel="stylesheet">
@@ -30,6 +34,10 @@
         }
         .modal-backdrop {
             display: none;
+        }
+     
+        p,button,body,h1,h2,h3,h4,h5,h6{     
+            font-family: 'IBM Plex Sans Thai Looped', sans-serif !important;
         }
     </style>
 

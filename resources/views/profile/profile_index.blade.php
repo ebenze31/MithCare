@@ -122,7 +122,11 @@
           <li>
             <h5 class="details__title" style="font-size: 25px;">ที่อยู่</h5>
             <div class="details__content">
+              @if(!empty($user->province))
               <p class="mb-0" style="font-size: 25px;">{{$user->address}} ต.{{$user->sub_district}} อ.{{$user->district}} จ.{{$user->province}} </p>
+              @else
+              <p class="mb-0" style="font-size: 25px;"></p>
+              @endif
             </div>
           </li>
           <!-- <li>

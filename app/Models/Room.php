@@ -12,7 +12,11 @@ class Room extends Model
     protected $primaryKey = 'id';
 
    
-    protected $fillable = ['name', 'pass'];
+    protected $fillable = ['name', 'pass' ,'owner_id'];
 
+    
+    public function user(){
+        return $this->belongsTo('App\User','owner_id','id');
+    }
     
 }

@@ -13,16 +13,16 @@
                         <div class="d-none d-lg-block">
                             <ol class=" breadcrumb mb-0 ">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
-                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">{{$room->name}}</a></li>
                             </ol>
                         </div> <!--d-none d-lg-block -->
                         <!-- แสดงเฉพาะมือถือ -->
                         <div class="d-block d-md-none">
                             <ol class=" breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
-                                <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้านของฉัน</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">{{$room->name}}</a></li>
                             </ol>
                         </div> <!--d-block d-md-none -->
                     </nav>
@@ -34,21 +34,14 @@
 <section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
-             <!--//////// Sidebar ////////-->
-            @if(Auth::check() && Auth::user()->role == "isAdmin")
-                @include('sidebar.admin_sidebar')
-            @else
-                @include('sidebar.user_sidebar')
-            @endif
-            <!--////// End Sidebar /////////-->
+    
+            <div class="contact-panel col-md-12 mb-2">
+                <div class="row">
 
-            <div class="contact-panel col-md-9 mb-2">
-                
-                    <h3 >บ้านไอดีที่ {{ $room->id }} ของฉัน</h3>
+                    <h3 >บ้าน {{ $room->name }} </h3>
+                    <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room"><button class="btn-old btn-primary btn-sm main-shadow main-radius m-2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                </div>
                     <div class="h5">
-                    <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm main-shadow main-radius"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
                         <form method="POST" action="{{ url('room' . '/' . $room->id) }}" accept-charset="UTF-8" style="display:inline">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
@@ -61,13 +54,17 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>ID</th><td>{{ $room->id }}</td>
+                                        <th>รหัสค้นหาบ้าน</th><td>{{ $room->id }}</td>
                                     </tr>
-                                    <tr><th> Name </th><td> {{ $room->name }} </td></tr><tr><th> Pass </th><td> {{ $room->pass }} </td></tr>
+                                    <tr>
+                                        <th> Name </th>
+                                    </tr>
+                                    <td> {{ $room->name }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                 
             </div>
         </div>

@@ -30,71 +30,80 @@
     </div><!-- /.container -->
 </section><!-- /.page-title -->
 
-<section class="page-title page-title-layout5">
+<div class="container mt-3">
+    <div class="row d-flex justify-content-end ">
+        <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
+            <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่</a>
+        <a href="{{ url('/room_join') }}" class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
+            <i class="fa-solid fa-right-to-bracket"></i>ค้นหาบ้าน</a>
+    </div>
+</div>
+
+<section class="page-title page-title-layout5 p-3">
     <div class="container">
         <div class="row">
 
             <!--//////// Sidebar ////////-->
-            @if(Auth::check() && Auth::user()->role == "isAdmin")
-                @include('sidebar.admin_sidebar')
-            @else
-                @include('sidebar.user_sidebar')
-            @endif
+
             <!--////// End Sidebar /////////-->
 
 
-            <div class="contact-panel col-md-9 mb-2">
-                <h2>จัดการบ้าน</h2>
-                <div class="row d-flex justify-content-between">
-                    <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 25px;">
-                        <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้าน
-                    </a>
-                    <!-- <a href="{{ url('/room_join') }}" class="btn btn-info btn-sm main-shadow main-radius " style="font-size: 25px;">
-                        <i class="fa-solid fa-right-to-bracket"></i>เข้าร่วมบ้าน
-                    </a> -->
-
-                    <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-end" role="search">
-                        <input type="text" class="form-control" style="float: right;" placeholder="Search...">
-                        <!-- <button class="btn" type="submit"><i class="icon-search"></i></button> -->
-                    </form>
+            <div class="contact-panel col-md-12 mb-2">
+                <div class="row">
+                    <div class="col-md-8 col-12">
+                        <h2>บ้านของฉัน</h2>
+                    </div>
+                    <div class=" col-md-4 col-12">
+                        <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right d-block" role="search">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <!-- <button class="btn" type="submit"><i class="icon-search"></i></button> -->
+                        </form>
+                    </div>
                 </div>
                 <hr width="97%">
-                <div class="container ">
-                    <div class="row">
-                        <div class="col-2 h5">ลำดับ</div>
-                        <div class="col-3 h5">ชื่อ</div>
-                        <div class="col-3 h5">เจ้าของบ้าน</div>
-                        <div class="col-4 h5">...</div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        @foreach($room as $item)
-
-                        <div class="col-2 h6">{{ $loop->iteration }}</div><br><br>
-                        <div class="col-3 h6">{{ $item->name }}</div><br><br>
-                        <div class="col-3 h6">ชื่อเจ้าของ</div>
-                        <div class="col-4">
-                            <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn-old btn-info btn-sm"><i class="fa-solid fa-magnifying-glass"></i></button></a>
-
-                            <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn-old btn-primary btn-sm">
-                            <i class="fa-solid fa-pen-to-square"></i></button></a>
-
-                            <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                {{ method_field('DELETE') }}
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn-old btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa-solid fa-trash"></i></button>
-                            </form>
-
+                @foreach($room as $item)
+                <div class="card col-4 ">
+                    <img class="card-img-top mt-3" src="{{asset('/img/logo_mithcare/portrait-volunteer-who-organized-donations-charity.jpg')}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="{{ url('/room/' . $item->id) }}" class="btn-old btn-info btn-sm btn-block main-shadow main-radius">                                
+                                    <i class="fa-solid fa-magnifying-glass"></i> รายละเอียด        
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn-old btn-success btn-sm btn-block main-shadow main-radius">ตารางนัด</button>
+                            </div>
                         </div>
-                     
-                        @endforeach
-                    </div>
+                        <p class="text-center main-shadow main-radius btn-block mt-2 p-2" style="background-color:#407CAB; color:#ffffff; font-size:18px">{{$item->name}}</p>
+                        <p style="font-size: 13px;">เจ้าของบ้าน : {{$item->user->name}}</p>
+                        <hr>
+                        @if(Auth::user()->id == $item->owner_id)
+             
+                        <div class="row">
+                            <div class="col-12">
+                                <i data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="fa-solid fa-caret-down" style="font-size: 30px; float: right"></i>
+                            </div>
+                            <div class="collapse col-12" id="collapseExample">
+                                <div class="row mr-2">
 
-                    <div class="pagination-wrapper"> {!! $room->appends(['search' => Request::get('search')])->render() !!} </div>
-                </div>
+                                    <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn-old btn-primary btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i></button></a>
 
-
-
+                                    <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn-old btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>               
+                        @endif
+                    </div><!--  card-body -->
+                </div><!--  card -->
+                @endforeach
+                <div class="pagination-wrapper"> {!! $room->appends(['search' => Request::get('search')])->render() !!} </div>
+               
             </div> <!-- contact-panel -->
 
         </div>

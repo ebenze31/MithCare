@@ -1451,7 +1451,7 @@ h6 {
   font-size: 15px;
   font-weight: 700;
   min-width: 17px;
-  height: 35px;
+  min-height: 35px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   -webkit-box-align: center;

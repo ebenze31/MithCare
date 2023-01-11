@@ -10,7 +10,8 @@
     <title>MithCare</title>
 
     <!-- calendar -->
-    <script src='fullcalendar/dist/index.global.js'></script>
+    <link href="assets/plugins/fullcalendar/css/main.min.css" rel="stylesheet" />
+    <link href="{{ asset('mithcare/js/fullcalendar/css/main.min.css') }}" rel="stylesheet">
     <!-- icon -->
 
 
@@ -39,7 +40,28 @@
      
         p,button,body,h1,h2,h3,h4,h5,h6{     
             font-family: 'IBM Plex Sans Thai Looped', sans-serif !important;
+        }  
+        .form-control input {
+            border: none;
+            box-sizing: border-box;
+            outline: 0;
+            padding: .75rem;
+            position: relative;
+            width: 100%;
         }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+
     </style>
 
 

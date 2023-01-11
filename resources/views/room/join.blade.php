@@ -34,15 +34,8 @@
 <section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
-            <!--//////// Sidebar ////////-->
-            @if(Auth::check() && Auth::user()->role == "isAdmin")
-                @include('sidebar.admin_sidebar')
-            @else
-                @include('sidebar.user_sidebar')
-            @endif
-            <!--////// End Sidebar /////////-->
-
-            <div class="contact-panel col-md-9 mb-2">
+     
+            <div class="contact-panel col-md-12 mb-2">
 
                 <h3>เข้าร่วมบ้าน</h3>
                 <div class="container">

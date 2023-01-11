@@ -48,8 +48,10 @@ class RoomController extends Controller
    
     public function store(Request $request)
     {
-        
+        $data_user = Auth::user();
         $requestData = $request->all();
+
+        $requestData['owner_id'] = $data_user->id;
         
         Room::create($requestData);
 

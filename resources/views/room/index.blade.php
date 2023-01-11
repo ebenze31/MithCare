@@ -82,7 +82,7 @@
                                     <div class="col-12">
                                         <hr>
                                             <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->name}}</ย>
-                                            <p style="font-size: 20px;">เจ้าของบ้าน : </p>
+                                            <p style="font-size: 20px;">เจ้าของบ้าน : {{ $item->user->name }}</p>
                                         <hr>
                                     </div>
                                 </div>
@@ -99,24 +99,21 @@
                                         
                                     </div>
                                     
-                                    <div class="collapse  " id="collapseExample{{$item->id}}"> 
-                                        <!-- <br><br>-->
-                                        <!-- <div class="col-12"></div> -->
-                                        <div class="row ">
-                                            <div class="col-6 ">
-                                                <a class="btn-old btn-primary btn-sm main-shadow main-radius" href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room">
-                                                        <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
-                                                </a>
-                                            </div>       
-                                            <div class="col-6 ">
-                                                <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                    {{ method_field('DELETE') }}
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
-                                                        <i class="fa-solid fa-trash"></i> ลบบ้าน
-                                                    </button>
-                                                </form>
-                                            </div>    
+                                    <div class="collapse" id="collapseExample{{$item->id}}"> 
+
+                                        <div class="col-6">
+                                            <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
+                                                <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
+                                            </a >
+                                        </div>
+                                        <div class="col-6">
+                                            <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" >
+                                                {{ method_field('DELETE') }}
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
+                                                    <i class="fa-solid fa-trash"></i> ลบบ้าน
+                                                </button>
+                                            </form>
                                         </div>
 
                                     </div>

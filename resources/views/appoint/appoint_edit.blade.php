@@ -14,7 +14,7 @@
                         <ol class=" breadcrumb mb-0 ">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
-                            <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">แก้ไขบ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">ตารางนัด</a></li>
                         </ol>
                     </div> <!--d-none d-lg-block -->
                     <!-- แสดงเฉพาะมือถือ -->
@@ -22,7 +22,7 @@
                         <ol class=" breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
-                            <li class="breadcrumb-item"><a href="#">แก้ไขบ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="#">ตารางนัด</a></li>
                         </ol>
                     </div> <!--d-block d-md-none -->
                 </nav>
@@ -31,42 +31,35 @@
     </div><!-- /.container -->
 </section><!-- /.page-title -->
 
+
+
 <section class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
 
-
             <div class="contact-panel col-md-12 mb-2">
 
-                <h3>แก้ไขบ้าน #{{ $room->name }}</h3>
-                <div class="card-body">
+                <h3>ตารางนัด</h3>
 
+                <div id='calendar'></div>
 
-                    <br />
-                    <br />
-
-                    @if ($errors->any())
-                    <ul class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
-
-                    <form method="POST" action="{{ url('/room/' . $room->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                        {{ method_field('PATCH') }}
-                        {{ csrf_field() }}
-
-                        @include ('room.form_edit')
-
-                    </form>
-                    <a class="btn-old btn-info btn-sm main-shadow main-radius" href="#" onclick="goBack()">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ
-                    </a>
-                </div>
+                <a class="btn-old btn-info btn-sm main-shadow main-radius" href="#" onclick="goBack()">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ
+                </a>
 
             </div>
         </div>
     </div>
 </section><!-- กันสั่น -->
 @endsection
+
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+</script>

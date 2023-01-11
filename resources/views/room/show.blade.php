@@ -58,22 +58,22 @@
                     <br />
 
                     <div class="collg-12 col-md-9">
-                        <div class="pricing-widget-layout2 mb-70 product-item">                   
+                        <div class="pricing-widget-layout2 mb-70 product-item">
                             <ul class="pricing__list list-unstyled mb-0">
-                                <li><span>รหัสค้นหาบ้าน</span><span class="price">{{ $room->id }}</span></li>
+                                <li><span>รหัสค้นหาบ้าน</span><span class="price">#sdfgfhad4155ET51858#848FDFSdfgd</span></li>
                                 <li><span>ชื่อบ้าน</span><span class="price">{{ $room->name }}</span></li>
-                                <li><span>เจ้าของบ้าน</span><span class="price">{{ $room->user->name }}</span></li>                          
+                                <li><span>เจ้าของบ้าน</span><span class="price">{{ $room->user->name }}</span></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="collg-12 col-md-9 ">
-                        <div class="pricing-widget-layout2 mb-70 product-item">    
-                                <h4>สมาชิกในบ้าน</h4>               
+                        <div class="pricing-widget-layout2 mb-70 product-item">
+                            <h4>สมาชิกในบ้าน</h4>
                             <ul class="pricing__list list-unstyled mb-0">
                                 <li><span>1</span><span class="price">คุณ ..........</span></li>
                                 <li><span>2</span><span class="price">คุณ ..........</span></li>
-                                <li><span>3</span><span class="price">คุณ ..........</span></li>                          
+                                <li><span>3</span><span class="price">คุณ ..........</span></li>
                             </ul>
                         </div>
                     </div>
@@ -94,8 +94,9 @@
                         </table>
                     </div> -->
                 </div>
-                <a href="#" onclick="goBack()"><button class="btn-old btn-info btn-sm main-shadow main-radius"><i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ</button></a>
-
+                <a class="btn-old btn-info btn-sm main-shadow main-radius" href="#" onclick="goBack()">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ
+                </a>
             </div>
         </div>
     </div>

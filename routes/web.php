@@ -28,20 +28,26 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
 Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update');
 
-////// ที่อยู่ ///////////
-// Route::get('/profile/{id}/edit', function () {
-//     $provinces = Tambon::select('province')->distinct()->get();
-//     $amphoes = Tambon::select('amphoe')->distinct()->get();
-//     $tambons = Tambon::select('tambon')->distinct()->get();
-//     return view("profile/profile_form", compact('provinces','amphoes','tambons'));
-// });
+//// My_Room /////////
 
 Route::resource('room', 'RoomController');
 Route::get('room_join', 'RoomController@room_join');
 
+ /// Find_Room //////
+
 Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
 Route::get('room_find/{id}/edti', 'RoomController@room_edit')->name('room_find_edit');
 
+ // Admin Room //////
+
 Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 
-// Route::get('/room/{id}/edit', 'RoomController@edit')->name('room_edit');
+// Appoint /////////
+
+Route::get('appoint', 'AppointController@index')->name('appoint');
+Route::get('appoint/{id}/edit', 'AppointController@edit')->name('appoint_edit');
+
+
+
+
+// Route::resource('appoint', 'AppointController');

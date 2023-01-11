@@ -31,7 +31,7 @@ class RoomController extends Controller
             // ->latest()->paginate($perPage);
         }
 
-        return view('room.index', compact('room'));
+        return view('room.index', compact('room','user'));
     }
 
    
@@ -79,6 +79,10 @@ class RoomController extends Controller
     {
         
         $requestData = $request->all();
+
+        if ($request->hasFile('home_pic')) {
+            $requestData['home_pic'] = $request->file('home_pic')->store('uploads', 'public');     
+        }
         
         $room = Room::findOrFail($id);
         $room->update($requestData);

@@ -15,6 +15,7 @@ class AddToRoomsTable extends Migration
     {
         Schema::table('rooms', function (Blueprint $table) {
             $table->string('owner_id')->nullable();
+            $table->string('home_pic')->nullable();
         });
     }
 

@@ -1,0 +1,29 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "date_time",
+            "type": "date"
+        },
+        {
+            "name": "status",
+            "type": "string"
+        },
+        {
+            "name": "sent_round",
+            "type": "string"
+        },
+        {
+            "name": "user_id",
+            "type": "string"
+        }
+        
+    ]
+}

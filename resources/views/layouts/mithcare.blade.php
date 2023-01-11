@@ -9,7 +9,8 @@
     <link href="{{asset('/img/logo_mithcare/x-icon.png')}}" rel="icon">
     <title>MithCare</title>
 
-
+    <!-- calendar -->
+    <script src='fullcalendar/dist/index.global.js'></script>
     <!-- icon -->
 
 
@@ -354,6 +355,8 @@
 
         $('#myModal').appendTo("body")
     </script>
+
+    
 
 </body>
 

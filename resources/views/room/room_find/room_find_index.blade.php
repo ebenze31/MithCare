@@ -37,15 +37,7 @@
     <div class="container">
         <div class="row">
 
-            <!--//////// Sidebar ////////-->
-            @if(Auth::check() && Auth::user()->role == "isAdmin")
-            @include('sidebar.admin_sidebar')
-            @else
-            @include('sidebar.user_sidebar')
-            @endif
-            <!--////// End Sidebar /////////-->
-
-            <div class="contact-panel col-md-9 mb-2">
+            <div class="contact-panel col-md-12 mb-2">
                 <h2>ค้นหาบ้าน</h2>
                 <div class="row">
 
@@ -76,9 +68,9 @@
                                     รายละเอียด</button></a>
 
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
-                            </button>
+                            </ฟ>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,15 +93,7 @@
                                 </div>
                             </div>
 
-                            <!-- <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                        <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                            {{ method_field('DELETE') }}
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                        </form> -->
-
+                         
                         </div>
 
                         @endforeach

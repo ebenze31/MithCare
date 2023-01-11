@@ -101,19 +101,21 @@
                                     
                                     <div class="collapse" id="collapseExample{{$item->id}}"> 
 
-                                        <div class="col-6">
-                                            <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
-                                                <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
-                                            </a >
-                                        </div>
-                                        <div class="col-6">
-                                            <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" >
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
-                                                    <i class="fa-solid fa-trash"></i> ลบบ้าน
-                                                </button>
-                                            </form>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
+                                                    <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
+                                                </a >
+                                            </div>
+                                            <div class="col-6">
+                                                <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" >
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
+                                                        <i class="fa-solid fa-trash"></i> ลบบ้าน
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
 
                                     </div>

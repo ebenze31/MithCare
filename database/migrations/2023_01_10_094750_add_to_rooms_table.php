@@ -15,7 +15,6 @@ class AddToRoomsTable extends Migration
     {
         Schema::table('rooms', function (Blueprint $table) {
             $table->string('owner_id')->nullable();
-            $table->string('gen_id')->nullable();
         });
     }
 

@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/Calendar_test', function () {
+    return view('Calendar_test');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

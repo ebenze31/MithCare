@@ -127,7 +127,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{{ url('/appoint/' . $item->id . '/edit') }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
+                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
                                            ตารางนัด
                                         </a>
                                     </div>

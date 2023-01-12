@@ -15,22 +15,17 @@ class AppointController extends Controller
     
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+        $room_id = $request->get('room_id');
 
-        if (!empty($keyword)) {
-            $appoint = Appoint::where('title', 'LIKE', "%$keyword%")
-                ->orWhere('type', 'LIKE', "%$keyword%")
-                ->orWhere('date_time', 'LIKE', "%$keyword%")
-                ->orWhere('status', 'LIKE', "%$keyword%")
-                ->orWhere('sent_round', 'LIKE', "%$keyword%")
-                ->orWhere('create_by_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $appoint = Appoint::latest()->paginate($perPage);
-        }
+        $room = Room::where('id',$room_id)->first();
+        $appoint = Appoint::where('room_id', $room_id)->get();
 
-        return view('appoint.index', compact('appoint'));
+        // echo"<pre>";
+        // print_r($appoint);
+        // echo"</pre>";
+        // exit();
+        
+        return view('appoint.index', compact('room','appoint'));
     }
 
   
@@ -66,15 +61,15 @@ class AppointController extends Controller
     {
 
         // if (Auth::id()  == $id){
-            $room = Room::findOrFail($id);
+            // $room = Room::findOrFail($id);
 
-            $appoint = Appoint::where('room_id', $id)->get();
-            // echo"<pre>";
-            // print_r($appoint);
-            // echo"</pre>";
-            // exit();
+            // $appoint = Appoint::where('room_id', $id)->get();
+            // // echo"<pre>";
+            // // print_r($appoint);
+            // // echo"</pre>";
+            // // exit();
             
-            return view('appoint.appoint_edit', compact('room','appoint'));
+            // return view('appoint.appoint_edit', compact('room','appoint'));
 
         //  }else{
         //     return view('404');

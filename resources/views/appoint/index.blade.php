@@ -1,63 +1,150 @@
-@extends('layouts.app')
+@extends('layouts.mithcare')
 
 @section('content')
+
+<section class="page-title page-title-layout5">
+    <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+            <div class="col-12">
+                <h1 class="pagetitle__heading">deer </h1>
+                    
+                <nav>
+                    <!-- แสดงเฉพาะคอม -->
+                    <div class="d-none d-lg-block">
+                        <ol class=" breadcrumb mb-0 ">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">ตารางนัด</a></li>
+                        </ol>
+                    </div> <!--d-none d-lg-block -->
+                    <!-- แสดงเฉพาะมือถือ -->
+                    <div class="d-block d-md-none">
+                        <ol class=" breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="#">ตารางนัด</a></li>
+                        </ol>
+                    </div> <!--d-block d-md-none -->
+                </nav>
+            </div><!-- /.col-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.page-title -->
 
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Appoint</div>
-                    <div class="card-body">
-                        <a href="{{ url('/appoint/create') }}" class="btn btn-success btn-sm" title="Add New Appoint">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
-                        <form method="GET" action="{{ url('/appoint') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
+
+<section class="page-title page-title-layout5">
+    <div class="container">
+        <div class="row">
+
+            <div class="container mt-3">
+                <div class="row d-flex justify-content-end ">
+                    <!-- <a href="#" class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
+                        <i class="fa fa-plus"></i>เพิ่มตารางนัดหมอ/กินยา</a> -->
+                    <a class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#exampleModalCenter">
+                        <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มตารางนัดหมอ/กินยา
+                    </a>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <!-- หน้าสร้างบ้าน -->
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="contact-panel col-md-12 mb-2">
+
+                                            <button class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+
+                                            <div class="container">
+                                                <h3><i class="fa-solid fa-home"></i> เพิ่มตารางนัด</h3>
+                                                <br />
+                                                <br />
+                                                @if ($errors->any())
+                                                <ul class="alert alert-danger">
+                                                    @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+
+                                                <form method="POST" action="{{ url('/appoint/'. $room->id) }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                    {{ csrf_field() }}
+
+                                                    @include ('appoint.appoint_form')
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th><th>Title</th><th>Type</th><th>Date Time</th><th>Status</th><th>Sent Round</th><th>User Id</th><th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($appoint as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->title }}</td><td>{{ $item->type }}</td><td>{{ $item->date_time }}</td><td>{{ $item->status }}</td><td>{{ $item->sent_round }}</td><td>{{ $item->user_id }}</td>
-                                        <td>
-                                            <a href="{{ url('/appoint/' . $item->id) }}" title="View Appoint"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/appoint/' . $item->id . '/edit') }}" title="Edit Appoint"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                            <form method="POST" action="{{ url('/appoint' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete Appoint" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $appoint->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
+                    </div><!-- modal -->
 
-                    </div>
                 </div>
+            </div>
+            <div class="contact-panel col-md-12 mb-2 mt-3">
+                <h3>ตารางนัด</h3>
+                <br />
+                <br />
+            
+                    <div id='calendar'></div>
+        
             </div>
         </div>
     </div>
+</section><!-- กันสั่น -->
 @endsection
+
+<script src="{{ asset('mithcare/js/fullcalendar/js/main.min.js') }}"></script>
+<script>
+    const date_now_Y_m = Date.now('Y-m');
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            initialView: 'dayGridMonth',
+            initialDate: date_now_Y_m,
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            nowIndicator: true,
+            dayMaxEvents: true, // allow "more" link when too many events
+            editable: true,
+            selectable: true,
+            businessHours: true,
+            dayMaxEvents: true, // allow "more" link when too many events
+            timeZone: 'Asia/Bangkok',
+            eventTimeFormat: { // like '14:30:00'
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            },
+            events: [
+                @foreach($appoint as $ap)
+                    {
+                        title: '{{ $ap->title }}',
+                        start: '{{ $ap->date_time }}',
+                    },
+                @endforeach
+                {
+                    title: 'gdsdgddg',
+                    start: '2023-01-14',
+                },
+            ],
+            eventColor: '#378006'
+        
+        });
+        calendar.render();
+    });
+</script>

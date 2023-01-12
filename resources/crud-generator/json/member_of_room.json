@@ -1,0 +1,21 @@
+{
+    "fields": [
+        {
+            "name": "status",
+            "type": "string"
+        },
+        {
+            "name": "lv_of_caretaker",
+            "type": "string"
+        },
+        {
+            "name": "user_id",
+            "type": "string"
+        },
+        {
+            "name": "room_id",
+            "type": "string"
+        } 
+        
+    ]
+}

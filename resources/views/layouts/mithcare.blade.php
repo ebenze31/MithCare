@@ -49,7 +49,7 @@
             position: relative;
             width: 100%;
         }
-        input[type="date"]::-webkit-calendar-picker-indicator {
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
             background: transparent;
             bottom: 0;
             color: transparent;

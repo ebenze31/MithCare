@@ -30,7 +30,7 @@
                 <div class="widget-content">
                   <ul class="list-unstyled mb-0">
                     <li><a href="{{ url('/room') }}"><span class="cat-count"><i class="fa-solid fa-house"></i></span><span  class="h5">จัดการบ้าน</span></a></li>
-                    <li><a href="{{ url('/room_find') }}"><span class="cat-count"><i class="fa-solid fa-house-day"></i></span><span class="h5">ค้นหาบ้าน</span></a></li>
+                    <!-- <li><a href="{{ url('/room_find') }}"><span class="cat-count"><i class="fa-solid fa-house-day"></i></span><span class="h5">ค้นหาบ้าน</span></a></li> -->
                     <li><a href="{{ url('/room_admin') }}"><span class="cat-count"><i class="fa-solid fa-house-heart"></i></span><span class="h5">ADMIN HOME</span></a></li>                   
                   </ul>
                 </div><!-- /.widget-content -->

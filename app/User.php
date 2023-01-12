@@ -29,5 +29,12 @@ class User extends Authenticatable
     public function rooms(){
         return $this->hasMany('App\Models\Room','owner_id','id');
     }
+
+    public function appoints(){
+        return $this->hasMany('App\Models\Appoint','user_id','id');
+    }
+    public function member_of_rooms(){
+        return $this->hasMany('App\Models\Member_of_room','user_id','id');
+    }
 }
 

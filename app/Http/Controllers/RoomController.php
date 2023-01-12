@@ -126,8 +126,12 @@ class RoomController extends Controller
 
     public function room_admin_index(Request $request)
     {
+        $id = Auth::id();
+        
         $keyword = $request->get('search');
         $perPage = 5;
+
+        $user = User::findOrFail($id);   
 
         if (!empty($keyword)) {
             $room = Room::where('name', 'LIKE', "%$keyword%")
@@ -137,7 +141,7 @@ class RoomController extends Controller
             $room = Room::latest()->paginate($perPage);
         }
 
-        return view('room.room_admin.room_admin_index', compact('room'));
+        return view('room.room_admin.room_admin_index', compact('room','user'));
     }
 
 }

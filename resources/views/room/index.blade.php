@@ -38,7 +38,7 @@
         <!-- <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่</a> -->
         <a href="{{ url('/room_join') }}" class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
-            <i class="fa-solid fa-right-to-bracket"></i>ค้นหาบ้าน</a>
+            <i class="fa-solid fa-right-to-bracket"></i>ขอเข้าร่วม</a>
 
 
 
@@ -127,7 +127,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{{ url('/appoint/' . $user->id . '/edit') }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
+                                        <a href="{{ url('/appoint/' . $item->id . '/edit') }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
                                            ตารางนัด
                                         </a>
                                     </div>

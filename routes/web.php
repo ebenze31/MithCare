@@ -48,10 +48,14 @@ Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 
 // Appoint /////////
 
-Route::get('appoint', 'AppointController@index')->name('appoint');
-Route::get('appoint/{id}/edit', 'AppointController@edit')->name('appoint_edit');
-
-
-
-
+// Route::get('appoint', 'AppointController@index')->name('appoint');
 // Route::resource('appoint', 'AppointController');
+
+Route::get('appoint/{id}/edit', 'AppointController@edit')->name('appoint_edit');
+Route::post('appoint/{id}', 'AppointController@store')->name('appoint_store');
+
+
+
+
+
+Route::resource('member_of_room', 'Member_of_roomController');

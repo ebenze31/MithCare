@@ -6,6 +6,7 @@ use App\User;
 use App\Models\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Models\Member_of_room;
 
 use App\Models\Appoint;
 use Illuminate\Http\Request;
@@ -16,16 +17,32 @@ class AppointController extends Controller
     public function index(Request $request)
     {
         $room_id = $request->get('room_id');
+        $user_id = Auth::id();
+        $check = "" ;
 
-        $room = Room::where('id',$room_id)->first();
-        $appoint = Appoint::where('room_id', $room_id)->get();
+        $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
 
-        // echo"<pre>";
-        // print_r($appoint);
-        // echo"</pre>";
-        // exit();
+        foreach ($Member_of_room as $key ) {
+            if ($key->user_id == $user_id) {
+                $check = "Yes" ;
+            }
+        }
+
+        if ($check == "Yes"){
+            $room = Room::where('id',$room_id)->first();
+            $appoint = Appoint::where('room_id', $room_id)->get();
+
+            // echo"<pre>";
+            // print_r($appoint);
+            // echo"</pre>";
+            // exit();
         
-        return view('appoint.index', compact('room','appoint'));
+            return view('appoint.index', compact('room','appoint'));
+
+        }else{
+            return view('404');
+        }
+        
     }
 
   

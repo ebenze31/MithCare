@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\User;
 use App\Models\Room;
+use App\Models\Member_of_room;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -51,9 +52,21 @@ class RoomController extends Controller
         $data_user = Auth::user();
         $requestData = $request->all();
 
+        // echo"<pre>";
+        // print_r( $requestData);
+        // echo"</pre>";
+        // exit();
+
         $requestData['owner_id'] = $data_user->id;
-        
+       
+
         Room::create($requestData);
+        
+        $requestData_Room['status'] = "owner";
+        $requestData_Room['user_id'] = $requestData['owner_id'];
+        // $requestData_Room['room_id'] = $requestData['id'];
+
+        Member_of_room::create($requestData_Room);
 
         return redirect('room')->with('flash_message', 'Room added!');
     }

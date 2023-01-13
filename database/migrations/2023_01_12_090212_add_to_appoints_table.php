@@ -16,7 +16,8 @@ class AddToAppointsTable extends Migration
         Schema::table('appoints', function (Blueprint $table) {
             $table->dropColumn('user_id'); 
             $table->string('create_by_id')->nullable();   
-            $table->string('patient_id')->nullable();        
+            $table->string('patient_id')->nullable();
+            $table->string('room_id')->nullable();         
         });
     }
 

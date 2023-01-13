@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="pagetitle__heading">deer </h1>
-                    
+
                 <nav>
                     <!-- แสดงเฉพาะคอม -->
                     <div class="d-none d-lg-block">
@@ -75,11 +75,49 @@
                                                 <form method="POST" action="{{ url('/appoint/'. $room->id) }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
                                                     {{ csrf_field() }}
 
-                                                    @include ('appoint.appoint_form')
-
+                                                    @include ('appoint.appoint_form_create')
                                                 </form>
 
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- modal -->
+
+                    <div class="modal fade" id="edit_Appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" >
+                            <div class="modal-content">
+                                <!-- หน้าสร้างบ้าน -->
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="contact-panel col-md-12 mb-2">
+
+                                            <button class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+
+                                            <div class="container">
+                                                <h3><i class="fa-solid fa-home"></i>แก้ไขตารางนัด</h3>
+                                                <br />
+                                                <br />
+                                                @if ($errors->any())
+                                                <ul class="alert alert-danger">
+                                                    @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+
+                                                <form method="POST" action="{{ url('/appoint/'. $room->id) }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                    {{ csrf_field() }}
+
+                                                    @include ('appoint.appoint_form_create')
+                                                </form>
+                                             </div> <!--container -->
+
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -93,9 +131,9 @@
                 <h3>ตารางนัด</h3>
                 <br />
                 <br />
-            
-                    <div id='calendar'></div>
-        
+
+                <div id='calendar'></div>
+
             </div>
         </div>
     </div>
@@ -131,19 +169,32 @@
                 hour12: false
             },
             events: [
-                @foreach($appoint as $ap)
-                    {
-                        title: '{{ $ap->title }}',
-                        start: '{{ $ap->date_time }}',
-                    },
-                @endforeach
+                @foreach($appoint as $ap) {
+                    title: '{{ $ap->title }}',
+                    start: '{{ $ap->date_time }}',  
+            
+                },
+                @endforeach 
                 {
-                    title: 'gdsdgddg',
+                    title: 'กดได้เถอะครับ',
                     start: '2023-01-14',
+                    
+                    eventClick: function(event, jsEvent, view) {
+                        // alert('Event: ' + $ap.event.title);
+                     
+                        $('#edit_Appoint').modal();
+                        // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                        // alert('View: ' + info.view.type);
+ 
+                        // change the border color just for fun
+                        // info.el.style.borderColor = 'red';
+                    }
+                   
                 },
             ],
             eventColor: '#378006'
-        
+
+
         });
         calendar.render();
     });

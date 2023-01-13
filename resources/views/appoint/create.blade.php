@@ -24,7 +24,7 @@
                         <form method="POST" action="{{ url('/appoint') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
-                            @include ('appoint.form', ['formMode' => 'create'])
+                            @include ('appoint.appoint_form_create')
 
                         </form>
 

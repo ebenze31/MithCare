@@ -20,6 +20,7 @@ class AppointController extends Controller
         $user_id = Auth::id();
         $check = "" ;
 
+        // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
         $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
 
         foreach ($Member_of_room as $key ) {
@@ -27,17 +28,12 @@ class AppointController extends Controller
                 $check = "Yes" ;
             }
         }
-
+        
         if ($check == "Yes"){
             $room = Room::where('id',$room_id)->first();
             $appoint = Appoint::where('room_id', $room_id)->get();
-
-            // echo"<pre>";
-            // print_r($appoint);
-            // echo"</pre>";
-            // exit();
-        
-            return view('appoint.index', compact('room','appoint'));
+     
+            return view('appoint.appoint_index', compact('room','appoint'));
 
         }else{
             return view('404');

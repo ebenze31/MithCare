@@ -203,17 +203,30 @@
                    
                 // },
             ], 
-            eventClick: function(calEvent, jsEvent, view) {
-                // $('#appoint_id').val(calEvent.id);
-                // $('#appoint_id').val(moment(calEvent.title));
-                // $('#finish_time').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
-                document.querySelector('#appoint_id').value = calEvent['event']['_def']['publicId'];
-                $('#edit_Appoint').modal();
+            eventClick: function(info) {
+                console.log(info.event);
 
-                console.log(calEvent);
-                console.log(calEvent['event']['_def']['publicId']);
+                console.log('ID : ' + info.event.id);
+                console.log('title : ' + info.event.title);
+                console.log('start: ' + info.event.start);
+
+
+                // info.event.setProp('title', 'Test Title')
+                // info.event.setProp('id', 54321)
+
+                // console.log('Event ID changed to: ' + info.event.id);
+            },
+            // eventClick: function(calEvent, jsEvent, view) {
+            //     // $('#appoint_id').val(calEvent.id);
+            //     // $('#appoint_id').val(moment(calEvent.title));
+            //     // $('#finish_time').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
+            //     document.querySelector('#appoint_id').value = calEvent['event']['_def']['publicId'];
+            //     $('#edit_Appoint').modal();
+
+            //     console.log(calEvent);
+            //     console.log(calEvent['event']['_def']['publicId']);
             
-                },
+            //     },
            
             eventColor: '#378006'
 

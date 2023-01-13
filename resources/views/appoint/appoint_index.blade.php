@@ -51,7 +51,7 @@
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                                <!-- หน้าสร้างบ้าน -->
+                                <!-- หน้าสร้างตารางนัด -->
                                 <div class="container">
                                     <div class="row">
                                         <div class="contact-panel col-md-12 mb-2">
@@ -89,7 +89,7 @@
                     <div class="modal fade" id="edit_Appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" >
                             <div class="modal-content">
-                                <!-- หน้าสร้างบ้าน -->
+                                <!-- แก้ไขตารางนัด -->
                                 <div class="container">
                                     <div class="row">
                                         <div class="contact-panel col-md-12 mb-2">
@@ -99,9 +99,12 @@
                                             </button>
 
                                             <div class="container">
+                                                
                                                 <h3><i class="fa-solid fa-home"></i>แก้ไขตารางนัด</h3>
                                                 <br />
                                                 <br />
+
+                                                
                                                 @if ($errors->any())
                                                 <ul class="alert alert-danger">
                                                     @foreach ($errors->all() as $error)
@@ -109,11 +112,12 @@
                                                     @endforeach
                                                 </ul>
                                                 @endif
-
-                                                <form method="POST" action="{{ url('/appoint/'. $room->id) }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                <!-- ?appoint_id=-->
+                                                <form method="POST" action="{{ url('/appoint/') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
                                                     {{ csrf_field() }}
 
-                                                    @include ('appoint.appoint_form_create')
+                                                    <input  name="appoint_id" id="appoint_id" value="" />
+                                                    @include ('appoint.appoint_form_edit')
                                                 </form>
                                              </div> <!--container -->
 
@@ -128,25 +132,34 @@
                 </div>
             </div>
             <div class="contact-panel col-md-12 mb-2 mt-3">
-                <h3>ตารางนัด</h3>
-                <br />
-                <br />
+             
+                    <h3>ตารางนัด</h3>
+                    <select class="form-control col-md-2" id="appoint_selector">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="นัดหมอ">นัดหมอ</option>
+                        <option value="ทานยา">ทานยา</option>
+                    </select>
+             
 
-                <div id='calendar'></div>
+                <div class="mt-3" id='calendar'></div>
 
             </div>
         </div>
     </div>
 </section><!-- กันสั่น -->
 @endsection
-
+{{$appoint}}
 <script src="{{ asset('mithcare/js/fullcalendar/js/main.min.js') }}"></script>
 <script>
     const date_now_Y_m = Date.now('Y-m');
 
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
+        
         var calendar = new FullCalendar.Calendar(calendarEl, {
+
+           
+
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -162,38 +175,49 @@
             selectable: true,
             businessHours: true,
             dayMaxEvents: true, // allow "more" link when too many events
-            timeZone: 'Asia/Bangkok',
+            timeZone: 'Asia/Bangkok',                   
             eventTimeFormat: { // like '14:30:00'
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: false
             },
+             // modal toggle 
+            //  eventClick: function() {
+				
+			// 	$('#edit_Appoint').modal("show");	
+    
+			// },
+           
             events: [
                 @foreach($appoint as $ap) {
+                    id: '{{ $ap->id }}', 
                     title: '{{ $ap->title }}',
                     start: '{{ $ap->date_time }}',  
             
                 },
                 @endforeach 
-                {
-                    title: 'กดได้เถอะครับ',
-                    start: '2023-01-14',
-                    
-                    eventClick: function(event, jsEvent, view) {
-                        // alert('Event: ' + $ap.event.title);
-                     
-                        $('#edit_Appoint').modal();
-                        // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-                        // alert('View: ' + info.view.type);
- 
-                        // change the border color just for fun
-                        // info.el.style.borderColor = 'red';
-                    }
+                // {
+                //     title: 'กดได้เถอะครับ',
+                //     start: '2023-01-14',  
+                               
                    
+                // },
+            ], 
+            eventClick: function(calEvent, jsEvent, view) {
+                // $('#appoint_id').val(calEvent.id);
+                // $('#appoint_id').val(moment(calEvent.title));
+                // $('#finish_time').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
+                document.querySelector('#appoint_id').value = calEvent['event']['_def']['publicId'];
+                $('#edit_Appoint').modal();
+
+                console.log(calEvent);
+                console.log(calEvent['event']['_def']['publicId']);
+            
                 },
-            ],
+           
             eventColor: '#378006'
 
+          
 
         });
         calendar.render();

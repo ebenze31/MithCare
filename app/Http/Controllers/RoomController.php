@@ -60,11 +60,11 @@ class RoomController extends Controller
         $requestData['owner_id'] = $data_user->id;
        
 
-        Room::create($requestData);
+        $room = Room::create($requestData);
         
         $requestData_Room['status'] = "owner";
         $requestData_Room['user_id'] = $requestData['owner_id'];
-        // $requestData_Room['room_id'] = $requestData['id'];
+        $requestData_Room['room_id'] = $room->id;
 
         Member_of_room::create($requestData_Room);
 

@@ -246,8 +246,6 @@
                 
                 $('#edit_Appoint').modal();
             },
-           
-            eventColor: '#378006'
 
           
 

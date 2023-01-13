@@ -72,7 +72,7 @@
                                                 </ul>
                                                 @endif
 
-                                                <form method="POST" action="{{ url('/appoint/'. $room->id) }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                <form method="POST" action="{{ url('/appoint/'. $room->id . '/create') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
                                                     {{ csrf_field() }}
 
                                                     @include ('appoint.appoint_form_create')
@@ -113,7 +113,7 @@
                                                 </ul>
                                                 @endif
                                                 <!-- ?appoint_id=-->
-                                                <form method="POST" action="{{ url('/appoint/') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                <form method="POST" action="{{ url('/appoint/edit') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
                                                     {{ csrf_field() }}
 
                                                     <input  name="appoint_id" id="appoint_id" value="" />
@@ -203,30 +203,49 @@
                    
                 // },
             ], 
-            eventClick: function(info) {
-                console.log(info.event);
+            eventClick: function(calEvent, jsEvent, view) {
 
-                console.log('ID : ' + info.event.id);
-                console.log('title : ' + info.event.title);
-                console.log('start: ' + info.event.start);
+                let appoint_id = calEvent['event']['_def']['publicId'] ;
 
+                document.querySelector('#appoint_id').value = appoint_id;
 
-                // info.event.setProp('title', 'Test Title')
-                // info.event.setProp('id', 54321)
+                fetch("{{ url('/') }}/api/get_data_appoint/"+appoint_id )
+                    .then(response => response.json())
+                    .then(result => {
 
-                // console.log('Event ID changed to: ' + info.event.id);
+                        // console.log(result);
+                        // console.log(result.date_time);
+                        // console.log(result.title);
+                        // console.log(result.type);
+
+                        document.querySelector('.date_time_edit').value = result.date_time;
+                        document.querySelector('.title_edit').value = result.title;
+
+                        let type_edit = document.querySelector('.type_edit');
+                            type_edit.innerHTML = "";
+
+                        let option_select = document.createElement("option");
+                            option_select.text = result.type;
+                            option_select.value = result.type;
+                            option_select.selected = true ;
+                            option_select.disabled = true ;
+                            type_edit.add(option_select);
+
+                        let option_1 = document.createElement("option");
+                            option_1.text = "นัดหมอ";
+                            option_1.value = "นัดหมอ";
+                            type_edit.add(option_1);
+                        let option_2 = document.createElement("option");
+                            option_2.text = "ทานยา";
+                            option_2.value = "ทานยา";
+                            type_edit.add(option_2);
+                });
+
+                // console.log(calEvent);
+                // console.log(calEvent['event']['_def']['publicId']);
+                
+                $('#edit_Appoint').modal();
             },
-            // eventClick: function(calEvent, jsEvent, view) {
-            //     // $('#appoint_id').val(calEvent.id);
-            //     // $('#appoint_id').val(moment(calEvent.title));
-            //     // $('#finish_time').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
-            //     document.querySelector('#appoint_id').value = calEvent['event']['_def']['publicId'];
-            //     $('#edit_Appoint').modal();
-
-            //     console.log(calEvent);
-            //     console.log(calEvent['event']['_def']['publicId']);
-            
-            //     },
            
             eventColor: '#378006'
 
@@ -235,4 +254,5 @@
         });
         calendar.render();
     });
+
 </script>

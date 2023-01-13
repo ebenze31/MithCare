@@ -52,9 +52,8 @@ Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 // Route::resource('appoint', 'AppointController');
 
 Route::get('appoint', 'AppointController@index');
-Route::get('appoint/{id}/edit', 'AppointController@edit')->name('appoint_edit');
-Route::post('appoint/{id}', 'AppointController@store')->name('appoint_store');
-
+Route::post('appoint/edit', 'AppointController@update')->name('appoint_edit');
+Route::post('appoint/{id}/create', 'AppointController@store')->name('appoint_store');
 
 
 

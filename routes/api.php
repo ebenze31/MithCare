@@ -25,6 +25,8 @@ Route::get('/amphoes', 'API\TambonController@getAmphoes');
 Route::get('/tambons', 'API\TambonController@getTambons');
 Route::get('/zipcodes', 'API\TambonController@getZipcodes');
 
+Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint');
+
 
 
 // Route::get('/show_amphoes/{province}', 'API\TambonController@getAmphoes');

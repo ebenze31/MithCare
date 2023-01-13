@@ -47,7 +47,6 @@ class AppointController extends Controller
         return view('appoint.create');
     }
 
-  
     public function store(Request $request, $id)
     {
         $create_by_id = Auth::id();
@@ -92,15 +91,17 @@ class AppointController extends Controller
     }
 
   
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
        
         $requestData = $request->all();
-        
-        $appoint = Appoint::findOrFail($id);
+
+        $appoint = Appoint::findOrFail($requestData['appoint_id']);
         $appoint->update($requestData);
 
-        return redirect()->route('appoint', ['id' => $id],'edit');
+        return back();
+
+        // return redirect()->route('appoint', ['id' => $id],'edit');
     }
 
     public function destroy($id)
@@ -108,5 +109,12 @@ class AppointController extends Controller
         Appoint::destroy($id);
 
         return redirect('appoint')->with('flash_message', 'Appoint deleted!');
+    }
+
+    public function get_data_appoint($appoint_id)
+    {
+        $data = Appoint::where('id' , $appoint_id)->first();
+        return $data ;
+
     }
 }

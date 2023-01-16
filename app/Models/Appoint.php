@@ -13,7 +13,7 @@ class Appoint extends Model
     protected $primaryKey = 'id';
 
    
-    protected $fillable = ['title', 'type', 'date_time', 'status', 'sent_round', 'patient_id','room_id','create_by_id'];
+    protected $fillable = ['title', 'type', 'date_time','date', 'status', 'sent_round', 'patient_id','room_id','create_by_id'];
 
     public function appoint(){
         return $this->belongsTo('App\Appoint','user_id','id');

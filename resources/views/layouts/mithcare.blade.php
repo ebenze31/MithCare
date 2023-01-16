@@ -61,6 +61,18 @@
             top: 0;
             width: auto;
         }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
 
     </style>
 
@@ -112,11 +124,11 @@
 
                                 </ul><!-- /.contact__list -->
                                 <div class="d-flex">
-                                    <ul class="social-icons list-unstyled mb-0 mr-30">
+                                    <!--<ul class="social-icons list-unstyled mb-0 mr-30">
                                         <li><a href="#"><i class="fab fa-facebook-f" title="facebook"></i></a></li>
                                         <li><a href="#"><i class="fab fa-line" title="line"></i></a></li>
 
-                                    </ul><!-- /.social-icons -->
+                                    </ul> /.social-icons -->
                                     <!-- <form class="header-topbar__search">
                                         <input type="text" class="form-control" placeholder="Search...">
                                         <button class="header-topbar__search-btn"><i class="fa fa-search"></i></button>

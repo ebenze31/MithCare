@@ -2,7 +2,7 @@
 
     <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
         <label for="type" class="control-label" style="font-size: 25px;">{{ 'ประเภท' }}</label>
-        <select name="type" class="form-control type_edit" id="type" >
+        <select name="type" class="form-control type_edit" id="type" onchange="myFunction()">
         <option selected disabled>กรุณาเลือกประเภท</option>
             @foreach (json_decode('{"นัดหมอ":"นัดหมอ","ทานยา":"ทานยา"}', true) as $optionKey => $optionvalue)
                 <option value="{{ $optionKey }}" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
@@ -15,35 +15,36 @@
         <input class="form-control title_edit" name="title" type="text" id="title" value="{{ isset($appoint->title) ? $appoint->title : ''}}" >
         {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
     </div>
-    <!-- <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="type" class="control-label">{{ 'ประเภท' }}</label>
-        <input class="form-control" name="type" type="text" id="type" value="{{ isset($appoint->type) ? $appoint->type : ''}}" >
-        {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
-    </div> -->
-    <div class="form-group {{ $errors->has('date_time') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="date_time" class="control-label">{{ 'วันที่/เวลา' }}</label>
+ 
+    <div id="div_datetime_edit" class="form-group {{ $errors->has('date_time') ? 'has-error' : ''}} col-md-12 col-12">
+        <label id="label_date" for="date_time" class="control-label">{{ 'วันที่/เวลา' }}</label>
         <input class="form-control date_time_edit" name="date_time" type="datetime-local" id="date_time" value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" >
         {!! $errors->first('date_time', '<p class="help-block">:message</p>') !!}
     </div>
-    <!-- <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="status" class="control-label">{{ 'สถานะ' }}</label>
-        <input class="form-control" name="status" type="text" id="status" value="{{ isset($appoint->status) ? $appoint->status : ''}}" >
-        {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-    </div> -->
-    <!-- <div class="form-group {{ $errors->has('sent_round') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="sent_round" class="control-label">{{ 'ส่งรอบที่' }}</label>
-        <input class="form-control" name="sent_round" type="text" id="sent_round" value="{{ isset($appoint->sent_round) ? $appoint->sent_round : ''}}" >
-        {!! $errors->first('sent_round', '<p class="help-block">:message</p>') !!}
-    </div> -->
-    <!-- <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="user_id" class="control-label">{{ 'รหัสผู้ใช้' }}</label>
-        <input disabled class="form-control" name="user_id" type="text" id="user_id" value="{{ isset($appoint->user_id) ? $appoint->user_id : ''}}" >
-        {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
-    </div> -->
+
+    <div  id="div_date_edit" class="form-group {{ $errors->has('date') ? 'has-error' : ''}} col-md-12 col-12 ">
+        <label id="label_date" for="date" class="control-label">{{ 'วันที่' }}</label>
+        <input class="form-control date_edit" name="date" type="date" id="date"  value="{{ isset($appoint->date) ? $appoint->date : ''}}" >
+        {!! $errors->first('date', '<p class="help-block">:message</p>') !!}
+    </div>
+
+
 </div>
 
 <center>
-    <div class="form-group col-12 col-md-6 ">
-        <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</button>
+    <div class="row">
+        <div class="form-group col-12 col-md-6 ">
+            <form method="POST" action="{{ url('/appoint/delete' ) }}" accept-charset="UTF-8">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                    <span type="submit" class="btn-old btn-primary form-control" style="background-color: #e3342f; font-size: 25px; color: white;" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
+                        <i class="fa-solid fa-trash"></i> ลบ
+                    </span>
+            </form>
+        </div>
+        <div class="form-group col-12 col-md-6 ">
+            <span class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</span>
+        </div>
     </div>
 </center>
+

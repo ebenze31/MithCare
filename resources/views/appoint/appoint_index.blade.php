@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         businessHours: true,
         dayMaxEvents: true, // allow "more" link when too many events
         timeZone: 'Asia/Bangkok',
+        locale: 'th',
         eventTimeFormat: { // like '14:30:00'
             hour: '2-digit',
             minute: '2-digit',
@@ -228,9 +229,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: '{{ $ap->title }}',
 
                 @if(!empty($ap-> date_time))
-                    start: '{{ $ap->date_time }}',
+                    // กินยา
+                    start: '{{ $ap->date }} {{ $ap->date_time }}',
                     color: '#21cdc0'
                 @else
+                    // นัดหมอ
                     start: '{{ $ap->date }}',
                     color: '#38c172'
                 @endif
@@ -257,12 +260,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (result.type === 'นัดหมอ') {
                         document.querySelector('.date_edit').value = result.date;
-                        document.getElementById('div_datetime_edit').style.display = 'none';
-                        document.getElementById('div_date_edit').style.display = 'block';
+                        
+                        let div_date = document.querySelector('#div_date_edit').classList ;
+                            // console.log(div_date);
+                            div_date.remove("col-md-6");
+                            div_date.remove('d-none');
+                            div_date.add('col-md-12');
+                        document.querySelector('#div_datetime_edit').classList.add('d-none');
+                        document.querySelector('#date_time_edit').required = false ;
                     } else {
+                        document.querySelector('.date_edit').value = result.date;
                         document.querySelector('.date_time_edit').value = result.date_time;
-                        document.getElementById('div_datetime_edit').style.display = 'block';
-                        document.getElementById('div_date_edit').style.display = 'none';
+                        
+                        let div_date = document.querySelector('#div_date_edit').classList;
+                            // console.log(div_date);
+                            div_date.remove("col-md-12");
+                            div_date.remove('d-none');
+                            div_date.add('col-md-6');
+                        document.querySelector('#div_datetime_edit').classList.remove('d-none');
+                        document.querySelector('#date_time_edit').required = true ;
 
                     }
 
@@ -307,18 +323,21 @@ document.addEventListener('DOMContentLoaded', function() {
       let type = document.querySelector('#type_edit').value;
       
       if (type === 'นัดหมอ') {
-
-            let data_date = document.querySelector('.date_time_edit').value;
-            let x = data_date.getDate();
-            // document.querySelector('.date_edit').value = Date.now('Y-m-d');
-            document.getElementById('div_datetime_edit').style.display = 'none';
-            document.getElementById('div_date_edit').style.display = 'block';
-            console.log(x);
-        } else {
-            let date = document.querySelector('.date_edit').value;
-            document.getElementById('div_datetime_edit').style.display = 'block';
-            document.getElementById('div_date_edit').style.display = 'none';
-            console.log(data_date);
+            let div_date = document.querySelector('#div_date_edit').classList ;
+                // console.log(div_date);
+                div_date.remove("col-md-6");
+                div_date.remove('d-none');
+                div_date.add('col-md-12');
+            document.querySelector('#div_datetime_edit').classList.add('d-none');
+            document.querySelector('#date_time_edit').required = false ;
+        }else {        
+            let div_date = document.querySelector('#div_date_edit').classList;
+                // console.log(div_date);
+                div_date.remove("col-md-12");
+                div_date.remove('d-none');
+                div_date.add('col-md-6');
+            document.querySelector('#div_datetime_edit').classList.remove('d-none');
+            document.querySelector('#date_time_edit').required = true ;
         }
     }
 </script>

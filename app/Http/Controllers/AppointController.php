@@ -106,15 +106,13 @@ class AppointController extends Controller
        
         $requestData = $request->all();
 
-        //    echo"<pre>";
-        //     print_r($requestData);
-        //     echo"</pre>";
-        //     exit();
+        // echo"<pre>";
+        // print_r($requestData);
+        // echo"</pre>";
+        // exit();
 
         if($requestData['type'] == 'นัดหมอ'){
-            $requestData['datetime'] = NULL;
-        }else{
-            $requestData['date'] = NULL;
+            $requestData['date_time'] = null;
         }
 
         $appoint = Appoint::findOrFail($requestData['appoint_id']);

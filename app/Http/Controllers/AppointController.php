@@ -17,6 +17,7 @@ class AppointController extends Controller
     public function index(Request $request)
     {
         $room_id = $request->get('room_id');
+        $type = $request->get('type');
         $user_id = Auth::id();
         $check = "" ;
 
@@ -28,12 +29,20 @@ class AppointController extends Controller
                 $check = "Yes" ;
             }
         }
+
+       
         
-        if ($check == "Yes"){
+        if ($check == "Yes"){ 
             $room = Room::where('id',$room_id)->first();
-            $appoint = Appoint::where('room_id', $room_id)->get();
-     
-            return view('appoint.appoint_index', compact('room','appoint'));
+
+            if(!empty($type)){
+                $appoint = Appoint::where('room_id', $room_id)->where('type' , $type)->get();
+            }else{
+                $appoint = Appoint::where('room_id', $room_id)->get();
+                
+            }    
+            
+            return view('appoint.appoint_index', compact('room','room_id','appoint'));
 
         }else{
             return view('404');
@@ -93,8 +102,20 @@ class AppointController extends Controller
   
     public function update(Request $request)
     {
+
        
         $requestData = $request->all();
+
+        //    echo"<pre>";
+        //     print_r($requestData);
+        //     echo"</pre>";
+        //     exit();
+
+        if($requestData['type'] == 'นัดหมอ'){
+            $requestData['datetime'] = NULL;
+        }else{
+            $requestData['date'] = NULL;
+        }
 
         $appoint = Appoint::findOrFail($requestData['appoint_id']);
         $appoint->update($requestData);
@@ -106,9 +127,10 @@ class AppointController extends Controller
 
     public function destroy($id)
     {
+        
         Appoint::destroy($id);
 
-        return redirect('appoint')->with('flash_message', 'Appoint deleted!');
+        return back();
     }
 
     public function get_data_appoint($appoint_id)

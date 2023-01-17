@@ -2,7 +2,7 @@
 
     <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
         <label for="type" class="control-label" style="font-size: 25px;">{{ 'ประเภท' }}</label>
-        <select name="type" class="form-control type_edit" id="type" onchange="myFunction()">
+        <select name="type_edit" class="form-control type_edit" id="type_edit" onChange="edit_type();">
         <option selected disabled>กรุณาเลือกประเภท</option>
             @foreach (json_decode('{"นัดหมอ":"นัดหมอ","ทานยา":"ทานยา"}', true) as $optionKey => $optionvalue)
                 <option value="{{ $optionKey }}" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
@@ -31,20 +31,5 @@
 
 </div>
 
-<center>
-    <div class="row">
-        <div class="form-group col-12 col-md-6 ">
-            <form method="POST" action="{{ url('/appoint/delete' ) }}" accept-charset="UTF-8">
-                {{ method_field('DELETE') }}
-                {{ csrf_field() }}
-                    <span type="submit" class="btn-old btn-primary form-control" style="background-color: #e3342f; font-size: 25px; color: white;" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
-                        <i class="fa-solid fa-trash"></i> ลบ
-                    </span>
-            </form>
-        </div>
-        <div class="form-group col-12 col-md-6 ">
-            <span class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</span>
-        </div>
-    </div>
-</center>
+
 

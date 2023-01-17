@@ -134,8 +134,24 @@
 
                                                         <input type="hidden" name="appoint_id" id="appoint_id" value="" />
                                                         @include ('appoint.appoint_form_edit')
-                                                    </form>
-                                            </div>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <button class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</button>
+                                                        </div>
+                                                    </form> 
+                                                        <div class="col-6">
+                                                            <form id="appoint_delete" method="POST" action="" accept-charset="UTF-8">
+                                                                {{ method_field('DELETE') }}
+                                                                {{ csrf_field() }}
+                                                                    <button type="submit" class="btn-old btn-primary form-control" style="background-color: #e3342f; font-size: 25px; color: white;" title="Delete Appoint" onclick="return confirm('ต้องการลบใช่หรือไม่')">
+                                                                        <i class="fa-solid fa-trash"></i> ลบ
+                                                                    </button>
+                                                            </form>
+                                                        </div> 
+                                                    </div>
+                                                   
+                                                </div>
                                             <!--container -->
 
 
@@ -153,16 +169,22 @@
                 <h3>ตารางนัด</h3>          
 
                 <div class="row" id="appoint_selector">
-                    <button style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1"
-                        value="ทั้งหมด">ทั้งหมด</button>
-                    <button style="background-color: #21cdc0;" class="btn-old btn-outline-dark mr-1"
-                        value="นัดหมอ">นัดหมอ</button>
-                    <button style="background-color: #38c172;" class="btn-old btn-outline-dark mr-1"
-                        value="ทานยา">ทานยา</button>
+                    <div class="col-12 col-md-10 mt-2"> 
+                        <a  style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}">ทั้งหมด</a>
+                        <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=นัดหมอ">นัดหมอ</a>
+                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=ทานยา">ทานยา</a>
+                    </div>
+                    <div class="col-6 col-md-2 column mt-2"> 
+                      <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>
+                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ทานยา</a>
+                    </div>
                 </div>
               
+                <!-- ///////////////////////////////////////////
+                //////////////// Calendar //////////////////////
+                //////////////////////////////////////////////// -->
 
-                <div class="mt-3" id='calendar'></div>
+                <div class="mt-3" id='calendar'></div> 
 
             </div>
         </div>
@@ -225,6 +247,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             document.querySelector('#appoint_id').value = appoint_id;
 
+            document.querySelector('#appoint_delete').action = '{{ url("/appoint" ) }}' + '/' + appoint_id;
+
             fetch("{{ url('/') }}/api/get_data_appoint/" + appoint_id)
                 .then(response => response.json())
                 .then(result => {
@@ -243,9 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     document.querySelector('.title_edit').value = result.title;
-
                     let type_edit = document.querySelector('.type_edit');
                     type_edit.innerHTML = "";
+                    
 
                     let option_select = document.createElement("option");
                     option_select.text = result.type;
@@ -257,30 +281,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     let option_1 = document.createElement("option");
                     option_1.text = "นัดหมอ";
                     option_1.value = "นัดหมอ";
-
                     type_edit.add(option_1);
+
                     let option_2 = document.createElement("option");
                     option_2.text = "ทานยา";
                     option_2.value = "ทานยา";
-
                     type_edit.add(option_2);
+
                 });
 
             $('#edit_Appoint').modal();
-
-                            /* When a checkbox changes, re-render events */
-                            $('input:checkbox.calFilter:checked').on('change', function() {
-                                $('#calendar').fullCalendar('rerenderEvents');
-
-                            function filter(calEvent) {
-                                var vals = [];
-                                $('input:checkbox.calFilter:checked').each(function() {
-                                    vals.push($(this).val());
-                                    });
-                                return vals.indexOf(calEvent.risk) !== -1;
-                            };
-
-            });
+                                
 
         },
 
@@ -290,3 +301,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+
+<script>
+    function edit_type() {
+      let type = document.querySelector('#type_edit').value;
+      
+      if (type === 'นัดหมอ') {
+
+            let data_date = document.querySelector('.date_time_edit').value;
+            let x = data_date.getDate();
+            // document.querySelector('.date_edit').value = Date.now('Y-m-d');
+            document.getElementById('div_datetime_edit').style.display = 'none';
+            document.getElementById('div_date_edit').style.display = 'block';
+            console.log(x);
+        } else {
+            let date = document.querySelector('.date_edit').value;
+            document.getElementById('div_datetime_edit').style.display = 'block';
+            document.getElementById('div_date_edit').style.display = 'none';
+            console.log(data_date);
+        }
+    }
+</script>
+

@@ -125,11 +125,14 @@
                 <i class="icon-health-report"></i>
               </div><!-- /.contact__icon -->
               <div class="contact__content">
-                <h2 class="contact__title">Doctors Timetable</h2>
-                <p class="contact__desc">Qualified doctors available six days a week, view our timetable to make an
-                  appointment.</p>
-                <a href="doctors-timetable.html" class="btn btn__white btn__outlined btn__rounded">
-                  <span>View Timetable</span><i class="icon-arrow-right"></i>
+                <h2 class="contact__title">บ้านของฉัน</h2>
+                <p class="contact__desc">
+                  1.สร้างบ้านและเพิ่มสมาชิกภายในบ้าน<br>
+                  2.นัดหมายนัดพบแพทย์<br>
+                  3.แจ้งเตือนการรับประทานยานัดพบแพทย์<br>
+                </p>
+                <a href="{{url('/room')}}" class="btn btn__white btn__outlined btn__rounded">
+                  <span>ไปยังหน้าบ้านของฉัน</span><i class="icon-arrow-right"></i>
                 </a>
               </div><!-- /.contact__content -->
             </div><!-- /.contact-box -->

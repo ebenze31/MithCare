@@ -44,11 +44,12 @@ Route::get('room_find/{id}/edti', 'RoomController@room_edit')->name('room_find_e
 
 
  // ADMIN MithCare //////
-Route::middleware(['auth', 'role:isAdmin'])->group(function () {
+// Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
     Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 
-}); // END ADMIN MithCare
+// });
+// END ADMIN MithCare
 
 
 
@@ -63,6 +64,10 @@ Route::post('appoint/{id}/create', 'AppointController@store')->name('appoint_sto
 Route::delete('appoint/{id}', 'AppointController@destroy')->name('appoint_destroy');
 
 
-
+// Member_of_Room /////////
 
 Route::resource('member_of_room', 'Member_of_roomController');
+
+// Ask_for_Help /////////
+
+Route::resource('ask_for_help', 'Ask_for_helpController');

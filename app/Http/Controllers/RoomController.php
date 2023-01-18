@@ -11,31 +11,40 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
- 
+
     public function index(Request $request)
     {
         $id = Auth::id();
 
         $keyword = $request->get('search');
-        $perPage = 5;
+        $perPage = 6;
 
-        $user = User::findOrFail($id);     
+        $user = User::findOrFail($id);
+
+        $my_room = Member_of_room::where('user_id',$id)->latest()->paginate($perPage);
+
+        // echo"<pre>";
+        // print_r($my_room);
+        // echo"</pre>";
+        // exit();
 
         if (!empty($keyword)) {
-            $room = Room::where('name', 'LIKE', "%$keyword%")
+            $my_room = Member_of_room::where('user_id',$id)
+                ->where('name', 'LIKE', "%$keyword%")
                 ->orWhere('pass', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $room = Room::latest()->paginate($perPage);
-          
+            $my_room = Member_of_room::where('user_id',$id)->latest()->paginate($perPage);
+
+
             // $room = Room::where('user_id','=', $id)
             // ->latest()->paginate($perPage);
         }
 
-        return view('room.index', compact('room','user'));
+        return view('room.index', compact('user','my_room'));
     }
 
-   
+
     public function create()
     {
         return view('room.create');
@@ -46,7 +55,7 @@ class RoomController extends Controller
         return view('room.join');
     }
 
-   
+
     public function store(Request $request)
     {
         $data_user = Auth::user();
@@ -58,10 +67,10 @@ class RoomController extends Controller
         // exit();
 
         $requestData['owner_id'] = $data_user->id;
-       
+
 
         $room = Room::create($requestData);
-        
+
         $requestData_Room['status'] = "owner";
         $requestData_Room['user_id'] = $requestData['owner_id'];
         $requestData_Room['room_id'] = $room->id;
@@ -79,7 +88,7 @@ class RoomController extends Controller
         return view('room.show', compact('room'));
     }
 
- 
+
     public function edit($id)
     {
         $room = Room::findOrFail($id);
@@ -87,23 +96,23 @@ class RoomController extends Controller
         return view('room.edit', compact('room'));
     }
 
-   
+
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
 
         if ($request->hasFile('home_pic')) {
-            $requestData['home_pic'] = $request->file('home_pic')->store('uploads', 'public');     
+            $requestData['home_pic'] = $request->file('home_pic')->store('uploads', 'public');
         }
-        
+
         $room = Room::findOrFail($id);
         $room->update($requestData);
 
         return redirect('room')->with('flash_message', 'Room updated!');
     }
 
-  
+
     public function destroy($id)
     {
         Room::destroy($id);
@@ -140,11 +149,11 @@ class RoomController extends Controller
     public function room_admin_index(Request $request)
     {
         $id = Auth::id();
-        
+
         $keyword = $request->get('search');
         $perPage = 5;
 
-        $user = User::findOrFail($id);   
+        $user = User::findOrFail($id);
 
         if (!empty($keyword)) {
             $room = Room::where('name', 'LIKE', "%$keyword%")

@@ -50,11 +50,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="contact-panel col-md-12 mb-2">
-                           
+
                                 <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                
+
                                 <div class="container">
                                 <h3 ><i class="fa-solid fa-home"></i> สร้างบ้านใหม่</h3>
                                     <br />
@@ -110,34 +110,39 @@
                 <div class="row">
 
 
-                    @foreach($room as $item)
+                    @foreach($my_room as $item)
                     <div class="col-md-4 col-sm-12">
                         <div class="card product-item ">
-                        @if(!empty($item->home_pic))
-                            <img class="card-img-top p-3 " src="{{ url('storage/'.$item->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                        @if(!empty($item->room->home_pic))
+                            <img class="card-img-top p-3 " src="{{ url('storage/'.$item->room->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
                         @else
                             <img class="card-img-top p-3 " src="{{asset('/img/logo_mithcare/home-background.png')}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
                         @endif
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
-                                        <a href="{{ url('/room/' . $item->id) }}" class="btn-old btn-info btn-sm btn-block main-shadow main-radius">
+                                        <a href="{{ url('/room/' . $item->room->id) }}" class="btn-old btn-info btn-sm btn-block main-shadow main-radius">
                                             <!-- <i class="fa-solid fa-magnifying-glass"></i>  -->
                                             รายละเอียด
                                         </a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
+                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
                                            ตารางนัด
                                         </a>
                                     </div>
                                     <div class="col-12">
                                         <hr>
-                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->name}}</ย>
-                                        <p style="font-size: 20px;">เจ้าของบ้าน : {{ $item->user->name }}</p>
+                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->room->name}}</p>
+                                        @php
+                                            $data_room = \App\Models\Room::where('id',$item->room_id)->first();
+                                        @endphp
+                                        <p style="font-size: 20px;">เจ้าของบ้าน : {{ $data_room->user->name }}</p>
                                         <hr>
                                     </div>
                                 </div>
+
+
 
                                 @if(Auth::user()->id == $item->owner_id)
 
@@ -156,12 +161,12 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-6 p-0">
-                                                    <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
+                                                    <a href="{{ url('/room/' . $item->room->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
                                                         <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
                                                     </a>
                                                 </div>
                                                 <div class="col-6 p-0">
-                                                    <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8">
+                                                    <form method="POST" action="{{ url('/room' . '/' . $item->room->id) }}" accept-charset="UTF-8">
                                                         {{ method_field('DELETE') }}
                                                         {{ csrf_field() }}
                                                         <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
@@ -179,7 +184,7 @@
                     </div>
                     @endforeach
                 </div>
-                <div class="pagination-wrapper"> {!! $room->appends(['search' => Request::get('search')])->render() !!} </div>
+                <div class="pagination-wrapper"> {!! $my_room->appends(['search' => Request::get('search')])->render() !!} </div>
 
             </div> <!-- contact-panel -->
 

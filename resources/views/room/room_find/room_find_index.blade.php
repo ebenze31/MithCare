@@ -70,7 +70,7 @@
                             <!-- Button trigger modal -->
                             <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
-                            </ฟ>
+                            </a>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 
-                         
+
                         </div>
 
                         @endforeach
@@ -147,7 +147,7 @@
                     <br />
                     <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="row">
-                        <ul > 
+                        <ul >
                             <li>
 
                                 <a>#</a><a>Name</a><a>Pass</a><a>Actions</a>

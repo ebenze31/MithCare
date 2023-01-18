@@ -37,10 +37,10 @@
         .modal-backdrop {
             display: none;
         }
-     
-        p,button,body,h1,h2,h3,h4,h5,h6{     
+
+        p,button,body,h1,h2,h3,h4,h5,h6{
             font-family: 'IBM Plex Sans Thai Looped', sans-serif !important;
-        }  
+        }
         .form-control input {
             border: none;
             box-sizing: border-box;
@@ -49,7 +49,7 @@
             position: relative;
             width: 100%;
         }
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        input[type="time"]::-webkit-calendar-picker-indicator {
             background: transparent;
             bottom: 0;
             color: transparent;
@@ -90,7 +90,7 @@
     =========================== -->
         <header class="header header-layout1">
             <!-- ///////////////
-                   คอม 
+                   คอม
             ///////////////////-->
             <div class="header-topbar">
                 <div class="container-fluid">
@@ -266,6 +266,9 @@
                                         <a class="nav__item-link text-center" href="{{url('/room')}}">
                                             <i class="fa-solid fa-home"></i> ครอบครัวของฉัน
                                         </a>
+                                        <a class="nav__item-link text-center" href="{{url('/ask_for_help')}}">
+                                            <i class="fa-solid fa-home"></i> หน้าขอความช่วยเหลือ
+                                        </a>
                                     </li>
                                     <hr style="width: 75%;">
                                     <li class="nav__item">
@@ -280,7 +283,6 @@
                                     </li><!-- /.nav-item -->
 
 
-
                                 </ul><!-- /.dropdown-menu -->
                             </li><!-- /.nav-item -->
                             @endguest
@@ -291,12 +293,10 @@
                         <button class="close-mobile-menu d-block d-lg-none"><i class="fas fa-times"></i></button>
                     </div><!-- /.navbar-collapse -->
 
-
-
                 </div>
-    </div><!-- /.container -->
-    </nav><!-- /.navabr -->
-    </header><!-- /.Header -->
+                </div><!-- /.container -->
+            </nav><!-- /.navabr -->
+        </header><!-- /.Header -->
 
     <main class="py-4">
         @yield('content')
@@ -390,7 +390,7 @@
         $('#myModal').appendTo("body")
     </script>
 
-    
+
 
 </body>
 

@@ -38,7 +38,8 @@
             <div class="contact-panel col-md-12 mb-2">
                 <div class="row">
                     <h3>บ้าน {{ $room->name }} </h3>
-                    <div>
+                        {{-- เช็คว่าเป็น owner or admin -> มองเห็นปุ่มลบและแก้ไข  --}}
+                    @if($room->owner_id == Auth::user()->id || Auth::user()->role == 'isAdmin')
                         <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room">
                             <button class="btn-old btn-primary btn-sm main-shadow main-radius m-2">
                                 <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
@@ -51,7 +52,8 @@
                                 <i class="fa-solid fa-trash"></i> ลบบ้าน
                             </button>
                         </form>
-                    </div>
+                    @endif
+
                 </div>
                 <div class="h5">
                     <br />

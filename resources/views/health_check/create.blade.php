@@ -13,14 +13,16 @@
                         <div class="d-none d-lg-block">
                             <ol class=" breadcrumb mb-0 ">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/health_check') }}" style="font-size: 30px;">หน้าไฟล์ตรวจสุขภาพ</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">หน้าเพิ่มไฟล์</a></li>
                             </ol>
                         </div> <!--d-none d-lg-block -->
                         <!-- แสดงเฉพาะมือถือ -->
                         <div class="d-block d-md-none">
                             <ol class=" breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/health_check') }}" style="font-size: 20px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">หน้าเพิ่มไฟล์</a></li>
                             </ol>
                         </div> <!--d-block d-md-none -->
                     </nav>
@@ -29,36 +31,35 @@
         </div><!-- /.container -->
     </section><!-- /.page-title -->
 
-    <div class="container">
-        <div class="row">
+    <section class="page-title page-title-layout5">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header font-weight-bold h4">สร้างไฟล์ตรวจสุขภาพ</div>
+                        <div class="card-body h5">
+                            <br />
+                            <br />
 
+                            @if ($errors->any())
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">สร้างไฟล์ตรวจสุขภาพ</div>
-                    <div class="card-body">
-                        <a href="{{ url('/health_check') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
+                            <form method="POST" action="{{ url('/health_check') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                {{ csrf_field() }}
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                                @include ('health_check.form', ['formMode' => 'create'])
 
-                        <form method="POST" action="{{ url('/health_check') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                            </form>
 
-                            @include ('health_check.form', ['formMode' => 'create'])
-
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

@@ -3,11 +3,11 @@
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
+            <i class="fa-solid fa-bars"></i>
           </button>
 
           <!-- Topbar Search -->
-          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+           {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -16,7 +16,7 @@
                 </button>
               </div>
             </div>
-          </form> -->
+          </form> --}}
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -41,7 +41,7 @@
               </div>
             </li>
 
-            
+
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -57,17 +57,17 @@
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                     {{ __('Logout') }}</a>                                                                         
-                      
+                     {{ __('Logout') }}</a>
+
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                       @csrf
                     </form>
 
-                    
+
               </div>
 
 
-              
+
             </li>
 
           </ul>
@@ -75,8 +75,8 @@
         </nav>
         <!-- End of Topbar -->
 
-
-        <!-- <div class="modal-dialog" role="document">
+{{--
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
@@ -90,6 +90,6 @@
                     <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
-        </div> -->
+        </div> --}}
 
 

@@ -17,6 +17,11 @@
                         <i class="fas fa-circle"></i>
                         <span style="color:black ; font-weight:bold" >ห้องแอดมิน</span></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/health_check') }}">
+                        <i class="fas fa-circle"></i>
+                        <span style="color:black ; font-weight:bold" >ไฟล์การตรวจรักษา</span></a>
+                </li>
             </ul>
         </div>
     </div>

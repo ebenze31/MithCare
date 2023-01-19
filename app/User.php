@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-  
+
     protected $fillable = [
         'name', 'email', 'password','username','provider_id','nickname','full_name','avatar','photo','role','phone','birthday'
         ,'gender','province','district','sub_district','address','lat','lng','health_card_1','health_card_2','health_card_3','organization'
@@ -36,5 +36,6 @@ class User extends Authenticatable
     public function member_of_rooms(){
         return $this->hasMany('App\Models\Member_of_room','user_id','id');
     }
+
 }
 

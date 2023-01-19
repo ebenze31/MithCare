@@ -21,7 +21,7 @@ class RoomController extends Controller
 
         $user = User::findOrFail($id);
 
-        $my_room = Member_of_room::where('user_id',$id)->latest()->paginate($perPage);
+
 
         // echo"<pre>";
         // print_r($my_room);
@@ -157,8 +157,9 @@ class RoomController extends Controller
 
         if (!empty($keyword)) {
             $room = Room::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('pass', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+            ->orWhere('pass', 'LIKE', "%$keyword%")
+            ->latest()->paginate($perPage);
+
         } else {
             $room = Room::latest()->paginate($perPage);
         }

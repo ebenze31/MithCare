@@ -14,7 +14,6 @@
     <link href="{{ asset('mithcare/js/fullcalendar/css/main.min.css') }}" rel="stylesheet">
     <!-- icon -->
 
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     <link href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" rel="stylesheet">
 

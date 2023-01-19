@@ -267,7 +267,7 @@
                                             <i class="fa-solid fa-home"></i> ครอบครัวของฉัน
                                         </a>
                                         <a class="nav__item-link text-center" href="{{url('/ask_for_help')}}">
-                                            <i class="fa-solid fa-home"></i> หน้าขอความช่วยเหลือ
+                                            <i class="fa-solid fa-truck-medical"></i> หน้าขอความช่วยเหลือ
                                         </a>
                                     </li>
                                     <hr style="width: 75%;">

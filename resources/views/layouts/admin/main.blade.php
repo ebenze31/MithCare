@@ -10,36 +10,31 @@
 <body id="page-top">
 
   <!-- Page Wrapper -->
-  <div id="wrapper">
+    <div id="wrapper">
+        @include('layouts.admin.sidebar')
 
-    @include('layouts.admin.sidebar')
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                @include('layouts.admin.navbar')
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+                <!-- /.container-fluid -->
 
-      <!-- Main Content -->
-      <div id="content">
+            </div>
+            <!-- End of Main Content -->
 
-          @include('layouts.admin.navbar')
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-            @yield('content')
+            @include('layouts.admin.footer')
 
         </div>
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-
-      @include('layouts.admin.footer')
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- End of Page Wrapper -->
 
     @include('layouts.admin.js')
 

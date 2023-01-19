@@ -71,3 +71,5 @@ Route::resource('member_of_room', 'Member_of_roomController');
 // Ask_for_Help /////////
 
 Route::resource('ask_for_help', 'Ask_for_helpController');
+
+Route::resource('health_check', 'Health_checkController');

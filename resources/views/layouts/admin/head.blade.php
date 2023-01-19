@@ -3,8 +3,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+  <link href="{{asset('/img/logo_mithcare/x-icon.png')}}" rel="icon">
   <title>MithCare</title>
+
+    <!-- icon -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template-->
     <link rel="preconnect" href="https://fonts.googleapis.com">

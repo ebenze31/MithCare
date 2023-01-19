@@ -1,8 +1,8 @@
-@extends('layouts.mithcare_admin')
+@extends('layouts.admin.main')
 
 @section('content')
 <div class="row">
-    @include('admin.sidebar')
+    {{-- @include('admin.sidebar') --}}
     <div class="col-md-10">
 
         <div class="card mr-5">
@@ -72,9 +72,8 @@
 
 
                     </section>
-                 </div>
+                </div>
                  {{-- ^^cardbody end^^ --}}
-            </div>
         </div>
 
     </div>

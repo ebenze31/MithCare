@@ -1,21 +1,16 @@
-@extends('layouts.mithcare_admin')
+@extends('layouts.admin.main')
 
 @section('content')
 <div class="row">
-    @include('admin.sidebar')
-    <div class="col-md-10">
+    {{-- @include('admin.sidebar') --}}
+    <div class="col-md-12">
 
         <div class="card mr-2">
-                    <div class="card-header">หน้าขอความช่วยเหลือ</div>
-            <div class="card-body">
+
+
                 <section class="page-title page-title-layout5 p-3">
                     <div class="container">
                         <div class="row">
-
-                            <!--//////// Sidebar ////////-->
-
-                            <!--////// End Sidebar /////////-->
-
 
                             <div class="contact-panel col-md-12 mb-2">
                                 <div class="row">
@@ -32,7 +27,6 @@
                                 <hr width="97%">
                                 <div class="row">
 
-
                                     @foreach($room as $item)
                                     <div class="col-md-4 col-sm-12">
                                         <div class="card product-item ">
@@ -44,19 +38,19 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <a href="{{ url('/room/' . $item->id) }}" class="btn-old btn-info btn-sm btn-block main-shadow main-radius">
+                                                        <a href="{{ url('/room/' . $item->id) }}" class="btn btn-info btn-sm btn-block main-shadow main-radius">
                                                             <!-- <i class="fa-solid fa-magnifying-glass"></i>  -->
                                                             รายละเอียด
                                                         </a>
                                                     </div>
                                                     <div class="col-6">
-                                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
+                                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn btn-success btn-sm btn-block main-shadow main-radius">
                                                            ตารางนัด
                                                         </a>
                                                     </div>
                                                     <div class="col-12">
                                                         <hr>
-                                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->name}}</ย>
+                                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->name}}</p>
                                                         <p style="font-size: 20px;">เจ้าของบ้าน : {{ $item->user->name }}</p>
                                                         <hr>
                                                     </div>
@@ -68,26 +62,26 @@
 
 
                                                     <div class="col-12">
-                                                        <a data-toggle="collapse" href="#collapseExample{{$item->id}}" aria-expanded="false" aria-controls="collapseExample{{$item->id}}" class="btn-old btn-info text-white" style="float: right;">
+                                                        <a data-toggle="collapse" href="#collapseExample{{$item->id}}" aria-expanded="false" aria-controls="collapseExample{{$item->id}}" class="btn btn-info text-white p-1" style="float: right;">
                                                             เพิ่มเติม <i class="fa-solid fa-caret-down"></i>
                                                         </a>
 
                                                     </div>
 
-                                                    <div class="col-12 mt-5">
+                                                    <div class="col-12 mt-2">
                                                         <div class="collapse" id="collapseExample{{$item->id}}">
                                                             <br>
-                                                            <div class="row">
-                                                                <div class="col-6 p-0">
-                                                                    <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
+                                                            <div class="row ">
+                                                                <div class="col-6 p-0 text-center">
+                                                                    <a href="{{ url('/room/' . $item->id . '/edit') }}" class="btn btn-primary btn-sm main-radius main-shadow">
                                                                         <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
                                                                     </a>
                                                                 </div>
-                                                                <div class="col-6 p-0">
+                                                                <div class="col-6 p-0 text-center">
                                                                     <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8">
                                                                         {{ method_field('DELETE') }}
                                                                         {{ csrf_field() }}
-                                                                        <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
+                                                                        <button type="submit" class="btn btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
                                                                             <i class="fa-solid fa-trash"></i> ลบบ้าน
                                                                         </button>
                                                                     </form>
@@ -109,14 +103,9 @@
                         </div>
                     </div>
                 </section>
-
-            </div>
         </div>
     </div>
 </div>
-
-
-
 
 @endsection
 

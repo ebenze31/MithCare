@@ -7,12 +7,12 @@
 /*---------------------------
       Table of Contents
     -------------------------
-    
+
     01- Global Styles
     02- Helper Classes
     03- Background & Colors
     04- Typography
-    05- page title 
+    05- page title
     06- Buttons
     07- Forms
     08- Tabs
@@ -24,12 +24,12 @@
     14- Alerts
     16- Carousel
     17- Preloader
-    18- Header & Navbar 
+    18- Header & Navbar
     19- Accordions
     20- Banners
     21- Footer
     22- Call to Action
-    23- Carousel 
+    23- Carousel
     24- Slider
     26- Video
     27- Features
@@ -48,9 +48,9 @@
     39- Shop
     40- Work Process
     41- Progress Bars
-    
+
 ----------------------------*/
-/*-------------------------- 
+/*--------------------------
       Global Styles
 ---------------------------*/
 html {
@@ -273,7 +273,7 @@ textarea {
 }
 
 /*----------------------
-     Dividers 
+     Dividers
 ------------------------*/
 .divider {
   display: inline-block;
@@ -1241,7 +1241,7 @@ h6 {
 }
 
 /*-------------------------
-    page title 
+    page title
 -------------------------*/
 .header-transparent + .page-title {
   margin-top: -135px;
@@ -1419,6 +1419,7 @@ h6 {
 /*--------------------
    Buttons
 ---------------------*/
+
 .btn {
   text-transform: capitalize;
   position: relative;
@@ -2156,7 +2157,7 @@ input[type=radio] {
   }
 }
 
-/*------------------- 
+/*-------------------
     Icons
 ------------------*/
 .social-icons {
@@ -4485,7 +4486,7 @@ input[type=radio] {
 }
 
 /*------------------------
-    Slider 
+    Slider
 --------------------------*/
 .header-transparent + .slider {
   margin-top: -100px;
@@ -5220,7 +5221,7 @@ input[type=radio] {
 }
 
 /*-----------------------
-     fancybox 
+     fancybox
 ------------------------*/
 .fancybox-item {
   position: relative;
@@ -7732,7 +7733,7 @@ textarea.form-control {
 }
 
 /*-----------------------
-    Services 
+    Services
 --------------------------*/
 .service-item {
   position: relative;
@@ -8457,8 +8458,8 @@ textarea.form-control {
   line-height: 50px;
   border-radius: 50px;
   margin-bottom: 0;
-} 
-  
+}
+
 /* Shopping Cart */
 .cart-table {
   margin-bottom: 50px;

@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "link",
+            "type": "string"
+        },
+        {
+            "name": "img",
+            "type": "string"
+        },
+        {
+            "name": "amount_click",
+            "type": "string"
+        }
+    ]
+}

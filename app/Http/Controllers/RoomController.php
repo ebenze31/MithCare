@@ -117,7 +117,21 @@ class RoomController extends Controller
     {
         Room::destroy($id);
 
+        // หา id เพื่อลบ
+        $find_member_of_room = Member_of_room::where('room_id','=',$id)->get();
+        foreach($find_member_of_room as $items){
+           Member_of_room::where('id','=',$items->id)->delete();
+        }
+
+
+        // echo"<pre>";
+        // print_r( $find_member_of_room);
+        // echo"</pre>";
+        // exit();
+
+
         return redirect('room')->with('flash_message', 'Room deleted!');
+        // return back();
     }
 
             //////////////////////////

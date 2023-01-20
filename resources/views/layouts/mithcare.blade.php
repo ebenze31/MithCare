@@ -31,6 +31,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
     <style>
+        .ab{
+        display: flex;
+        align-items: center;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        right: 0;
+        padding-right: 1px;
+        }
+
+        input.pw {
+        -webkit-text-security: disc;
+        }
         .modal {
             background: rgba(0, 0, 0, 0.5);
         }
@@ -263,11 +276,24 @@
                                         <a class="nav__item-link text-center" href="{{url('/profile')}}">
                                             <i class="fa-solid fa-user"></i> โปรไฟล์
                                         </a>
+
                                         <a class="nav__item-link text-center" href="{{url('/room')}}">
                                             <i class="fa-solid fa-home"></i> ครอบครัวของฉัน
                                         </a>
-                                        <a class="nav__item-link text-center" href="{{url('/ask_for_help')}}">
+
+                                        <a class="nav__item-link text-center" href="{{url('/ask_for_help/create')}}">
                                             <i class="fa-solid fa-truck-medical"></i> หน้าขอความช่วยเหลือ
+                                        </a>
+
+                                        <a class="nav__item-link text-center" href="{{url('/health_check')}}">
+                                            <i class="fa-solid fa-file"></i> หน้าไฟล์ตรวจสุขภาพ
+                                        </a>
+                                        <a class="nav__item-link text-center" href="{{url('/game')}}">
+                                            <i class="fa-solid fa-gamepad"></i> GAME
+                                        </a>
+                                        <hr>
+                                        <a class="nav__item-link text-center" href="{{url('/room_admin')}}">
+                                            <i class="fa-solid fa-user-tie"></i> หน้า Admin
                                         </a>
                                     </li>
                                     <hr style="width: 75%;">
@@ -388,6 +414,43 @@
         }
 
         $('#myModal').appendTo("body")
+
+
+    </script>
+
+    {{-- /// show-hide ->password --}}
+    <script>
+        const toggle_eye = document.querySelector('#toggleEye');
+        const pw = document.querySelector('#password');
+
+        toggleEye.addEventListener('click', function (e) {
+            if(pw.classList.contains("pw")){
+                pw.classList.remove("pw");
+                // toggle_eye.classList.add('fa-solid fa-eye');
+                document.getElementById('#toggleEye').className = "fa-solid fa-eye";
+                // toggle_eye.classList.remove('fa-sharp fa-solid fa-eye-slash');
+            }else{
+                pw.classList.add("pw");
+                document.getElementById('#toggleEye').className = "fa-sharp fa-solid fa-eye-slash";
+                // toggle_eye.classList.add('fa-sharp fa-solid fa-eye-slash');
+                // toggle_eye.classList.remove('fa-solid fa-eye');
+            }
+
+        });
+
+        // toggleEye.addEventListener('click', function (e) {
+        //     if(this.classList.contains("fa-sharp fa-solid fa-eye-slash")){
+
+        //         this.classList.add('fa-solid fa-eye');
+        //         this.classList.remove('fa-sharp fa-solid fa-eye-slash');
+        //     }else{
+
+        //         this.classList.add('fa-sharp fa-solid fa-eye-slash');
+        //         this.classList.remove('fa-solid fa-eye');
+        //     }
+
+        // });
+
     </script>
 
 

@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- ========================
-       page title 
+       page title
     =========================== -->
 <section class="page-title page-title-layout5">
   <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
@@ -40,7 +40,7 @@
           <div class="widget widget-member">
             <div class="member mb-0">
               <div class="member__img">
-                <img src="{{asset('/img/logo_mithcare/portrait-volunteer-who-organized-donations-charity.jpg')}}" alt="member img">
+                <img src="{{asset('/img/logo_mithcare/portrait-volunteer-who-organized-donations-charity.jpg')}}" alt="member img" height="300px" width="100%">
               </div><!-- /.member-img -->
               <div class="member__info">
                 <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
@@ -53,40 +53,40 @@
           </div><!-- /.widget-member -->
           <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
             <!-- /.zoom_picture-only-pc -->
-              <div class="product__img d-none d-lg-block">         
-                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">     
+              <div class="product__img d-none d-lg-block">
+                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
               </div><!-- /.product__img -->
             <!-- /.-only-mobile -->
-              <div class="d-block d-md-none">         
-                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+              <div class="d-block d-md-none">
+                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
               </div><!-- /.product__img -->
 
           </div><!-- /.widget-member -->
 
           <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
               <!-- /.zoom_picture-only-pc -->
-            <div class="product__img d-none d-lg-block"> 
+            <div class="product__img d-none d-lg-block">
               <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
             </div><!-- /.product__img -->
 
              <!-- /.-only-mobile -->
-             <div class="d-block d-md-none">         
-                <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+             <div class="d-block d-md-none">
+                <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
               </div><!-- /.product__img -->
 
           </div><!-- /.widget-help -->
 
           <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
               <!-- /.zoom_picture-only-pc -->
-            <div class="product__img d-none d-lg-block"> 
+            <div class="product__img d-none d-lg-block">
               <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
             </div><!-- /.product__img -->
 
              <!-- /.-only-mobile -->
-             <div class="d-block d-md-none">         
-                <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">     
+             <div class="d-block d-md-none">
+                <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
               </div><!-- /.product__img -->
-            
+
           </div><!-- /.widget-help -->
 
 
@@ -146,20 +146,20 @@
               <div class="row">
                 <h2 style="color: #ffffff;" class="col-10 ">ครอบครัวของฉัน</h2>
                  <a href="#" data-toggle="dropdown" class=" nav__item-link active fa-solid fa-bars"></a>
-              
+
                     <li class="nav__item has-dropdown col-6" >
                         <ul class="dropdown-menu">
-                     
+
                                 <a href="{{ url('/room') }}" class="nav__item-link">บ้านของฉัน</a>
-                    
+
                         </ul><!-- /.dropdown-menu -->
                     </li><!-- /.nav-item -->
               </div><!-- row -->
-              
-              <ul class="widget-content">         
+
+              <ul class="widget-content">
                 <li class="widget__title">ลูกบ้าน1</li>
                 <li class="widget__title">ลูกบ้าน1</li>
-                <li class="widget__title">ลูกบ้าน1</li>  
+                <li class="widget__title">ลูกบ้าน1</li>
               </ul><!-- /.widget-content -->
           </div><!-- /.widget-help -->
 

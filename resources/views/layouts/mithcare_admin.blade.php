@@ -30,6 +30,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
     <style>
+        input.pw {
+        -webkit-text-security: disc;
+        }
+
         .modal {
             background: rgba(0, 0, 0, 0.5);
         }
@@ -358,6 +362,41 @@
         }
 
         $('#myModal').appendTo("body")
+    </script>
+
+    {{-- /// show-hide ->password --}}
+    <script>
+        const toggle_eye = document.querySelector('#toggleEye');
+        const pw = document.querySelector('#password');
+
+        toggleEye.addEventListener('click', function (e) {
+            if(pw.classList.contains("pw")){
+                pw.classList.remove("pw");
+                // toggle_eye.classList.add('fa-solid fa-eye');
+                document.getElementById('#toggleEye').className = "fa-solid fa-eye";
+                // toggle_eye.classList.remove('fa-sharp fa-solid fa-eye-slash');
+            }else{
+                pw.classList.add("pw");
+                document.getElementById('#toggleEye').className = "fa-sharp fa-solid fa-eye-slash";
+                // toggle_eye.classList.add('fa-sharp fa-solid fa-eye-slash');
+                // toggle_eye.classList.remove('fa-solid fa-eye');
+            }
+
+        });
+
+        // toggleEye.addEventListener('click', function (e) {
+        //     if(this.classList.contains("fa-sharp fa-solid fa-eye-slash")){
+
+        //         this.classList.add('fa-solid fa-eye');
+        //         this.classList.remove('fa-sharp fa-solid fa-eye-slash');
+        //     }else{
+
+        //         this.classList.add('fa-sharp fa-solid fa-eye-slash');
+        //         this.classList.remove('fa-solid fa-eye');
+        //     }
+
+        // });
+
     </script>
 
 

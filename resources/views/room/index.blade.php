@@ -32,18 +32,18 @@
 <div class="container mt-3">
     <div class="row d-flex justify-content-end ">
         <!-- Button trigger modal -->
-        <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#exampleModalCenter">
+        <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#create_room">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่
         </a>
         <!-- <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่</a> -->
-        <a href="{{ url('/room_join') }}" class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
+        <a href="{{ url('/room_join') }}" class="btn btn-primary btn-sm main-shadow main-radius mr-2" style="font-size: 20px;" data-toggle="modal" data-target="#join_room">
             <i class="fa-solid fa-right-to-bracket"></i>ขอเข้าร่วม</a>
 
 
+        <!--/////// Modal หน้าสร้างบ้าน ///////////-->
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="create_room" tabindex="-1" role="dialog" aria-labelledby="create_roomTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <!-- หน้าสร้างบ้าน -->
@@ -81,7 +81,56 @@
                 </div>
             </div>
         </div>
+        <!--///////End Modal หน้าสร้างบ้าน ///////////-->
 
+        <!--/////// Modal เข้าร่วมบ้าน ///////////-->
+
+          <div class="modal fade" id="join_room" tabindex="-1" role="dialog" aria-labelledby="join_roomTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- หน้าสร้างบ้าน -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="contact-panel col-md-12 mb-2">
+                                <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+
+                                <div class="container">
+                                    <h3><i class="fa-solid fa-right-to-bracket"></i> เข้าร่วมบ้าน</h3>
+                                    {{-- <a href="#" onclick="goBack()">
+                                        <button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
+                                            <i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ
+                                        </button>
+                                    </a> --}}
+                                    <br />
+                                    <br />
+
+                                    @if ($errors->any())
+                                    <ul class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+
+                                    <form method="POST" action="{{ url('/room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+
+                                        @include ('room.form_join')
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--///////End Modal เข้าร่วมบ้าน ///////////-->
     </div>
 </div>
 
@@ -127,7 +176,7 @@
                                         </a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}" class="btn-old btn-success btn-sm btn-block main-shadow main-radius">
+                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}" class="btn-old btn-primary btn-sm btn-block main-shadow main-radius">
                                            ตารางนัด
                                         </a>
                                     </div>
@@ -144,7 +193,7 @@
 
 
 
-                                @if(Auth::user()->id == $item->owner_id)
+                                @if(Auth::user()->id == $item->room->owner_id)
 
                                 <div class="row">
 
@@ -166,13 +215,58 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-6 p-0">
-                                                    <form method="POST" action="{{ url('/room' . '/' . $item->room->id) }}" accept-charset="UTF-8">
+                                                    {{-- <form method="POST" action="{{ url('/room' . '/' . $item->room->id) }}" accept-charset="UTF-8">
                                                         {{ method_field('DELETE') }}
                                                         {{ csrf_field() }}
                                                         <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')">
-                                                            <i class="fa-solid fa-trash"></i> ลบบ้าน
+                                                            <i class="fa-solid fa-trash"></i> ยืนยัน
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
+
+                                                    <button data-toggle="modal" data-target="#room_delete"
+                                                    class="btn-old btn-danger btn-sm main-shadow main-radius" title="Delete Room">
+                                                        <i class="fa-solid fa-trash"></i> ลบบ้าน
+                                                    </button>
+
+                                                    <div class="modal fade" id="room_delete" tabindex="-1" role="dialog" aria-labelledby="room_delete" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <!-- หน้าสร้างบ้าน -->
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="contact-panel col-md-12 mb-2">
+
+                                                                            <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+
+                                                                            <div class="container">
+                                                                            <h5 class="text-warning"><i class="fa-solid fa-warning"></i> ท่านต้องการลบบ้านหรือไม่</h5>
+                                                                            <br>
+                                                                            <br>
+
+                                                                            <div class="row justify-content-between">
+                                                                                <form method="POST" action="{{ url('/room' . '/' . $item->room->id) }}" accept-charset="UTF-8">
+                                                                                    {{ method_field('DELETE') }}
+                                                                                    {{ csrf_field() }}
+                                                                                    <button type="submit" class="btn-old btn-secondary btn-sm main-shadow main-radius" title="Delete Room" >
+                                                                                        <i class="fa-solid fa-trash"></i> ยืนยัน
+                                                                                    </button>
+                                                                                </form>
+
+                                                                                <button type="submit" class="btn-old btn-primary btn-sm main-shadow main-radius" data-dismiss="modal" aria-label="Close">
+                                                                                    <i class="fa-solid fa-arrow"></i> ยกเลิก
+                                                                                </button>
+                                                                            </div>
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -27,11 +27,11 @@
             <i class="fas fa-circle"></i>
             <span style="color:black ; font-weight:bold" >ขอความช่วยเหลือ</span></a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" href="{{ url('/health_check') }}">
             <i class="fas fa-circle"></i>
             <span style="color:black ; font-weight:bold" >ไฟล์ตรวจสุขภาพ</span></a>
-    </li>
+    </li> --}}
     {{-- <li class="nav-item">
         <a class="nav-link" href="{{ url('/category') }}">
             <i class="fas fa-circle"></i>

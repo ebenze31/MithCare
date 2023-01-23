@@ -5,11 +5,8 @@
     {{-- @include('admin.sidebar') --}}
     <div class="col-md-12">
 
-        <div class="card mr-2">
-
-
                 <section class="page-title page-title-layout5 p-3">
-                    <div class="container">
+                    <div class="">
                         <div class="row">
 
                             <div class="contact-panel col-md-12 mb-2">
@@ -28,7 +25,7 @@
                                 <div class="row">
 
                                     @foreach($room as $item)
-                                    <div class="col-md-4 col-sm-12">
+                                    <div class="col-md-4 col-sm-12 mt-2">
                                         <div class="card product-item ">
                                         @if(!empty($item->home_pic))
                                             <img class="card-img-top p-3 " src="{{ url('storage/'.$item->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
@@ -103,7 +100,7 @@
                         </div>
                     </div>
                 </section>
-        </div>
+
     </div>
 </div>
 

@@ -2,6 +2,13 @@
 
 @section('content')
 
+{{-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                                    หน้านี้ไม่ได้ใช้ -> ใช้ Modal ในหน้า index
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
+
+
     <section class="page-title page-title-layout5">
         <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
         <div class="container">
@@ -34,7 +41,8 @@
     <section class="page-title page-title-layout5">
         <div class="container mt-3">
             <div class="row">
-                <div class="col-md-12">
+                <center>
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header font-weight-bold h4">สร้างไฟล์ตรวจสุขภาพ</div>
                         <div class="card-body h5">
@@ -59,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+                </center>
             </div>
         </div>
     </section>

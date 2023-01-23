@@ -1,6 +1,35 @@
 @extends('layouts.mithcare')
 
 @section('content')
+
+<section class="page-title page-title-layout5 mb-3">
+    <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="pagetitle__heading">{{Auth::user()->name}}</h1>
+                <nav>
+                    <!-- แสดงเฉพาะคอม -->
+                    <div class="d-none d-lg-block">
+                        <ol class=" breadcrumb mb-0 ">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                        </ol>
+                    </div> <!--d-none d-lg-block -->
+                    <!-- แสดงเฉพาะมือถือ -->
+                    <div class="d-block d-md-none">
+                        <ol class=" breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                        </ol>
+                    </div> <!--d-block d-md-none -->
+                </nav>
+            </div><!-- /.col-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.page-title -->
+
+<section class="page-title page-title-layout5 mb-3">
     <div class="container d-none d-lg-block">
         <div class="row ">
             {{-- @include('admin.sidebar') --}}
@@ -9,10 +38,15 @@
                 <div class="card mr-2 main-radius ">
                     <div class="card-header font-weight-bold" style="font-size: 25px">ไฟล์ตรวจสุขภาพ</div>
                     <div class="card-body">
-                        <a href="{{ url('/health_check/create') }}" class="btn btn-success btn-sm"
-                            title="Add New Health_check">
+                        <a class="btn btn-primary btn-sm main-radius main-shadow text-white"
+                        data-toggle="modal" data-target="#create_room">
                             <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มไฟล์ตรวจสุขภาพ
                         </a>
+
+                        {{-- <button type="button" class="btn btn-info btn__rounded float-right" style="font-size: 20px" data-toggle="modal" data-target="#create_room">
+                            <i class="fa fa-plus"></i>สร้างไฟล์ modal
+                        </button> --}}
+
 
                         <form method="GET" action="{{ url('/health_check') }}" accept-charset="UTF-8"
                             class="form-inline my-2 my-lg-0 float-right" role="search">
@@ -28,6 +62,49 @@
                                 </span>
                             </div>
                         </form>
+
+                         <!--/////// Modal หน้าสร้างไฟล์ ///////////-->
+
+                         <div class="modal fade" id="create_room" tabindex="-1" role="dialog" aria-labelledby="create_roomTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <!-- หน้าสร้างไฟล์ -->
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="contact-panel col-md-12 mb-2">
+
+                                                <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+
+                                                <div class="container">
+                                                <h3 ><i class="fa-solid fa-home"></i> เพิ่มเอกสาร</h3>
+                                                    <br />
+                                                    <br />
+                                                    @if ($errors->any())
+                                                    <ul class="alert alert-danger">
+                                                        @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
+
+                                                    <form method="POST" action="{{ url('/health_check') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+
+                                                        @include ('health_check.form', ['formMode' => 'create'])
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--///////End Modal หน้าสร้างไฟล์ ///////////-->
+
 
                         <br />
                         <br />
@@ -86,9 +163,14 @@
 
 
     </div> {{-- end container --}}
+</section><!-- /.page-title -->
 
-    {{-- /////////////// มือถือ /////////////////// --}}
 
+                    {{-- ////////////////////
+                                มือถือ
+                        /////////////////// --}}
+
+<section class="page-title page-title-layout5 mb-3">
     <div class="container-fluid card radius-10 d-block d-lg-none"
         style="font-family: 'Baloo Bhaijaan 2', cursive;font-family: 'Prompt', sans-serif;">
         <div class="row">
@@ -111,9 +193,54 @@
                                 </span>
                             </div>
                         </form>
-                        <button type="button" class="btn btn-info btn__rounded float-right" style="font-size: 20px" data-toggle="modal" data-target="#">
+                        <button type="button" class="btn btn-info btn__rounded float-right" style="font-size: 20px" data-toggle="modal" data-target="#create_room">
                             <i class="fa fa-plus"></i>สร้างไฟล์
                         </button>
+                        <button type="button" class="btn btn-info btn__rounded float-right" style="font-size: 20px" data-toggle="modal" data-target="#create_room">
+                            <i class="fa fa-plus"></i>สร้างไฟล์ modal
+                        </button>
+
+                        <!--/////// Modal หน้าสร้างไฟล์ ///////////-->
+
+                        <div class="modal fade" id="create_room" tabindex="-1" role="dialog" aria-labelledby="create_roomTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <!-- หน้าสร้างไฟล์ -->
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="contact-panel col-md-12 mb-2">
+
+                                                <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+
+                                                <div class="container">
+                                                <h3 ><i class="fa-solid fa-home"></i> เพิ่มเอกสาร</h3>
+                                                    <br />
+                                                    <br />
+                                                    @if ($errors->any())
+                                                    <ul class="alert alert-danger">
+                                                        @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
+
+                                                    <form method="POST" action="{{ url('/health_check') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+
+                                                        @include ('health_check.form', ['formMode' => 'create'])
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--///////End Modal หน้าสร้างไฟล์ ///////////-->
 
                 </div>
             </div>
@@ -178,4 +305,5 @@
             </div>
         </div>
     </div>
+</section><!-- /.page-title -->
 @endsection

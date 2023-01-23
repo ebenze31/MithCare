@@ -25,7 +25,7 @@ class Game extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'link', 'img', 'amount_click'];
+    protected $fillable = ['name', 'link', 'img', 'amount_click','detail_of_game'];
 
-    
+
 }

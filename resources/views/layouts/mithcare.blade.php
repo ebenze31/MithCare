@@ -438,18 +438,6 @@
 
         });
 
-        // toggleEye.addEventListener('click', function (e) {
-        //     if(this.classList.contains("fa-sharp fa-solid fa-eye-slash")){
-
-        //         this.classList.add('fa-solid fa-eye');
-        //         this.classList.remove('fa-sharp fa-solid fa-eye-slash');
-        //     }else{
-
-        //         this.classList.add('fa-sharp fa-solid fa-eye-slash');
-        //         this.classList.remove('fa-solid fa-eye');
-        //     }
-
-        // });
 
     </script>
 

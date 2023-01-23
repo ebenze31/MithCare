@@ -13,6 +13,11 @@
     <input class="form-control" name="img" type="file" id="img" value="{{ isset($game->img) ? $game->img : ''}}" >
     {!! $errors->first('img', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('detail_of_game') ? 'has-error' : ''}}">
+    <label for="detail_of_game" class="control-label">{{ 'รายละเอียดเกม' }}</label>
+    <textarea class="form-control" name="detail_of_game" type="text" id="detail_of_game" value="{{ isset($game->detail_of_game) ? $game->detail_of_game : ''}}" ></textarea>
+    {!! $errors->first('detail_of_game', '<p class="help-block">:message</p>') !!}
+</div>
 {{-- <div class="form-group {{ $errors->has('amount_click') ? 'has-error' : ''}}">
     <label for="amount_click" class="control-label">{{ 'จำนวนคลิ๊ก' }}</label>
     <input class="form-control" name="amount_click" type="text" id="amount_click" value="{{ isset($game->amount_click) ? $game->amount_click : ''}}" >
@@ -23,7 +28,7 @@
 
 <div class="form-group">
     <div class="row">
-        <div class="col-3 col-md-2">
+        <div class="col-12 col-md-2">
             <a href="{{ url('/game') }}" title="Back">
                 <span class="btn btn-info btn-sm main-shadow main-radius">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ

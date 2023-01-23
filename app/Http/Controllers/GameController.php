@@ -18,13 +18,14 @@ class GameController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = 3;
+
 
         if (!empty($keyword)) {
             $game = Game::where('name', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+                ->orderBy('amount_click','desc')->paginate($perPage);
         } else {
-            $game = Game::latest()->paginate($perPage);
+            $game = Game::orderBy('amount_click','desc')->paginate($perPage);
         }
 
         return view('game.index', compact('game'));
@@ -71,6 +72,7 @@ class GameController extends Controller
     {
 
         $requestData = $request->all();
+
 
         if ($request->hasFile('img')) {
             $requestData['img'] = $request->file('img')->store('uploads', 'public');

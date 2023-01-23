@@ -1,16 +1,16 @@
 <style>
     input[type="file"]::file-selector-button {
-  border: 2px solid #007bff;
+  border: 2px solid #00cec9;
   border-radius: 50%;
   padding: 0.3em 0.5em;
   border-radius: 0.8em;
-  background-color: #4170A2;
+  background-color: #81ecec;
   transition: 1s;
 }
 
 input[type="file"]::file-selector-button:hover {
-  background-color: #81ecec;
-  border: 2px solid #00cec9;
+  background-color: #007bff;
+  border: 2px solid #4170A2;
 }
 </style>
 <center>
@@ -21,24 +21,23 @@ input[type="file"]::file-selector-button:hover {
     </div>
 </center>
 <div class="row">
-    <div class="col-md-12 col-12">
+    <div class="col-md-12 col-sm-12">
         <div class="form-group {{ $errors->has('img_1') ? 'has-error' : ''}}">
             <label for="img_1" class="control-label">รูปเอกสาร 1</label>
-            <input  class="form-control p-2" name="img_1" type="file" id="img_1" value="{{ isset($health_check->img_1) ? $health_check->img_1 : ''}}" >
-            {!! $errors->first('img_1', '<p class="help-block">:message</p>') !!}
+            <input  class="form-control p-2" name="img_1" type="file" id="img_1" title="อัพโหลดรูป" value="{{ isset($health_check->img_1) ? $health_check->img_1 : ''}}" >
         </div>
     </div>
-    <div class="col-md-12 col-12">
+    <div class="col-md-12 col-sm-12">
         <div class="form-group {{ $errors->has('img_2') ? 'has-error' : ''}}">
             <label for="img_2" class="control-label">รูปเอกสาร 2</label>
             <input class="form-control p-2" name="img_2" type="file" id="img_2" value="{{ isset($health_check->img_2) ? $health_check->img_2 : ''}}" >
-            {!! $errors->first('img_2', '<p class="help-block">:message</p>') !!}
+
         </div>
     </div>
-    <div class="col-md-12 col-12">
+    <div class="col-md-12 col-sm-12">
         <div class="mb-3">
-            <label for="formFile" class="form-label">รูปเอกสาร 3</label>
-            <input class="form-control p-2" name="formFile" type="file" id="formFile" value="{{ isset($health_check->img_2) ? $health_check->img_2 : ''}}" >
+            <label for="img_3" class="form-label">รูปเอกสาร 3</label>
+            <input class="form-control p-2" name="img_3" type="file" id="img_3" value="{{ isset($health_check->img_3) ? $health_check->img_3 : ''}}" >
           </div>
     </div>
 </div>
@@ -60,8 +59,8 @@ input[type="file"]::file-selector-button:hover {
 </div>
 
 
-<script>
+{{-- <script>
     $(".form-control").change(function() {
     filename = this.files[0].name;
     });
-</script>
+</script> --}}

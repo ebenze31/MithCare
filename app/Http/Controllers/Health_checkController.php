@@ -17,7 +17,7 @@ class Health_checkController extends Controller
         $id = Auth::id();
 
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = 10;
 
         $user = User::findOrFail($id);
 
@@ -45,8 +45,22 @@ class Health_checkController extends Controller
     public function store(Request $request)
     {
 
+        $user_id = Auth::id();
+
         $requestData = $request->all();
 
+
+        if ($request->hasFile('img_1')) {
+            $requestData['img_1'] = $request->file('img_1')->store('uploads', 'public');
+        }
+        if ($request->hasFile('img_2')) {
+            $requestData['img_2'] = $request->file('img_2')->store('uploads', 'public');
+        }
+        if ($request->hasFile('img_3')) {
+            $requestData['img_3'] = $request->file('img_3')->store('uploads', 'public');
+        }
+
+        $requestData['user_id'] = $user_id;
         Health_check::create($requestData);
 
         return redirect('health_check')->with('flash_message', 'Health_check added!');
@@ -75,6 +89,17 @@ class Health_checkController extends Controller
         $requestData = $request->all();
 
         $health_check = Health_check::findOrFail($id);
+
+        if ($request->hasFile('img_1')) {
+            $requestData['img_1'] = $request->file('img_1')->store('uploads', 'public');
+        }
+        if ($request->hasFile('img_2')) {
+            $requestData['img_2'] = $request->file('img_2')->store('uploads', 'public');
+        }
+        if ($request->hasFile('img_3')) {
+            $requestData['img_3'] = $request->file('img_3')->store('uploads', 'public');
+        }
+
         $health_check->update($requestData);
 
         return redirect('health_check')->with('flash_message', 'Health_check updated!');

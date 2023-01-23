@@ -113,7 +113,7 @@
                                             </button>
 
                                             <div class="container">
-                                                
+
                                                     <h3><i class="fa-solid fa-calendar-days"></i> แก้ไขตารางนัด</h3>
                                                     <br />
                                                     <br />
@@ -126,7 +126,7 @@
                                                         @endforeach
                                                     </ul>
                                                     @endif
-                                            
+
                                                     <form method="POST" action="{{ url('/appoint/edit') }}"
                                                         accept-charset="UTF-8" class="form-horizontal h5"
                                                         enctype="multipart/form-data">
@@ -134,12 +134,12 @@
 
                                                         <input type="hidden" name="appoint_id" id="appoint_id" value="" />
                                                         @include ('appoint.appoint_form_edit')
-                                                    
+
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <button class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</button>
                                                         </div>
-                                                    </form> 
+                                                    </form>
                                                         <div class="col-6">
                                                             <form id="appoint_delete" method="POST" action="" accept-charset="UTF-8">
                                                                 {{ method_field('DELETE') }}
@@ -148,9 +148,9 @@
                                                                         <i class="fa-solid fa-trash"></i> ลบ
                                                                     </button>
                                                             </form>
-                                                        </div> 
+                                                        </div>
                                                     </div>
-                                                   
+
                                                 </div>
                                             <!--container -->
 
@@ -166,25 +166,25 @@
             </div>
             <div class="contact-panel col-md-12 mb-2 mt-3">
 
-                <h3>ตารางนัด</h3>          
+                <h3>ตารางนัด</h3>
 
                 <div class="row" id="appoint_selector">
-                    <div class="col-12 col-md-10 mt-2"> 
+                    <div class="col-12 col-md-10 mt-2">
                         <a  style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}">ทั้งหมด</a>
                         <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=นัดหมอ">นัดหมอ</a>
                         <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=ทานยา">ทานยา</a>
                     </div>
-                    <div class="col-6 col-md-2 column mt-2"> 
+                    <div class="col-6 col-md-2 column mt-2">
                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>
                        <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ทานยา</a>
                     </div>
                 </div>
-              
+
                 <!-- ///////////////////////////////////////////
                 //////////////// Calendar //////////////////////
                 //////////////////////////////////////////////// -->
 
-                <div class="mt-3" id='calendar'></div> 
+                <div class="mt-3" id='calendar'></div>
 
             </div>
         </div>
@@ -239,10 +239,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 @endif
 
             },
-            @endforeach  
+            @endforeach
 
         ],
-       
+
 
         eventClick: function(calEvent, jsEvent, view) {
 
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (result.type === 'นัดหมอ') {
                         document.querySelector('.date_edit').value = result.date;
-                        
+
                         let div_date = document.querySelector('#div_date_edit').classList ;
                             // console.log(div_date);
                             div_date.remove("col-md-6");
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         document.querySelector('.date_edit').value = result.date;
                         document.querySelector('.date_time_edit').value = result.date_time;
-                        
+
                         let div_date = document.querySelector('#div_date_edit').classList;
                             // console.log(div_date);
                             div_date.remove("col-md-12");
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelector('.title_edit').value = result.title;
                     let type_edit = document.querySelector('.type_edit');
                     type_edit.innerHTML = "";
-                    
+
 
                     let option_select = document.createElement("option");
                     option_select.text = result.type;
@@ -307,11 +307,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
             $('#edit_Appoint').modal();
-                                
+
 
         },
 
-     
+
     });
     calendar.render();
 });
@@ -319,9 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
+
     function edit_type() {
       let type = document.querySelector('#type_edit').value;
-      
+
       if (type === 'นัดหมอ') {
             let div_date = document.querySelector('#div_date_edit').classList ;
                 // console.log(div_date);
@@ -330,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 div_date.add('col-md-12');
             document.querySelector('#div_datetime_edit').classList.add('d-none');
             document.querySelector('#date_time_edit').required = false ;
-        }else {        
+        }else {
             let div_date = document.querySelector('#div_date_edit').classList;
                 // console.log(div_date);
                 div_date.remove("col-md-12");

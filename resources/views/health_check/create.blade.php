@@ -44,8 +44,8 @@
                 <center>
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header font-weight-bold h4">สร้างไฟล์ตรวจสุขภาพ</div>
-                        <div class="card-body h5">
+                        <div class="card-header bg-transparent font-weight-bold h4">สร้างไฟล์ตรวจสุขภาพ</div>
+                        <div class="card-body bg-transparent h5">
                             <br />
                             <br />
 

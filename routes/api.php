@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 
-   
+
 });
 
 Route::get('/provinces', 'API\TambonController@getProvinces');
@@ -26,6 +26,8 @@ Route::get('/tambons', 'API\TambonController@getTambons');
 Route::get('/zipcodes', 'API\TambonController@getZipcodes');
 
 Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint');
+
+Route::get('/game', 'API\GameController@update_Click');
 
 
 

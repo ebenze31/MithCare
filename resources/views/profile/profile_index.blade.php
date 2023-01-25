@@ -40,7 +40,11 @@
           <div class="widget widget-member">
             <div class="member mb-0">
               <div class="member__img">
-                <img src="{{asset('/img/logo_mithcare/portrait-volunteer-who-organized-donations-charity.jpg')}}" alt="member img" height="300px" width="100%">
+                @if (!empty($user->photo))
+                    <img src="{{ url('storage/'.$user->photo )}}" alt="member img" height="300px" width="100%">
+                @else
+                    <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
+                @endif
               </div><!-- /.member-img -->
               <div class="member__info">
                 <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>

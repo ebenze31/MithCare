@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function index(Request $request)
     {
         $keyword = $request->get('search');
@@ -89,6 +85,6 @@ class GameController extends Controller
     {
         Game::destroy($id);
 
-        return redirect('game')->with('flash_message', 'Game deleted!');
+        return redirect('game');
     }
 }

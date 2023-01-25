@@ -31,6 +31,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
     <style>
+        .close_img{
+            right:0px;
+            position: absolute;
+        }
         .ab{
         display: flex;
         align-items: center;
@@ -86,7 +90,21 @@
             top: 0;
             width: auto;
         }
+        input[type="file"]::file-selector-button {
+            border: 2px solid #00cec9;
+            border-radius: 50%;
+            padding: 0.3em 0.5em;
+            border-radius: 0.8em;
+            background-color: #81ecec;
+            transition: 1s;
+            margin-top: 0.8em;
 
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color: #007bff;
+            border: 2px solid #4170A2;
+        }
     </style>
 
 
@@ -345,20 +363,38 @@
                             <div class="row">
                                 <div class="col-12">
 
-                                    <div class="home-demo">
+                                                {{-- คอม --}}
+                                    <div class="home-demo d-none d-lg-block">
                                         <div class="owl-carousel owl-theme">
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50" alt="gallery img">
+                                                <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50" alt="gallery img">
-                                                </a>
+                                                <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/green-logo-01.png')}}" width="50" alt="gallery img">
+                                                <img src="{{asset('/img/logo_partner/green-logo-01.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50" alt="gallery img">
+                                                <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px" alt="gallery img">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                                {{-- มือถือ --}}
+                                    <div class="home-demo d-block d-md-none">
+                                        <div class="owl-carousel owl-theme">
+                                            <div class="item">
+                                                <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px"  alt="gallery img">
+                                            </div>
+                                            <div class="item">
+                                                <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px"  alt="gallery img">
+                                            </div>
+                                            <div class="item">
+                                                <img src="{{asset('/img/logo_partner/green-logo-01.png')}}" width="50px"   alt="gallery img">
+                                            </div>
+                                            <div class="item">
+                                                <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px"   alt="gallery img">
                                             </div>
                                         </div>
                                     </div>

@@ -275,7 +275,7 @@
                                 @endif
                             </div><!--  card-body -->
                         </div><!--  card -->
-                    </div>
+                    </div><!--  col-md-4 col-sm-12 -->
                     @endforeach
                 </div>
                 <div class="pagination-wrapper"> {!! $my_room->appends(['search' => Request::get('search')])->render() !!} </div>

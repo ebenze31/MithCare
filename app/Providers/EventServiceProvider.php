@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
+
     /**
      * The event listener mappings for the application.
      *
@@ -18,13 +19,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+        // ... other providers
+        \SocialiteProviders\Line\LineExtendSocialite::class.'@handle',
+    ],
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
+
     public function boot()
     {
         parent::boot();

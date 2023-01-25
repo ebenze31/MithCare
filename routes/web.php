@@ -3,16 +3,12 @@
 use App\Tambon;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
+//Route for all providers login
+Route::get('login/line','Auth\LoginController@redirectToLine');
+Route::get('login/line/callback','Auth\LoginController@handleLineCallback');
+
+//End Route providers login
 
 Route::get('/', function () {
     return view('welcome');
@@ -72,5 +68,9 @@ Route::resource('member_of_room', 'Member_of_roomController');
 
 Route::resource('ask_for_help', 'Ask_for_helpController');
 
+
+// health_check /////////
 Route::resource('health_check', 'Health_checkController');
+
+// Game /////////
 Route::resource('game', 'GameController');

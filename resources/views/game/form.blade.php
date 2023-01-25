@@ -15,7 +15,7 @@
 </div>
 <div class="form-group {{ $errors->has('detail_of_game') ? 'has-error' : ''}}">
     <label for="detail_of_game" class="control-label">{{ 'รายละเอียดเกม' }}</label>
-    <textarea class="form-control" name="detail_of_game" type="text" id="detail_of_game" value="{{ isset($game->detail_of_game) ? $game->detail_of_game : ''}}" ></textarea>
+    <textarea class="form-control" name="detail_of_game" type="text" id="detail_of_game">{{ isset($game->detail_of_game) ? $game->detail_of_game : ''}}</textarea>
     {!! $errors->first('detail_of_game', '<p class="help-block">:message</p>') !!}
 </div>
 {{-- <div class="form-group {{ $errors->has('amount_click') ? 'has-error' : ''}}">

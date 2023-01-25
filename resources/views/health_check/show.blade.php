@@ -13,14 +13,16 @@
                         <div class="d-none d-lg-block">
                             <ol class=" breadcrumb mb-0 ">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/health_check') }}" style="font-size: 30px;">ไฟล์ตรวจสุขภาพ</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">รายละเอียด</a></li>
                             </ol>
                         </div> <!--d-none d-lg-block -->
                         <!-- แสดงเฉพาะมือถือ -->
                         <div class="d-block d-md-none">
                             <ol class=" breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
-                                <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/health_check') }}" style="font-size: 20px;">ไฟล์ตรวจสุขภาพ</a></li>
+                                <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">รายละเอียด</a></li>
                             </ol>
                         </div> <!--d-block d-md-none -->
                     </nav>
@@ -49,66 +51,78 @@
                         <br/>
                         <br/>
 
-                        <div class="table-responsive">
+                        {{-- <div class="table-responsive">
                             <table class="table">
                                 <tbody>
                                     <tr>
                                         <th>ไอดี</th><td>{{ $health_check->id }}</td>
                                     </tr>
                                     <tr><th> เรื่อง </th><td> {{ $health_check->title }} </td></tr>
-                                    {{-- <tr><th> รูปเอกสาร 1</th><td> {{ $health_check->img_1 }} </td></tr>
+                                     <tr><th> รูปเอกสาร 1</th><td> {{ $health_check->img_1 }} </td></tr>
                                     <tr><th> รูปเอกสาร 2</th><td> {{ $health_check->img_2 }} </td></tr>
-                                    <tr><th> รูปเอกสาร 3</th><td> {{ $health_check->img_3 }} </td></tr> --}}
+                                    <tr><th> รูปเอกสาร 3</th><td> {{ $health_check->img_3 }} </td></tr>
 
                                 </tbody>
                             </table>
+                        </div> --}}
+
+                        <div class="col-12 col-md-12">
+                            <div class="pricing-widget-layout2 mb-70 product-item">
+                                <ul class="pricing__list list-unstyled mb-0">
+                                    <li><span  class="h5 font-weight-bold">เรื่อง</span><span  class="h5 font-weight-bold"> {{ $health_check->title }} </span></li>
+                                </ul>
+                            </div>
                         </div>
 
+                        <center>
+                            <div class="row justify-content-between col-12">
+                                <div class="card product-item col-md-3 col-12 mb-2" >
+                                    @if (!empty($health_check->img_1))
+                                        <a href="{{ url('storage/'.$health_check->img_1 )}}" >
+                                            <img style="border: 1px solid #4170A2;" class="card-img-top mt-3" src="{{ url('storage/'.$health_check->img_1 )}}" height="200px" alt="รูปภาพ">
+                                        </a>
+                                    @else
+                                        <img style="border: 1px solid #4170A2;" class="card-img-top mt-3" src="{{asset('/img/logo_mithcare/document-background.png')}}" height="200px" alt="รูปภาพ">
+                                    @endif
 
-                            <div class="row justify-content-around">
+                                    <div class="card-body">
+                                        <p class="card-text">บัตร 1</p>
+                                    </div>
+                                </div>
 
-                                <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
-                                        <!-- /.zoom_picture-only-pc -->
-                                    <div class="product__img d-none d-lg-block">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 1</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_1 )}}" width="250px" height="250px" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
-                                        <!-- /.-only-mobile -->
-                                    <div class="d-block d-md-none">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 1</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
-                                </div><!-- /.widget-help -->
+                                <div class="card product-item col-md-3 col-12 mb-2" >
+                                    @if (!empty($health_check->img_2))
+                                        <a href="{{ url('storage/'.$health_check->img_2 )}}">
+                                            <img style="border: 1px solid #4170A2;" class="card-img-top mt-3" src="{{ url('storage/'.$health_check->img_2 )}}" height="200px" alt="รูปภาพ">
+                                        </a>
+                                    @else
+                                        <img style="border: 1px solid #4170A2;" class="card-img-top mt-3" src="{{asset('/img/logo_mithcare/document-background.png')}}" height="200px" alt="รูปภาพ">
+                                    @endif
+                                    <div class="card-body">
+                                        <p class="card-text">บัตร 2</p>
+                                    </div>
+                                </div>
 
-                                <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
-                                    <!-- /.zoom_picture-only-pc -->
-                                    <div class="product__img d-none d-lg-block">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 2</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
+                                <div class="card product-item col-md-3 col-12 mb-2" >
+                                    @if (!empty($health_check->img_3))
+                                        <a href="{{ url('storage/'.$health_check->img_3 )}}">
+                                            <img style="border: 1px solid #4170A2;" class="card-img-top mt-3 mb-2" src="{{ url('storage/'.$health_check->img_3 )}}" height="200px" alt="รูปภาพ">
+                                        </a>
+                                    @else
+                                        <img style="border: 1px solid #4170A2;" class="card-img-top mt-3" src="{{asset('/img/logo_mithcare/document-background.png')}}" height="200px" alt="รูปภาพ">
+                                    @endif
+                                    <div class="card-body">
+                                        <p class="card-text">บัตร 3</p>
+                                    </div>
+                                </div>
+                             </div>{{--row justify-content-between --}}
+                        </center>
+                        <hr>
 
-                                    <!-- /.-only-mobile -->
-                                    <div class="d-block d-md-none">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 2</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
-                                </div><!-- /.widget-help -->
 
-                                <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
-                                    <!-- /.zoom_picture-only-pc -->
-                                    <div class="product__img d-none d-lg-block">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 3</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
 
-                                    <!-- /.-only-mobile -->
-                                    <div class="d-block d-md-none">
-                                        <h2 class="text-secondary" style="font-size: 30px;">บัตร 3</h2>
-                                        <img src="{{ url('storage/'.$health_check->img_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-                                    </div><!-- /.product__img -->
-                                </div><!-- /.widget-help -->
 
-                            </div> <!-- /.row -->
+
 
                             <div class="row justify-content-around">
                                 <a href="{{ url('/health_check/' . $health_check->id . '/edit') }}" title="Edit Health_check">

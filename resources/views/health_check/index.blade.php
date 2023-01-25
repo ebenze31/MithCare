@@ -263,8 +263,8 @@
                                     aria-controls="form_delete_11003308">
                                     <h5 style="margin-bottom:0px; margin-top:0px; ">
                                         <a target="break">
-                                            <i class="fa-solid fa-file-lines"></i></i></a>&nbsp;&nbsp;
-                                        {{ $item->title }} {{-- // หัวข้อ // --}}
+                                           <i class="fa-solid fa-file-lines"></i></i>
+                                        </a>&nbsp;&nbsp;  {{ $item->title }} {{-- // หัวข้อ // --}}
                                     </h5>
                                 </div>
                                 <div class="col-2 align-self-center collapsed" style="vertical-align: middle;"

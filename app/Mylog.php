@@ -6,17 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mylog extends Model
 {
-    protected $fillable = [
-        'title', 'content', 'user_id',
-    ];
+ /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'mylogs';
 
+    /**
+    * The database primary key value.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['title', 'content', 'user_id'];
 }

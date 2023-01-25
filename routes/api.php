@@ -29,6 +29,6 @@ Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint
 
 Route::get('/game', 'API\GameController@update_Click');
 
-Route::get('/lineapi','API\LineApiController@store');
+Route::post('/lineapi','API\LineApiController@store');
 
 // Route::get('/show_amphoes/{province}', 'API\TambonController@getAmphoes');

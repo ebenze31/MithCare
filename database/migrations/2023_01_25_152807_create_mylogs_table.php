@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddToUsers02Table extends Migration
+class CreateMylogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddToUsers02Table extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('provider ')->nullable();
+        Schema::create('mylogs', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('title')->nullable();
+            $table->string('content')->nullable();
+            $table->string('user_id')->nullable();
         });
     }
 
@@ -25,8 +29,6 @@ class AddToUsers02Table extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('mylogs');
     }
 }

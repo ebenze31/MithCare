@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Revolution\Line\Facades\Bot;
+use Redirect;
+
 class LoginController extends Controller
 {
 
@@ -29,13 +33,14 @@ class LoginController extends Controller
 // Line callback
     public function handleLineCallback(Request $request)
     {
-    // $user = Socialite::driver('line')->user();
+    $user = Socialite::driver('line')->user();
 
-    try {
-        $user = Socialite::driver('line')->user();
-    } catch (InvalidStateException $e) {
-        $user = Socialite::driver('line')->stateless()->user();
-    }
+    // try {
+    //     $user = Socialite::driver('line')->user();
+    // }
+    // catch (InvalidStateException $e) {
+    //     $user = Socialite::driver('line')->stateless()->user();
+    // }
 
     echo "<pre>";
     print_r($user);

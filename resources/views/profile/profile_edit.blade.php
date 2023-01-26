@@ -66,18 +66,36 @@
               <div class="widget widget-member">
                 <div class="member mb-0">
                   <div class="member__img">
-                    @if (!empty($user->photo))
+                    {{-- @if (!empty($user->photo))
                         <img src="{{ url('storage/'.$user->photo )}}" alt="member img" height="300px" width="100%">
                      @else
                         <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
-                    @endif
+                    @endif --}}
+
+                    <!-- รูปโปรไฟล์-->
+                    <center>
+                        <div id="img_profile_old" class="m-2">
+                            @if(!empty($user->avatar) and empty($user->photo))
+                                <img width="300" src="{{ $user->avatar }}" >
+                            @endif
+                            @if(!empty($user->photo))
+                                <img  width="300" src="{{ url('storage')}}/{{ $user->photo }}" >
+                            @endif
+                            @if(empty($user->avatar) and empty($user->photo))
+                                <img  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                            @endif
+                        </div>
+                        <div width="300" id="img_profile_new" class="m-2"></div>
+                    </center>
+
                   </div><!-- /.member-img -->
                   <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
                     <div class="member__info">
                         <div class="form-group ">
-                            <input class="form-control" name="profile-picture" type="file" id="profile-picture" value="{{ url('storage/'.$user->photo )}}" >
+                            <input class="form-control" name="photo" type="file" id="photo" value="{{ url('storage/'.$user->photo )}}" onchange="document.querySelector('#img_profile_old').classList.add('d-none');">
+
                         </div>
                         <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
                     </div><!-- /.member-info -->
@@ -140,9 +158,32 @@
 @endsection
 
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#photo").change(function () {
+            var img_profile_new = $("#img_profile_new");
+            img_profile_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
 
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
 
-<script>
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "300");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
 
-
+                    img_profile_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
 </script>

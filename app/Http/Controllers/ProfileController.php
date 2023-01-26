@@ -47,8 +47,8 @@ class ProfileController extends Controller
 
             $requestData = $request->all();
 
-            if ($request->hasFile('profile-picture')) {
-                $requestData['photo'] = $request->file('profile-picture')->store('uploads', 'public');
+            if ($request->hasFile('photo')) {
+                $requestData['photo'] = $request->file('photo')->store('uploads', 'public');
             }
 
             if ($request->hasFile('health_card_1')) {

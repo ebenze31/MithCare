@@ -123,8 +123,10 @@ class LoginController extends Controller
                 //LOGIN by object user
                     Auth::login($user);
 
+                    $value = $request->session()->get('redirectTo');
                     $request->session()->forget('redirectTo');
-                    return redirect('https://www.mithcare.com/profile/6/edit');
+
+                    return redirect()->intended($value.'/profile/6/edit');
 
           }
 

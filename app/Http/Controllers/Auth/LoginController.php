@@ -71,9 +71,6 @@ class LoginController extends Controller
 
     $this->_registerOrLoginUser($user,$request);
 
-
-
-
 }
 
     //Register or Login
@@ -115,18 +112,22 @@ class LoginController extends Controller
 
             $user->save();
         }else{
-          if(!empty($user->phone)){
-            $value = $request->session()->get('redirectTo');
-          }else{
-            $value = "/profile". "/" .$user->id. "/edit";
+            if(!empty($user->phone)){
+                $value = $request->session()->get('redirectTo');
+                //LOGIN by object user
+                    Auth::login($user);
 
+                    $request->session()->forget('redirectTo');
+                    return redirect()->intended($value);
+            }else{
+                //LOGIN by object user
+                    Auth::login($user);
+
+                    $request->session()->forget('redirectTo');
+                    return redirect("/profile". "/" .$user->id. "/edit");
           }
 
         }
-        //LOGIN by object user
-        Auth::login($user);
-        $request->session()->forget('redirectTo');
 
-        return redirect()->intended($value);
     }
 }

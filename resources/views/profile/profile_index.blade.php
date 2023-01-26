@@ -15,15 +15,15 @@
           <!-- แสดงเฉพาะคอม -->
           <div class="d-none d-lg-block">
             <ol class=" breadcrumb mb-0 ">
-              <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">Profile</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">โปรไฟล์</a></li>
             </ol>
           </div> <!--d-none d-lg-block -->
           <!-- แสดงเฉพาะมือถือ -->
           <div class="d-block d-md-none">
             <ol class=" breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 20px;">Profile</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
+              <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 20px;">โปรไฟล์</a></li>
             </ol>
           </div> <!--d-block d-md-none -->
         </nav>
@@ -63,50 +63,52 @@
               </div><!-- /.member-img -->
               <div class="member__info">
                 <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
-                <button class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10 main-shadow ">
-                  <a style="font-size: 20px; color:#ffffff;" href="{{ url('/profile/'. $user->id . '/edit') }}">แก้ไขโปรไฟล์</a>
-                </button>
+
+                <a class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10 main-shadow"
+                    style="font-size: 20px; color:#ffffff;" href="{{ url('/profile/'. $user->id . '/edit') }}">แก้ไขโปรไฟล์
+                </a>
 
               </div><!-- /.member-info -->
             </div><!-- /.member -->
           </div><!-- /.widget-member -->
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-            <!-- /.zoom_picture-only-pc -->
-              <div class="product__img d-none d-lg-block">
-                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-              </div><!-- /.product__img -->
-            <!-- /.-only-mobile -->
-              <div class="d-block d-md-none">
-                <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-              </div><!-- /.product__img -->
 
-          </div><!-- /.widget-member -->
+            <div class="card main-shadow main-radius mt-3  ">
+                <!-- /.zoom_picture-only-pc -->
+                <div class="product__img main-radius d-none d-lg-block">
+                    <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                </div>
+                <!-- /.-only-mobile -->
+                <div class="d-block d-md-none">
+                    <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                </div>
 
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-              <!-- /.zoom_picture-only-pc -->
-            <div class="product__img d-none d-lg-block">
-              <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-            </div><!-- /.product__img -->
+            </div><!-- /.card -->
 
-             <!-- /.-only-mobile -->
-             <div class="d-block d-md-none">
-                <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-              </div><!-- /.product__img -->
+            <div class="card main-shadow main-radius mt-3  ">
+                <!-- /.zoom_picture-only-pc -->
+                <div class="product__img d-none d-lg-block">
+                    <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                </div>
 
-          </div><!-- /.widget-help -->
+                <!-- /.-only-mobile -->
+                <div class="d-block d-md-none">
+                    <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                </div>
 
-          <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-radius main-shadow">
-              <!-- /.zoom_picture-only-pc -->
-            <div class="product__img d-none d-lg-block">
-              <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
-            </div><!-- /.product__img -->
+            </div><!-- /.card -->
 
-             <!-- /.-only-mobile -->
-             <div class="d-block d-md-none">
-                <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
-              </div><!-- /.product__img -->
+            <div class="card main-shadow main-radius mt-3 ">
+                <!-- /.zoom_picture-only-pc -->
+                <div class="product__img d-none d-lg-block">
+                    <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                </div>
 
-          </div><!-- /.widget-help -->
+                <!-- /.-only-mobile -->
+                <div class="d-block d-md-none">
+                    <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                </div>
+
+            </div><!-- /.card -->
 
 
         </aside><!-- /.sidebar -->

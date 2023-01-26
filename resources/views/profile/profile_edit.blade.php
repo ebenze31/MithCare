@@ -37,7 +37,7 @@
                   <ol class=" breadcrumb mb-0 ">
                     <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
                     <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 30px;">โปรไฟล์</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/profile/edit')}}" style="font-size: 30px;">แก้ไขโปรไฟล์</a></li>
+                    <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">แก้ไขโปรไฟล์</a></li>
                   </ol>
                 </div> <!--d-none d-lg-block -->
 
@@ -46,7 +46,7 @@
                   <ol class=" breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
                     <li class="breadcrumb-item"><a href="{{ url('/profile') }}" style="font-size: 20px;">โปรไฟล์</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/profile/edit')}}" style="font-size: 30px;">แก้ไขโปรไฟล์</a></li>
+                    <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">แก้ไขโปรไฟล์</a></li>
                   </ol>
                 </div> <!--d-block d-md-none -->
             </nav>
@@ -94,8 +94,8 @@
 
                     <div class="member__info">
                         <div class="form-group ">
-                            <input class="form-control" name="photo" type="file" id="photo" value="{{ url('storage/'.$user->photo )}}" onchange="document.querySelector('#img_profile_old').classList.add('d-none');">
-
+                            <input class="form-control" name="photo" type="file" id="photo" value="{{ url('storage/'.$user->photo )}}"
+                            onchange="document.querySelector('#img_profile_old').classList.add('d-none');">
                         </div>
                         <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
                     </div><!-- /.member-info -->
@@ -105,32 +105,65 @@
 
 
                         <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
+                            {{-- พื้นหลัง widget --}}
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
                           <div class="widget-content">
-                            <h2 class="widget__title" style="font-size: 30px;">บัตร 1</h2>
-                            <div class="form-group ">
-                                  <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="" >
+                            <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 1</h2>
+
+                            <div id="health_card_1_old">
+                                @if (!empty($user->health_card_1))
+                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_1 }}" >
+                                @else
+                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                                @endif
+                            </div>
+                            <div class="main-radius" id="health_card_1_new" class="m-2"></div>
+                            <div class="form-group mt-3">
+                                  <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="{{ url('storage/'.$user->health_card_1 )}}"
+                                   onchange="document.querySelector('#health_card_1_old').classList.add('d-none');">
+                            </div>
+
+                          </div><!-- /.widget-content -->
+                        </div><!-- /.widget-help -->
+
+                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
+                            {{-- พื้นหลัง widget --}}
+                          <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
+                          <div class="widget-content">
+                            <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 2</h2>
+
+                            <div id="health_card_2_old">
+                                @if (!empty($user->health_card_2))
+                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_2 }}" >
+                                @else
+                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                                @endif
+                            </div>
+                            <div class="main-radius" id="health_card_2_new" class="m-2"></div>
+                            <div class="form-group mt-3">
+                                  <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="{{ url('storage/'.$user->health_card_2 )}}"
+                                  onchange="document.querySelector('#health_card_2_old').classList.add('d-none');" >
                             </div>
                           </div><!-- /.widget-content -->
                         </div><!-- /.widget-help -->
 
                         <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
+                            {{-- พื้นหลัง widget --}}
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
                           <div class="widget-content">
-                            <h2 class="widget__title" style="font-size: 30px;">บัตร 2</h2>
-                            <div class="form-group ">
-                                  <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="" >
+
+                            <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 3</h2>
+                            <div id="health_card_3_old">
+                                @if (!empty($user->health_card_3))
+                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_3 }}" >
+                                @else
+                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                                @endif
                             </div>
-                          </div><!-- /.widget-content -->
-                        </div><!-- /.widget-help -->
-
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-                          <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
-
-                            <h2 class="widget__title" style="font-size: 30px;">บัตร 3</h2>
-                            <div class="form-group ">
-                                  <input class="form-control" name="health_card_3" type="file" id="health_card_3" value="" >
+                            <div class="main-radius" id="health_card_3_new" class="m-2"></div>
+                            <div class="form-group mt-3">
+                                  <input class="form-control" name="health_card_3" type="file" id="health_card_3" value="{{ url('storage/'.$user->health_card_3 )}}"
+                                  onchange="document.querySelector('#health_card_3_old').classList.add('d-none');" >
                             </div>
                           </div><!-- /.widget-content -->
                         </div><!-- /.widget-help -->
@@ -159,6 +192,7 @@
 
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ {{-- กดอัพโหลดรูปโปรไฟล์->มองเห็นรูปที่เปลี่ยน --}}
 <script type="text/javascript">
     $(function () {
         $("#photo").change(function () {
@@ -181,6 +215,96 @@
                     divImagePreview.append(img);
 
                     img_profile_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>
+
+{{-- กดอัพโหลดรูปบัตร 1->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_1").change(function () {
+            var health_card_1_new = $("#health_card_1_new");
+            health_card_1_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "300");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_1_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>
+
+{{-- กดอัพโหลดรูปบัตร 2->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_2").change(function () {
+            var health_card_2_new = $("#health_card_2_new");
+            health_card_2_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "300");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_2_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>
+
+{{-- กดอัพโหลดรูปบัตร 3->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_3").change(function () {
+            var health_card_3_new = $("#health_card_3_new");
+            health_card_3_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "300");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_3_new.append(divImagePreview);
                 }
                 reader.readAsDataURL(file[0]);
             });

@@ -90,21 +90,7 @@
             top: 0;
             width: auto;
         }
-        input[type="file"]::file-selector-button {
-            border: 2px solid #00cec9;
-            border-radius: 50%;
-            padding: 0.3em 0.5em;
-            border-radius: 0.8em;
-            background-color: #81ecec;
-            transition: 1s;
-            margin-top: 0.8em;
 
-        }
-
-        input[type="file"]::file-selector-button:hover {
-            background-color: #007bff;
-            border: 2px solid #4170A2;
-        }
     </style>
 
 

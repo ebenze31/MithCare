@@ -161,9 +161,9 @@
               </div><!-- row -->
 
               <ul class="widget-content">
-                <li class="widget__title">ลูกบ้าน1</li>
-                <li class="widget__title">ลูกบ้าน1</li>
-                <li class="widget__title">ลูกบ้าน1</li>
+                <li class="widget__title">บ้านที่ 1</li>
+                <li class="widget__title">บ้านที่ 2</li>
+                <li class="widget__title">บ้านที่ 3</li>
               </ul><!-- /.widget-content -->
           </div><!-- /.widget-help -->
 

@@ -2,6 +2,26 @@
 
 @section('content')
 
+<style>
+    input[type="file"]::file-selector-button {
+            border: 2px solid #00cec9;
+            border-radius: 50%;
+            padding: 0.3em 0.5em;
+            border-radius: 0.8em;
+            background-color: #81ecec;
+            transition: 1s;
+            margin-top: 0.8em;
+
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color: #007bff;
+            border: 2px solid #4170A2;
+        }
+
+
+</style>
+
      <!-- ========================
        page title
     =========================== -->
@@ -35,6 +55,9 @@
       </div><!-- /.container -->
     </section><!-- /.page-title -->
 
+
+
+
     <section class="pt-120 pb-80">
       <div class="container">
         <div class="row">
@@ -49,15 +72,19 @@
                         <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
                     @endif
                   </div><!-- /.member-img -->
-                  <div class="member__info">
-                    <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
+                  <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                    {{ csrf_field() }}
 
-                  </div><!-- /.member-info -->
+                    <div class="member__info">
+                        <div class="form-group ">
+                            <input class="form-control" name="profile-picture" type="file" id="profile-picture" value="{{ url('storage/'.$user->photo )}}" >
+                        </div>
+                        <h2 class="member__name text-center"><a href="#" style="font-size: 30px;">{{$user->full_name}}</a></h2>
+                    </div><!-- /.member-info -->
                 </div><!-- /.member -->
               </div><!-- /.widget-member -->
 
-              <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+
 
                         <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
                           <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
@@ -111,3 +138,11 @@
     </section>
 
 @endsection
+
+
+
+
+<script>
+
+
+</script>

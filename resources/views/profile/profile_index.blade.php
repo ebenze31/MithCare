@@ -40,10 +40,25 @@
           <div class="widget widget-member">
             <div class="member mb-0">
               <div class="member__img">
-                @if (!empty($user->photo))
-                    <img src="{{ url('storage/'.$user->photo )}}" alt="member img" height="300px" width="100%">
+                {{-- @if (!empty($user->photo))
+                    <a href="{{ $user->avatar }}" class="glightbox play-btn mb-4">
+                        <img src="{{ url('storage/'.$user->photo )}}" alt="member img" height="300px" width="100%">
+                    </a>
                 @else
                     <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
+                @endif --}}
+                @if(!empty($user->avatar) and empty($user->photo))
+                <a href="{{ $user->avatar }}" class="glightbox play-btn mb-4">
+                    <img alt="member img" height="300px" width="100%" src="{{ $user->avatar }}" data-original-title="Usuario">
+                </a>
+                @endif
+                @if(!empty($user->photo))
+                    <a href="{{ url('storage')}}/{{ $user->photo }}" class="glightbox play-btn mb-4">
+                        <img alt="member img" height="300px" width="100%" src="{{ url('storage')}}/{{ $user->photo }}" data-original-title="Usuario">
+                    </a>
+                @endif
+                @if(empty($user->avatar) and empty($user->photo))
+                    <img alt="member img" height="300px" width="100%" src="{{ url('/img/icon/user.png') }}" data-original-title="Usuario">
                 @endif
               </div><!-- /.member-img -->
               <div class="member__info">

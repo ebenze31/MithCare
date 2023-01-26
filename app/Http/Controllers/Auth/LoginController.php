@@ -24,6 +24,28 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function redirectTo()
+    {
+        // if(!isset($_SESSION["backurl"]) )
+        //     $_SESSION["backurl"] = $_SERVER['HTTP_REFERER'] ;
+        //     $backurl = $_SESSION["backurl"];
+        //     // echo "backurl >> ". parse_url($backurl, PHP_URL_QUERY);
+        //     // exit();
+
+        $backurl = $_SERVER['HTTP_REFERER'] ;
+
+        $redirectTo = parse_url($backurl, PHP_URL_QUERY);
+
+        if (!empty($redirectTo)) {
+            $backurl_split = explode('redirectTo=', $redirectTo, 2);
+            $back = $backurl_split[1];
+            return $back;
+        }else{
+            return $backurl;
+        }
+
+    }
+
    // Line login
    public function redirectToLine(Request $request)
    {
@@ -47,17 +69,15 @@ class LoginController extends Controller
     // echo "<pre>";
     // exit();
 
-    $this->_registerOrLoginUser($user);
+    $this->_registerOrLoginUser($user,$request);
 
-    $value = $request->session()->get('redirectTo');
-    $request->session()->forget('redirectTo');
 
-    return redirect()->intended($value);
+
 
 }
 
     //Register or Login
-    protected function _registerOrLoginUser($data)
+    protected function _registerOrLoginUser($data,$request)
     {
         //GET USER
         $user = User::where('provider_id', $data->id)->first();
@@ -94,8 +114,19 @@ class LoginController extends Controller
             }
 
             $user->save();
+        }else{
+          if(!empty($user->phone)){
+            $value = $request->session()->get('redirectTo');
+          }else{
+            $value = "/profile". "/" .$user->id. "/edit";
+
+          }
+
         }
         //LOGIN by object user
         Auth::login($user);
+        $request->session()->forget('redirectTo');
+
+        return redirect()->intended($value);
     }
 }

@@ -46,7 +46,7 @@
 
 <div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}" style="display: block">
     <label for="phone" class="control-label" style="font-size: 25px;">{{ 'เบอร์โทร' }}</label>
-    <input class="form-control" name="phone" type="text" id="phone" placeholder="กรุณาใส่เบอร์โทร" value="{{ isset($user->phone) ? $user->phone : ''}}">{!! $errors->first('name', '<p class="help-block">:รูปแบบเบอร์มือถือไม่ถูกต้อง</p>') !!}
+    <input class="form-control" name="phone" type="text" id="phone" placeholder="กรุณาใส่เบอร์โทร" value="{{ isset($user->phone) ? $user->phone : ''}}" required>{!! $errors->first('name', '<p class="help-block">:รูปแบบเบอร์มือถือไม่ถูกต้อง</p>') !!}
 </div> <!--///  เบอร์โทร /// -->
 
 
@@ -149,7 +149,7 @@
                 let input_amphoe = document.querySelector("#input_amphoe");
                 let old_amphoe = input_amphoe.value;
                 input_amphoe.innerHTML = "";
-           
+
                 if (old_amphoe && count_select_a === 1) {
 
                     let option_start = document.createElement("option");
@@ -159,7 +159,7 @@
                     option_start.disabled = true;
                     input_amphoe.appendChild(option_start);
                 } else {
-                   
+
                     let option_start = document.createElement("option");
                     option_start.text = "กรุณาเลือกอำเภอ";
                     option_start.selected = true;
@@ -167,7 +167,7 @@
                 }
 
                 for (let item of result) {
-                    // console.log(item.amphoe);  
+                    // console.log(item.amphoe);
                     let option = document.createElement("option");
                     option.text = item.amphoe;
                     option.value = item.amphoe;
@@ -175,7 +175,7 @@
                 }
                 //QUERY AMPHOES
                 count_select_a = count_select_a + 1;
-                showTambons();               
+                showTambons();
             });
     }
 
@@ -184,7 +184,7 @@
         let input_amphoe = document.querySelector("#input_amphoe");
         let url = "{{ url('/api/tambons') }}?province=" + input_province.value + "&amphoe=" + input_amphoe.value;
         // console.log(url);
-        // if(input_province.value == "") return;        
+        // if(input_province.value == "") return;
         // if(input_amphoe.value == "") return;
         fetch(url)
             .then(response => response.json())
@@ -203,7 +203,7 @@
                     option_start.disabled = true;
                     input_tambon.appendChild(option_start);
                 } else {
-                
+
                     let option_start = document.createElement("option");
                     option_start.text = "กรุณาเลือกตำบล";
                     option_start.selected = true;
@@ -211,7 +211,7 @@
                 }
 
                 for (let item of result) {
-                    // console.log(item.tambon);  
+                    // console.log(item.tambon);
                     let option = document.createElement("option");
                     option.text = item.tambon;
                     option.value = item.tambon;

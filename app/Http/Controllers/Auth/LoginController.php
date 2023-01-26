@@ -124,7 +124,7 @@ class LoginController extends Controller
                     Auth::login($user);
 
                     $request->session()->forget('redirectTo');
-                    return redirect("https://www.mithcare.com/profile/6/edit");
+                    return redirect('https://www.mithcare.com/profile/6/edit');
 
           }
 

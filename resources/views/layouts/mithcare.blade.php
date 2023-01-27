@@ -400,14 +400,14 @@
                 </section><!-- /.gallery 2 -->
 
 
-                <div class="copyright text-center align-items-center " style="margin-top:-15px;">
+                <div class="copyright text-center align-items-center h6" style="margin-top:-15px;">
                     <span>•</span> WWW.MithCare.COM
                     <span>•</span>
-                    <a href="privacy_policy">
+                    <a href="{{url('privacy_policy')}}">
                         <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
                     </a>
                     <span>•</span>
-                    <a href="terms_of_service">
+                    <a href="{{url('terms_of_service')}}">
                         <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
                     </a>
                 </div>

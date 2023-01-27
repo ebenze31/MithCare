@@ -1,6 +1,21 @@
 @extends('layouts.mithcare')
 
 @section('content')
+
+<style>
+    input.largerCheckbox {
+        height: 2em;
+        width: 2em;
+        vertical-align: middle;
+    }
+    .tacbox {
+        padding: 1em;
+        margin: 2em;
+        max-width: 800px;
+    }
+
+</style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -67,14 +82,24 @@
 
 
                                                 <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
+
                                                     <a href="{{ url('login/line') }}">
                                                         <span style="background-color: #21C608;" class="btn btn__secondary btn__rounded btn__block btn__xhight mt-10 main-shadow">
                                                             <img src="{{ asset('/img/icon_Social/icon-line.png')}}"  style="border-radius: 30px;background-color: #ffff; margin-top:5px; margin-bottom:5px" width="10%" class="center main-shadow " >&nbsp;&nbsp; เข้าสู่ระบบด้วย LINE
                                                         </span>
                                                     </a>
+                                                    <center>
+                                                        <br> <hr class="hr" style="width:70%;">
+                                                    </center>
+                                                    <center>
+                                                        <div class="tacbox " >
+                                                            {{-- <input class="largerCheckbox" id="checkbox" type="checkbox" /> --}}
+                                                            <label for="checkbox" style="font-size: 15px">&nbsp;<a href="{{url('/privacy_policy')}}">นโยบายเกี่ยวกับข้อมูลส่วรบุคคล</a></label>
+                                                            <br><br>
+                                                            <label for="checkbox" style="font-size: 15px">&nbsp;<a href="{{url('/terms_of_service')}}">ข้อกำหนดและเงื่อนไขการใช้บริการบนเว็บไซต์ MithCare.com</a></label>
+                                                        </div>
+                                                    </center>
 
-                                                    <br>
-                                                    <br>
                                                     <center>
                                                         <a href="{{ route('register') }}">สมัครสมาชิก</a>
                                                     </center>

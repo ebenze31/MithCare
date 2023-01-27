@@ -28,6 +28,8 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
 Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update');
 
+Route::get('/profile/{id}/register', 'ProfileController@register')->name('profile_register');
+
 //// My_Room /////////
 
 Route::resource('room', 'RoomController');

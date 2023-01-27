@@ -130,14 +130,13 @@
                                             <a href="" class="btn btn__secondary btn__link btn__block">
                                                 <span>Make Appointment</span> <i class="icon-arrow-right"></i>
                                             </a>
-
                                             <!-- เช็คว่ามีข้อมูลเบอร์? ไปหน้าแรก , ไปหน้าลงทะเบียน-->
                                             @if (Auth::check())
                                                 @if (empty(Auth::user()->phone) && url()->full() != url('/profile/'. Auth::user()->id . '/register'))
-
                                                     <a class="d-none" id="register_first_of_id" href="{{ url('/profile/'. Auth::user()->id . '/register') }}">DEER</a>
                                                 @endif
                                             @endif
+
                                         </div><!-- /.miniPopup-emergency -->
                                     </li>
                                     <!-- <li>
@@ -178,103 +177,6 @@
                     </button>
                     <div class="collapse navbar-collapse" id="mainNavigation">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">หน้าแรก</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="{{ url('/') }}" class="nav__item-link">Home Main</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-modern.html" class="nav__item-link">Home Modern</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-classic.html" class="nav__item-link">Home Classic</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-dentist.html" class="nav__item-link">Home Dentist</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-pharmacy.html" class="nav__item-link">Home pharmacy</a>
-                                    </li><!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">เกี่ยวกับเรา</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="about-us.html" class="nav__item-link">About Us</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="services.html" class="nav__item-link">Our Services</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="services-single.html" class="nav__item-link">single Services</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="pricing.html" class="nav__item-link">Pricing & Plans</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="appointment.html" class="nav__item-link">Appointments</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="faqs.html" class="nav__item-link">Help & FAQs</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="gallery.html" class="nav__item-link">Our Gallery</a>
-                                    </li><!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">หมอ</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="doctors-timetable.html" class="nav__item-link">Doctors Timetable</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="doctors-standard.html" class="nav__item-link">Our Doctors Standard</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="doctors-modern.html" class="nav__item-link">Our Doctors Modern</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="doctors-grid.html" class="nav__item-link">Our Doctors Grid</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="doctors-single-doctor1.html" class="nav__item-link">Single Doctor 01</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="doctors-single-doctor2.html" class="nav__item-link">Single Doctor 02</a>
-                                    </li> <!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Blog</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="blog.html" class="nav__item-link">Blog Grid</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="blog-single-post.html" class="nav__item-link">Single Blog Post</a>
-                                    </li><!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Shop</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="shop.html" class="nav__item-link">Our Products</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="shop-single-product.html" class="nav__item-link">Products Single</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="cart.html" class="nav__item-link">Cart</a>
-                                    </li><!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
-                                <a href="contact-us.html" class="nav__item-link">ติดต่อ</a>
-                            </li><!-- /.nav-item -->
 
                             <li class="nav__item">
                                 @guest
@@ -284,31 +186,6 @@
                                 <a href="#" data-toggle="dropdown" class=" btn btn__primary btn__rounded mt-xl-3"> {{ Auth::user()->name }}</a>
                                 <ul class="dropdown-menu">
 
-                                    <li class="nav__item">
-                                        <a class="nav__item-link text-center" href="{{url('/profile')}}">
-                                            <i class="fa-solid fa-user"></i> โปรไฟล์
-                                        </a>
-
-                                        <a class="nav__item-link text-center" href="{{url('/room')}}">
-                                            <i class="fa-solid fa-home"></i> ครอบครัวของฉัน
-                                        </a>
-
-                                        <a class="nav__item-link text-center" href="{{url('/ask_for_help/create')}}">
-                                            <i class="fa-solid fa-truck-medical"></i> หน้าขอความช่วยเหลือ
-                                        </a>
-
-                                        <a class="nav__item-link text-center" href="{{url('/health_check')}}">
-                                            <i class="fa-solid fa-file"></i> หน้าไฟล์ตรวจสุขภาพ
-                                        </a>
-                                        <a class="nav__item-link text-center" href="{{url('/game')}}">
-                                            <i class="fa-solid fa-gamepad"></i> GAME
-                                        </a>
-                                        <hr>
-                                        <a class="nav__item-link text-center" href="{{url('/room_admin')}}">
-                                            <i class="fa-solid fa-user-tie"></i> หน้า Admin
-                                        </a>
-                                    </li>
-                                    <hr style="width: 75%;">
                                     <li class="nav__item">
                                         <a class="nav__item-link text-center" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
@@ -336,16 +213,36 @@
             </nav><!-- /.navabr -->
         </header><!-- /.Header -->
 
-    <main class="py-4">
-        @yield('content')
-    </main>
+        <!-- ========================
+            Content
+        ========================== -->
 
+        <section class="page-title page-title-layout5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card mt-3">
+                            <div class="card-header h4 font-weight-bold bg-transparent text-center text-primary"> กรอกข้อมูลเบื้องต้น</div>
+                            <div class="card-body h5 text-info">
+                                <br />
+                                <br />
+                                <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+
+                                    @include ('profile.profile_form', ['formMode' => 'edit'])
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     <!-- ========================
       Footer
     ========================== -->
     <footer class="footer">
-
-
 
         <hr width="90%">
         <div class="footer-secondary">
@@ -448,18 +345,6 @@
 
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-        // console.log("START");
-
-            try {
-                document.querySelector('#register_first_of_id').click();
-            } catch (error) {
-            // Only runs when there is an error/exception
-            }
-        });
-        window.addEventListener("DOMContentLoaded", document, false);
-    </script>
 
 
 

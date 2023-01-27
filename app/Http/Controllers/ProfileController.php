@@ -64,9 +64,32 @@ class ProfileController extends Controller
             $user = User::findOrFail($id);
             $user->update($requestData);
 
-        return redirect('profile')->with('flash_message', 'Crud updated!');
+            $backurl = url()->previous();
+            $register = url("/profile". "/" .$user->id. "/register");
 
+            // echo "<pre>";
+            // print_r($backurl);
+            // echo "<pre>";
+            // exit();
 
+            if($backurl == $register){
+                return redirect('/')->with('flash_message', 'Crud updated!');
+            }else{
+                return redirect('profile')->with('flash_message', 'Crud updated!');
+            }
+
+    }
+
+    public function register(Request $request)
+    {
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+
+        $provinces = Tambon::select('province')->distinct()->get();
+        $amphoes = Tambon::select('amphoe')->distinct()->get();
+        $tambons = Tambon::select('tambon')->distinct()->get();
+
+        return view('profile.profile_register' , compact('user','provinces','amphoes','tambons'));
     }
 
 

@@ -69,12 +69,17 @@ class LoginController extends Controller
     // echo "<pre>";
     // exit();
 
-    $this->_registerOrLoginUser($user,$request);
+    $this->_registerOrLoginUser($user);
+
+    $value = $request->session()->get('redirectTo');
+    $request->session()->forget('redirectTo');
+
+    return redirect()->intended($value);
 
 }
 
     //Register or Login
-    protected function _registerOrLoginUser($data,$request)
+    protected function _registerOrLoginUser($data)
     {
         //GET USER
         $user = User::where('provider_id', $data->id)->first();
@@ -111,26 +116,8 @@ class LoginController extends Controller
             }
 
             $user->save();
-        }else{
-            if(!empty($user->phone)){
-                $value = $request->session()->get('redirectTo');
-                //LOGIN by object user
-                    Auth::login($user);
-
-                    $request->session()->forget('redirectTo');
-                    return redirect()->intended($value);
-            }else{
-                //LOGIN by object user
-                    Auth::login($user);
-
-                    $value = $request->session()->get('redirectTo');
-                    $request->session()->forget('redirectTo');
-
-                    return redirect()->intended($value.'/profile/6/edit');
-
-          }
-
         }
-
+        //LOGIN by object user
+        Auth::login($user);
     }
 }

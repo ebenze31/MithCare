@@ -1,15 +1,4 @@
 
-<!-- <div  class="form-group {{ $errors->has('category_type') ? 'has-error' : ''}}">
-        <label for="category_type" class="control-label" style="font-size: 25px;">{{ 'ประเภท' }}</label>
-        <select name="category_type" class="details__content" id="category_type" required>
-        <option selected disabled>กรุณาเลือกประเภท</option>
-        @foreach (json_decode('{"รายรับ":"รายรับ","รายจ่าย":"รายจ่าย"}', true) as $optionKey => $optionvalue)
-            <option value="{{ $optionKey }}" {{ (isset($email->category_type) && $transaction->category_type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
-        @endforeach
-    </select>
-        {!! $errors->first('category_type', '<p class="help-block">:message</p>') !!}
-    </div> -->
-
 <div class="form-group {{ $errors->has('full_name') ? 'has-error' : ''}}" style="display: block">
     <label for="full_name" class="control-label" style="font-size: 25px;">{{ 'ชื่อ-สกุล' }}</label>
     <input class="form-control" name="full_name" type="text" id="full_name" maxlength="20" placeholder="" value="{{ isset($user->full_name) ? $user->full_name : ''}}">{!! $errors->first('name', '<p class="help-block">:ชื่อนี้ไม่สามารถใช้ได้</p>') !!}

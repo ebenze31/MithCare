@@ -103,7 +103,7 @@
 
 
 <div class="form-group">
-    <button style="background-color: #3490dc; font-size: 25px; color: white;" class="btn btn-primary form-control" type="submit">ยืนยันการแก้ไข</button>
+    <button style="background-color: #3490dc; font-size: 25px; color: white;" class="btn btn-primary form-control" type="submit">บันทึก</button>
 </div>
 
 

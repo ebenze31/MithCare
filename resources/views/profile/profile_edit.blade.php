@@ -215,7 +215,8 @@
                     var img = $("<img />");
                     // img.attr("style", "border-radius: 50%;");
                     // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "300");
+                    img.attr("width", "100%");
+                    img.attr("height", "300");
                     img.attr("src", e.target.result);
                     divImagePreview.append(img);
 
@@ -245,7 +246,7 @@
                     var img = $("<img />");
                     // img.attr("style", "border-radius: 50%;");
                     // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "300");
+                    img.attr("width", "100%");
                     img.attr("src", e.target.result);
                     divImagePreview.append(img);
 
@@ -275,7 +276,7 @@
                     var img = $("<img />");
                     // img.attr("style", "border-radius: 50%;");
                     // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "300");
+                    img.attr("width", "100%");
                     img.attr("src", e.target.result);
                     divImagePreview.append(img);
 
@@ -305,7 +306,7 @@
                     var img = $("<img />");
                     // img.attr("style", "border-radius: 50%;");
                     // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "300");
+                    img.attr("width", "100%");
                     img.attr("src", e.target.result);
                     divImagePreview.append(img);
 

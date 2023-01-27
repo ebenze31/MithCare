@@ -104,60 +104,65 @@
 
 
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-                            {{-- พื้นหลัง widget --}}
-                          <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
-                            <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 1</h2>
 
-                            <div id="health_card_1_old">
-                                @if (!empty($user->health_card_1))
-                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_1 }}" >
-                                @else
-                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
-                                @endif
-                            </div>
-                            <div class="main-radius" id="health_card_1_new" class="m-2"></div>
-                            <div class="form-group mt-3">
-                                  <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="{{ url('storage/'.$user->health_card_1 )}}"
-                                   onchange="document.querySelector('#health_card_1_old').classList.add('d-none');">
-                            </div>
 
-                          </div><!-- /.widget-content -->
-                        </div><!-- /.widget-help -->
+                            <div class="widget-content">
+                                <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 1</h2>
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-                            {{-- พื้นหลัง widget --}}
-                          <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
-                            <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 2</h2>
+                                <div id="health_card_1_old">
+                                    @if (!empty($user->health_card_1))
+                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                            <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_1 }}" >
+                                        </div>
+                                    @else
+                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                            <img class="main-radius" height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="main-radius" id="health_card_1_new" class="m-2"></div>
+                                <div class="form-group mt-3">
+                                    <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="{{ url('storage/'.$user->health_card_1 )}}"
+                                    onchange="document.querySelector('#health_card_1_old').classList.add('d-none');">
+                                </div>
 
-                            <div id="health_card_2_old">
-                                @if (!empty($user->health_card_2))
-                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_2 }}" >
-                                @else
-                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
-                                @endif
-                            </div>
-                            <div class="main-radius" id="health_card_2_new" class="m-2"></div>
-                            <div class="form-group mt-3">
-                                  <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="{{ url('storage/'.$user->health_card_2 )}}"
-                                  onchange="document.querySelector('#health_card_2_old').classList.add('d-none');" >
-                            </div>
-                          </div><!-- /.widget-content -->
-                        </div><!-- /.widget-help -->
+                            </div><!-- /.widget-content -->
 
-                        <div class="widget widget-help bg-overlay bg-overlay-primary-gradient main-shadow">
-                            {{-- พื้นหลัง widget --}}
-                          <div class="bg-img"><img src="assets/images/banners/5.jpg" alt="background"></div>
-                          <div class="widget-content">
+                            <div class="widget-content">
+                                <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 2</h2>
 
+                                <div id="health_card_2_old">
+                                    @if (!empty($user->health_card_2))
+                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                            <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_2 }}" >
+                                        </div>
+                                    @else
+                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                            <img class="main-radius" height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="main-radius" id="health_card_2_new" class="m-2"></div>
+                                <div class="form-group mt-3">
+                                    <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="{{ url('storage/'.$user->health_card_2 )}}"
+                                    onchange="document.querySelector('#health_card_2_old').classList.add('d-none');" >
+                                </div>
+                            </div><!-- /.widget-content -->
+
+
+
+                        <div class="widget-content">
                             <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 3</h2>
+
                             <div id="health_card_3_old">
                                 @if (!empty($user->health_card_3))
-                                    <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_3 }}" >
+                                    <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                        <img class="main-radius" src="{{ url('storage')}}/{{ $user->health_card_3 }}" >
+                                    </div>
                                 @else
-                                    <img class="main-radius"  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                                    <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                        <img class="main-radius" height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                    </div>
                                 @endif
                             </div>
                             <div class="main-radius" id="health_card_3_new" class="m-2"></div>
@@ -165,8 +170,8 @@
                                   <input class="form-control" name="health_card_3" type="file" id="health_card_3" value="{{ url('storage/'.$user->health_card_3 )}}"
                                   onchange="document.querySelector('#health_card_3_old').classList.add('d-none');" >
                             </div>
-                          </div><!-- /.widget-content -->
-                        </div><!-- /.widget-help -->
+                        </div><!-- /.widget-content -->
+
 
                       </aside><!-- /.sidebar -->
                     </div><!-- /.col-lg-4 -->

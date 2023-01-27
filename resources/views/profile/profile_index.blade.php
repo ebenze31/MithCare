@@ -75,11 +75,19 @@
             <div class="card main-shadow main-radius mt-3  ">
                 <!-- /.zoom_picture-only-pc -->
                 <div class="product__img main-radius d-none d-lg-block">
+                    @if (!empty($user->health_card_1))
                     <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                @else
+                    <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                @endif
                 </div>
                 <!-- /.-only-mobile -->
                 <div class="d-block d-md-none">
-                    <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @if (!empty($user->health_card_1))
+                        <img src="{{ url('storage/'.$user->health_card_1 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @else
+                        <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                    @endif
                 </div>
 
             </div><!-- /.card -->
@@ -87,12 +95,20 @@
             <div class="card main-shadow main-radius mt-3  ">
                 <!-- /.zoom_picture-only-pc -->
                 <div class="product__img d-none d-lg-block">
-                    <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                    @if (!empty($user->health_card_2))
+                        <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                    @else
+                        <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                    @endif
                 </div>
 
                 <!-- /.-only-mobile -->
                 <div class="d-block d-md-none">
-                    <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @if (!empty($user->health_card_2))
+                        <img src="{{ url('storage/'.$user->health_card_2 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @else
+                        <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                    @endif
                 </div>
 
             </div><!-- /.card -->
@@ -100,12 +116,20 @@
             <div class="card main-shadow main-radius mt-3 ">
                 <!-- /.zoom_picture-only-pc -->
                 <div class="product__img d-none d-lg-block">
+                    @if (!empty($user->health_card_3))
                     <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="zoomin" loading="lazy" style="visibility: visible;">
+                @else
+                    <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                @endif
                 </div>
 
                 <!-- /.-only-mobile -->
                 <div class="d-block d-md-none">
-                    <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @if (!empty($user->health_card_3))
+                        <img src="{{ url('storage/'.$user->health_card_3 )}}" alt="background" class="main-radius" loading="lazy" style="visibility: visible;">
+                    @else
+                        <img alt="member img" height="200px" width="100%" src="{{ url('/img/logo_mithcare/nation_card.png') }}" data-original-title="Usuario">
+                    @endif
                 </div>
 
             </div><!-- /.card -->
@@ -166,7 +190,6 @@
             <div class="bg-img"><img src="#" alt="background"></div>
               <div class="row">
                 <h2 style="color: #ffffff;" class="col-10 ">ครอบครัวของฉัน</h2>
-                 <a href="#" data-toggle="dropdown" class=" nav__item-link active fa-solid fa-bars"></a>
 
                     <li class="nav__item has-dropdown col-6" >
                         <ul class="dropdown-menu">

@@ -98,7 +98,7 @@
                       "height": "40px"
                     }
                   ],
-                  "position": "absolute",
+                  "position": "relative",
                   "offsetBottom": "0px",
                   "offsetStart": "0px",
                   "offsetEnd": "0px",

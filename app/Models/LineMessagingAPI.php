@@ -76,7 +76,7 @@ class LineMessagingAPI extends Model
                 $string_json = file_get_contents($template_path);
 
                 $string_json = str_replace("ตัวอย่าง" , "ยังไม่ได้เปิดครับ" ,$string_json);
-                $string_json = str_replace("https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip1.jpg" , "https://www.mithcare.com/img/logo_mithcare/logo_mithcare(%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99).png" ,$string_json);
+                // $string_json = str_replace("https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip1.jpg" , "https://www.mithcare.com/img/logo_mithcare/logo_mithcare(%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99).png" ,$string_json);
                 $string_json = str_replace("วันที่" , "ไป" ,$string_json);
                 $string_json = str_replace("วันที่เกิดเหตุ" , "ไม่อยู่" ,$string_json);
                 break;

@@ -15,7 +15,8 @@ class LineApiController extends Controller
         $requestData = $request->all();
         $data = [
             "title" => "Line",
-            "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
+            "content" => "hello",
+            // "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data);  
 

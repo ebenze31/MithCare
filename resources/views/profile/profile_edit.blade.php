@@ -102,10 +102,6 @@
                 </div><!-- /.member -->
               </div><!-- /.widget-member -->
 
-
-
-
-
                             <div class="widget-content">
                                 <h2 class="widget__title text-center" style="font-size: 30px;">บัตร 1</h2>
 

@@ -21,10 +21,10 @@ class LineMessagingAPI extends Model
         $data_Text_topic = [
             "ระบบได้รับการตอบกลับของท่านแล้ว ขอบคุณค่ะ",
         ];
-        
+
         $data_topic = $this->language_for_user($data_Text_topic, $event["source"]['userId']);
 
-        $template_path = storage_path('../public/json/text_success.json');   
+        $template_path = storage_path('../public/json/text_success.json');
 
         $string_json = file_get_contents($template_path);
         $string_json = str_replace("ระบบได้รับการตอบกลับของท่านแล้ว ขอบคุณค่ะ",$data_topic[0],$string_json);
@@ -45,7 +45,7 @@ class LineMessagingAPI extends Model
                 //'timeout' => 60
             ]
         ];
-                            
+
         $context  = stream_context_create($opts);
         //https://api-data.line.me/v2/bot/message/11914912908139/content
         $url = "https://api.line.me/v2/bot/message/reply";
@@ -62,25 +62,27 @@ class LineMessagingAPI extends Model
     }
 
     public function replyToUser($event, $message_type)
-    {   
+    {
         switch ($message_type) {
             case 'test':
-                $template_path = storage_path('../public/json/text.json');   
+                $template_path = storage_path('../public/json/text.json');
                 $string_json = file_get_contents($template_path);
 
                 $string_json = str_replace("ตัวอย่าง" , "อันนี้เแลี่ยนแล้วนะ" ,$string_json);
                 $string_json = str_replace("hello" , "ทดสอบอะไร" ,$string_json);
                 break;
             case 'register':
-                $template_path = storage_path('../public/json/flex_test.json');   
+                $template_path = storage_path('../public/json/flex_test.json');
                 $string_json = file_get_contents($template_path);
 
                 $string_json = str_replace("ตัวอย่าง" , "ยังไม่ได้เปิดครับ" ,$string_json);
-                $string_json = str_replace("Brown Grand Hotel" , "สวัสดี" ,$string_json);
+                $string_json = str_replace("https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip1.jpg" , "https://www.mithcare.com/img/logo_mithcare/logo_mithcare(%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99).png" ,$string_json);
+                $string_json = str_replace("วันที่" , "ไป" ,$string_json);
+                $string_json = str_replace("วันที่เกิดเหตุ" , "ไม่อยู่" ,$string_json);
                 break;
-            
+
             default:
-                $template_path = storage_path('../public/json/text.json');   
+                $template_path = storage_path('../public/json/text.json');
                 $string_json = file_get_contents($template_path);
 
                 $string_json = str_replace("hello" , "สวัสดีครับคุณพรี๊" ,$string_json);
@@ -103,7 +105,7 @@ class LineMessagingAPI extends Model
                 //'timeout' => 60
             ]
         ];
-                            
+
         $context  = stream_context_create($opts);
         //https://api-data.line.me/v2/bot/message/11914912908139/content
         $url = "https://api.line.me/v2/bot/message/reply";

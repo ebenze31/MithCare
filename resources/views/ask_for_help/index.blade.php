@@ -9,7 +9,7 @@
         <div class="card mr-5">
             <div class="card-header">หน้าขอความช่วยเหลือ</div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row d-flex justify-content-between">
                         <div class="col-md-6">
                             <a href="{{ url('/ask_for_help/create') }}" class="btn btn-success btn__rounded btn-sm main-radius main-shadow mb-2"  title="Add New Ask_for_help">
                                 <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มคำร้องขอความช่วยเหลือ
@@ -29,7 +29,7 @@
                                     </button>
                                 </span>
                             </div>
-                        </form>
+                            </form>
                         </div>
                     </div><!-- row -->
 

@@ -90,6 +90,23 @@
             top: 0;
             width: auto;
         }
+        input[type="file"]::file-selector-button {
+            border: 2px solid #00cec9;
+            border-radius: 50%;
+            padding: 0.3em 0.5em;
+            border-radius: 0.8em;
+            background-color: #81ecec;
+            transition: 1s;
+            margin-top: 0.8em;
+
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #007bff;
+            border: 2px solid #4170A2;
+        }
+
+
+
 
     </style>
 
@@ -228,6 +245,122 @@
                                 <br />
                                 <form method="POST" action="{{ url('/profile/' . $user->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5 class="text-center text-info">บัตรที่ 1</h5>
+                                            <div id="health_card_1_old">
+                                                @if (!empty($user->health_card_1))
+                                                      <!-- คอม -->
+                                                      <div class="d-none d-lg-block">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="150px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_1 }}" >
+                                                        </div>
+                                                    </div>
+                                                    <!-- มือถือ -->
+                                                    <div class="d-block d-md-none">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius " height="200px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_1 }}" >
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <!-- คอม -->
+                                                    <div class="d-none d-lg-block">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="150px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                    <!-- มือถือ -->
+                                                    <div class="d-block d-md-none">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="main-radius" id="health_card_1_new" class="m-2"></div>
+                                            <div class="form-group mt-3">
+                                                <input class="form-control" name="health_card_1" type="file" id="health_card_1" value="{{ url('storage/'.$user->health_card_1 )}}"
+                                                onchange="document.querySelector('#health_card_1_old').classList.add('d-none');">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <h5 class="text-center text-info">บัตรที่ 2</h5>
+                                            <div id="health_card_2_old">
+                                                @if (!empty($user->health_card_2))
+                                                        <!-- คอม -->
+                                                        <div class="d-none d-lg-block">
+                                                            <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                                <img class="main-radius"  height="150px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_2 }}" >
+                                                            </div>
+                                                        </div>
+                                                        <!-- มือถือ -->
+                                                        <div class="d-block d-md-none">
+                                                            <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                                <img class="main-radius " height="200px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_2 }}" >
+                                                            </div>
+                                                        </div>
+                                                @else
+                                                    <!-- คอม -->
+                                                    <div class="d-none d-lg-block">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="150px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                    <!-- มือถือ -->
+                                                    <div class="d-block d-md-none">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="main-radius" id="health_card_2_new" class="m-2"></div>
+                                            <div class="form-group mt-3">
+                                                <input class="form-control" name="health_card_2" type="file" id="health_card_2" value="{{ url('storage/'.$user->health_card_2 )}}"
+                                                onchange="document.querySelector('#health_card_2_old').classList.add('d-none');" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5 class="text-center text-info">บัตรที่ 3</h5>
+                                            <div id="health_card_3_old">
+                                                @if (!empty($user->health_card_3))
+                                                     <!-- คอม -->
+                                                     <div class="d-none d-lg-block">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="150px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_3 }}" >
+                                                        </div>
+                                                    </div>
+                                                    <!-- มือถือ -->
+                                                    <div class="d-block d-md-none">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius " height="200px" width="100%" src="{{ url('storage')}}/{{ $user->health_card_3 }}" >
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                     <!-- คอม -->
+                                                     <div class="d-none d-lg-block">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="150px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                    <!-- มือถือ -->
+                                                    <div class="d-block d-md-none">
+                                                        <div class="main-radius" style="border-style: solid; border-width: 1px; color:#4170A2">
+                                                            <img class="main-radius"  height="200px" width="100%" src="{{ asset('/img/logo_mithcare/nation_card.png') }}" >
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="main-radius" id="health_card_3_new" class="m-2"></div>
+                                            <div class="form-group mt-3">
+                                                  <input class="form-control" name="health_card_3" type="file" id="health_card_3" value="{{ url('storage/'.$user->health_card_3 )}}"
+                                                  onchange="document.querySelector('#health_card_3_old').classList.add('d-none');" >
+                                            </div>
+                                        </div>
+                                    </div><!-- /.row -->
+                                    <br>
+                                    <br>
 
                                     @include ('profile.profile_form', ['formMode' => 'edit'])
 
@@ -351,3 +484,94 @@
 </body>
 
 </html>
+
+
+{{-- กดอัพโหลดรูปบัตร 1->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_1").change(function () {
+            var health_card_1_new = $("#health_card_1_new");
+            health_card_1_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "100%");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_1_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>
+
+{{-- กดอัพโหลดรูปบัตร 2->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_2").change(function () {
+            var health_card_2_new = $("#health_card_2_new");
+            health_card_2_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "100%");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_2_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>
+
+{{-- กดอัพโหลดรูปบัตร 3->มองเห็นรูปที่เปลี่ยน --}}
+<script type="text/javascript">
+    $(function () {
+        $("#health_card_3").change(function () {
+            var health_card_3_new = $("#health_card_3_new");
+            health_card_3_new.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var divImagePreview = $("<div/>");
+
+                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                    divImagePreview.append(hiddenRotation);
+
+                    var img = $("<img />");
+                    // img.attr("style", "border-radius: 50%;");
+                    // img.attr("class", "img-circle img-thumbnail isTooltip");
+                    img.attr("width", "100%");
+                    img.attr("src", e.target.result);
+                    divImagePreview.append(img);
+
+                    health_card_3_new.append(divImagePreview);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        });
+    });
+</script>

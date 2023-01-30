@@ -26,23 +26,23 @@
 
                                     @foreach($room as $item)
                                     <div class="col-md-4 col-sm-12 mt-2">
-                                        <div class="card product-item ">
-                                        @if(!empty($item->home_pic))
-                                            <img class="card-img-top p-3 " src="{{ url('storage/'.$item->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
-                                        @else
-                                            <img class="card-img-top p-3 " src="{{asset('/img/logo_mithcare/home-background.png')}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
-                                        @endif
+                                        <div class="card ">
+                                            @if(!empty($item->home_pic))
+                                                <img class="card-img-top p-3 " src="{{ url('storage/'.$item->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                                            @else
+                                                <img class="card-img-top p-3 " src="{{asset('/img/logo_mithcare/home-background.png')}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                                            @endif
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <a href="{{ url('/room/' . $item->id) }}" class="btn btn-info btn-sm btn-block main-shadow main-radius">
+                                                    <div class="col-6 text-center">
+                                                        <a href="{{ url('/room/' . $item->id) }}" class="btn btn-info btn-sm btn-block main-shadow main-radius d-block">
                                                             <!-- <i class="fa-solid fa-magnifying-glass"></i>  -->
                                                             รายละเอียด
                                                         </a>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn btn-success btn-sm btn-block main-shadow main-radius">
-                                                           ตารางนัด
+                                                    <div class="col-6 text-center">
+                                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->id }}" class="btn btn-success btn-sm btn-block main-shadow main-radius d-block">
+                                                            ตารางนัด
                                                         </a>
                                                     </div>
                                                     <div class="col-12">

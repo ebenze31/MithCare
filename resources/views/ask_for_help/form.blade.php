@@ -129,7 +129,7 @@
     {!! $errors->first('partner_id', '<p class="help-block">:message</p>') !!}
 </div> --}}
 
-<div class="row">
+<div class="row mt-2">
     <div class="col-3">
         <a href="{{ url('/ask_for_help') }}" title="กลับ">
             <button class="btn btn-warning btn-sm form-control" style="background-color: #21CDC0; font-size: 25px; color: white;">

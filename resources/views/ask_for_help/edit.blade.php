@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.admin.main')
 
 @section('content')
-    <div class="container">
+<section class="page-title page-title-layout5 p-3 d-none d-lg-block">
+    <div class="container-fluid">
         <div class="row">
-            @include('admin.sidebar')
+            {{-- @include('admin.sidebar') --}}
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Edit Ask_for_help #{{ $ask_for_help->id }}</div>
                     <div class="card-body">
@@ -34,4 +35,5 @@
             </div>
         </div>
     </div>
+</section><!-- End page-title -->
 @endsection

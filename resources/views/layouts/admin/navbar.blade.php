@@ -453,7 +453,7 @@
                                 <img src="{{ url('storage')}}/{{Auth::user()->photo}}" class="user-img" >
                             @else
                                 <img src="{{ asset('/img/logo_mithcare/x-icon.png') }}" class="user-img" >
-                            {{-- @endif --}}
+                            @endif
 							<div class="user-info ps-3">
 								<p class="user-name mb-0"> {{ Auth::user()->name }}</p>
 								{{-- <p class="designattion mb-0">Web Designer</p> --}}

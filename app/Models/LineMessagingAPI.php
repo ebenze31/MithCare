@@ -68,13 +68,14 @@ class LineMessagingAPI extends Model
                 $template_path = storage_path('../public/json/text.json');   
                 $string_json = file_get_contents($template_path);
 
+                $string_json = str_replace("ตัวอย่าง" , "อันนี้เแลี่ยนแล้วนะ" ,$string_json);
                 $string_json = str_replace("hello" , "ทดสอบอะไร" ,$string_json);
                 break;
             case 'register':
-                $template_path = storage_path('../public/json/text.json');   
+                $template_path = storage_path('../public/json/flex_test.json');   
                 $string_json = file_get_contents($template_path);
 
-                $string_json = str_replace("hello" , "ยังไม่ได้เปิดครับ" ,$string_json);
+                $string_json = str_replace("ตัวอย่าง" , "ยังไม่ได้เปิดครับ" ,$string_json);
                 break;
             
             default:

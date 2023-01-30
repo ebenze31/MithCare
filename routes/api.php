@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 });
 
-Route::get('/lineapi', 'API\LineApiController@store');
+Route::post('/lineapi', 'API\LineApiController@store');
 
 Route::get('/provinces', 'API\TambonController@getProvinces');
 Route::get('/amphoes', 'API\TambonController@getAmphoes');

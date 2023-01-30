@@ -13,21 +13,12 @@ class LineApiController extends Controller
     {
         //SAVE LOG
         $requestData = $request->all();
-        
-        if($requestData){
-            $data = [
-                "title" => "Line",
-                "content" => $requestData,
-            ];
-            MyLog::create($data);  
-        }else{
-            $data = [
-                "title" => "Line",
-                "content" => "hello",
-            ];
-            MyLog::create($data);  
-        }
-        
+        $data = [
+            "title" => "Line",
+            // "content" => "hello",
+            "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);  
 
         //GET ONLY FIRST EVENT
         // $event = $requestData["events"][0];

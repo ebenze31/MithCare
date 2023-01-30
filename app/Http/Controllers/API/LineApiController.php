@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\Mylog;
-use Illuminate\Support\Facades\Auth;
 
 class LineApiController extends Controller
 {
@@ -20,4 +20,5 @@ class LineApiController extends Controller
         ];
         Mylog::create($data);
     }
+
 }

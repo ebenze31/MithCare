@@ -14,7 +14,7 @@
                 {
                   "type": "image",
                   "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip1.jpg",
-                  "size": "full",
+                  "size": "md",
                   "aspectMode": "cover",
                   "aspectRatio": "2:3",
                   "gravity": "top",
@@ -36,7 +36,7 @@
                           "type": "text",
                           "text": "วันที่",
                           "size": "xl",
-                          "color": "#ffffff",
+                          "color": "#000000",
                           "weight": "bold"
                         }
                       ]
@@ -48,7 +48,7 @@
                         {
                           "type": "text",
                           "text": "วันที่เกิดเหตุ",
-                          "color": "#ebebeb",
+                          "color": "#000000",
                           "size": "sm",
                           "flex": 0
                         }

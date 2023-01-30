@@ -37,5 +37,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Member_of_room','user_id','id');
     }
 
+
+
 }
 

@@ -449,11 +449,9 @@
 
 					<div class="user-box dropdown">
 						<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							{{-- @if (!empty(Auth::user()->avatar) and empty(Auth::user()->photo))
-                                <img src="{{ url('storage')}}/{{Auth::user()->avatar}}" class="user-img" >
-                            @elseif(!empty(Auth::user()->photo))
+                            @if(!empty(Auth::user()->photo))
                                 <img src="{{ url('storage')}}/{{Auth::user()->photo}}" class="user-img" >
-                            @else --}}
+                            @else
                                 <img src="{{ asset('/img/logo_mithcare/x-icon.png') }}" class="user-img" >
                             {{-- @endif --}}
 							<div class="user-info ps-3">

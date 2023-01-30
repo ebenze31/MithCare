@@ -76,6 +76,7 @@ class LineMessagingAPI extends Model
                 $string_json = file_get_contents($template_path);
 
                 $string_json = str_replace("ตัวอย่าง" , "ยังไม่ได้เปิดครับ" ,$string_json);
+                $string_json = str_replace("Brown Grand Hotel" , "สวัสดี" ,$string_json);
                 break;
             
             default:

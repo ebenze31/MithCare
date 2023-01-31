@@ -18,19 +18,14 @@ Route::get('/privacy_policy', function () {
     return view('privacy_policy');
 });
 
-
 Route::get('/terms_of_service', function () {
     return view('terms_of_service');
 });
 
 
-Route::get('/Calendar_test', function () {
-    return view('Calendar_test');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 //Profiles
 
@@ -50,39 +45,68 @@ Route::get('room_join', 'RoomController@room_join');
 Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
 Route::get('room_find/{id}/edti', 'RoomController@room_edit')->name('room_find_edit');
 
+////////////////////////////
+//// ADMIN MithCare //////
+//////////////////////////
 
- // ADMIN MithCare //////
-// Route::middleware(['auth', 'role:isAdmin'])->group(function () {
+Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
     Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 
-// });
-// END ADMIN MithCare
+});
+
+
+/////////////////////////
+// END ADMIN MithCare///
+/////////////////////////
+
+
+Route::middleware(['auth'])->group(function () {
+
+    // Appoint /////////
+
+    // Route::get('appoint', 'AppointController@index')->name('appoint');
+    // Route::resource('appoint', 'AppointController');
+    Route::get('appoint', 'AppointController@index');
+    Route::post('appoint/edit', 'AppointController@update')->name('appoint_edit');
+    Route::post('appoint/{id}/create', 'AppointController@store')->name('appoint_store');
+    Route::delete('appoint/{id}', 'AppointController@destroy')->name('appoint_destroy');
+
+
+    // Member_of_Room /////////
+
+    Route::resource('member_of_room', 'Member_of_roomController');
+
+    // Ask_for_Help /////////
+
+    Route::resource('ask_for_help', 'Ask_for_helpController');
+
+
+    // health_check /////////
+    Route::resource('health_check', 'Health_checkController');
+
+    // Game /////////
+    Route::resource('game', 'GameController');
+
+});
 
 
 
-// Appoint /////////
-
-// Route::get('appoint', 'AppointController@index')->name('appoint');
-// Route::resource('appoint', 'AppointController');
-
-Route::get('appoint', 'AppointController@index');
-Route::post('appoint/edit', 'AppointController@update')->name('appoint_edit');
-Route::post('appoint/{id}/create', 'AppointController@store')->name('appoint_store');
-Route::delete('appoint/{id}', 'AppointController@destroy')->name('appoint_destroy');
 
 
-// Member_of_Room /////////
-
-Route::resource('member_of_room', 'Member_of_roomController');
-
-// Ask_for_Help /////////
-
-Route::resource('ask_for_help', 'Ask_for_helpController');
 
 
-// health_check /////////
-Route::resource('health_check', 'Health_checkController');
 
-// Game /////////
-Route::resource('game', 'GameController');
+// /////////////////
+// หน้าที่ไม่ได้ใช้จริง //
+///////////////////
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/Calendar_test', function () {
+    return view('Calendar_test');
+});
+
+/////////////////////////
+// สิ้นสุด หน้าที่ไม่ได้ใช้จริง //
+////////////////////////

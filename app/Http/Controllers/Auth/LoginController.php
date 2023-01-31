@@ -49,7 +49,9 @@ class LoginController extends Controller
    // Line login
    public function redirectToLine(Request $request)
    {
-       return Socialite::driver('line')->redirect();
+        $request->session()->put('redirectTo', $request->get('redirectTo'));
+
+        return Socialite::driver('line')->redirect();
    }
 
 // Line callback

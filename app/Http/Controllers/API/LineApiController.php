@@ -72,6 +72,9 @@ class LineApiController extends Controller
             case "โรงพยาบาลใกล้ฉัน/ร้านยาใกล้ฉัน" :
                 $line->replyToUser($event, "select_menu_hnd");
                 break;
+            case "เลือกเมนูอื่นๆ" :
+                $line->replyToUser($event, "select_menu_other");
+                break;
         }
 
     }

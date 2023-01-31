@@ -26,10 +26,11 @@
                 {
                   "type": "text",
                   "weight": "bold",
-                  "size": "lg",
+                  "size": "md",
                   "wrap": true,
                   "text": "โรงพยาบาลใกล้ฉัน",
-                  "align": "center"
+                  "align": "start",
+                  "margin": "5px"
                 }
               ],
               "spacing": "sm",
@@ -38,7 +39,8 @@
               "action": {
                 "type": "uri",
                 "uri": "https://www.google.com/search?q=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&oq=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&aqs=edge..69i57j0i402l2j0i512l5.6845j0j1&sourceid=chrome&ie=UTF-8"
-              }
+              },
+              "justifyContent": "center"
             }
           },
           {
@@ -73,7 +75,8 @@
               "action": {
                 "type": "uri",
                 "uri": "https://www.google.com/search?q=%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%A2%E0%B8%B2%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&source=lmns&bih=1007&biw=1920&hl=th&sa=X&ved=2ahUKEwjd8qia-PD8AhUj3HMBHYCmAM4Q_AUoAHoECAEQAA"
-              }
+              },
+              "justifyContent": "center"
             }
           }
         ]

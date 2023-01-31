@@ -84,6 +84,11 @@ class LineMessagingAPI extends Model
                 $template_path = storage_path('../public/json/flex_hnd.json');
                 $string_json = file_get_contents($template_path);
                 break;
+            case 'select_menu_other':
+                    $template_path = storage_path('../public/json/flex_other.json');
+                    $string_json = file_get_contents($template_path);
+                    break;
+
 
             default:
                 $template_path = storage_path('../public/json/text.json');

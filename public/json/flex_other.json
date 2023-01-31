@@ -1,0 +1,80 @@
+{
+    "type": "flex",
+    "altText": "ตัวอย่าง",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "giga",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://i.ibb.co/MckBtYf/other-menu.png",
+              "size": "full",
+              "aspectRatio": "480:467",
+              "aspectMode": "cover"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "45%",
+              "position": "absolute",
+              "height": "45%",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.mithcare.com/health_check"
+              },
+              "offsetTop": "2%",
+              "offsetStart": "3%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "43%",
+              "position": "absolute",
+              "height": "45%",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.mithcare.com/game"
+              },
+              "offsetTop": "2%",
+              "offsetEnd": "3%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "44%",
+              "position": "absolute",
+              "height": "45%",
+              "action": {
+                "type": "message",
+                "text": "ยังไม่เปิดใช้บริการ"
+              },
+              "offsetBottom": "2%",
+              "offsetEnd": "2%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "44%",
+              "position": "absolute",
+              "height": "45%",
+              "action": {
+                "type": "message",
+                "text": "ยังไม่เปิดใช้บริการ"
+              },
+              "offsetStart": "3%",
+              "offsetBottom": "2%"
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}

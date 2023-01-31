@@ -27,23 +27,7 @@ Auth::routes();
 
 
 
-//Profiles
 
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
-Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update');
-
-Route::get('/profile/{id}/register', 'ProfileController@register')->name('profile_register');
-
-//// My_Room /////////
-
-Route::resource('room', 'RoomController');
-Route::get('room_join', 'RoomController@room_join');
-
- /// Find_Room //////
-
-Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
-Route::get('room_find/{id}/edti', 'RoomController@room_edit')->name('room_find_edit');
 
 ////////////////////////////
 //// ADMIN MithCare //////
@@ -62,6 +46,24 @@ Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+
+    //Profiles
+
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+    Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
+    Route::post('/profile/{id}', 'ProfileController@update')->name('profile_update');
+
+    Route::get('/profile/{id}/register', 'ProfileController@register')->name('profile_register');
+
+    //// My_Room /////////
+
+    Route::resource('room', 'RoomController');
+    Route::get('room_join', 'RoomController@room_join');
+
+    /// Find_Room //////
+
+    Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
+    Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
 
     // Appoint /////////
 

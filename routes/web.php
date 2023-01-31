@@ -115,3 +115,6 @@ Route::get('/Calendar_test', function () {
 
 
 Route::get('room_check_login', 'RoomController@check_login');
+
+// ask_for_help_check_login
+// profile_check_login

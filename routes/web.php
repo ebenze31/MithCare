@@ -112,3 +112,6 @@ Route::get('/Calendar_test', function () {
 /////////////////////////
 // สิ้นสุด หน้าที่ไม่ได้ใช้จริง //
 ////////////////////////
+
+
+Route::get('room/check_login', 'RoomController@check_login');

@@ -181,4 +181,16 @@ class RoomController extends Controller
         return view('room.room_admin.room_admin_index', compact('room','user'));
     }
 
+    public function check_login(Request $request){
+
+        $type = $request->get('type');
+
+        if(Auth::check()){
+            return redirect('room?type=' . $type);
+        }else{
+            return redirect('/login/line?redirectTo=room?type=' . $type);
+        }
+
+    }
+
 }

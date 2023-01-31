@@ -1,0 +1,81 @@
+{
+    "type": "flex",
+    "altText": "ตัวอย่าง",
+    "contents":
+    {
+        "type": "carousel",
+        "contents": [
+          {
+            "type": "bubble",
+            "size": "micro",
+            "hero": {
+              "type": "image",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/588-hospital.svg/1200px-588-hospital.svg.png",
+              "size": "full",
+              "aspectMode": "cover",
+              "aspectRatio": "320:213",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.google.com/search?q=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&oq=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&aqs=edge..69i57j0i402l2j0i512l5.6845j0j1&sourceid=chrome&ie=UTF-8"
+              }
+            },
+            "body": {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "weight": "bold",
+                  "size": "lg",
+                  "wrap": true,
+                  "text": "โรงพยาบาลใกล้ฉัน",
+                  "align": "center"
+                }
+              ],
+              "spacing": "sm",
+              "paddingAll": "13px",
+              "width": "250px",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.google.com/search?q=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&oq=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B8%9E%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&aqs=edge..69i57j0i402l2j0i512l5.6845j0j1&sourceid=chrome&ie=UTF-8"
+              }
+            }
+          },
+          {
+            "type": "bubble",
+            "size": "micro",
+            "hero": {
+              "type": "image",
+              "url": "https://png.pngtree.com/png-clipart/20211014/ourlarge/pngtree-pharmacy-flat-style-illustration-of-female-characters-png-image_3973433.png",
+              "size": "full",
+              "aspectMode": "cover",
+              "aspectRatio": "320:213",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.google.com/search?q=%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%A2%E0%B8%B2%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&source=lmns&bih=1007&biw=1920&hl=th&sa=X&ved=2ahUKEwjd8qia-PD8AhUj3HMBHYCmAM4Q_AUoAHoECAEQAA"
+              }
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ร้านยาใกล้ฉัน ",
+                  "weight": "bold",
+                  "size": "lg",
+                  "wrap": true,
+                  "align": "center"
+                }
+              ],
+              "spacing": "sm",
+              "paddingAll": "13px",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.google.com/search?q=%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%A2%E0%B8%B2%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%89%E0%B8%B1%E0%B8%99&source=lmns&bih=1007&biw=1920&hl=th&sa=X&ved=2ahUKEwjd8qia-PD8AhUj3HMBHYCmAM4Q_AUoAHoECAEQAA"
+              }
+            }
+          }
+        ]
+      }
+}

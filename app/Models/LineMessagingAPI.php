@@ -80,12 +80,16 @@ class LineMessagingAPI extends Model
                 $string_json = str_replace("วันที่เกิดเหตุ" , "ไม่อยู่" ,$string_json);
                 $string_json = str_replace("วันที่" , "ไป" ,$string_json);
                 break;
+            case 'select_menu_hnd':
+                $template_path = storage_path('../public/json/flex_test.json');
+                $string_json = file_get_contents($template_path);
+                break;
 
             default:
                 $template_path = storage_path('../public/json/text.json');
                 $string_json = file_get_contents($template_path);
 
-                $string_json = str_replace("hello" , "สวัสดีครับคุณพรี๊" ,$string_json);
+                $string_json = str_replace("hello" , "สวัสดีครับ" ,$string_json);
                 break;
         }
 

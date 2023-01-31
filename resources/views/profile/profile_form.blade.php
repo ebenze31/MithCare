@@ -1,12 +1,12 @@
 
 <div class="form-group {{ $errors->has('full_name') ? 'has-error' : ''}}" style="display: block">
     <label for="full_name" class="control-label" style="font-size: 25px;">{{ 'ชื่อ-สกุล' }}</label>
-    <input class="form-control" name="full_name" type="text" id="full_name" maxlength="20" placeholder="" value="{{ isset($user->full_name) ? $user->full_name : ''}}">{!! $errors->first('name', '<p class="help-block">:ชื่อนี้ไม่สามารถใช้ได้</p>') !!}
+    <input class="form-control" name="full_name" type="text" id="full_name" maxlength="20" placeholder="" value="{{ isset($user->full_name) ? $user->full_name : ''}}" required>{!! $errors->first('name', '<p class="help-block">:ชื่อนี้ไม่สามารถใช้ได้</p>') !!}
 </div> <!--///  ชื่อเล่น /// -->
 
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}" style="display: block">
     <label for="name" class="control-label" style="font-size: 25px;">{{ 'ชื่อเล่น' }}</label>
-    <input class="form-control" name="name" type="text" id="name" maxlength="20" placeholder="กรุณาใส่ชื่อเล่น" value="{{ isset($user->name) ? $user->name : ''}}">{!! $errors->first('name', '<p class="help-block">:ชื่อนี้ไม่สามารถใช้ได้</p>') !!}
+    <input class="form-control" name="name" type="text" id="name" maxlength="20" placeholder="กรุณาใส่ชื่อเล่น" value="{{ isset($user->name) ? $user->name : ''}}" required>{!! $errors->first('name', '<p class="help-block">:ชื่อนี้ไม่สามารถใช้ได้</p>') !!}
 </div> <!--///  ชื่อเล่น /// -->
 
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}" style="display: block">
@@ -17,7 +17,6 @@
 <div class="row">
     <div class="form-group {{ $errors->has('gender') ? 'has-error' : ''}} col-12 col-md-6">
         <label for="gender" class="control-label" style="font-size: 25px;">{{ 'เพศ' }}</label>
-        <!-- <input class="form-control" name="gender" type="text" id="gender" placeholder="กรุณาใส่อีเมล" value="{{ isset($user->gender) ? $user->gender : ''}}">{!! $errors->first('name', '<p class="help-block">:รูปแบบอีเมลไม่ถูกต้อง</p>') !!} -->
         <select name="gender" class="form-control" id="gender" required>
             <option selected disabled>กรุณาเลือกเพศ</option>
             @foreach (json_decode('{"ชาย":"ชาย","หญิง":"หญิง"}', true) as $optionKey => $optionvalue)
@@ -28,7 +27,7 @@
 
     <div class="form-group {{ $errors->has('birthday') ? 'has-error' : ''}} col-12 col-md-6">
         <label for="birthday" class="control-label" style="font-size: 25px;">{{ 'วันเกิด' }}</label>
-        <input class="form-control input" name="birthday" type="date" id="birthday" value="{{ isset($user->birthday) ? $user->birthday : ''}}">{!! $errors->first('name', '<p class="help-block">:รูปแบบอีเมลไม่ถูกต้อง</p>') !!}
+        <input class="form-control input" name="birthday" type="date" id="birthday" value="{{ isset($user->birthday) ? $user->birthday : ''}}" required>{!! $errors->first('name', '<p class="help-block">:รูปแบบอีเมลไม่ถูกต้อง</p>') !!}
 
     </div> <!--///  วันเกิด /// -->
 </div>
@@ -48,7 +47,7 @@
 
 
         <div class="form-group col-12 col-md-4">
-            <select id="input_province" name="province" onChange="showAmphoes();" value="{{ isset($user->province) ? $user->province : ''}}" class="form-control">
+            <select id="input_province" name="province" onChange="showAmphoes();" value="{{ isset($user->province) ? $user->province : ''}}" class="form-control" required>
 
                 @if(!empty($user->province))
                 <option value="{{$user->province}}" selected disabled>{{$user->province}}</option>
@@ -62,7 +61,7 @@
         </div> <!--///  จังหวัด /// -->
 
         <div class="form-group col-12 col-md-4">
-            <select id="input_amphoe" name="district" onChange="showTambons();" class="form-control">
+            <select id="input_amphoe" name="district" onChange="showTambons();" class="form-control" required>
                 @if(!empty($user->district))
                 <option value="{{$user->district}}" selected disabled>{{$user->district}}</option>
                 @else
@@ -72,7 +71,7 @@
         </div> <!--///  อำเภอ /// -->
 
         <div class="form-group col-12 col-md-4">
-            <select id="input_tambon" name="sub_district" value="{{ isset($user->sub_district) ? $user->sub_district : ''}}" class="form-control">
+            <select id="input_tambon" name="sub_district" value="{{ isset($user->sub_district) ? $user->sub_district : ''}}" class="form-control" required>
 
                 @if(!empty($user->sub_district))
                 <option value="{{$user->sub_district}}" selected disabled>{{$user->sub_district}}</option>
@@ -83,7 +82,7 @@
         </div> <!--///  ตำบล /// -->
 
         <div class="form-group col-12 col-md-12">
-            <textarea class="form-control " name="address" id="" cols="30" rows="2" placeholder="ใส่รายละเอียดที่อยู่">
+            <textarea class="form-control " name="address" id="" cols="30" rows="2" placeholder="ใส่รายละเอียดที่อยู่" required>
 @if(!empty($user->address))
 {{$user->address}}
 @else

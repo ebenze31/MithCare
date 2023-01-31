@@ -18,16 +18,16 @@ class LineApiController extends Controller
             "title" => "Line",
             "content" => json_encode($requestData, JSON_UNESCAPED_UNICODE),
         ];
-        MyLog::create($data);  
+        MyLog::create($data);
 
         //GET ONLY FIRST EVENT
         $event = $requestData["events"][0];
 
         switch($event["type"]){
-            case "message" : 
+            case "message" :
                 $this->messageHandler($event);
                 break;
-            case "postback" : 
+            case "postback" :
                 $this->postbackHandler($event);
                 break;
             case "join" :
@@ -36,10 +36,10 @@ class LineApiController extends Controller
             case "follow" :
                 $this->user_follow_line($event);
                 DB::table('users')
-                    ->where([ 
+                    ->where([
                             ['type', 'line'],
                             ['provider_id', $event['source']['userId']],
-                            ['status', "active"] 
+                            ['status', "active"]
                         ])
                     ->update(['add_line' => 'Yes']);
                 break;
@@ -49,7 +49,7 @@ class LineApiController extends Controller
     function messageHandler($event){
 
         switch($event["message"]["type"]){
-            case "text" : 
+            case "text" :
                 $this->textHandler($event);
                 break;
         }
@@ -62,15 +62,18 @@ class LineApiController extends Controller
         $text = $event["message"]["text"] ;
 
         switch( $text )
-        {     
-            case "ทดสอบ" :  
+        {
+            case "ทดสอบ" :
                 $line->replyToUser($event, "test");
                 break;
-            case "สมัครสมาชิก" :  
+            case "สมัครสมาชิก" :
                 $line->replyToUser($event, "register");
                 break;
-        }   
-        
+            case "โรงพยาบาลใกล้ฉัน/ร้านยาใกล้ฉัน" :
+                $line->replyToUser($event, "select_menu_hnd");
+                break;
+        }
+
     }
 
 }

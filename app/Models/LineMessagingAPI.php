@@ -81,7 +81,7 @@ class LineMessagingAPI extends Model
                 $string_json = str_replace("วันที่" , "ไป" ,$string_json);
                 break;
             case 'select_menu_hnd':
-                $template_path = storage_path('../public/json/flex_test.json');
+                $template_path = storage_path('../public/json/flex_hnd.json');
                 $string_json = file_get_contents($template_path);
                 break;
 

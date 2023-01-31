@@ -114,4 +114,4 @@ Route::get('/Calendar_test', function () {
 ////////////////////////
 
 
-Route::get('room/check_login', 'RoomController@check_login');
+Route::get('room_check_login', 'RoomController@check_login');

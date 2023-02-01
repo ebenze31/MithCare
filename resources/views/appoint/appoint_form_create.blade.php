@@ -68,7 +68,7 @@
 
         let type = document.querySelector('#type').value;
 
-        if (type === 'นัดหมอ') {
+        if (type === 'doc') {
             let div_date = document.querySelector('#div_date').classList ;
                 // console.log(div_date);
                 div_date.remove("col-md-6");

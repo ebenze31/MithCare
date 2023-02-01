@@ -146,9 +146,9 @@ class Ask_for_helpController extends Controller
     public function check_login(Request $request){
 
         if(Auth::check()){
-            return redirect('ask_for_help');
+            return redirect('ask_for_help/create');
         }else{
-            return redirect('/login/line?redirectTo=ask_for_help');
+            return redirect('/login/line?redirectTo=ask_for_help/create');
         }
 
     }

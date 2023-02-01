@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class AppointController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $room_id = $request->get('room_id');
@@ -30,27 +30,27 @@ class AppointController extends Controller
             }
         }
 
-       
-        
-        if ($check == "Yes"){ 
+
+
+        if ($check == "Yes"){
             $room = Room::where('id',$room_id)->first();
 
             if(!empty($type)){
                 $appoint = Appoint::where('room_id', $room_id)->where('type' , $type)->get();
             }else{
                 $appoint = Appoint::where('room_id', $room_id)->get();
-                
-            }    
-            
+
+            }
+
             return view('appoint.appoint_index', compact('room','room_id','appoint'));
 
         }else{
             return view('404');
         }
-        
+
     }
 
-  
+
     public function create()
     {
         return view('appoint.create');
@@ -59,7 +59,7 @@ class AppointController extends Controller
     public function store(Request $request, $id)
     {
         $create_by_id = Auth::id();
-        
+
         $requestData = $request->all();
         $requestData["create_by_id"] = $create_by_id;
         $requestData["room_id"] = $id;
@@ -69,7 +69,7 @@ class AppointController extends Controller
         return back();
     }
 
-    
+
     public function show($id)
     {
         $appoint = Appoint::findOrFail($id);
@@ -77,7 +77,7 @@ class AppointController extends Controller
         return view('appoint.show', compact('appoint'));
     }
 
-  
+
     public function edit($id)
     {
 
@@ -89,21 +89,21 @@ class AppointController extends Controller
             // // print_r($appoint);
             // // echo"</pre>";
             // // exit();
-            
+
             // return view('appoint.appoint_edit', compact('room','appoint'));
 
         //  }else{
         //     return view('404');
         //  }
 
-      
+
     }
 
-  
+
     public function update(Request $request)
     {
 
-       
+
         $requestData = $request->all();
 
         // echo"<pre>";
@@ -111,7 +111,7 @@ class AppointController extends Controller
         // echo"</pre>";
         // exit();
 
-        if($requestData['type'] == 'นัดหมอ'){
+        if($requestData['type'] == 'pill'){
             $requestData['date_time'] = null;
         }
 
@@ -125,7 +125,7 @@ class AppointController extends Controller
 
     public function destroy($id)
     {
-        
+
         Appoint::destroy($id);
 
         return back();

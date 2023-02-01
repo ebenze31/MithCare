@@ -137,7 +137,7 @@
 
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <button class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</button>
+                                                            <button class="btn-old btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">บันทึก</button>
                                                         </div>
                                                     </form>
                                                         <div class="col-6">
@@ -171,8 +171,8 @@
                 <div class="row" id="appoint_selector">
                     <div class="col-12 col-md-10 mt-2">
                         <a  style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}">ทั้งหมด</a>
-                        <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=นัดหมอ">นัดหมอ</a>
-                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=ทานยา">ทานยา</a>
+                        <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=doc">นัดหมอ</a>
+                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill">ทานยา</a>
                     </div>
                     <div class="col-6 col-md-2 column mt-2">
                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>

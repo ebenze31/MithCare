@@ -22,7 +22,7 @@ class RoomController extends Controller
         $user = User::findOrFail($id);
 
         $check_url = $request->get('check_url');
-
+        $type = $request->get('type');
         // echo"<pre>";
         // print_r($my_room);
         // echo"</pre>";
@@ -41,7 +41,7 @@ class RoomController extends Controller
             // ->latest()->paginate($perPage);
         }
 
-        return view('room.index', compact('user','my_room','check_url'));
+        return view('room.index', compact('user','my_room','check_url','type'));
     }
 
 

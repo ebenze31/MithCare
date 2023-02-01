@@ -176,9 +176,16 @@
                                         </a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}" class="btn-old btn-primary btn-sm btn-block main-shadow main-radius">
-                                           ตารางนัด
-                                        </a>
+                                        @if (!empty($type))
+                                            <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}&type={{$type}}" class="btn-old btn-primary btn-sm btn-block main-shadow main-radius">
+                                                ตารางนัด
+                                            </a>
+                                        @else
+                                            <a href="{{ url('/appoint/') }}?room_id={{ $item->room->id }}" class="btn-old btn-primary btn-sm btn-block main-shadow main-radius">
+                                                ตารางนัด
+                                            </a>
+                                        @endif
+
                                     </div>
                                     <div class="col-12">
                                         <hr>

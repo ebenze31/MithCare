@@ -67,6 +67,7 @@ class AppointController extends Controller
         Appoint::create($requestData);
 
         return back();
+        // return view('appoint');
     }
 
 

@@ -288,7 +288,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
                     let option_select = document.createElement("option");
-                    option_select.text = result.type;
+                    if(result.type == 'doc'){
+                        option_select.text = 'นัดหมอ';
+                    }else{
+                        option_select.text = 'ใช้ยา';
+                    }
                     option_select.value = result.type;
                     option_select.selected = true;
                     option_select.disabled = true;

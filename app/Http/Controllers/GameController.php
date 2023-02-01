@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -86,5 +87,15 @@ class GameController extends Controller
         Game::destroy($id);
 
         return redirect('game');
+    }
+
+    public function check_login(Request $request){
+
+        if(Auth::check()){
+            return redirect('game');
+        }else{
+            return redirect('/login/line?redirectTo=game');
+        }
+
     }
 }

@@ -2,6 +2,24 @@
 
 @section('content')
 
+<style>
+    .btn-circle{
+        font-size: 20px;
+        font-weight: 700;
+        display: block;
+        width: 60px;
+        height: 60px;
+        line-height: 46px;
+        text-align: center;
+        border-radius: 50%;
+        color: #4170A2;
+        border: 2px solid #e6e8eb;
+        background-color: #ffffff;
+        -webkit-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+    }
+</style>
+
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
@@ -59,54 +77,82 @@
                     <br />
                     <br />
 
-                    <div class="col-lg-12 col-md-9">
+                    <div class="col-12 col-md-12">
                         <div class="pricing-widget-layout2 mb-70 product-item">
-                            <ul class="pricing__list list-unstyled mb-0">
-                                {{-- <li>
-                                    <span>รหัสค้นหาบ้าน</span>
-                                    <input id="gen_id" value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" class="">
-                                    <button class="btn-old btn-light" onclick="Copy_Text()"><i class="fa-regular fa-copy"></i></button>
-                                </li> --}}
-                                <div class="input-group mb-3">
-                                    <span>รหัสค้นหาบ้าน</span>
-                                    <input type="text" class="form-control" value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            {{-- แสดงเฉพาะคอม --}}
+                            <ul class="d-none d-lg-block pricing__list list-unstyled mb-0">
+                                <li>
+                                    <span class="details__title" style="font-size: 25px;">รหัสค้นหาบ้าน</span>
+                                    <input type="text" id="gen_id"  class="form-control col-9" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" >&nbsp;&nbsp;
                                     <div class="input-group-append">
                                         <span class="input-group-append">
-                                            <button class="btn-old btn-info"  type="submit"
-                                             style="border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px; border-color:#495057" >
+                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text()" type="submit"
+                                            style="">
                                                 <i class="fa-regular fa-copy"></i>
                                             </button>
                                         </span>
                                     </div>
-                                </div>
-
+                                </li>
                                 <li>
-                                    <h5 class="details__title" style="font-size: 25px;">ชื่อบ้าน</h5>
+                                    <span class="details__title" style="font-size: 25px;">ชื่อบ้าน</span>
                                     <div class="details__content">
                                         <p class="mb-0" style="font-size: 25px;">{{ $room->name }}</p>
                                     </div>
                                 </li>
                                 <li>
-                                    <h5 class="details__title" style="font-size: 25px;">เจ้าของบ้าน</h5>
+                                    <span class="details__title" style="font-size: 25px;">เจ้าของบ้าน</span>
                                     <div class="details__content">
                                         <p class="mb-0" style="font-size: 25px;">{{ $room->user->name }}</p>
                                     </div>
                                 </li>
+                            </ul> {{--สิ้นสุด แสดงเฉพาะคอม --}}
 
-                                {{-- <li><span>ชื่อบ้าน</span><span class="price">{{ $room->name }}</span></li>
-                                <li><span>เจ้าของบ้าน</span><span class="price">{{ $room->user->name }}</span></li> --}}
-                            </ul>
+                             {{-- แสดงเฉพาะมือถือ --}}
+                            <ul class="d-block d-md-none pricing__list list-unstyled mb-0">
+                                <li>
+                                    <span class="details__title" style="font-size: 20px;">รหัสค้นหาบ้าน</span>
+                                </li>
+                                <li>
+
+                                    <input type="text" id="gen_id"  class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" >&nbsp;&nbsp;
+                                    <div class="input-group-append">
+                                        <span class="input-group-append">
+                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text()" type="submit">
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="details__title" style="font-size: 20px;">ชื่อบ้าน</span>
+                                    <div class="details__content">
+                                        <p class="mb-0" style="font-size: 20px;">{{ $room->name }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="details__title" style="font-size: 20px;">เจ้าของบ้าน</span>
+                                    <div class="details__content">
+                                        <p class="mb-0" style="font-size: 20px;">{{ $room->user->name }}</p>
+                                    </div>
+                                </li>
+                            </ul> {{-- สิ้นสุด แสดงเฉพาะมือถือ --}}
                         </div>
                     </div>
 
-                    <div class="col-lg-12 col-md-9 ">
+                    <div class="col-12 col-md-12 ">
                         <div class="pricing-widget-layout2 mb-70 product-item">
                             <h4>สมาชิกในบ้าน</h4>
-                            <ul class="pricing__list list-unstyled mb-0">
-                                <li><span>1</span><span class="price">คุณ ..........</span></li>
-                                <li><span>2</span><span class="price">คุณ ..........</span></li>
-                                <li><span>3</span><span class="price">คุณ ..........</span></li>
-                            </ul>
+                            @foreach ($member as $item)
+                                <ul class="pricing__list list-unstyled mb-0">
+                                    <li>
+                                        <span>{{$loop->iteration}}</span>
+                                        <span>{{$item->id}}</span>
+                                        <span class="price">Deer</span>
+                                    </li>
+                                </ul>
+                            @endforeach
                         </div>
                     </div>
 
@@ -149,6 +195,6 @@
       navigator.clipboard.writeText(copyText.value);
 
       // Alert the copied text
-      alert("Copied the text: " + copyText.value);
+    //   alert("Copied !!!" );
     }
-    </script>
+</script>

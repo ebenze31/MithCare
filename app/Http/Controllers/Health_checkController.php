@@ -112,4 +112,14 @@ class Health_checkController extends Controller
 
         return redirect('health_check')->with('flash_message', 'Health_check deleted!');
     }
+
+    public function check_login(Request $request){
+
+        if(Auth::check()){
+            return redirect('health_check');
+        }else{
+            return redirect('/login/line?redirectTo=health_check');
+        }
+
+    }
 }

@@ -29,6 +29,8 @@ Auth::routes();
 Route::get('room_check_login', 'RoomController@check_login');
 Route::get('ask_for_help_check_login', 'Ask_for_helpController@check_login');
 Route::get('profile_check_login', 'ProfileController@check_login');
+Route::get('health_check_check_login', 'Health_checkController@check_login');
+Route::get('game_check_login', 'GameController@check_login');
 
 
 

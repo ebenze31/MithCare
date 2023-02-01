@@ -90,7 +90,9 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($id);
 
-        return view('room.show', compact('room'));
+        $member = Member_of_room::where('room_id',$room)->get();
+
+        return view('room.show', compact('room','member'));
     }
 
 

@@ -25,7 +25,7 @@
               "height": "45%",
               "action": {
                 "type": "uri",
-                "uri": "https://www.mithcare.com/health_check"
+                "uri": "https://www.mithcare.com/health_check_check_login?openExternalBrowser=1"
               },
               "offsetTop": "2%",
               "offsetStart": "3%"
@@ -39,7 +39,7 @@
               "height": "45%",
               "action": {
                 "type": "uri",
-                "uri": "https://www.mithcare.com/game"
+                "uri": "https://www.mithcare.com/game_check_login?openExternalBrowser=1"
               },
               "offsetTop": "2%",
               "offsetEnd": "3%"

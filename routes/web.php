@@ -25,7 +25,10 @@ Route::get('/terms_of_service', function () {
 
 Auth::routes();
 
-
+// เช็คล็อคอิน
+Route::get('room_check_login', 'RoomController@check_login');
+Route::get('ask_for_help_check_login', 'Ask_for_helpController@check_login');
+Route::get('profile_check_login', 'ProfileController@check_login');
 
 
 
@@ -114,7 +117,3 @@ Route::get('/Calendar_test', function () {
 ////////////////////////
 
 
-Route::get('room_check_login', 'RoomController@check_login');
-
-// ask_for_help_check_login
-// profile_check_login

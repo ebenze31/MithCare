@@ -92,6 +92,16 @@ class ProfileController extends Controller
         return view('profile.profile_register' , compact('user','provinces','amphoes','tambons'));
     }
 
+    public function check_login(Request $request){
+
+        if(Auth::check()){
+            return redirect('profile');
+        }else{
+            return redirect('/login/line?redirectTo=profile');
+        }
+
+    }
+
 
 
 }

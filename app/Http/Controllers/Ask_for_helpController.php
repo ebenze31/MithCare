@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
 use App\Models\Ask_for_help;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class Ask_for_helpController extends Controller
 {
@@ -73,9 +74,9 @@ class Ask_for_helpController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Ask_for_help::create($requestData);
 
         return redirect('ask_for_help')->with('flash_message', 'Ask_for_help added!');
@@ -119,9 +120,9 @@ class Ask_for_helpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $ask_for_help = Ask_for_help::findOrFail($id);
         $ask_for_help->update($requestData);
 
@@ -140,5 +141,15 @@ class Ask_for_helpController extends Controller
         Ask_for_help::destroy($id);
 
         return redirect('ask_for_help')->with('flash_message', 'Ask_for_help deleted!');
+    }
+
+    public function check_login(Request $request){
+
+        if(Auth::check()){
+            return redirect('ask_for_help');
+        }else{
+            return redirect('/login/line?redirectTo=ask_for_help');
+        }
+
     }
 }

@@ -112,7 +112,7 @@ class AppointController extends Controller
         // echo"</pre>";
         // exit();
 
-        if($requestData['type'] == 'pill'){
+        if($requestData['type'] == 'doc'){
             $requestData['date_time'] = null;
         }
 

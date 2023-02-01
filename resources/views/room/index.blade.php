@@ -32,12 +32,12 @@
 <div class="container mt-3">
     <div class="row d-flex justify-content-end ">
         <!-- Button trigger modal -->
-        <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#create_room">
+        <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" id="btn_create_room" data-toggle="modal" data-target="#create_room">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่
         </a>
         <!-- <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่</a> -->
-        <a href="{{ url('/room_join') }}" class="btn btn-primary btn-sm main-shadow main-radius mr-2" style="font-size: 20px;" data-toggle="modal" data-target="#join_room">
+        <a href="{{ url('/room_join') }}" class="btn btn-primary btn-sm main-shadow main-radius mr-2" style="font-size: 20px;" id="btn_find_room" data-toggle="modal" data-target="#join_room">
             <i class="fa-solid fa-right-to-bracket"></i>ขอเข้าร่วม</a>
 
 
@@ -286,7 +286,22 @@
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // console.log("START");
+
+        if('{{$check_url}}' == 'create_room'){
+            document.querySelector('#btn_create_room').click();
+        }else if('{{$check_url}}' == 'find_room'){
+            document.querySelector('#btn_find_room').click();
+        }
+
+    });
+</script>
+
 @endsection
+
+
 
 
 

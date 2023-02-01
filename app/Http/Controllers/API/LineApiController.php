@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mylog;
@@ -61,6 +62,11 @@ class LineApiController extends Controller
         $line = new LineMessagingAPI();
         $text = $event["message"]["text"] ;
 
+        // $data_users = DB::table('users')
+        //         ->where('provider_id', $event["source"]['userId'])
+        //         ->where('status', "active")
+        //         ->get();
+
         switch( $text )
         {
             case "ทดสอบ" :
@@ -69,12 +75,16 @@ class LineApiController extends Controller
             case "สมัครสมาชิก" :
                 $line->replyToUser($event, "register");
                 break;
-            case "โรงพยาบาลใกล้ฉัน/ร้านยาใกล้ฉัน" :
+            case "โรงพยาบาล/ร้านยา" :
                 $line->replyToUser($event, "select_menu_hnd");
                 break;
-            case "เลือกเมนูอื่นๆ" :
+            case "ครอบครัวของฉัน" :
+                $line->replyToUser($event, "select_my_room");
+                break;
+            case "อื่นๆ" :
                 $line->replyToUser($event, "select_menu_other");
                 break;
+
         }
 
     }

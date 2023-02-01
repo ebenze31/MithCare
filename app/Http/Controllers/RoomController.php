@@ -21,7 +21,7 @@ class RoomController extends Controller
 
         $user = User::findOrFail($id);
 
-
+        $check_url = $request->get('check_url');
 
         // echo"<pre>";
         // print_r($my_room);
@@ -41,7 +41,7 @@ class RoomController extends Controller
             // ->latest()->paginate($perPage);
         }
 
-        return view('room.index', compact('user','my_room'));
+        return view('room.index', compact('user','my_room','check_url'));
     }
 
 
@@ -61,13 +61,18 @@ class RoomController extends Controller
         $data_user = Auth::user();
         $requestData = $request->all();
 
+        // สุ่มลิ้ง url
+        for ($i=0; $i < 10; $i++) {
+            $randomSite = "https:/www.mithcare.com/room/" . hash('adler32', $i);
+        }
+
         // echo"<pre>";
-        // print_r( $requestData);
+        // print_r( $randomSite);
         // echo"</pre>";
         // exit();
 
         $requestData['owner_id'] = $data_user->id;
-
+        $requestData['gen_id'] = $randomSite;
 
         $room = Room::create($requestData);
 

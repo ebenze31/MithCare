@@ -59,17 +59,47 @@
                     <br />
                     <br />
 
-                    <div class="collg-12 col-md-9">
+                    <div class="col-lg-12 col-md-9">
                         <div class="pricing-widget-layout2 mb-70 product-item">
                             <ul class="pricing__list list-unstyled mb-0">
-                                <li><span>รหัสค้นหาบ้าน</span><span class="price">#sdfgfhad4155ET51858#848FDFSdfgd</span></li>
-                                <li><span>ชื่อบ้าน</span><span class="price">{{ $room->name }}</span></li>
-                                <li><span>เจ้าของบ้าน</span><span class="price">{{ $room->user->name }}</span></li>
+                                {{-- <li>
+                                    <span>รหัสค้นหาบ้าน</span>
+                                    <input id="gen_id" value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" class="">
+                                    <button class="btn-old btn-light" onclick="Copy_Text()"><i class="fa-regular fa-copy"></i></button>
+                                </li> --}}
+                                <div class="input-group mb-3">
+                                    <span>รหัสค้นหาบ้าน</span>
+                                    <input type="text" class="form-control" value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-append">
+                                            <button class="btn-old btn-info"  type="submit"
+                                             style="border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px; border-color:#495057" >
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <li>
+                                    <h5 class="details__title" style="font-size: 25px;">ชื่อบ้าน</h5>
+                                    <div class="details__content">
+                                        <p class="mb-0" style="font-size: 25px;">{{ $room->name }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h5 class="details__title" style="font-size: 25px;">เจ้าของบ้าน</h5>
+                                    <div class="details__content">
+                                        <p class="mb-0" style="font-size: 25px;">{{ $room->user->name }}</p>
+                                    </div>
+                                </li>
+
+                                {{-- <li><span>ชื่อบ้าน</span><span class="price">{{ $room->name }}</span></li>
+                                <li><span>เจ้าของบ้าน</span><span class="price">{{ $room->user->name }}</span></li> --}}
                             </ul>
                         </div>
                     </div>
 
-                    <div class="collg-12 col-md-9 ">
+                    <div class="col-lg-12 col-md-9 ">
                         <div class="pricing-widget-layout2 mb-70 product-item">
                             <h4>สมาชิกในบ้าน</h4>
                             <ul class="pricing__list list-unstyled mb-0">
@@ -104,3 +134,21 @@
     </div>
 </section><!-- กันสั่น -->
 @endsection
+
+
+<script>
+    function Copy_Text() {
+      // Get the text field
+      var copyText = document.getElementById("gen_id");
+
+      // Select the text field
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.value);
+
+      // Alert the copied text
+      alert("Copied the text: " + copyText.value);
+    }
+    </script>

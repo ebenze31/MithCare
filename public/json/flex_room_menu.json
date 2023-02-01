@@ -1,0 +1,66 @@
+{
+    "type": "flex",
+    "altText": "ตัวอย่าง",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "giga",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://i.postimg.cc/yNsHbDzZ/Room-menu.png",
+              "size": "full",
+              "aspectRatio": "747:278",
+              "aspectMode": "cover"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "30%",
+              "position": "absolute",
+              "height": "90%",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.mithcare.com/room?openExternalBrowser=1&check_url=create_room"
+              },
+              "offsetTop": "5%",
+              "offsetStart": "2%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "30%",
+              "position": "absolute",
+              "height": "90%",
+              "offsetStart": "35%",
+              "action": {
+                "type": "uri",
+                "uri": "https://www.mithcare.com/room?openExternalBrowser=1&check_url=find_room"
+              },
+              "offsetTop": "5%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [],
+              "width": "30%",
+              "position": "absolute",
+              "height": "90%",
+              "offsetStart": "68%",
+              "action": {
+                "type": "message",
+                "text": "ยังไม่เปิดใช้บริการ"
+              },
+              "offsetTop": "5%"
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}

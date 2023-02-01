@@ -12,7 +12,7 @@ class Room extends Model
     protected $primaryKey = 'id';
 
 
-    protected $fillable = ['name', 'pass' ,'owner_id','home_pic'];
+    protected $fillable = ['name', 'pass' ,'owner_id','home_pic','gen_id'];
 
 
     public function user(){

@@ -80,12 +80,20 @@ class LineMessagingAPI extends Model
                 $string_json = str_replace("วันที่เกิดเหตุ" , "ไม่อยู่" ,$string_json);
                 $string_json = str_replace("วันที่" , "ไป" ,$string_json);
                 break;
+
+                // โรงพยาบาล และ ร้านยา ใกล้ฉัน
             case 'select_menu_hnd':
                 $template_path = storage_path('../public/json/flex_hnd.json');
                 $string_json = file_get_contents($template_path);
                 break;
+                // อื่นๆ
             case 'select_menu_other':
                 $template_path = storage_path('../public/json/flex_other.json');
+                $string_json = file_get_contents($template_path);
+                break;
+                // ครอบครัวของฉัน
+            case 'select_my_room':
+                $template_path = storage_path('../public/json/flex_room_menu.json');
                 $string_json = file_get_contents($template_path);
                 break;
 

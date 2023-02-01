@@ -50,7 +50,7 @@
                         <i class="fa fa-plus"></i>เพิ่มตารางนัดหมอ/กินยา</a> -->
                     <a class="btn btn-primary btn-sm main-shadow main-radius mr-2"
                         style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มตารางนัดหมอ/กินยา
+                        <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มตารางนัดหมอ/ใช้ยา
                     </a>
 
 
@@ -172,11 +172,11 @@
                     <div class="col-12 col-md-10 mt-2">
                         <a  style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}">ทั้งหมด</a>
                         <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=doc">นัดหมอ</a>
-                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill">ทานยา</a>
+                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill">ใช้ยา</a>
                     </div>
                     <div class="col-6 col-md-2 column mt-2">
                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>
-                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ทานยา</a>
+                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ใช้ยา</a>
                     </div>
                 </div>
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: '{{ $ap->title }}',
 
                 @if(!empty($ap-> date_time))
-                    // กินยา
+                    // ใช้ยา
                     start: '{{ $ap->date }} {{ $ap->date_time }}',
                     color: '#21cdc0'
                 @else
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // console.log(result.type);
                     // console.log(result);
 
-                    if (result.type === 'นัดหมอ') {
+                    if (result.type === 'doc') {
                         document.querySelector('.date_edit').value = result.date;
 
                         let div_date = document.querySelector('#div_date_edit').classList ;
@@ -296,12 +296,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     let option_1 = document.createElement("option");
                     option_1.text = "นัดหมอ";
-                    option_1.value = "นัดหมอ";
+                    option_1.value = "doc";
                     type_edit.add(option_1);
 
                     let option_2 = document.createElement("option");
-                    option_2.text = "ทานยา";
-                    option_2.value = "ทานยา";
+                    option_2.text = "ใช้ยา";
+                    option_2.value = "pill";
                     type_edit.add(option_2);
 
                 });
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function edit_type() {
       let type = document.querySelector('#type_edit').value;
 
-      if (type === 'นัดหมอ') {
+      if (type === 'doc') {
             let div_date = document.querySelector('#div_date_edit').classList ;
                 // console.log(div_date);
                 div_date.remove("col-md-6");

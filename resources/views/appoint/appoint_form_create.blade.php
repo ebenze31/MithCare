@@ -1,10 +1,10 @@
 <div class="row">
 
     <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
-        <label for="type" class="control-label" style="font-size: 25px;">{{ 'นัดหมอ/ทานยา' }}</label>
+        <label for="type" class="control-label" style="font-size: 25px;">{{ 'นัดหมอ/ใช้ยา' }}</label>
         <select name="type" class="form-control" id="type" onchange="show_input();" required>
         <option selected disabled >กรุณาเลือกประเภทนัดหมาย</option>
-            @foreach (json_decode('{"นัดหมอ":"นัดหมอ","ทานยา":"ทานยา"}', true) as $optionKey => $optionvalue)
+            @foreach (json_decode('{"doc":"นัดหมอ","pill":"ใช้ยา"}', true) as $optionKey => $optionvalue)
                 <option value="{{ $optionKey }}" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
             @endforeach
         </select>
@@ -15,7 +15,7 @@
         <input class="form-control" name="title" type="text" id="title" value="{{ isset($appoint->title) ? $appoint->title : ''}}" required>
         {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
     </div>
- 
+
     <!-- <div  id="div_datetime" class="form-group {{ $errors->has('date_time') ? 'has-error' : ''}} col-md-12 col-12 ">
         <label id="label_datetime" for="date_time" class="control-label">{{ 'วันที่/เวลา' }}</label>
         <input class="form-control" name="date_time" type="datetime-local" id="date_time"  value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" >
@@ -76,7 +76,7 @@
                 div_date.add('col-md-12');
             document.querySelector('#div_datetime').classList.add('d-none');
             document.querySelector('#date_time').required = false ;
-        }else {        
+        }else {
              let div_date = document.querySelector('#div_date').classList;
                 // console.log(div_date);
                 div_date.remove("col-md-12");

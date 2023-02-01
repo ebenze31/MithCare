@@ -4,7 +4,7 @@
         <label for="type" class="control-label" style="font-size: 25px;">{{ 'ประเภท' }}</label>
         <select name="type" class="form-control type_edit" id="type_edit" onChange="edit_type();" required>
         <option selected disabled>กรุณาเลือกประเภท</option>
-            @foreach (json_decode('{"doc":"นัดหมอ","pill":"ทานยา"}', true) as $optionKey => $optionvalue)
+            @foreach (json_decode('{"doc":"นัดหมอ","pill":"ใช้ยา"}', true) as $optionKey => $optionvalue)
                 <option value="{{ $optionKey }}" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
             @endforeach
         </select>

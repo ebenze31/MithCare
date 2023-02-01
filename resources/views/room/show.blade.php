@@ -83,11 +83,11 @@
                             <ul class="d-none d-lg-block pricing__list list-unstyled mb-0">
                                 <li>
                                     <span class="details__title" style="font-size: 25px;">รหัสค้นหาบ้าน</span>
-                                    <input type="text" id="gen_id"  class="form-control col-9" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" >&nbsp;&nbsp;
+                                    <p type="text" id="gen_id_computer"  class=" col-9" aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2" >{{ isset($room->gen_id) ? $room->gen_id : ''}}</p>&nbsp;&nbsp;
                                     <div class="input-group-append">
                                         <span class="input-group-append">
-                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text()" type="submit"
+                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_Computer()" type="submit"
                                             style="">
                                                 <i class="fa-regular fa-copy"></i>
                                             </button>
@@ -114,12 +114,11 @@
                                     <span class="details__title" style="font-size: 20px;">รหัสค้นหาบ้าน</span>
                                 </li>
                                 <li>
-
-                                    <input type="text" id="gen_id"  class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" >&nbsp;&nbsp;
+                                    <input type="text" id="gen_id_mobile"  class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" readonly>&nbsp;&nbsp;
                                     <div class="input-group-append">
                                         <span class="input-group-append">
-                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text()" type="submit">
+                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_Mobile()" type="submit">
                                                 <i class="fa-regular fa-copy"></i>
                                             </button>
                                         </span>
@@ -148,8 +147,8 @@
                                 <ul class="pricing__list list-unstyled mb-0">
                                     <li>
                                         <span>{{$loop->iteration}}</span>
-                                        <span>{{$item->id}}</span>
-                                        <span class="price">Deer</span>
+                                        <span>{{$item->user->name}}</span>
+
                                     </li>
                                 </ul>
                             @endforeach
@@ -183,18 +182,25 @@
 
 
 <script>
-    function Copy_Text() {
+    function Copy_Text_Computer() {
       // Get the text field
-      var copyText = document.getElementById("gen_id");
-
-      // Select the text field
-      copyText.select();
-      copyText.setSelectionRange(0, 99999); // For mobile devices
+      var copyText = document.getElementById("gen_id_computer");
 
       // Copy the text inside the text field
-      navigator.clipboard.writeText(copyText.value);
+      navigator.clipboard.writeText(copyText.innerText);
 
-      // Alert the copied text
-    //   alert("Copied !!!" );
+    //   Alert the copied text
+      alert("Copied !!!" );
+    }
+
+    function Copy_Text_Mobile() {
+      // Get the text field
+      var copyText = document.getElementById("gen_id_mobile");
+
+     // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.innerText);
+
+    //   Alert the copied text
+      alert("Copied !!!" );
     }
 </script>

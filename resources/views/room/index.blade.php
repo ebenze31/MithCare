@@ -15,14 +15,14 @@
                     <div class="d-none d-lg-block">
                         <ol class=" breadcrumb mb-0 ">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
-                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้านของฉัน</a></li>
                         </ol>
                     </div> <!--d-none d-lg-block -->
                     <!-- แสดงเฉพาะมือถือ -->
                     <div class="d-block d-md-none">
                         <ol class=" breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
-                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้านของฉัน</a></li>
                         </ol>
                     </div> <!--d-block d-md-none -->
                 </nav>

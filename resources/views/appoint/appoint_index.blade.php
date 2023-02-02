@@ -17,7 +17,14 @@
                             </li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">ตารางนัด</a></li>
+                            @if ($type == 'doc')
+                                <li class="breadcrumb-item"><a href="#">ตาราง นัดหมอ</a></li>
+                            @elseif($type == 'pill')
+                                <li class="breadcrumb-item"><a href="#">ตาราง ใช้ยา</a></li>
+                            @elseif(($type == 'all'))
+                                <li class="breadcrumb-item"><a href="#">ตารางนัดทั้งหมด</a></li>
+                            @endif
+
                         </ol>
                     </div>
                     <!--d-none d-lg-block -->
@@ -28,7 +35,14 @@
                             </li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">ตารางนัด</a></li>
+                            @if ($type == 'doc')
+                                <li class="breadcrumb-item"><a href="#">ตาราง นัดหมอ</a></li>
+                            @elseif($type == 'pill')
+                                <li class="breadcrumb-item"><a href="#">ตาราง ใช้ยา</a></li>
+                            @elseif(($type == 'all'))
+                                <li class="breadcrumb-item"><a href="#">ตารางนัดทั้งหมด</a></li>
+                            @endif
+
                         </ol>
                     </div>
                     <!--d-block d-md-none -->
@@ -40,7 +54,7 @@
 
 
 
-<section class="page-title page-title-layout5">
+<section id="head_content" class="page-title page-title-layout5">
     <div class="container">
         <div class="row">
 
@@ -48,7 +62,7 @@
                 <div class="row d-flex justify-content-end ">
                     <!-- <a href="#" class="btn btn-success btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
                         <i class="fa fa-plus"></i>เพิ่มตารางนัดหมอ/กินยา</a> -->
-                    <a class="btn btn-primary btn-sm main-shadow main-radius mr-2"
+                    <a  class="btn btn-primary btn-sm main-shadow main-radius mr-2"
                         style="font-size: 20px; color:#ffffff;" data-toggle="modal" data-target="#exampleModalCenter">
                         <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มตารางนัดหมอ/ใช้ยา
                     </a>
@@ -165,14 +179,42 @@
                 </div>
             </div>
             <div class="contact-panel col-md-12 mb-2 mt-3">
+                <h3>
+                    <span class="text-dark">ตาราง</span>
+                    @if ($type == 'doc')
+                        <span class="text-success">นัดหมอ</span>
+                    @elseif($type == 'pill')
+                        <span class="text-info">ใช้ยา</span>
+                    @else
+                        <span class="text-dark">ทั้งหมด</span>
+                    @endif
+                </h3>
 
-                <h3>ตารางนัด</h3>
+                @php
+                    switch ($type) {
+                        case 'doc':
+                            $color_doc = "btn-success";
+                            $color_pill = "btn-outline-info";
+                            $color_all = "btn-outline-dark";
+                            break;
+                        case 'pill':
+                            $color_doc = "btn-outline-success";
+                            $color_pill = "btn-info";
+                            $color_all = "btn-outline-dark";
+                            break;
+                        default:
+                            $color_doc = "btn-outline-success";
+                            $color_pill = "btn-outline-info";
+                            $color_all = "btn-dark";
+                            break;
+                    }
+                @endphp
 
                 <div class="row" id="appoint_selector">
                     <div class="col-12 col-md-10 mt-2">
-                        <a  style="background-color: #848e9f;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}">ทั้งหมด</a>
-                        <a  style="background-color: #38c172;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=doc">นัดหมอ</a>
-                        <a  style="background-color: #21cdc0;" class="btn-old btn-outline-dark  mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill">ใช้ยา</a>
+                        <a id="all" style="border: #000 solid 1px;" class="btn-old {{$color_all}} mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}#head_content">ทั้งหมด</a>
+                        <a id="doc" style="border: #38c172 solid 1px;" class="btn-old {{$color_doc}} mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=doc#head_content">นัดหมอ</a>
+                        <a id="pill" style="border: #21cdc0 solid 1px;" class="btn-old {{$color_pill}} mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill#head_content">ใช้ยา</a>
                     </div>
                     <div class="col-6 col-md-2 column mt-2">
                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>
@@ -342,8 +384,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 div_date.remove('d-none');
                 div_date.add('col-md-6');
             document.querySelector('#div_datetime_edit').classList.remove('d-none');
-            document.querySelector('#date_time_edit').required = true ;
+            document.querySelector('#date_time_edit').required = true
         }
     }
-</script>
 
+</script>

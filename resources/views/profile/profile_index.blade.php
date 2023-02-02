@@ -58,7 +58,7 @@
                     </a>
                 @endif
                 @if(empty($user->avatar) and empty($user->photo))
-                    <img alt="member img" height="300px" width="100%" src="{{ url('/img/icon/user.png') }}" data-original-title="Usuario">
+                    <img alt="member img" height="300px" width="100%" src="https://www.viicheck.com/Medilab/img/icon.png" data-original-title="Usuario">
                 @endif
               </div><!-- /.member-img -->
               <div class="member__info">

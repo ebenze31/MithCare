@@ -393,28 +393,28 @@
                                         </div>
                                     </div>
 
-                                </div><!-- /.gallery-images-wrapper -->
-                            </div><!-- /.col-xl-5 -->
-                        </div><!-- /.row -->
-                </div><!-- /.container -->
-                </section><!-- /.gallery 2 -->
+
+                                </div><!-- /.col-12 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+                    </section><!-- /.gallery 2 -->
 
 
-                <div class="copyright text-center align-items-center h6" style="margin-top:-15px;">
-                    <span>•</span> WWW.MithCare.COM
-                    <span>•</span>
-                    <a href="{{url('privacy_policy')}}">
-                        <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
-                    </a>
-                    <span>•</span>
-                    <a href="{{url('terms_of_service')}}">
-                        <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
-                    </a>
-                </div>
+                        <div class="copyright text-center align-items-center h6" style="margin-top:-15px;">
+                            <span>•</span> WWW.MithCare.COM
+                            <span>•</span>
+                            <a href="{{url('privacy_policy')}}">
+                                <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
+                            </a>
+                            <span>•</span>
+                            <a href="{{url('terms_of_service')}}">
+                                <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
+                            </a>
+                        </div>
 
 
-            </div><!-- /.row -->
-        </div><!-- /.container -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
         </div><!-- /.footer-secondary -->
     </footer><!-- /.Footer -->
     <button id="scrollTopBtn"><i class="fas fa-long-arrow-alt-up"></i></button>

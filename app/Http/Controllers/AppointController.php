@@ -42,7 +42,7 @@ class AppointController extends Controller
 
             }
 
-            return view('appoint.appoint_index', compact('room','room_id','appoint'));
+            return view('appoint.appoint_index', compact('room','room_id','appoint','type'));
 
         }else{
             return view('404');

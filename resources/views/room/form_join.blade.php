@@ -1,7 +1,7 @@
 <div class="row">
     <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}} col-6">
         <label for="name" class="control-label">{{ 'ไอดีห้อง' }}</label>
-        <input required class="form-control" name="name" type="text" id="name" value="{{ isset($room->name) ? $room->name : ''}}" >
+        <input required class="form-control" name="name" type="text" id="name" value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" >
         {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group {{ $errors->has('pass') ? 'has-error' : ''}} col-6">
@@ -12,7 +12,9 @@
  </div><!-- /row -->
 
  <div class="form-group">
-    <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">   
-        เข้าร่วมบ้าน
+    <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">
+        ค้นหาบ้าน
     </button>
 </div>
+
+

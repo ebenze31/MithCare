@@ -50,9 +50,17 @@ class RoomController extends Controller
         return view('room.create');
     }
 
-    public function room_join()
+    public function room_join(Request $request)
     {
-        return view('room.join');
+        $keyword = $request->get('find_room_search');
+
+        $find_room = Room::where('gen_id','LIKE', $keyword)
+        ->orWhere('pass', 'LIKE', $keyword)
+        ->get();
+
+
+
+        return view('room.join' , compact('find_room'));
     }
 
 
@@ -99,6 +107,14 @@ class RoomController extends Controller
     public function edit($id)
     {
         $room = Room::findOrFail($id);
+
+        if (!empty($keyword)) {
+            $my_room = Member_of_room::where('user_id',$id)
+                ->where('gen_id', 'LIKE', "%$keyword%")
+                ->orWhere('pass', 'LIKE', "%$keyword%")
+                ->get();
+        }
+
 
         return view('room.edit', compact('room'));
     }

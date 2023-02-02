@@ -85,12 +85,46 @@
         </div>
         <!--///////End Modal หน้าสร้างบ้าน ///////////-->
 
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+<ul id="myUL">
+  <li><a href="#">Adele</a></li>
+  <li><a href="#">Agnes</a></li>
+
+  <li><a href="#">Billy</a></li>
+  <li><a href="#">Bob</a></li>
+
+  <li><a href="#">Calvin</a></li>
+  <li><a href="#">Christina</a></li>
+  <li><a href="#">Cindy</a></li>
+</ul>
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+
+}
+</script>
+
         <!--/////// Modal เข้าร่วมบ้าน ///////////-->
 
           <div class="modal fade" id="join_room" tabindex="-1" role="dialog" aria-labelledby="join_roomTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <!-- หน้าสร้างบ้าน -->
+                    <!-- หน้าเข้าร่วมบ้าน -->
                     <div class="container">
                         <div class="row">
                             <div class="contact-panel col-md-12 mb-2">
@@ -109,18 +143,19 @@
                                     <br />
                                     <br />
 
-                                    @if ($errors->any())
-                                    <ul class="alert alert-danger">
-                                        @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                    @endif
-
                                     <form method="POST" action="{{ url('/room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                         {{ csrf_field() }}
 
-                                        @include ('room.form_join')
+                                        {{-- @include ('room.form_join') --}}
+                                        {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
+                                        <div class="form-group ">
+                                            <label for="pass" class="control-label">{{ 'รหัสห้อง' }}</label>
+                                            <input type="text" class="form-control" name="find_room_search" placeholder="Search...">
+
+                                            <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">
+                                                ค้นหาบ้าน
+                                            </button>
+                                        </div>
 
                                     </form>
 
@@ -219,7 +254,7 @@
                                             <br>
                                             <div class="row">
                                                 <div class="col-6 p-0">
-                                                    <a href="{{ url('/room/' . $item->room->id . '/edit') }}" class="btn-old btn-sm main-radius main-shadow">
+                                                    <a href="{{ url('/room/' . $item->room->id . '/edit') }}" class="btn-old btn-primary btn-sm main-radius main-shadow">
                                                         <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
                                                     </a>
                                                 </div>

@@ -29,6 +29,7 @@ Route::get('/zipcodes', 'API\TambonController@getZipcodes');
 Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint');
 
 Route::get('/game', 'API\GameController@update_Click');
+Route::get('/find_room', 'RoomController@search_find_room');
 
-
+Route::get('/caretaker_of_room', 'API\API_CaretakerControllerController@getCaretaker');
 // Route::get('/show_amphoes/{province}', 'API\TambonController@getAmphoes');

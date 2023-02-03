@@ -50,18 +50,6 @@ class RoomController extends Controller
         return view('room.create');
     }
 
-    public function room_join(Request $request)
-    {
-        $keyword = $request->get('find_room_search');
-
-        $find_room = Room::where('gen_id','LIKE', $keyword)
-        ->orWhere('pass', 'LIKE', $keyword)
-        ->get();
-
-
-
-        return view('room.join' , compact('find_room'));
-    }
 
 
     public function store(Request $request)
@@ -164,18 +152,50 @@ class RoomController extends Controller
 
     public function room_find_index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 5;
+        $keyword = $request->get('find_room_search');
 
-        if (!empty($keyword)) {
-            $room = Room::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('pass', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $room = Room::latest()->paginate($perPage);
-        }
+        $find_room = Room::where('gen_id','LIKE', $keyword)
+        ->orWhere('pass', 'LIKE', $keyword)
+        ->get();
 
-        return view('room.room_find.room_find_index', compact('room'));
+        // $room_id = Room::findOrFail($find_room->id);
+
+        $this_room = Member_of_room::where('room_id','32')->get();
+
+        //  echo"<pre>";
+        // print_r($this_room);
+        // echo"</pre>";
+        // exit();
+
+        return view('room.room_find.room_find_index', compact('find_room','this_room'));
+    }
+
+    public function room_join(Request $request,$item)
+    {
+          echo"<pre>";
+        print_r($item->id);
+        echo"</pre>";
+        exit();
+        $requestData = $request->all();
+
+        $requestData['user_id'] = $requestData['owner_id'];
+        $requestData['room_id'] = $item->id;
+
+        Member_of_room::create($requestData);
+
+        return redirect('room')->with('flash_message', 'Room deleted!');
+        // return view('room.join' , compact('find_room','this_room'));
+    }
+
+
+    public function search_find_room(Request $request)
+    {
+        $search_room = $request->get('search');
+        $room = Room::where('gen_id','LIKE', $search_room)
+        ->orWhere('pass', 'LIKE', $search_room)
+        ->get();
+
+        return $room;
     }
 
             //////////////////////////

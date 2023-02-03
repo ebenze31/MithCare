@@ -143,14 +143,14 @@ function myFunction() {
                                     <br />
                                     <br />
 
-                                    <form method="POST" action="{{ url('/room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                    <form method="POST" action="{{ url('/room_find') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                         {{ csrf_field() }}
 
                                         {{-- @include ('room.form_join') --}}
                                         {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
                                         <div class="form-group ">
                                             <label for="pass" class="control-label">{{ 'รหัสห้อง' }}</label>
-                                            <input type="text" class="form-control" name="find_room_search" placeholder="Search...">
+                                            <input id="input_search" type="text" class="form-control" name="find_room_search" onkeyup="Super_search()">
 
                                             <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">
                                                 ค้นหาบ้าน
@@ -341,6 +341,22 @@ function myFunction() {
         }
 
     });
+</script>
+
+<script>
+      function Super_search() {
+        let search = document.querySelector("#input_search");
+        let url = "{{ url('/api/find_room') }}?search=" + search.value;
+        // console.log(url);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+
+
+            });
+    }
 </script>
 
 @endsection

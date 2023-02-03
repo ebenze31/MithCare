@@ -49,99 +49,69 @@
     </div><!-- /.container -->
 </section><!-- /.page-title -->
 
-<section class="page-title page-title-layout5">
-    <div class="container-fluid">
+
+
+<section class="features-layout1 pt-130 pb-50 mt--90">
+    <div class="bg-img"><img src="assets/images/backgrounds/1.jpg" alt="background"></div>
+    <div class="container">
+        <h3 class="text-center"><i class="fa-solid fa-house"></i> {{ $room->name }} </h3>
+            <a class="btn-old btn-info btn-sm main-shadow main-radius" href="#" onclick="goBack()">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ
+            </a>
+            {{-- เช็คว่าเป็น owner or admin -> มองเห็นปุ่มลบและแก้ไข  --}}
+            @if($room->owner_id == Auth::user()->id || Auth::user()->role == 'isAdmin')
+            <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room">
+                <button class="btn-old btn-primary btn-sm main-shadow main-radius m-2">
+                    <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
+                </button>
+            </a>
+            <form method="POST" action="{{ url('room' . '/' . $room->id) }}" accept-charset="UTF-8" style="display:inline">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius m-2" title="Delete Room" onclick="return confirm('ต้องการลบใช่ไหม')">
+                    <i class="fa-solid fa-trash"></i> ลบบ้าน
+                </button>
+            </form>
+            @endif
+            <br><br>
         <div class="row">
-            <div class="contact-panel col-md-12 mb-2">
-                <div class="row">
-                    <h3>บ้าน {{ $room->name }} </h3>
-                        {{-- เช็คว่าเป็น owner or admin -> มองเห็นปุ่มลบและแก้ไข  --}}
-                    @if($room->owner_id == Auth::user()->id || Auth::user()->role == 'isAdmin')
-                        <a href="{{ url('/room/' . $room->id . '/edit') }}" title="Edit Room">
-                            <button class="btn-old btn-primary btn-sm main-shadow main-radius m-2">
-                                <i class="fa-solid fa-pen-to-square"></i> แก้ไขบ้าน
-                            </button>
-                        </a>
-                        <form method="POST" action="{{ url('room' . '/' . $room->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn-old btn-danger btn-sm main-shadow main-radius m-2" title="Delete Room" onclick="return confirm('ต้องการลบใช่ไหม')">
-                                <i class="fa-solid fa-trash"></i> ลบบ้าน
-                            </button>
-                        </form>
-                    @endif
+            <!-- Feature item #1 -->
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="feature-item">
+                    <div class="feature__content">
+                        <div class="feature__icon">
+                            <i class="fa-solid fa-notes-medical"></i>
+                            <i class="fa-solid fa-notes-medical feature__overlay-icon"></i>
+                        </div>
 
+                        <div class="row d-flex justify-content-between ">
+                            <span class="feature__title" style="font-size: 25px; color:#4170A2; font-weight:bold;">รหัสค้นหาบ้าน</span>
+                            <p type="text" id="gen_id" class="feature__title" style="font-size: 25px;" >{{ isset($room->gen_id) ? $room->gen_id : ''}}</p>&nbsp;&nbsp;
+                            <div class="input-group-append">
+                                <!-- คอม -->
+                                <span class="input-group-append d-none d-lg-block">
+                                    <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_()" type="submit" >
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </span>
 
-                </div><!-- row -->
-                <a class="btn-old btn-info btn-sm main-shadow main-radius" href="#" onclick="goBack()">
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i> กลับ
-                </a>
-                <div class="h5">
-                    <br />
-                    <br />
+                                  <!-- มือถือ -->
+                                <span class="input-group-append d-block d-md-none">
+                                    <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_()" type="submit" >
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
 
-                    <div class="col-12 col-md-12">
-                        <div class="pricing-widget-layout2 mb-70 product-item">
-                            {{-- แสดงเฉพาะคอม --}}
-                            <ul class="d-none d-lg-block pricing__list list-unstyled mb-0">
-                                <li>
-                                    <span class="details__title" style="font-size: 25px;">รหัสค้นหาบ้าน</span>
-                                    <p type="text" id="gen_id_computer" style="font-size: 25px;" class=" col-9" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2" >{{ isset($room->gen_id) ? $room->gen_id : ''}}</p>&nbsp;&nbsp;
-                                    <div class="input-group-append">
-                                        <span class="input-group-append">
-                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_Computer()" type="submit"
-                                            style="">
-                                                <i class="fa-regular fa-copy"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="details__title" style="font-size: 25px;">ชื่อบ้าน</span>
-                                    <div class="details__content">
-                                        <p class="mb-0" style="font-size: 25px;">{{ $room->name }}</p>
-                                    </div>
-                                </li>
+                    </div><!-- /.feature__content -->
 
-                            </ul> {{--สิ้นสุด แสดงเฉพาะคอม --}}
+                </div><!-- /.feature-item -->
+            </div><!-- /.col-lg-3 -->
 
-                             {{-- แสดงเฉพาะมือถือ --}}
-                            <ul class="d-block d-md-none pricing__list list-unstyled mb-0">
-                                <li>
-                                    <span class="details__title" style="font-size: 20px;">รหัสค้นหาบ้าน</span>
-                                </li>
-                                <li>
-                                    <input type="text" id="gen_id_mobile"  class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2"
-                                        value="{{ isset($room->gen_id) ? $room->gen_id : ''}}" readonly>&nbsp;&nbsp;
-                                    <div class="input-group-append">
-                                        <span class="input-group-append">
-                                            <button class="btn-old btn-secondary btn-circle" onclick="Copy_Text_Mobile()" type="submit">
-                                                <i class="fa-regular fa-copy"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="details__title" style="font-size: 20px;">ชื่อบ้าน</span>
-                                    <div class="details__content">
-                                        <p class="mb-0" style="font-size: 20px;">{{ $room->name }}</p>
-                                    </div>
-                                </li>
-
-                            </ul> {{-- สิ้นสุด แสดงเฉพาะมือถือ --}}
-                        </div><!-- pricing-widget-layout2 mb-70 product-item -->
-                    </div>
-
-
-
-
-                </div><!-- h5 -->
-
-            </div><!-- contact-panel -->
-        </div><!-- row -->
-    </div><!-- container -->
-</section><!-- กันสั่น -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+  </section><!-- /.Features Layout 1 -->
 
  <!-- ======================
              คอม
@@ -308,10 +278,9 @@
 
 
 <script>
-        // คอมพิวเตอร์
-    function Copy_Text_Computer() {
+    function Copy_Text_() {
       // Get the text field
-      var copyText = document.getElementById("gen_id_computer");
+      var copyText = document.getElementById("gen_id");
 
       // Copy the text inside the text field
       navigator.clipboard.writeText(copyText.innerText);
@@ -319,15 +288,5 @@
     //   Alert the copied text
       alert("Copied !!!" );
     }
-        // มือถือ
-    function Copy_Text_Mobile() {
-      // Get the text field
-      var copyText = document.getElementById("gen_id_mobile");
 
-     // Copy the text inside the text field
-      navigator.clipboard.writeText(copyText.value);
-
-    //   Alert the copied text
-      alert("Copied !!!" );
-    }
 </script>

@@ -63,12 +63,13 @@ Route::middleware(['auth'])->group(function () {
     //// My_Room /////////
 
     Route::resource('room', 'RoomController');
-    Route::post('room_join', 'RoomController@room_join');
+
 
     /// Find_Room //////
 
-    Route::get('room_find', 'RoomController@room_find_index')->name('room_find');
-    Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
+    Route::post('room_find', 'RoomController@room_find_index')->name('room_find');
+    Route::post('room_join', 'RoomController@room_join')->name('room_join');
+    // Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
 
     // Appoint /////////
 

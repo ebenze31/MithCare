@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
@@ -16,7 +14,7 @@
                         <ol class=" breadcrumb mb-0 ">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 30px;">หน้าแรก</a></li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a></li>
-                            <li class="breadcrumb-item"><a href="#" style="font-size: 30px;">ค้นหาบ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room_join') }}" style="font-size: 30px;">เข้าร่วมบ้าน</a></li>
                         </ol>
                     </div> <!--d-none d-lg-block -->
                     <!-- แสดงเฉพาะมือถือ -->
@@ -24,7 +22,7 @@
                         <ol class=" breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a></li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a></li>
-                            <li class="breadcrumb-item"><a href="#" style="font-size: 20px;">ค้นหาบ้าน</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/room_join') }}" style="font-size: 20px;">เข้าร่วมบ้าน</a></li>
                         </ol>
                     </div> <!--d-block d-md-none -->
                 </nav>
@@ -38,145 +36,170 @@
         <div class="row">
 
             <div class="contact-panel col-md-12 mb-2">
-                <h2>ค้นหาบ้าน</h2>
-                <div class="row">
 
-                    <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 " role="search">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <!-- <button class="btn" type="submit"><i class="icon-search"></i></button> -->
-                    </form>
-                </div>
-                <hr width="97%">
+                <h3>เข้าร่วมบ้าน</h3>
 
-                <div class="container ">
-                    <div class="row">
-                        <div class="col-3 h5">ลำดับ</div>
-                        <div class="col-3 h5">ชื่อบ้าน</div>
-                        <div class="col-3 h5">ชื่อเจ้าของ</div>
-                        <div class="col-3 h5">...</div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        @foreach($room as $item)
+                    <a href="#" onclick="goBack()"><button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;"><i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ</button></a>
+                    <br />
+                    <br />
 
-                        <div class="col-3 h6">{{ $loop->iteration }}</div>
-                        <div class="col-3 h6">{{ $item->name }}</div>
-                        <div class="col-3 h6">ชื่อเจ้าของบ้าน</div>
-                        <div class="col-3 h6">
+                    @foreach($find_room as $item)
+                    <center>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="card product-item ">
+                            @if(!empty($item->home_pic))
+                                <img class="card-img-top p-3 " src="{{ url('storage/'.$item->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                            @else
+                                <img class="card-img-top p-3 " src="{{asset('/img/logo_mithcare/home-background.png')}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap">
+                            @endif
+                                <div class="card-body">
+                                    <div class="row">
 
-                            <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn btn-info btn-sm"><i class="fa-solid fa-door-open"></i>
-                                    รายละเอียด</button></a>
+                                        <div class="col-12">
+                                            <hr>
+                                            <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->name}}</p>
 
-                            <!-- Button trigger modal -->
-                            <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                <i class="fa-solid fa-door-open"></i>ขอเข้าร่วม
-                            </a>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">ขอเข้าร่วม</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input class="form-control" placeholder="ใส่รหัสห้อง">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button> -->
-                                            <button type="button" class="btn btn-primary">เข้าร่วม</button>
+                                            <p style="font-size: 20px;">เจ้าของบ้าน : {{$item->user->name}}</p>
+                                            <hr>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
+                                </div><!--  card-body -->
+                            </div><!--  card -->
+                        </div><!--  col-md-4 col-sm-12 -->
+                    </center>
+                    @endforeach
 
-                        </div>
+                    <form method="POST" action="{{ url('/room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ csrf_field() }}
 
-                        @endforeach
-                    </div>
-
-                    <div class="pagination-wrapper"> {!! $room->appends(['search' => Request::get('search')])->render() !!} </div>
-                </div>
-
-
-
-            </div> <!-- contact-panel -->
-
-        </div>
-    </div>
-</section>
-@endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Room</div>
-                <div class="card-body">
-                    <a href="{{ url('/room/create') }}" class="btn btn-success btn-sm" title="Add New Room">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                    </a>
-
-                    <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                            <span class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-
-                    <br />
-                    <br />
-                    <div class="col-sm-12 col-md-12 col-lg-4">
-                        <div class="row">
-                        <ul >
-                            <li>
-
-                                <a>#</a><a>Name</a><a>Pass</a><a>Actions</a>
-
-                            </li>
-                            <li>
-                                @foreach($room as $item)
-                                <tr>
-                                    <a>{{ $loop->iteration }}</a>
-                                    <a>{{ $item->name }}</a>
-                                    <a>{{ $item->pass }}</a>
-                                    <a>
-                                        <a href="{{ url('/room/' . $item->id) }}" title="View Room"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                        <a href="{{ url('/room/' . $item->id . '/edit') }}" title="Edit Room"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                                        <form method="POST" action="{{ url('/room' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                                            {{ method_field('DELETE') }}
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Room" onclick="return confirm('ต้องการลบใช่หรือไม่')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                        </form>
-                                    </a>
-                                </tr>
+                        @if(Auth::user()->role == 'isAdmin')
+                            <div class="d-none">
+                                @foreach ($find_room as $item)
+                                    <input type="text" value="{{ isset($item->id) ? $item->id : ''}}">
                                 @endforeach
-                            </li>
-                        </ul>
-                        </div>
-                        <div class="pagination-wrapper"> {!! $room->appends(['search' => Request::get('search')])->render() !!} </div>
-                    </div>
+                            </div>
+                        @endif
 
-                </div>
-            </div>
-        </div> -->
+                        <div id="status_fr" class="form-group {{ $errors->has('status') ? 'has-error' : ''}} col-12 col-md-12">
+                            <label for="status" class="control-label" style="font-size: 25px;">{{ 'สถานะ' }}</label>
+                            <select name="status" class="form-control" id="status" onchange="show_input_fr();" required>
+                                <option selected disabled>กรุณาเลือกสถานะ</option>
+                                @foreach (json_decode('{"member":"สมาชิก","patient":"ผู้ป่วย"}', true) as $optionKey => $optionvalue)
+                                <option value="{{ $optionKey }}" {{ (isset($requestData->status) && $requestData->status == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
+                                @endforeach
+                            </select>
+                        </div> <!--///  สถานะ /// -->
+
+
+
+                        <div id="takecare_fr" class="form-group">
+                            <select id="select_takecare" name="select_takecare" onchange="showMember_of_Room();" class="form-control" >
+                               <option value="" selected disabled>กรุณาเลือกผู้ดูแล</option>
+                                @foreach($this_room as $item)
+                                    <option value="{{ $item->user->full_name }}">{{ $item->user->full_name }}</option>
+                                @endforeach
+                            </select>
+                        </div> <!--///  เลือกผู้ดูแล /// -->
+
+                        <div id="lv_caretaker_fr" class="form-group {{ $errors->has('lv_caretaker') ? 'has-error' : ''}} col-12 col-md-12">
+                            <label for="lv_caretaker" class="control-label" style="font-size: 25px;">{{ 'ระดับ' }}</label>
+                            <select name="lv_caretaker" class="form-control" id="lv_caretaker" >
+                                <option selected disabled>กรุณาเลือกระดับผู้ป่วย</option>
+                                @foreach (json_decode('{"1":"ระดับ 1 (คนไข้สามารถกดยืนยันเองได้)","2":"ระดับ 2 (คนไข้ไม่สามารถกดยืนยันเองได้)"}', true) as $optionKey => $optionvalue)
+                                <option value="{{ $optionKey }}" {{ (isset($requestData->lv_of_caretaker) && $requestData->lv_of_caretaker == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
+                                @endforeach
+                            </select>
+                        </div> <!--///  เพศ /// -->
+
+
+                        <div class="form-group">
+                            <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">
+                                บันทึก
+                            </button>
+                        </div>
+                    </form><!--///  end form /// -->
+
+
+            </div><!--  contact-panel -->
+        </div><!--  row -->
+    </div><!-- /container -->
+</section><!-- กันสั่น -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('takecare_fr').classList.add('d-none');
+        document.getElementById('lv_caretaker_fr').classList.add('d-none');
+    });
+
+    function show_input_fr(){
+
+        let status = document.querySelector('#status').value;
+
+        if (status === 'member') {
+            let takecare_fr = document.querySelector('#takecare_fr').classList ;
+                // console.log(div_date);
+                takecare_fr.remove('d-none');
+                takecare_fr.add('col-12');
+            document.querySelector('#lv_caretaker_fr').classList.add('d-none');
+            document.querySelector('#lv_caretaker_fr').required = false ;
+        }else {
+             let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr').classList;
+                // console.log(div_date);
+                lv_caretaker_fr.remove('d-none');
+                lv_caretaker_fr.add('col-12');
+                document.querySelector('#takecare_fr').classList.add('d-none');
+                document.querySelector('#takecare_fr').required = false ;
+        }
+    }
+
+</script>
+
+{{-- <script>
+     function showMember_of_Room() {
+        let room_id = document
+        let input_caretaker = document.querySelector("#select_takecare");
+        let url = "{{ url('/api/caretaker_of_room') }}?caretaker=" + input_caretaker.value + "&room_id=" + ;
+        // console.log(url);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+                //UPDATE SELECT OPTION
+                let input_amphoe = document.querySelector("#input_amphoe");
+                let old_amphoe = input_amphoe.value;
+                input_amphoe.innerHTML = "";
+
+                if (old_amphoe && count_select_a === 1) {
+
+                    let option_start = document.createElement("option");
+                    option_start.value = old_amphoe;
+                    option_start.text = old_amphoe;
+                    option_start.selected = true;
+                    option_start.disabled = true;
+                    input_amphoe.appendChild(option_start);
+                } else {
+
+                    let option_start = document.createElement("option");
+                    option_start.text = "กรุณาเลือกอำเภอ";
+                    option_start.selected = true;
+                    input_amphoe.appendChild(option_start);
+                }
+
+                for (let item of result) {
+                    // console.log(item.amphoe);
+                    let option = document.createElement("option");
+                    option.text = item.amphoe;
+                    option.value = item.amphoe;
+                    input_amphoe.appendChild(option);
+                }
+                //QUERY AMPHOES
+                count_select_a = count_select_a + 1;
+                showTambons();
+            });
+    }
+</script> --}}
+
+
+@endsection

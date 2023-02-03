@@ -59,7 +59,7 @@ class RoomController extends Controller
 
         // สุ่มลิ้ง url
         for ($i=0; $i < 10; $i++) {
-            $randomSite = "https:/www.mithcare.com/room/" . hash('adler32', $i);
+            $randomSite = hash('adler32', $i);
         }
 
         // echo"<pre>";
@@ -154,9 +154,7 @@ class RoomController extends Controller
     {
         $keyword = $request->get('find_room_search');
 
-        $find_room = Room::where('gen_id','LIKE', $keyword)
-        ->orWhere('pass', 'LIKE', $keyword)
-        ->first();
+        $find_room = Room::where('gen_id','LIKE', $keyword)->first();
 
         // $room_id = Room::findOrFail($find_room->id);
 
@@ -174,16 +172,14 @@ class RoomController extends Controller
     {
 
         $requestData = $request->all();
-        echo"<pre>";
-        print_r($requestData);
-        echo"</pre>";
-        exit();
-        $requestData['user_id'] = $requestData['owner_id'];
-        $requestData['room_id'] = $item->id;
+        // echo"<pre>";
+        // print_r($requestData);
+        // echo"</pre>";
+        // exit();
 
-        Member_of_room::create($requestData);
+        Member_of_room::Create($requestData);
 
-        return redirect('room')->with('flash_message', 'Room deleted!');
+        return redirect('room'.'/'.$requestData['room_id'])->with('flash_message', 'Room deleted!');
         // return view('room.join' , compact('find_room','this_room'));
     }
 
@@ -191,8 +187,8 @@ class RoomController extends Controller
     public function search_find_room(Request $request)
     {
         $search_room = $request->get('search');
-        $room = Room::where('gen_id','LIKE', $search_room)
-        ->orWhere('pass', 'LIKE', $search_room)
+        $room = Room::where('gen_id','=', $search_room)
+        ->orWhere('name','=',$search_room)
         ->get();
 
         return $room;

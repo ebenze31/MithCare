@@ -13,7 +13,7 @@ class Member_of_room extends Model
     protected $primaryKey = 'id';
 
 
-    protected $fillable = ['status', 'lv_of_caretaker', 'user_id', 'room_id'];
+    protected $fillable = ['status', 'lv_of_caretaker', 'user_id', 'room_id', 'member_takecare'];
 
     public function user(){
         return $this->belongsTo('App\User','user_id','id');

@@ -85,44 +85,10 @@
         </div>
         <!--///////End Modal หน้าสร้างบ้าน ///////////-->
 
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-
-<ul id="myUL">
-  <li><a href="#">Adele</a></li>
-  <li><a href="#">Agnes</a></li>
-
-  <li><a href="#">Billy</a></li>
-  <li><a href="#">Bob</a></li>
-
-  <li><a href="#">Calvin</a></li>
-  <li><a href="#">Christina</a></li>
-  <li><a href="#">Cindy</a></li>
-</ul>
-
-<script>
-function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
-
-}
-</script>
-
         <!--/////// Modal เข้าร่วมบ้าน ///////////-->
 
           <div class="modal fade" id="join_room" tabindex="-1" role="dialog" aria-labelledby="join_roomTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <!-- หน้าเข้าร่วมบ้าน -->
                     <div class="container">
@@ -149,8 +115,9 @@ function myFunction() {
                                         {{-- @include ('room.form_join') --}}
                                         {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
                                         <div class="form-group ">
-                                            <label for="pass" class="control-label">{{ 'รหัสห้อง' }}</label>
-                                            <input id="input_search" type="text" class="form-control" name="find_room_search" onkeyup="Super_search()">
+                                            <label for="pass" class="control-label">{{ 'ชื่อบ้านหรือรหัสบ้าน' }}</label>
+                                            <input id="input_search" type="text" class="form-control" name="find_room_search" oninput="Super_search()">
+
 
                                             <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">
                                                 ค้นหาบ้าน
@@ -158,6 +125,39 @@ function myFunction() {
                                         </div>
 
                                     </form>
+
+
+                                    <div id="show_data_room" class="col-md-12 col-sm-12 d-none">
+                                        <div class="card product-item ">
+                                            <div id="test_insert"></div>
+                                            {{-- <img class="card-img-top p-3 " src="{ url('storage/'.$item->room->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap"> --}}
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        รูป
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h5>ชื่อบ้าน</h5>
+                                                        <p>เจ้าของ</p>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        ปุ่มขอเข้าร่วม
+                                                    </div>
+                                                    {{-- <div class="col-12">
+                                                        <hr>
+                                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{$item->room->name}</p>
+
+                                                        <p style="font-size: 20px;">เจ้าของบ้าน : { $data_room->user->name }</p>
+                                                        <hr>
+                                                    </div> --}}
+                                                </div>
+
+                                            </div><!--  card-body -->
+                                            <span class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" >
+                                                เข้าร่วม
+                                            </span>
+                                        </div><!--  card -->
+                                    </div><!--  col-md-4 col-sm-12 -->
 
                                 </div>
 
@@ -345,22 +345,41 @@ function myFunction() {
 
 <script>
       function Super_search() {
+
         let search = document.querySelector("#input_search");
         let url = "{{ url('/api/find_room') }}?search=" + search.value;
+        let test_insert = document.querySelector('#test_insert');
+
+        if(search.value){
+            fetch(url)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result);
+                    let html;
+                    if(result.length != 0){
+                        for(i=0; i<result.length; i++){
+                            // console.log(result[i]['name']);
+                            let div_data_add = document.createElement("div");
+                            let id_div_data_add = document.createAttribute("id");
+                            id_div_data_add.value = "dataid" + result[i]['id'];
+                            div_data_add.setAttributeNode(id_div_data_add);
+                            test_insert.appendChild(div_data_add);
+
+                            html = '<span>' + result[i]['name'] + '</span>';
+                            document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
+                        }
+                        document.querySelector('#show_data_room').classList.remove('d-none');
+                    }
+
+                });
+        }
         // console.log(url);
 
-        fetch(url)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
 
-
-            });
     }
 </script>
 
 @endsection
-
 
 
 

@@ -2,6 +2,71 @@
 
 @section('content')
 
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+        label{
+            width: 100%
+        }
+        .card-input-element+.card {
+        height: calc(36px + 2*1rem);
+        color: #0d6efd;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        }
+
+        .card-input-element+.card:hover {
+        cursor: pointer;
+        }
+
+        .card-input-element:checked+.card {
+        border: 2px solid #0d6efd;
+        color: #4170A2 !important;
+        background-color: #ffffff !important;
+        -webkit-transition: border .3s;
+        -o-transition: border .3s;
+        transition: border .3s;
+        }
+
+        .card-input-element:checked+.card::after {
+        content: '\e5ca';
+        color: #AFB8EA;
+        font-family: 'Material Icons';
+        font-size: 24px;
+        -webkit-animation-name: fadeInCheckbox;
+        animation-name: fadeInCheckbox;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+        -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @-webkit-keyframes fadeInCheckbox {
+        from {
+        opacity: 0;
+        -webkit-transform: rotateZ(-20deg);
+        }
+        to {
+        opacity: 1;
+        -webkit-transform: rotateZ(0deg);
+        }
+        }
+
+        @keyframes fadeInCheckbox {
+        from {
+        opacity: 0;
+        transform: rotateZ(-20deg);
+        }
+        to {
+        opacity: 1;
+        transform: rotateZ(0deg);
+        }
+        }
+</style>
+
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
@@ -73,13 +138,7 @@
                     <form method="POST" action="{{ url('room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        @if(Auth::user()->role == 'isAdmin')
-                            <div class="d-none">
-                                @foreach ($find_room as $item)
-                                    <input type="text" value="{{ isset($item->id) ? $item->id : ''}}">
-                                @endforeach
-                            </div>
-                        @endif
+
 
                         <div id="status_fr" class="form-group {{ $errors->has('status') ? 'has-error' : ''}} col-12 col-md-12">
                             <label for="status" class="control-label" style="font-size: 25px;">{{ 'สถานะ' }}</label>
@@ -93,10 +152,24 @@
 
                         <div id="takecare_fr" class="form-group">
                             <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกผู้ที่ต้องการดูแล' }}</label>
-                            @foreach($this_room as $item)
-                                <input class="form-control" id="checkbox_select_takecare{{$item->id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare();" value="{{$item->id}}">{{$item->user->full_name}}<br>
-                            @endforeach
-                            <input class="form-control" type="text" name="select_takecare" id="select_takecare">
+                           <div class="row">
+                                @foreach($this_room as $item)
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <label>
+                                        {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                    <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare();" value="{{$item->id}}">
+                                        <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                            <span>
+                                                {{$item->user->full_name}}
+                                            </span>
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                           </div>
+                            <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                            <input class="form-control d-none" type="text" name="room_id" id="room_id" value="{{$find_room->id}}">
+                            <input class="form-control d-none" type="text" name="select_takecare" id="select_takecare">
                             {{-- <select id="select_takecare" name="select_takecare" onchange="showMember_of_Room();" class="form-control" >
                                <option value="" selected disabled>กรุณาเลือกผู้ที่ต้องการดูแล</option>
                                 @foreach($this_room as $item)
@@ -116,9 +189,11 @@
                         </div> <!--///  เพศ /// -->
 
 
+
+
                         <div class="form-group">
                             <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">
-                                บันทึก
+                                เข้าร่วม
                             </button>
                         </div>
                     </form><!--///  end form /// -->
@@ -156,7 +231,12 @@
                 document.querySelector('#takecare_fr').classList.add('d-none');
                 document.querySelector('#takecare_fr').required = false ;
 
+                let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
+                document.querySelector('#select_takecare').value = "";
 
+                for (let i = 0; i < checkbox_select_takecare.length; i++) {
+                    checkbox_select_takecare[i].checked = false ;
+                }
         }
     }
 
@@ -165,17 +245,18 @@
 <script>
     function click_Select_Takecare(){
         let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
-        let select_takecare = document.getElementById('select_takecare');
+        let select_takecare = document.querySelector('#select_takecare');
 
-            for (let i = 0; i < checkbox_select_takecare.length; i++) {
-                if (checkbox_select_takecare[i].checked) {
-                    if (select_takecare.value === "") {
-                        select_takecare.value = checkbox_select_takecare[i].value ;
-                    }else{
-                        select_takecare.value = select_takecare + "," +  checkbox_select_takecare[i].value ;
-                    }
+        select_takecare.value = "" ;
+        for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            if (checkbox_select_takecare[i].checked) {
+                if (select_takecare.value === "") {
+                    select_takecare.value = checkbox_select_takecare[i].value ;
+                }else{
+                    select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
                 }
             }
+        }
     }
 </script>
 

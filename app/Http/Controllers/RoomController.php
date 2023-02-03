@@ -156,11 +156,11 @@ class RoomController extends Controller
 
         $find_room = Room::where('gen_id','LIKE', $keyword)
         ->orWhere('pass', 'LIKE', $keyword)
-        ->get();
+        ->first();
 
         // $room_id = Room::findOrFail($find_room->id);
 
-        $this_room = Member_of_room::where('room_id','32')->get();
+        $this_room = Member_of_room::where('room_id',$find_room->id)->get();
 
         //  echo"<pre>";
         // print_r($this_room);
@@ -170,14 +170,14 @@ class RoomController extends Controller
         return view('room.room_find.room_find_index', compact('find_room','this_room'));
     }
 
-    public function room_join(Request $request,$item)
+    public function room_join(Request $request)
     {
-          echo"<pre>";
-        print_r($item->id);
+
+        $requestData = $request->all();
+        echo"<pre>";
+        print_r($requestData);
         echo"</pre>";
         exit();
-        $requestData = $request->all();
-
         $requestData['user_id'] = $requestData['owner_id'];
         $requestData['room_id'] = $item->id;
 

@@ -199,7 +199,6 @@ class RoomController extends Controller
         // $member = Member_of_room::where('room_id',$room->id)->get();
 
 
-
         return $room;
     }
 

@@ -329,17 +329,23 @@
             fetch(url)
                 .then(response => response.json())
                 .then(result => {
-                    // console.log(result);
+                    console.log(result);
 
                     let user = document.querySelector('#user_login_fullname').value;
-                    let imgResource = [];
-                    let img = [];
+                    
                     let html;
                     let show_data_room = document.querySelector('#show_data_room');
                         show_data_room.innerHTML = "";
                     if(result.length != 0){
                         for(i=0; i<result.length; i++){
                             // console.log(result[i]['name']);
+                            let img_home_pic ;
+                            if (result[i]['home_pic']) {
+                                img_home_pic = '{{ url("storage") }}' + '/' + result[i]['home_pic'] ;
+                            }else{
+                                // ใส่รูปเวลาไม่มีรูปบ้าน รูปอะไรก็ได้
+                                img_home_pic = 'http://localhost/mithcare/public/img/logo_mithcare/logo_mithcare(%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99).png' ;
+                            }
 
                             let div_data_add = document.createElement("div");
                             let id_div_data_add = document.createAttribute("id");
@@ -361,7 +367,7 @@
                                                     //  }
                                                     // '<img class="card-img-top p-3 " src="'+ photo_home_pic[i] +'" width="100%" style="object-fit: cover;" alt="Card image cap">' +
                                                     // '<div>' + photo_home_pic[i] + '</div>' +
-                                                    '<img id="imgResource'+ result[i]['id'] +'" />'  +
+                                                    '<img id="imgResource'+ result[i]['id'] +'" src="' + img_home_pic + '"  />'  +
 
                                                     // '<div id="imgResource'+result[i]['id']+'">' + '</div>' +
 
@@ -381,15 +387,6 @@
 
 
                              // แสดงรูปภาพแต่ละบ้าน โดยอิงจาก id;
-                                // imgResource[i] = document.querySelector('#imgResource'+ result[i]['id']) ;
-                                // img[i] = document.createAttribute("src");
-                                // img[i].value = "{{url('storage/')}}" + result[i]['home_pic'];
-                                // imgResource[i].setAttributeNode(img[i]);
-
-                                let data_img_officers = document.querySelector('#imgResource'+ result[i]['id']);
-                                    data_img_officers.src = '{{ url("storage") }}' + '/' + result[i]['home_pic'] ;
-
-
 
                             // document.querySelector('#imgResource' + result[i]['home_pic']).innerHTML = html;
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;

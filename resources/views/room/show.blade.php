@@ -80,8 +80,8 @@
                 <div class="feature-item">
                     <div class="feature__content">
                         <div class="feature__icon">
-                            <i class="fa-solid fa-notes-medical"></i>
-                            <i class="fa-solid fa-notes-medical feature__overlay-icon"></i>
+                            {{-- <i class="fa-solid fa-notes-medical"></i>
+                            <i class="fa-solid fa-notes-medical feature__overlay-icon"></i> --}}
                         </div>
 
                         <div class="row d-flex justify-content-between ">

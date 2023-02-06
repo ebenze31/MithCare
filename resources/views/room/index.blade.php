@@ -365,7 +365,34 @@
                             div_data_add.setAttributeNode(id_div_data_add);
                             test_insert.appendChild(div_data_add);
 
-                            html = '<span>' + result[i]['name'] + '</span>';
+
+
+                            html = '<div id="show_data_room" class="col-md-12 col-sm-12 ">' +
+                                            '<div class="card product-item ">' +
+                                                '<div id="test_insert">' + '</div>' +
+
+                                                '<div class="card-body">' +
+                                                    '<div class="row">' +
+                                                        '<div class="col-12 col-md-3  col-lg-3">' +
+                                                            'รูป' +
+                                                        '</div>' +
+                                                        '<div class="col-12 col-md-6 col-lg-5">' +
+                                                            '<h5>' + 'ชื่อบ้าน ' + result[i]['name'] +'</h5>' +
+                                                            '<p>' + 'เจ้าของ' + '</p>' +
+                                                        '</div>' +
+                                                        '<span class="col-12 col-md-3 col-lg-3 btn btn-primary" style="background-color: #3490dc; font-size: 20px; color: white;">' +
+                                                                'ปุ่มขอเข้าร่วม' +
+                                                        '</span>' +
+
+                                                    '</div>' +
+
+                                                '</div>' +
+
+                                            '</div>' +
+                                        '</div>' ;
+
+
+
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
                         }
                         document.querySelector('#show_data_room').classList.remove('d-none');

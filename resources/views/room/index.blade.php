@@ -37,8 +37,7 @@
         <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" id="btn_create_room" data-toggle="modal" data-target="#create_room">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่
         </a>
-        <!-- <a href="{{ url('/room/create') }}" class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px;">
-            <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่</a> -->
+
         <a href="{{ url('/room_join') }}" class="btn btn-primary btn-sm main-shadow main-radius mr-2" style="font-size: 20px;" id="btn_find_room" data-toggle="modal" data-target="#join_room">
             <i class="fa-solid fa-right-to-bracket"></i>ขอเข้าร่วม</a>
 
@@ -116,6 +115,7 @@
                                         {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
                                         <div class="form-group ">
                                             <label for="pass" class="control-label">{{ 'ชื่อบ้านหรือรหัสบ้าน' }}</label>
+                                            <input id="user_login_fullname" type="text" class="form-control d-none" name="user_login_fullname" value="{{Auth::user()->id}}">
                                             <input id="input_search" type="text" class="form-control" name="find_room_search" oninput="Super_search()">
 
 
@@ -126,38 +126,12 @@
 
                                     </form>
 
-
-                                    <div id="show_data_room" class="col-md-12 col-sm-12 d-none">
-                                        <div class="card product-item ">
-                                            <div id="test_insert"></div>
+                                    <div class="row">
+                                        <div id="show_data_room" class="col-12 d-none">
                                             {{-- <img class="card-img-top p-3 " src="{ url('storage/'.$item->room->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap"> --}}
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-3">
-                                                        รูป
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <h5>ชื่อบ้าน</h5>
-                                                        <p>เจ้าของ</p>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        ปุ่มขอเข้าร่วม
-                                                    </div>
-                                                    {{-- <div class="col-12">
-                                                        <hr>
-                                                        <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{$item->room->name}</p>
+                                        </div><!--  col-md-4 col-sm-12 -->
+                                    </div>
 
-                                                        <p style="font-size: 20px;">เจ้าของบ้าน : { $data_room->user->name }</p>
-                                                        <hr>
-                                                    </div> --}}
-                                                </div>
-
-                                            </div><!--  card-body -->
-                                            <span class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" >
-                                                เข้าร่วม
-                                            </span>
-                                        </div><!--  card -->
-                                    </div><!--  col-md-4 col-sm-12 -->
 
                                 </div>
 
@@ -347,52 +321,77 @@
       function Super_search() {
 
         let search = document.querySelector("#input_search");
-        let url = "{{ url('/api/find_room') }}?search=" + search.value;
-        let test_insert = document.querySelector('#test_insert');
+        let url = "{{ url('/api/find_room') }}?search=" + search.value ;
+        // let test_insert = document.querySelector('#test_insert');
+
 
         if(search.value){
             fetch(url)
                 .then(response => response.json())
                 .then(result => {
                     // console.log(result);
+
+                    let user = document.querySelector('#user_login_fullname').value;
+                    let imgResource = [];
+                    let img = [];
                     let html;
+                    let show_data_room = document.querySelector('#show_data_room');
+                        show_data_room.innerHTML = "";
                     if(result.length != 0){
                         for(i=0; i<result.length; i++){
                             // console.log(result[i]['name']);
+
                             let div_data_add = document.createElement("div");
                             let id_div_data_add = document.createAttribute("id");
                             id_div_data_add.value = "dataid" + result[i]['id'];
                             div_data_add.setAttributeNode(id_div_data_add);
-                            test_insert.appendChild(div_data_add);
+                            show_data_room.appendChild(div_data_add);
 
+                            if(user === result[i]['owner_id'])
+                            // let photo_home_pic = 'www.mithcare.com/storage' + '/' + result[i]['home_pic'];
 
+                            html = '<div class="card product-item ">' +
+                                        '<div class="card-body">' +
+                                            '<div class="row d-flex justify-content-center align-items-center">' +
+                                                '<div class="col-12 col-md-3 col-lg-4">' +
+                                                    //  if(result[i]['home_pic']){
+                                                    //     '<div>' + 'ไม่มีภาพ' + '</div>' +
+                                                    //  }else{
+                                                    //     '<div>' + result[i]['home_pic'] + '</div>' +
+                                                    //  }
+                                                    // '<img class="card-img-top p-3 " src="'+ photo_home_pic[i] +'" width="100%" style="object-fit: cover;" alt="Card image cap">' +
+                                                    // '<div>' + photo_home_pic[i] + '</div>' +
+                                                    '<img id="imgResource'+ result[i]['id'] +'" />'  +
 
-                            html = '<div id="show_data_room" class="col-md-12 col-sm-12 ">' +
-                                            '<div class="card product-item ">' +
-                                                '<div id="test_insert">' + '</div>' +
-
-                                                '<div class="card-body">' +
-                                                    '<div class="row">' +
-                                                        '<div class="col-12 col-md-3  col-lg-3">' +
-                                                            'รูป' +
-                                                        '</div>' +
-                                                        '<div class="col-12 col-md-6 col-lg-5">' +
-                                                            '<h5>' + 'ชื่อบ้าน ' + result[i]['name'] +'</h5>' +
-                                                            '<p>' + 'เจ้าของ' + '</p>' +
-                                                        '</div>' +
-                                                        '<span class="col-12 col-md-3 col-lg-3 btn btn-primary" style="background-color: #3490dc; font-size: 20px; color: white;">' +
-                                                                'ปุ่มขอเข้าร่วม' +
-                                                        '</span>' +
-
-                                                    '</div>' +
+                                                    // '<div id="imgResource'+result[i]['id']+'">' + '</div>' +
 
                                                 '</div>' +
+                                                '<div class="col-12 col-md-6 col-lg-4">' +
+                                                    '<h5 class="mt-2">' + '<i class="fa-solid fa-house">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
+                                                    '<p class="text-bold">' + 'เจ้าของ' + '<br>' + result[i]['name_owner'] + '</p>' +
+                                                '</div>' +
+                                                '<span class="col-12 col-md-3 col-lg-4 btn btn-primary " style="background-color: #3490dc; font-size: 20px; color: white;">' +
+                                                        'ขอเข้าร่วม' +
+                                                '</span>' +
 
                                             '</div>' +
-                                        '</div>' ;
+
+                                        '</div>' +
+                                    '</div>' ;
+
+
+                             // แสดงรูปภาพแต่ละบ้าน โดยอิงจาก id;
+                                // imgResource[i] = document.querySelector('#imgResource'+ result[i]['id']) ;
+                                // img[i] = document.createAttribute("src");
+                                // img[i].value = "{{url('storage/')}}" + result[i]['home_pic'];
+                                // imgResource[i].setAttributeNode(img[i]);
+
+                                let data_img_officers = document.querySelector('#imgResource'+ result[i]['id']);
+                                    data_img_officers.src = '{{ url("storage") }}' + '/' + result[i]['home_pic'] ;
 
 
 
+                            // document.querySelector('#imgResource' + result[i]['home_pic']).innerHTML = html;
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
                         }
                         document.querySelector('#show_data_room').classList.remove('d-none');

@@ -25,6 +25,6 @@
 
 <center>
     <div class="form-group col-12 col-md-6 ">
-        <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">แก้ไข</button>
+        <button class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit">บันทึก</button>
     </div>
 </center>

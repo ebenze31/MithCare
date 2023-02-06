@@ -8,6 +8,7 @@ use App\User;
 use App\Models\Room;
 use App\Models\Member_of_room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -154,7 +155,9 @@ class RoomController extends Controller
     {
         $keyword = $request->get('find_room_search');
 
-        $find_room = Room::where('gen_id','LIKE', $keyword)->first();
+        $find_room = Room::where('rooms.gen_id','=', $keyword)
+        ->orWhere('rooms.name','LIKE', "%$keyword%")
+        ->first();
 
         // $room_id = Room::findOrFail($find_room->id);
 
@@ -187,9 +190,15 @@ class RoomController extends Controller
     public function search_find_room(Request $request)
     {
         $search_room = $request->get('search');
-        $room = Room::where('gen_id','=', $search_room)
-        ->orWhere('name','=',$search_room)
+        $room = Room::join('users','rooms.owner_id', '=', 'users.id')
+        ->select('rooms.*','users.name as name_owner')
+        ->where('rooms.gen_id','=', $search_room)
+        ->orWhere('rooms.name','LIKE', "%$search_room%")
         ->get();
+
+        // $member = Member_of_room::where('room_id',$room->id)->get();
+
+
 
         return $room;
     }

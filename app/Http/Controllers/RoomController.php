@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Models\Member_of_room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RoomController extends Controller
 {
@@ -58,10 +59,8 @@ class RoomController extends Controller
         $data_user = Auth::user();
         $requestData = $request->all();
 
-        // สุ่มลิ้ง url
-        for ($i=0; $i < 10; $i++) {
-            $randomSite = hash('adler32', $i);
-        }
+        // สุ่มรหัส gen_id
+        $randomSite = Str::random(8);
 
         // echo"<pre>";
         // print_r( $randomSite);

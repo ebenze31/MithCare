@@ -332,7 +332,7 @@
                     console.log(result);
 
                     let user = document.querySelector('#user_login_fullname').value;
-                    
+
                     let html;
                     let show_data_room = document.querySelector('#show_data_room');
                         show_data_room.innerHTML = "";
@@ -344,7 +344,7 @@
                                 img_home_pic = '{{ url("storage") }}' + '/' + result[i]['home_pic'] ;
                             }else{
                                 // ใส่รูปเวลาไม่มีรูปบ้าน รูปอะไรก็ได้
-                                img_home_pic = 'http://localhost/mithcare/public/img/logo_mithcare/logo_mithcare(%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99).png' ;
+                                img_home_pic = 'http://localhost/mithcare/public/img/logo_mithcare/mithcare_nurse_1.png' ;
                             }
 
                             let div_data_add = document.createElement("div");
@@ -367,7 +367,7 @@
                                                     //  }
                                                     // '<img class="card-img-top p-3 " src="'+ photo_home_pic[i] +'" width="100%" style="object-fit: cover;" alt="Card image cap">' +
                                                     // '<div>' + photo_home_pic[i] + '</div>' +
-                                                    '<img id="imgResource'+ result[i]['id'] +'" src="' + img_home_pic + '"  />'  +
+                                                    '<img height="182px" id="imgResource'+ result[i]['id'] +'" src="' + img_home_pic + '"  />'  +
 
                                                     // '<div id="imgResource'+result[i]['id']+'">' + '</div>' +
 
@@ -376,9 +376,13 @@
                                                     '<h5 class="mt-2">' + '<i class="fa-solid fa-house">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
                                                     '<p class="text-bold">' + 'เจ้าของ' + '<br>' + result[i]['name_owner'] + '</p>' +
                                                 '</div>' +
-                                                '<span class="col-12 col-md-3 col-lg-4 btn btn-primary " style="background-color: #3490dc; font-size: 20px; color: white;">' +
+                                                '<div class="col-12 col-md-6 col-lg-4">' +
+                                                    '<input class="form-control" type="password" name="pass_room" id="pass_room" placeholder="พาสเวิร์ด">' +
+                                                    '<span class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;">' +
                                                         'ขอเข้าร่วม' +
-                                                '</span>' +
+                                                    '</span>' +
+                                                '</div>' +
+
 
                                             '</div>' +
 

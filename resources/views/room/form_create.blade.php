@@ -22,7 +22,7 @@
         </div> --}}
         <div class="form-group col-12">
             <div class="input-group mb-3">
-                <input type="text" class="form-control pw" id="password" placeholder="password" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input type="text" class="form-control pw" id="password" placeholder="password" autocomplete="new-password" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                 <div class="input-group-append" >
                     <span class="input-group-text" id="basic-addon2" style="border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;"
                     onclick="document.querySelector('#toggleEye_2').classList.toggle('d-none');

@@ -134,13 +134,38 @@
                         </div><!--  col-md-4 col-sm-12 -->
                     </center>
 
-
                     <form method="POST" action="{{ url('room_join') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
+                        <div class="row ">
+                            <div class="col-12 col-md-12 col-lg-12 from-group">
+                                <label for="status" class="control-label" style="font-size: 25px;">{{ 'เลือกสถานะ' }}</label>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                                <label>
+                                    <input class="card-input-element d-none" id="status_member_of_room" name="status_of_room" type="radio" onclick="show_input_fr();" value="member" required>
+                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        <span>
+                                            สมาชิก
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
 
+                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                                <label>
+                                    <input class="card-input-element d-none" id="status_patient_of_room" name="status_of_room" type="radio" onclick="show_input_fr();" value="patient" required>
+                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        <span>
+                                            ผู้ป่วย
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
 
-                        <div id="status_fr" class="form-group {{ $errors->has('status') ? 'has-error' : ''}} col-12 col-md-12">
+                                        <!--///  สถานะ /// -->
+                        {{-- <div id="status_fr" class="form-group {{ $errors->has('status') ? 'has-error' : ''}} col-12 col-md-12">
                             <label for="status" class="control-label" style="font-size: 25px;">{{ 'สถานะ' }}</label>
                             <select name="status" class="form-control" id="status" onchange="show_input_fr();" required>
                                 <option selected disabled>กรุณาเลือกสถานะ</option>
@@ -148,7 +173,7 @@
                                 <option value="{{ $optionKey }}" {{ (isset($this_room->status) && $this_room->status == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
                                 @endforeach
                             </select>
-                        </div> <!--///  สถานะ /// -->
+                        </div>  --}}
 
                         <div id="takecare_fr" class="form-group">
                             <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกผู้ที่ต้องการดูแล' }}</label>
@@ -170,15 +195,10 @@
                             <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                             <input class="form-control d-none" type="text" name="room_id" id="room_id" value="{{$find_room->id}}">
                             <input class="form-control d-none" type="text" name="select_takecare" id="select_takecare">
-                            {{-- <select id="select_takecare" name="select_takecare" onchange="showMember_of_Room();" class="form-control" >
-                               <option value="" selected disabled>กรุณาเลือกผู้ที่ต้องการดูแล</option>
-                                @foreach($this_room as $item)
-                                    <option value="{{ $item->user->full_name }}">{{ $item->user->full_name }}</option>
-                                @endforeach
-                            </select> --}}
-                        </div> <!--///  เลือกผู้ดูแล /// -->
 
-                        <div id="lv_caretaker_fr" class="form-group {{ $errors->has('lv_caretaker') ? 'has-error' : ''}} col-12 col-md-12">
+                        </div> <!--///  เลือกผู้ดูแล /// -->
+                        <!--///  ระดับ /// -->
+                        {{-- <div id="lv_caretaker_fr" class="form-group {{ $errors->has('lv_caretaker') ? 'has-error' : ''}} col-12 col-md-12">
                             <label for="lv_caretaker" class="control-label" style="font-size: 25px;">{{ 'ระดับผู้ป่วย' }}</label>
                             <select name="lv_of_caretaker" class="form-control" id="lv_of_caretaker" >
                                 <option id="oplv_caretaker_start" selected disabled>กรุณาเลือกระดับผู้ป่วย</option>
@@ -186,7 +206,35 @@
                                 <option value="{{ $optionKey }}" {{ (isset($this_room->lv_of_caretaker) && $this_room->lv_of_caretaker == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
                                 @endforeach
                             </select>
-                        </div> <!--///  เพศ /// -->
+                        </div>  --}}
+
+                        <div id="lv_caretaker_fr" class="row form-group col-12 col-md-12">
+                            <div class="col-12 col-md-12 col-lg-12 from-group">
+                                <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                                <label>
+                                    <input class="card-input-element d-none" id="lv_1_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="1" required>
+                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        <span>
+                                            ระดับ 1 (กดยืนยันใช้ยาเองได้)
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                                <label>
+                                    <input class="card-input-element d-none" id="lv_2_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="2" required>
+                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        <span>
+                                            ระดับ 2 (ไม่สามารถกดยืนยันใช้ยาเองได้)(ผู้ดูแลกดให้)
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
 
 
 
@@ -205,24 +253,26 @@
 </section><!-- กันสั่น -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('takecare_fr').classList.add('d-none');
         document.getElementById('lv_caretaker_fr').classList.add('d-none');
     });
 
     function show_input_fr(){
-
-        let status = document.querySelector('#status').value;
         let select_takecare = document.getElementsByName("select_takecare");
 
-        if (status === 'member') {
+        if (document.getElementById("status_member_of_room").checked) {
             let takecare_fr = document.querySelector('#takecare_fr').classList ;
                 // console.log(div_date);
                 takecare_fr.remove('d-none');
                 takecare_fr.add('col-12');
             document.querySelector('#lv_caretaker_fr').classList.add('d-none');
             document.querySelector('#lv_caretaker_fr').required = false ;
-            document.querySelector('#oplv_caretaker_start').selected = true ;
+
+            // document.getElementsByTagName('lv_of_caretaker').checked = false;
+            // document.getElementsByTagId('lv_1_of_caretaker').checked = false;
+            // document.getElementsByTagId('lv_2_of_caretaker').checked = false;
+
         }else {
              let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr').classList;
                 // console.log(div_date);

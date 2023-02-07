@@ -88,7 +88,9 @@ class RoomController extends Controller
 
         $member = Member_of_room::where('room_id',$id)->get();
 
-        return view('room.show', compact('room','member'));
+        $amount_member = Member_of_room::where('room_id',$id)->count('id');
+
+        return view('room.show', compact('room','member','amount_member'));
     }
 
 
@@ -144,19 +146,22 @@ class RoomController extends Controller
         return redirect('room')->with('flash_message', 'Room deleted!');
         // return back();
     }
-
             //////////////////////////
             //      ค้นหาบ้าน        //
             /////////////////////////
 
-
     public function room_find_index(Request $request)
     {
         $keyword = $request->get('id_select_room');
+        $password = $request->get('pass_room');
 
         $find_room = Room::where('id','=', $keyword)
         ->first();
 
+        if($password != $find_room->pass){
+            echo "<script>alert('รหัสผิดนะ');</script>";
+            return back();
+        }
         // $room_id = Room::findOrFail($find_room->id);
 
         $this_room = Member_of_room::where('room_id',$find_room->id)->get();
@@ -188,7 +193,9 @@ class RoomController extends Controller
 
     public function search_find_room(Request $request)
     {
+
         $search_room = $request->get('search');
+
         $room = Room::join('users','rooms.owner_id', '=', 'users.id')
         ->select('rooms.*','users.name as name_owner','users.full_name as full_name_owner')
         ->where('rooms.gen_id','=', $search_room)
@@ -199,6 +206,25 @@ class RoomController extends Controller
 
 
         return $room;
+    }
+
+    public function password_of_room(Request $request){
+        $password = $request->get('password');
+        $id = $request->get('id');
+
+        $room_pass = Room::where('id',$id)
+        ->where('pass',$password)
+        ->first();
+
+        $check = "";
+
+        if(empty($room_pass->id)){
+            $check = 'no';
+        }else{
+            $check = 'yes';
+        }
+
+        return $check;
     }
 
             //////////////////////////

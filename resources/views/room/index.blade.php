@@ -99,7 +99,7 @@
 
 
                                 <div class="container">
-                                    <h3><i class="fa-solid fa-right-to-bracket"></i> เข้าร่วมบ้าน</h3>
+                                    <h3><i class="fa-solid fa-right-to-bracket"></i> ค้นหาบ้าน</h3>
                                     {{-- <a href="#" onclick="goBack()">
                                         <button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
                                             <i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ
@@ -339,6 +339,8 @@
                     if(result.length != 0){
                         for(i=0; i<result.length; i++){
                             // console.log(result[i]['name']);
+
+
                             let img_home_pic ;
                             if (result[i]['home_pic']) {
                                 img_home_pic = '{{ url("storage") }}' + '/' + result[i]['home_pic'] ;
@@ -382,11 +384,13 @@
 
 
                                                             '<div class="col-12 col-md-6 col-lg-4">' +
-                                                                '<input class="form-control" type="password" name="pass_room" id="pass_room" autocomplete="new-password" placeholder="พาสเวิร์ด">' +
+                                                                '<input class="form-control" type="password" name="pass_room" id="pass_room'+result[i]['id']+'" autocomplete="new-password" placeholder="พาสเวิร์ด">' +
                                                                 '<input class="form-control d-none" name="id_select_room" id="id_select_room" value="'+ result[i]['id'] +'">' +
-                                                                '<button src="" class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;" type="submit">' +
+
+                                                                '<div id="div_submit_room'+result[i]['id']+'"></div>' +
+                                                                '<span id="password_check'+result[i]['id']+'" class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;" onclick="Password_check_of_room('+result[i]['id']+')">' +
                                                                     'ขอเข้าร่วม' +
-                                                                '</button>' +
+                                                                '</span>' +
                                                             '</div>' +
 
 
@@ -410,6 +414,36 @@
 
     }
 </script>
+
+<script>
+    function Password_check_of_room(id){
+        // console.log(id);
+        let pass_room = document.querySelector('#pass_room'+ id);
+        // console.log(pass_room);
+
+        let url = "{{ url('/api/check_password_of_room') }}?password=" + pass_room.value + "&id=" + id;
+
+        fetch(url)
+            .then(response => response.text())
+                .then(result => {
+
+                    if(result === 'yes'){
+                        let div_btn = document.querySelector('#div_submit_room'+ id);
+
+                        let html = '<button id="password_check_match_exacly'+id+'" class="btn btn-primary p-0 m-2 d-none" style="background-color: #3490dc; font-size: 20px; color: white;" type="submit">' +
+                                        'ขอเข้าร่วม5' +
+                                    '</button>';
+                            div_btn.innerHTML = html;
+                        document.querySelector('#password_check_match_exacly'+id).click();
+                    }else{
+                        alert('พาสเวิร์ดไม่ถูกต้อง');
+                    }
+                });
+
+    }
+</script>
+
+
 
 @endsection
 

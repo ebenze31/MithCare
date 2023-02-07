@@ -32,4 +32,5 @@ Route::get('/game', 'API\GameController@update_Click');
 Route::get('/find_room', 'RoomController@search_find_room');
 
 Route::get('/caretaker_of_room', 'API\API_CaretakerControllerController@getCaretaker');
+Route::get('/check_password_of_room', 'RoomController@password_of_room');
 // Route::get('/show_amphoes/{province}', 'API\TambonController@getAmphoes');

@@ -400,21 +400,20 @@
                         </div><!-- /.container -->
                     </section><!-- /.gallery 2 -->
 
-
-                        <div class="copyright text-center align-items-center h6" style="margin-top:-15px;">
-                            <span>•</span> WWW.MithCare.COM
-                            <span>•</span>
-                            <a href="{{url('privacy_policy')}}">
-                                <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
-                            </a>
-                            <span>•</span>
-                            <a href="{{url('terms_of_service')}}">
-                                <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
-                            </a>
-                        </div>
-
-
                 </div><!-- /.row -->
+                <center>
+                    <div class="copyright text-center h6" style="margin-top:-15px;">
+                        <span>•</span> WWW.MithCare.COM
+                        <span>•</span>
+                        <a href="{{url('privacy_policy')}}">
+                            <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
+                        </a>
+                        <span>•</span>
+                        <a href="{{url('terms_of_service')}}">
+                            <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
+                        </a>
+                    </div>
+                </center>
             </div><!-- /.container -->
         </div><!-- /.footer-secondary -->
     </footer><!-- /.Footer -->

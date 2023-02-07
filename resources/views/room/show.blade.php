@@ -121,7 +121,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
                     <div class="heading text-center mb-40">
-                        <h3 class="heading__title">สมาชิกในบ้าน</h3>
+                        <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน</h3>
                     </div><!-- /.heading -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
@@ -155,9 +155,16 @@
                                 <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
                                 @if ($item->status == 'owner')
                                     <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
-                                @else
+                                @elseif($item->status == 'member')
                                     <p class="member__job ">สถานะ : สมาชิก</p>
-                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}}</p>
+                                    <p class="member__job ">ดูแลผู้ป่วย : </p>
+                                @else
+                                    <p class="member__job ">สถานะ : ผู้ป่วย</p>
+                                    @if ($item->lv_of_caretaker == 1)
+                                        <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
+                                    @else
+                                        <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
+                                    @endif
                                 @endif
 
                             </div><!-- /.member-info -->
@@ -178,7 +185,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
                 <div class="heading text-center mb-40">
-                    <h3 class="heading__title">สมาชิกในบ้าน</h3>
+                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน</h3>
                 </div><!-- /.heading -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -214,7 +221,11 @@
                                 <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
                             @else
                                 <p class="member__job ">สถานะ : สมาชิก</p>
-                                <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}}</p>
+                                @if ($item->lv_of_caretaker == 1)
+                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
+                                @else
+                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
+                                @endif
                             @endif
 
                         </div><!-- /.member-info -->

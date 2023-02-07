@@ -179,11 +179,11 @@
                         </div> <!--///  เลือกผู้ดูแล /// -->
 
                         <div id="lv_caretaker_fr" class="form-group {{ $errors->has('lv_caretaker') ? 'has-error' : ''}} col-12 col-md-12">
-                            <label for="lv_caretaker" class="control-label" style="font-size: 25px;">{{ 'ระดับ' }}</label>
-                            <select name="lv_caretaker" class="form-control" id="lv_caretaker" >
+                            <label for="lv_caretaker" class="control-label" style="font-size: 25px;">{{ 'ระดับผู้ป่วย' }}</label>
+                            <select name="lv_of_caretaker" class="form-control" id="lv_of_caretaker" >
                                 <option id="oplv_caretaker_start" selected disabled>กรุณาเลือกระดับผู้ป่วย</option>
-                                @foreach (json_decode('{"1":"ระดับ 1 (คนไข้สามารถกดยืนยันเองได้)","2":"ระดับ 2 (คนไข้ไม่สามารถกดยืนยันเองได้)"}', true) as $optionKey => $optionvalue)
-                                <option value="{{ $optionKey }}" {{ (isset($requestData->lv_of_caretaker) && $requestData->lv_of_caretaker == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
+                                @foreach (json_decode('{"1":"ระดับ 1 (กดยืนยันใช้ยาเองได้)","2":"ระดับ 2 (ไม่สามารถกดยืนยันใช้ยาเองได้)(ผู้ดูแลกดให้)"}', true) as $optionKey => $optionvalue)
+                                <option value="{{ $optionKey }}" {{ (isset($this_room->lv_of_caretaker) && $this_room->lv_of_caretaker == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
                                 @endforeach
                             </select>
                         </div> <!--///  เพศ /// -->

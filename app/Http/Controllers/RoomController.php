@@ -152,18 +152,17 @@ class RoomController extends Controller
 
     public function room_find_index(Request $request)
     {
-        $keyword = $request->get('find_room_search');
+        $keyword = $request->get('id_select_room');
 
-        $find_room = Room::where('rooms.gen_id','=', $keyword)
-        ->orWhere('rooms.name','LIKE', "%$keyword%")
+        $find_room = Room::where('id','=', $keyword)
         ->first();
 
         // $room_id = Room::findOrFail($find_room->id);
 
         $this_room = Member_of_room::where('room_id',$find_room->id)->get();
 
-        //  echo"<pre>";
-        // print_r($this_room);
+        // echo"<pre>";
+        // print_r($keyword);
         // echo"</pre>";
         // exit();
 
@@ -174,6 +173,7 @@ class RoomController extends Controller
     {
 
         $requestData = $request->all();
+
         // echo"<pre>";
         // print_r($requestData);
         // echo"</pre>";
@@ -190,7 +190,7 @@ class RoomController extends Controller
     {
         $search_room = $request->get('search');
         $room = Room::join('users','rooms.owner_id', '=', 'users.id')
-        ->select('rooms.*','users.name as name_owner')
+        ->select('rooms.*','users.name as name_owner','users.full_name as full_name_owner')
         ->where('rooms.gen_id','=', $search_room)
         ->orWhere('rooms.name','LIKE', "%$search_room%")
         ->get();

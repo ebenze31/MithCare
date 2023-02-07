@@ -157,8 +157,9 @@
                                     <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
                                 @else
                                     <p class="member__job ">สถานะ : สมาชิก</p>
+                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}}</p>
                                 @endif
-                                <p class="member__desc">เลเวล</p>
+
                             </div><!-- /.member-info -->
                         </div><!-- /.member -->
                         @endforeach
@@ -213,8 +214,9 @@
                                 <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
                             @else
                                 <p class="member__job ">สถานะ : สมาชิก</p>
+                                <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}}</p>
                             @endif
-                            <p class="member__desc">เลเวล</p>
+
                         </div><!-- /.member-info -->
                     </div><!-- /.member -->
                     @endforeach

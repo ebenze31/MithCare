@@ -46,7 +46,7 @@
 
         <div class="modal fade" id="create_room" tabindex="-1" role="dialog" aria-labelledby="create_roomTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content" style="min-height: 100%">
                     <!-- หน้าสร้างบ้าน -->
                     <div class="container">
                         <div class="row">
@@ -108,29 +108,28 @@
                                     <br />
                                     <br />
 
-                                    <form method="POST" action="{{ url('/room_find') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
 
                                         {{-- @include ('room.form_join') --}}
                                         {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
                                         <div class="form-group ">
                                             <label for="pass" class="control-label">{{ 'ชื่อบ้านหรือรหัสบ้าน' }}</label>
                                             <input id="user_login_fullname" type="text" class="form-control d-none" name="user_login_fullname" value="{{Auth::user()->id}}">
-                                            <input id="input_search" type="text" class="form-control" name="find_room_search" oninput="Super_search()">
+                                            <input id="input_search" type="text" class="form-control" name="find_room_search" value="" >
 
 
-                                            <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" type="submit" value="">
+                                            <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" onclick="Super_search()">
                                                 ค้นหาบ้าน
                                             </button>
                                         </div>
 
-                                    </form>
 
-                                    <div class="row">
-                                        <div id="show_data_room" class="col-12 d-none">
-                                            {{-- <img class="card-img-top p-3 " src="{ url('storage/'.$item->room->home_pic )}}" width="100%" height="150px" style="object-fit: cover;" alt="Card image cap"> --}}
-                                        </div><!--  col-md-4 col-sm-12 -->
-                                    </div>
+
+                                        <div class="row">
+                                            <div id="show_data_room" name="show_data_room" class="col-12 d-none" >
+
+                                            </div><!--  col-md-4 col-sm-12 -->
+                                        </div>
+
 
 
                                 </div>
@@ -323,19 +322,20 @@
         let search = document.querySelector("#input_search");
         let url = "{{ url('/api/find_room') }}?search=" + search.value ;
         // let test_insert = document.querySelector('#test_insert');
-
+        let show_data_room = document.querySelector('#show_data_room');
+            show_data_room.innerHTML = "";
+        console.log("Super_search");
 
         if(search.value){
             fetch(url)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
+                    // console.log(result);
 
                     let user = document.querySelector('#user_login_fullname').value;
 
                     let html;
-                    let show_data_room = document.querySelector('#show_data_room');
-                        show_data_room.innerHTML = "";
+
                     if(result.length != 0){
                         for(i=0; i<result.length; i++){
                             // console.log(result[i]['name']);
@@ -352,45 +352,50 @@
                             id_div_data_add.value = "dataid" + result[i]['id'];
                             div_data_add.setAttributeNode(id_div_data_add);
                             show_data_room.appendChild(div_data_add);
-
-                            if(user === result[i]['owner_id'])
+                            // console.log(id_div_data_add.value);
+                            // if(user === result[i]['owner_id'])
                             // let photo_home_pic = 'www.mithcare.com/storage' + '/' + result[i]['home_pic'];
 
-                            html = '<div class="card product-item ">' +
-                                        '<div class="card-body">' +
-                                            '<div class="row d-flex justify-content-center align-items-center">' +
-                                                '<div class="col-12 col-md-3 col-lg-4">' +
-                                                    //  if(result[i]['home_pic']){
-                                                    //     '<div>' + 'ไม่มีภาพ' + '</div>' +
-                                                    //  }else{
-                                                    //     '<div>' + result[i]['home_pic'] + '</div>' +
-                                                    //  }
-                                                    // '<img class="card-img-top p-3 " src="'+ photo_home_pic[i] +'" width="100%" style="object-fit: cover;" alt="Card image cap">' +
-                                                    // '<div>' + photo_home_pic[i] + '</div>' +
-                                                    '<img height="182px" id="imgResource'+ result[i]['id'] +'" src="' + img_home_pic + '"  />'  +
+                            html =  '<form method="POST" action="{{ url("/room_find") }}" accept-charset="UTF-8" class="" enctype="multipart/form-data">' +
+                                                   '{{ csrf_field() }}' +
+                                            '<div class="card product-item ">' +
+                                                '<div class="card-body">' +
+                                                    '<div class="row d-flex justify-content-center align-items-center">' +
+                                                        '<div class="col-12 col-md-3 col-lg-4">' +
+                                                            //  if(result[i]['home_pic']){
+                                                            //     '<div>' + 'ไม่มีภาพ' + '</div>' +
+                                                            //  }else{
+                                                            //     '<div>' + result[i]['home_pic'] + '</div>' +
+                                                            //  }
+                                                            // '<img class="card-img-top p-3 " src="'+ photo_home_pic[i] +'" width="100%" style="object-fit: cover;" alt="Card image cap">' +
+                                                            // '<div>' + photo_home_pic[i] + '</div>' +
+                                                            '<img height="182px" id="imgResource'+ result[i]['id'] +'" src="' + img_home_pic + '"  />'  +
 
-                                                    // '<div id="imgResource'+result[i]['id']+'">' + '</div>' +
+                                                            // '<div id="imgResource'+result[i]['id']+'">' + '</div>' +
+
+                                                        '</div>' +
+                                                        '<div class="col-12 col-md-6 col-lg-4">' +
+                                                            '<h5 class="mt-2">' + '<i class="fa-solid fa-house">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
+                                                            '<p class="text-bold">' + 'เจ้าของ' + '<br>' + result[i]['full_name_owner'] + '</p>' +
+                                                            '<p class="text-bold">' + '(' + result[i]['name_owner']+ ')' + '</p>' +
+                                                        '</div>' +
+
+
+                                                            '<div class="col-12 col-md-6 col-lg-4">' +
+                                                                '<input class="form-control" type="password" name="pass_room" id="pass_room" autocomplete="new-password" placeholder="พาสเวิร์ด">' +
+                                                                '<input class="form-control d-none" name="id_select_room" id="id_select_room" value="'+ result[i]['id'] +'">' +
+                                                                '<button src="" class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;" type="submit">' +
+                                                                    'ขอเข้าร่วม' +
+                                                                '</button>' +
+                                                            '</div>' +
+
+
+                                                    '</div>' +
 
                                                 '</div>' +
-                                                '<div class="col-12 col-md-6 col-lg-4">' +
-                                                    '<h5 class="mt-2">' + '<i class="fa-solid fa-house">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
-                                                    '<p class="text-bold">' + 'เจ้าของ' + '<br>' + result[i]['name_owner'] + '</p>' +
-                                                '</div>' +
-                                                '<div class="col-12 col-md-6 col-lg-4">' +
-                                                    '<input class="form-control" type="password" name="pass_room" id="pass_room" placeholder="พาสเวิร์ด">' +
-                                                    '<span class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;">' +
-                                                        'ขอเข้าร่วม' +
-                                                    '</span>' +
-                                                '</div>' +
-
-
                                             '</div>' +
+                                    '</form>' ;
 
-                                        '</div>' +
-                                    '</div>' ;
-
-
-                             // แสดงรูปภาพแต่ละบ้าน โดยอิงจาก id;
 
                             // document.querySelector('#imgResource' + result[i]['home_pic']).innerHTML = html;
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;

@@ -4,11 +4,17 @@ use App\Tambon;
 use Illuminate\Support\Facades\Route;
 
 
-//Route for all providers login
+//========================
+//  ROUTE PROVIDERS LOGIN
+//========================
+
+Route::resource('member_of_room', 'Member_of_roomController');
 Route::get('login/line','Auth\LoginController@redirectToLine');
 Route::get('login/line/callback','Auth\LoginController@handleLineCallback');
 
-//End Route providers login
+//===========================
+// END ROUTE PROVIDERS LOGIN
+//===========================
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,9 +40,9 @@ Route::get('game_check_login', 'GameController@check_login');
 
 
 
-////////////////////////////
-//// ADMIN MithCare //////
-//////////////////////////
+//========================
+//     ADMIN MithCare
+//========================
 
 Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
@@ -44,15 +50,16 @@ Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
 });
 
-
-/////////////////////////
-// END ADMIN MithCare///
-/////////////////////////
+//========================
+//  END ADMIN MithCare
+//========================
 
 
 Route::middleware(['auth'])->group(function () {
 
-    //Profiles
+    //========================
+    //     PROFILE
+    //========================
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::get('/profile/{id}/edit', 'ProfileController@edit')->name('profile_edit');
@@ -60,18 +67,27 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile/{id}/register', 'ProfileController@register')->name('profile_register');
 
-    //// My_Room /////////
+    //========================
+    //       ROOM
+    //========================
 
     Route::resource('room', 'RoomController');
-
 
     /// Find_Room //////
 
     Route::post('room_find', 'RoomController@room_find_index')->name('room_find');
     Route::post('room_join', 'RoomController@room_join')->name('room_join');
+    Route::get('member_of_room_edit', 'RoomController@member_of_room_edit')->name('member_of_room_edit');
     // Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
+    //========================
+    //     MEMBER_OF_ROOM
+    //========================
 
-    // Appoint /////////
+    Route::resource('member_of_room', 'Member_of_roomController');
+
+    //========================
+    //     Appoint
+    //========================
 
     // Route::get('appoint', 'AppointController@index')->name('appoint');
     // Route::resource('appoint', 'AppointController');
@@ -80,20 +96,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('appoint/{id}/create', 'AppointController@store')->name('appoint_store');
     Route::delete('appoint/{id}', 'AppointController@destroy')->name('appoint_destroy');
 
-
-    // Member_of_Room /////////
-
-    Route::resource('member_of_room', 'Member_of_roomController');
-
-    // Ask_for_Help /////////
+    //========================
+    //     ASK_FOR_HELP
+    //========================
 
     Route::resource('ask_for_help', 'Ask_for_helpController');
 
 
-    // health_check /////////
+    //========================
+    //     HEALTH_CHECK
+    //========================
     Route::resource('health_check', 'Health_checkController');
 
-    // Game /////////
+    //========================
+    //     GAME
+    //========================
     Route::resource('game', 'GameController');
 
 });

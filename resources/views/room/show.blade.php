@@ -121,7 +121,59 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
                     <div class="heading text-center mb-40">
-                        <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน</h3>
+                        <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
+                            @if (Auth::id() == $room->owner_id)
+                               <a class="btn-old btn-primary " href="{{ url('member_of_room_edit')}}?room_id={{$room->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
+                            @endif
+
+                            <!--====================
+                            Modal แก้ไขสถานะของสมาชิก
+                            ======================-->
+
+                            {{-- <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
+                                <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <!-- Modal แก้ไขสถานะของสมาชิก -->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="contact-panel col-md-12 mb-2">
+
+                                                    <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                    <div class="container">
+                                                    <h3 ><i class="fa-solid fa-pen-to-square "></i> จัดการสมาชิก</h3>
+                                                        <br />
+                                                        <br />
+                                                        @if ($errors->any())
+                                                        <ul class="alert alert-danger">
+                                                            @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                        @endif
+
+                                                        <form method="POST" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                            {{ csrf_field() }}
+
+                                                            @include ('room.form_create')
+
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+
+                            <!--========================
+                            End Modal แก้ไขสถานะของสมาชิก
+                            ============================-->
+
+                        </h3>
                     </div><!-- /.heading -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
@@ -185,10 +237,34 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
                 <div class="heading text-center mb-40">
-                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน</h3>
+                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
+                        @if (Auth::id() == $room->owner_id)
+                            <a class="btn-old btn-primary" data-toggle="modal" data-target="#edit_member_of_room"><i class="fa-solid fa-pen-to-square"></i></a>
+                        @endif
+                    </h3>
+
+                    <!--====================
+                    Modal แก้ไขสถานะของสมาชิก
+                    ======================-->
+
+                    <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
+                        <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <!-- Modal แก้ไขสถานะของสมาชิก -->
+                                <div class="container">
+                                    DEER
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--========================
+                    End Modal แก้ไขสถานะของสมาชิก
+                    ============================-->
+
                 </div><!-- /.heading -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+
         <div class="row ">
             <div class="col-12">
                 <div class="slick-carousel"

@@ -7042,11 +7042,11 @@ textarea.form-control {
 
 .widget {
   position: relative;
-  padding: 40px;
+  /* padding: 0px; */
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 40px;
-  background-color: #def8f6;
+  /* background-color: #def8f6; */
 }
 
 .widget:after {

@@ -213,9 +213,9 @@
                                 <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
                             </div>
 
-                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                            <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_1_of_caretaker') is-invalid @enderror">
                                 <label>
-                                    <input class="card-input-element d-none" id="lv_1_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="1" required>
+                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_1_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="1" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                         <span>
                                             ระดับ 1 (กดยืนยันใช้ยาเองได้)
@@ -223,10 +223,15 @@
                                     </div>
                                 </label>
                             </div>
+                                @error('lv_1_of_caretaker')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>กรุณาเลือกระดับผู้ป่วยก่อน</strong>
+                                    </span>
+                                @enderror
 
-                            <div class="col-12 col-md-6 col-lg-6 from-group">
+                            <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_2_of_caretaker') is-invalid @enderror">
                                 <label>
-                                    <input class="card-input-element d-none" id="lv_2_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="2" required>
+                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_2_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="2" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                         <span>
                                             ระดับ 2 (ไม่สามารถกดยืนยันใช้ยาเองได้)(ผู้ดูแลกดให้)
@@ -234,6 +239,11 @@
                                     </div>
                                 </label>
                             </div>
+                                @error('lv_2_of_caretaker')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>กรุณาเลือกระดับผู้ป่วยก่อน</strong>
+                                    </span>
+                                @enderror
                         </div>
 
 
@@ -269,9 +279,13 @@
             document.querySelector('#lv_caretaker_fr').classList.add('d-none');
             document.querySelector('#lv_caretaker_fr').required = false ;
 
-            // document.getElementsByTagName('lv_of_caretaker').checked = false;
-            // document.getElementsByTagId('lv_1_of_caretaker').checked = false;
-            // document.getElementsByTagId('lv_2_of_caretaker').checked = false;
+
+            let radio_lv_takecare = document.getElementsByName('lv_of_caretaker');
+                // document.querySelector('#select_takecare').value = "";
+
+            for (let i = 0; i < radio_lv_takecare.length; i++) {
+                radio_lv_takecare[i].checked = false ;
+                }
 
         }else {
              let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr').classList;
@@ -280,6 +294,7 @@
                 lv_caretaker_fr.add('col-12');
                 document.querySelector('#takecare_fr').classList.add('d-none');
                 document.querySelector('#takecare_fr').required = false ;
+                document.querySelector('.lv_of_caretaker').required = true ;
 
                 let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
                 document.querySelector('#select_takecare').value = "";

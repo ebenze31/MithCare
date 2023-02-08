@@ -31,8 +31,11 @@
     </div><!-- /.container -->
 </section><!-- /.page-title -->
 
+
+
 <div class="container mt-3">
     <div class="row d-flex justify-content-end ">
+
         <!-- Button trigger modal -->
         <a class="btn btn-info btn-sm main-shadow main-radius mr-2" style="font-size: 20px; color:#ffffff;" id="btn_create_room" data-toggle="modal" data-target="#create_room">
             <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มบ้านใหม่
@@ -86,7 +89,7 @@
 
         <!--/////// Modal เข้าร่วมบ้าน ///////////-->
 
-          <div class="modal fade" id="join_room" tabindex="-1" role="dialog" aria-labelledby="join_roomTitle" aria-hidden="true">
+        <div class="modal fade" id="join_room" tabindex="-1" role="dialog" aria-labelledby="join_roomTitle" aria-hidden="true">
             <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <!-- หน้าเข้าร่วมบ้าน -->
@@ -159,10 +162,15 @@
                         <h2>บ้านของฉัน</h2>
                     </div>
                     <div class=" col-md-4 col-12">
-                        <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right d-block" role="search">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <!-- <button class="btn" type="submit"><i class="icon-search"></i></button> -->
-                        </form>
+                        <div class="widget widget-search">
+                            <div class="widget__content">
+                                <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="widget__form-search">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <button class="btn" type="submit"><i class="icon-search"></i></button>
+                                </form>
+                            </div><!-- /.widget-content -->
+                        </div>
+
                     </div>
                 </div>
                 <hr width="97%">
@@ -324,7 +332,7 @@
         // let test_insert = document.querySelector('#test_insert');
         let show_data_room = document.querySelector('#show_data_room');
             show_data_room.innerHTML = "";
-        console.log("Super_search");
+        // console.log(search);
 
         if(search.value){
             fetch(url)
@@ -333,13 +341,17 @@
                     // console.log(result);
 
                     let user = document.querySelector('#user_login_fullname').value;
-
+                    let user_in_room = [];
+                    let class_color = [];
                     let html;
-
+                    let xi = 0;
                     if(result.length != 0){
                         for(i=0; i<result.length; i++){
                             // console.log(result[i]['name']);
-
+                            if(result[i]['user_id'] === '{{Auth::user()->id}}'){
+                                user_in_room[xi] = result[i]['id'];
+                                xi++;
+                            }
 
                             let img_home_pic ;
                             if (result[i]['home_pic']) {
@@ -357,6 +369,8 @@
                             // console.log(id_div_data_add.value);
                             // if(user === result[i]['owner_id'])
                             // let photo_home_pic = 'www.mithcare.com/storage' + '/' + result[i]['home_pic'];
+
+
 
                             html =  '<form method="POST" action="{{ url("/room_find") }}" accept-charset="UTF-8" class="" enctype="multipart/form-data">' +
                                                    '{{ csrf_field() }}' +
@@ -383,13 +397,19 @@
                                                         '</div>' +
 
 
-                                                            '<div class="col-12 col-md-6 col-lg-4">' +
+                                                            '<div id="div_btn_join_room'+result[i]['id']+'" class="col-12 col-md-6 col-lg-4">' +
                                                                 '<input class="form-control" type="password" name="pass_room" id="pass_room'+result[i]['id']+'" autocomplete="new-password" placeholder="พาสเวิร์ด">' +
                                                                 '<input class="form-control d-none" name="id_select_room" id="id_select_room" value="'+ result[i]['id'] +'">' +
 
                                                                 '<div id="div_submit_room'+result[i]['id']+'"></div>' +
-                                                                '<span id="password_check'+result[i]['id']+'" class="btn btn-primary p-0 m-2" style="background-color: #3490dc; font-size: 20px; color: white;" onclick="Password_check_of_room('+result[i]['id']+')">' +
+                                                                '<span id="password_check'+result[i]['id']+'" class="btn btn-primary p-0 m-2" style="font-size: 20px; color: white;" onclick="Password_check_of_room('+result[i]['id']+')">' +
                                                                     'ขอเข้าร่วม' +
+                                                                '</span>' +
+                                                            '</div>' +
+
+                                                            '<div id="div_btn_join_laew_room'+result[i]['id']+'" class="col-12 col-md-6 col-lg-4 d-none">' +
+                                                                '<span class="btn btn-success p-0 m-2" style="font-size: 20px; color: white;" >' +
+                                                                    'เข้าร่วมแล้ว' +
                                                                 '</span>' +
                                                             '</div>' +
 
@@ -405,6 +425,12 @@
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
                         }
                         document.querySelector('#show_data_room').classList.remove('d-none');
+                        // console.log(user_in_room);
+                        for(x=0; x<user_in_room.length; x++){
+                            document.querySelector("#div_btn_join_room"+ user_in_room[x]).classList.add('d-none');
+                            document.querySelector("#div_btn_join_laew_room"+ user_in_room[x]).classList.remove('d-none');
+                            // console.log(user_in_room[x]);
+                        }
                     }
 
                 });
@@ -436,13 +462,21 @@
                             div_btn.innerHTML = html;
                         document.querySelector('#password_check_match_exacly'+id).click();
                     }else{
-                        alert('พาสเวิร์ดไม่ถูกต้อง');
+                        let div_btn = document.querySelector('#div_submit_room'+ id);
+                        let html =
+                                    '<a id="password_check_match_exacly'+id+'" class="text-danger p-0 m-2 alert-fade-password'+id+'" font-size: 20px; color: white;" >' +
+                                        'รหัสผ่านไม่ถูกต้อง' +
+                                    '</a>';
+                            div_btn.innerHTML = html;
+
+                            $(document).ready(function(){
+                                $('.alert-fade-password'+id).fadeIn().delay(3000).fadeOut();
+                            });
                     }
                 });
 
     }
 </script>
-
 
 
 @endsection

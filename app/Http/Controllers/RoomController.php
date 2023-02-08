@@ -58,6 +58,7 @@ class RoomController extends Controller
     {
         $data_user = Auth::user();
         $requestData = $request->all();
+        $password_room = $request->get('pass');
 
         // สุ่มรหัส gen_id
         $randomSite = Str::random(8);
@@ -67,6 +68,7 @@ class RoomController extends Controller
         // echo"</pre>";
         // exit();
 
+        $requestData['pass'] = $password_room;
         $requestData['owner_id'] = $data_user->id;
         $requestData['gen_id'] = $randomSite;
 
@@ -91,6 +93,19 @@ class RoomController extends Controller
         $amount_member = Member_of_room::where('room_id',$id)->count('id');
 
         return view('room.show', compact('room','member','amount_member'));
+    }
+
+    public function member_of_room_edit(Request $request)
+    {
+        $room_id = $request->get('room_id');
+
+        $member = Member_of_room::where('room_id',$room_id)->where('status','member')->get();
+
+        $patient = Member_of_room::where('room_id',$room_id)->where('status','patient')->get();
+
+        $amount_member = Member_of_room::where('room_id',$room_id)->count('id');
+
+        return view('room.room_member_edit', compact('member','patient','amount_member'));
     }
 
 
@@ -164,7 +179,7 @@ class RoomController extends Controller
         }
         // $room_id = Room::findOrFail($find_room->id);
 
-        $this_room = Member_of_room::where('room_id',$find_room->id)->get();
+        $this_room = Member_of_room::where('room_id',$find_room->id)->where('status', 'patient')->get();
 
         // echo"<pre>";
         // print_r($keyword);
@@ -179,10 +194,7 @@ class RoomController extends Controller
 
         $requestData = $request->all();
 
-        // echo"<pre>";
-        // print_r($requestData);
-        // echo"</pre>";
-        // exit();
+
 
         Member_of_room::Create($requestData);
 
@@ -194,18 +206,47 @@ class RoomController extends Controller
     public function search_find_room(Request $request)
     {
 
+        $user_id = Auth::id();
         $search_room = $request->get('search');
 
+
         $room = Room::join('users','rooms.owner_id', '=', 'users.id')
-        ->select('rooms.*','users.name as name_owner','users.full_name as full_name_owner')
+        ->join('member_of_rooms','rooms.id','=','member_of_rooms.room_id')
+        ->select('rooms.*','member_of_rooms.user_id','users.name as name_owner','users.full_name as full_name_owner')
         ->where('rooms.gen_id','=', $search_room)
         ->orWhere('rooms.name','LIKE', "%$search_room%")
         ->get();
 
+        $room = $room->makeHidden(['pass']);
+
+        // foreach($room as $key){
+        //     if($key['user_id'] == $user_id){
+        //         $key['check_user'] = 'joined';
+
+        //         return $room;
+        //     }else{
+        //         $room['check_user'] = 'bor_joined';
+        //         return $room;
+        //     }
+        // }
+
+        return $room;
+
+        // if($room->id == $user_id){
+        //     $check = 'no';
+        // }else{
+        //     $check = 'yes';
+        // }
+
+        // echo"<pre>";
+        // print_r($deer);
+        // echo"</pre>";
+        // exit();
+
         // $member = Member_of_room::where('room_id',$room->id)->get();
 
 
-        return $room;
+
     }
 
     public function password_of_room(Request $request){

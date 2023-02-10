@@ -39,6 +39,9 @@ Route::get('health_check_check_login', 'Health_checkController@check_login');
 Route::get('game_check_login', 'GameController@check_login');
 
 
+Route::get('test', 'TestController@test');
+
+
 
 //========================
 //     ADMIN MithCare

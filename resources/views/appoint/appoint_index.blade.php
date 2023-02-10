@@ -1,7 +1,10 @@
 @extends('layouts.mithcare')
 
 @section('content')
-
+    @foreach ($ap_pill_test as $item)
+        {{$item->id}}
+    @endforeach
+{{$time_10}}
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
@@ -17,13 +20,7 @@
                             </li>
                             <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 30px;">บ้าน</a>
                             </li>
-                            @if ($type == 'doc')
-                                <li class="breadcrumb-item"><a href="#">ตาราง นัดหมอ</a></li>
-                            @elseif($type == 'pill')
-                                <li class="breadcrumb-item"><a href="#">ตาราง ใช้ยา</a></li>
-                            @elseif(($type == 'all'))
-                                <li class="breadcrumb-item"><a href="#">ตารางนัดทั้งหมด</a></li>
-                            @endif
+
 
                         </ol>
                     </div>
@@ -33,15 +30,9 @@
                         <ol class=" breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}" style="font-size: 20px;">หน้าแรก</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน</a>
+                            <li class="breadcrumb-item"><a href="{{ url('/room') }}" style="font-size: 20px;">บ้าน </a>
                             </li>
-                            @if ($type == 'doc')
-                                <li class="breadcrumb-item"><a href="#">ตาราง นัดหมอ</a></li>
-                            @elseif($type == 'pill')
-                                <li class="breadcrumb-item"><a href="#">ตาราง ใช้ยา</a></li>
-                            @elseif(($type == 'all'))
-                                <li class="breadcrumb-item"><a href="#">ตารางนัดทั้งหมด</a></li>
-                            @endif
+
 
                         </ol>
                     </div>

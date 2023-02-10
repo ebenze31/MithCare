@@ -7,7 +7,7 @@ use App\Models\Room;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Member_of_room;
-
+use Carbon\Carbon;
 use App\Models\Appoint;
 use Illuminate\Http\Request;
 
@@ -20,6 +20,34 @@ class AppointController extends Controller
         $type = $request->get('type');
         $user_id = Auth::id();
         $check = "" ;
+
+
+        // ===================
+        // TEST APPOINT NOTI
+        // ===================
+
+        // $ap_test = Carbon::parse("2021-06-26 22:00:00")->addMinutes(10)->format('H:i:s');
+
+        $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
+        $date_now = Carbon::now()->format('Y-m-d');
+
+        $ap_pill_test = Appoint::where('room_id','=',$room_id)
+        ->where('type','=','pill')
+        ->where('date','=',$date_now)
+        ->where('date_time','<=',$time_10)
+        ->where('status','=',null)
+        ->orWhere('status','=','sent')
+        ->get();
+
+
+
+        // foreach($ap_pill_test as $item){
+        //     if($item['date'] == $date_now){
+        //         if($item['date_time'] == $time_10){
+
+        //         }
+        //     }
+        // }
 
         // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
         $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
@@ -42,7 +70,7 @@ class AppointController extends Controller
 
             }
 
-            return view('appoint.appoint_index', compact('room','room_id','appoint','type'));
+            return view('appoint.appoint_index', compact('room','room_id','appoint','type','ap_pill_test','date_now','time_10'));
 
         }else{
             return view('404');

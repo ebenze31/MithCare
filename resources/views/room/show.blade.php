@@ -2,6 +2,10 @@
 
 @section('content')
 
+<!-- verify(เครื่องหมายถูก)  -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <style>
     .btn-circle{
         font-size: 20px;
@@ -17,6 +21,69 @@
         background-color: #ffffff;
         -webkit-transition: all 0.3s linear;
         transition: all 0.3s linear;
+    }
+</style>
+
+<!-- Checkbox and Radio CSS -->
+<style>
+    label{
+        width: 100%
+    }
+    .card-input-element+.card {
+    height: calc(36px + 2*1rem);
+    color: #0d6efd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    }
+
+    .card-input-element+.card:hover {
+    cursor: pointer;
+    }
+
+    .card-input-element:checked+.card {
+    border: 2px solid #0d6efd;
+    color: #4170A2 !important;
+    background-color: #ffffff !important;
+    -webkit-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+    }
+
+    .card-input-element:checked+.card::after {
+    content: '\e5ca';
+    color: #AFB8EA;
+    font-family: 'Material Icons';
+    font-size: 24px;
+    -webkit-animation-name: fadeInCheckbox;
+    animation-name: fadeInCheckbox;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @-webkit-keyframes fadeInCheckbox {
+    from {
+    opacity: 0;
+    -webkit-transform: rotateZ(-20deg);
+    }
+    to {
+    opacity: 1;
+    -webkit-transform: rotateZ(0deg);
+    }
+    }
+
+    @keyframes fadeInCheckbox {
+    from {
+    opacity: 0;
+    transform: rotateZ(-20deg);
+    }
+    to {
+    opacity: 1;
+    transform: rotateZ(0deg);
+    }
     }
 </style>
 
@@ -111,156 +178,70 @@
 
         </div><!-- /.row -->
     </div><!-- /.container -->
-  </section><!-- /.Features Layout 1 -->
+</section><!-- /.Features Layout 1 -->
 
- <!-- ======================
-             คอม
-    ========================= -->
-    <section class="team-layout2 pb-80 d-none d-lg-block">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-                    <div class="heading text-center mb-40">
-                        <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
-                            @if (Auth::id() == $room->owner_id)
-                               <a class="btn-old btn-primary " href="{{ url('member_of_room_edit')}}?room_id={{$room->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
-                            @endif
+ <!-- =================================================================================================
+              คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม
+    ================================================================================================== -->
+<section class="team-layout2 pb-80 d-none d-lg-block">
+    <div class="container">
 
-                            <!--====================
-                            Modal แก้ไขสถานะของสมาชิก
-                            ======================-->
+        <div id="member_show_of_room" class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
+                <div class="heading text-center mb-40">
+                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
+                        @if (Auth::id() == $room->owner_id)
+                            <a class="btn-old btn-primary " href="{{ url('member_of_room_edit')}}?room_id={{$room->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
+                        @endif
 
-                            {{-- <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
-                                <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <!-- Modal แก้ไขสถานะของสมาชิก -->
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="contact-panel col-md-12 mb-2">
+                        <!--====================
+                        Modal แก้ไขสถานะของสมาชิก
+                        ======================-->
 
-                                                    <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                        {{-- <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
+                            <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <!-- Modal แก้ไขสถานะของสมาชิก -->
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="contact-panel col-md-12 mb-2">
 
-                                                    <div class="container">
-                                                    <h3 ><i class="fa-solid fa-pen-to-square "></i> จัดการสมาชิก</h3>
-                                                        <br />
-                                                        <br />
-                                                        @if ($errors->any())
-                                                        <ul class="alert alert-danger">
-                                                            @foreach ($errors->all() as $error)
-                                                            <li>{{ $error }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                        @endif
+                                                <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
 
-                                                        <form method="POST" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
-                                                            {{ csrf_field() }}
+                                                <div class="container">
+                                                <h3 ><i class="fa-solid fa-pen-to-square "></i> จัดการสมาชิก</h3>
+                                                    <br />
+                                                    <br />
+                                                    @if ($errors->any())
+                                                    <ul class="alert alert-danger">
+                                                        @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
 
-                                                            @include ('room.form_create')
+                                                    <form method="POST" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
 
-                                                        </form>
+                                                        @include ('room.form_create')
 
-                                                    </div>
+                                                    </form>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
-
-                            <!--========================
-                            End Modal แก้ไขสถานะของสมาชิก
-                            ============================-->
-
-                        </h3>
-                    </div><!-- /.heading -->
-                </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-            <div class="row ">
-                <div class="col-12">
-                    <div class="slick-carousel"
-                        data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-                        <!-- Member #1 -->
-                        @foreach ($member as $item)
-                        <div class="member">
-                            <div class="member__img">
-                                @if(!empty($item->user->avatar) and empty($item->user->photo))
-                                    <div class="member__img ">
-                                        <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" height="300px" width="100%">
-                                    </div><!-- /.member-img -->
-                                @endif
-
-                                @if(!empty($item->user->photo))
-                                    <div class="member__img ">
-                                        <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" height="300px" width="100%">
-                                    </div><!-- /.member-img -->
-                                @endif
-
-                                @if(empty($item->user->avatar) and empty($item->user->photo))
-                                    <div class="member__img ">
-                                        <img src="{{ asset('/img/logo_mithcare/x-icon-2.png') }}" alt="member img" height="300px" width="100%">
-                                    </div><!-- /.member-img -->
-                                @endif
-                            </div><!-- /.member-img -->
-                            <div class="member__info">
-                                <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
-                                @if ($item->status == 'owner')
-                                    <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
-                                @elseif($item->status == 'member')
-                                    <p class="member__job ">สถานะ : สมาชิก</p>
-                                    <p class="member__job ">ดูแลผู้ป่วย : </p>
-                                @else
-                                    <p class="member__job ">สถานะ : ผู้ป่วย</p>
-                                    @if ($item->lv_of_caretaker == 1)
-                                        <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
-                                    @else
-                                        <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
-                                    @endif
-                                @endif
-
-                            </div><!-- /.member-info -->
-                        </div><!-- /.member -->
-                        @endforeach
-                    </div><!-- /.carousel -->
-                </div><!-- /.col-12 -->
-
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </section><!-- /.Team -->
-
- <!-- ======================
-              มือถือ
-    ========================= -->
-<section class="team-layout2 pb-80 d-block d-md-none">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-                <div class="heading text-center mb-40">
-                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
-                        @if (Auth::id() == $room->owner_id)
-                            <a class="btn-old btn-primary" data-toggle="modal" data-target="#edit_member_of_room"><i class="fa-solid fa-pen-to-square"></i></a>
-                        @endif
-                    </h3>
-
-                    <!--====================
-                    Modal แก้ไขสถานะของสมาชิก
-                    ======================-->
-
-                    <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
-                        <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <!-- Modal แก้ไขสถานะของสมาชิก -->
-                                <div class="container">
-                                    DEER
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!--========================
-                    End Modal แก้ไขสถานะของสมาชิก
-                    ============================-->
+                        </div> --}}
 
+                        <!--========================
+                        End Modal แก้ไขสถานะของสมาชิก
+                        ============================-->
+
+                    </h3>
                 </div><!-- /.heading -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -295,8 +276,11 @@
                             <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
                             @if ($item->status == 'owner')
                                 <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
-                            @else
+                            @elseif($item->status == 'member')
                                 <p class="member__job ">สถานะ : สมาชิก</p>
+                                <p class="member__job ">ดูแลผู้ป่วย : </p>
+                            @else
+                                <p class="member__job ">สถานะ : ผู้ป่วย</p>
                                 @if ($item->lv_of_caretaker == 1)
                                     <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
                                 @else
@@ -309,58 +293,138 @@
                     @endforeach
                 </div><!-- /.carousel -->
             </div><!-- /.col-12 -->
-
         </div><!-- /.row -->
-    </div><!-- /.container -->
-</section><!-- /.Team -->
 
-
-{{-- <section class="team-layout2 pb-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-                <div class="heading text-center mb-40">
-                    <h3 class="heading__title">Meet Our Doctors</h3>
-                </div><!-- /.heading -->
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        <div class="row">
+        <!-- ======================
+            TEST CARD EDIT V.1
+        ========================= -->
+        <div id="member_edit_of_room" class="row ">
             <div class="col-12">
-                <div class="slick-carousel slick-initialized slick-slider" data-slick="{&quot;slidesToShow&quot;: 3, &quot;slidesToScroll&quot;: 1, &quot;autoplay&quot;: true, &quot;arrows&quot;: false, &quot;dots&quot;: false, &quot;responsive&quot;: [ {&quot;breakpoint&quot;: 992, &quot;settings&quot;: {&quot;slidesToShow&quot;: 2}}, {&quot;breakpoint&quot;: 767, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}, {&quot;breakpoint&quot;: 480, &quot;settings&quot;: {&quot;slidesToShow&quot;: 1}}]}">
-                    <div class="slick-list draggable">
-                        <div class="slick-track" style="opacity: 1; width: 5070px; transform: translate3d(-780px, 0px, 0px);">
-                            <div class="member slick-slide slick-cloned" style="width: 360px;" tabindex="-1" data-slick-index="-1" id="" aria-hidden="true">
-                                <div class="member__img">
-                                    <img src="assets/images/team/6.jpg" alt="member img">
+                <div class="slick-carousel"
+                    data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": false, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                    <!-- Member #1 -->
+                    @foreach ($member as $item)
+                    <div  class="member">
+                        <input id="div_member_of_room_card" class="d-none" value="{{$item->user_id}}" disabled>
+                        <div class="member__img">
+                            @if(!empty($item->user->avatar) and empty($item->user->photo))
+                                <div class="member__img ">
+                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
-                                <div class="member__info">
-                                    <h5 class="member__name"><a href="doctors-single-doctor1.html" tabindex="-1">Kiano Barker</a></h5>
-                                    <p class="member__job">Pathologist </p>
-                                    <p class="member__desc">Barker help care for patients every day by providing their doctors with the
-                                    information needed to ensure appropriate care. He also valuable resources for other physicians.</p>
-                                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                                        <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded" tabindex="-1">
-                                            <span>Read More</span>
-                                            <i class="icon-arrow-right"></i>
-                                        </a>
-                                        <ul class="social-icons list-unstyled mb-0">
-                                            <li><a href="#" class="facebook" tabindex="-1"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="#" class="twitter" tabindex="-1"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a href="#" class="phone" tabindex="-1"><i class="fas fa-phone-alt"></i></a></li>
-                                        </ul><!-- /.social-icons -->
+                            @endif
+
+                            @if(!empty($item->user->photo))
+                                <div class="member__img ">
+                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" height="300px" width="100%">
+                                </div><!-- /.member-img -->
+                            @endif
+
+                            @if(empty($item->user->avatar) and empty($item->user->photo))
+                                <div class="member__img ">
+                                    <img src="{{ asset('/img/logo_mithcare/x-icon-2.png') }}" alt="member img" height="300px" width="100%">
+                                </div><!-- /.member-img -->
+                            @endif
+                        </div><!-- /.member-img -->
+                        <div class="member__info">
+                            <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
+                                {{-- สถานะ --}}
+                                <div class="row ">
+                                    <div class="col-12 col-md-12 col-lg-12 from-group">
+                                        <label for="status" class="control-label" style="font-size: 20px;">{{ 'สถานะ' }}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 from-group">
+                                        <label>
+                                            <input class="card-input-element d-none" id="status_member_of_room{{$item->user_id}}" name="status_of_room{{$item->user_id}}" type="radio" onclick="show_input_fr({{$item->user_id}});" value="member" {{ (isset($item) && 'member' == $item->status) ? 'checked' : '' }} required>
+                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                <span>
+                                                    สมาชิก : {{$item->user_id}}
+                                                </span>
+                                            </div>
+                                        </label>
                                     </div>
 
+                                    <div class="col-12 col-md-6 col-lg-6 from-group">
+                                        <label>
+                                            <input class="card-input-element d-none" id="status_patient_of_room{{$item->user_id}}" name="status_of_room{{$item->user_id}}" type="radio" onclick="show_input_fr({{$item->user_id}});" value="patient" {{ (isset($item) && 'patient' == $item->status) ? 'checked' : '' }} required>
+                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                <span>
+                                                    ผู้ป่วย : {{$item->user_id}}
+                                                </span>
+                                            </div>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div><!-- /.member -->
-                        </div><!-- /.slick-track -->
-                    </div><!-- /.slick-list -->
+
+                                <hr>
+
+
+                                <div id="takecare_fr{{$item->user_id}}" class="row ">
+                                    <label for="status" class="control-label" style="font-size: 20px;">{{ 'เลือกผู้ที่ต้องการดูแล' }}</label>
+                                    <div class="col-12">
+                                        <div class="slick-carousel"
+                                            data-slick='{"slidesToShow": 1, "slidesToScroll": 1, "autoplay": false, "arrows": true, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                                            <!--///  เลือกผู้ดูแล /// -->
+                                            <div id="" class="form-group">
+                                                <div class="row">
+                                                    @foreach($this_room as $item)
+                                                    <div class="col-6">
+                                                        <label>
+                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare{{$item->user_id}}" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="member_takecare" {{ (isset($item) && 'member_takecare' == $item->member_takecare) ? 'checked' : '' }} value="{{$item->user_id}}">
+                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center"
+                                                                <span>
+                                                                    {{$item->user->name}}
+                                                                </span>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <input class="form-control d-none" type="text" name="select_takecare{{$item->user_id}}" id="select_takecare{{$item->user_id}}">
+                                            </div>
+                                        </div><!-- /.slick-carousel -->
+                                    </div> <!-- /.col-12 -->
+                                </div><!-- /.row -->
+
+                                <div id="lv_caretaker_fr{{$item->user_id}}" class="row ">
+                                    <div class="col-12 col-md-12 col-lg-12 from-group">
+                                        <label for="status" class="control-label" style="font-size: 20px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-6 from-group">
+                                        <label>
+                                            <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_1_of_caretaker{{$item->user_id}}"  name="lv_of_caretaker{{$item->user_id}}" type="radio" value="1" {{ (isset($item) && '1' == $item->lv_of_caretaker) ? 'checked' : '' }}>
+                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                <span>
+                                                    ระดับ 1
+                                                </span>
+                                            </div>
+                                        </label>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6 col-lg-6 from-group">
+                                        <label>
+                                            <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_2_of_caretaker{{$item->user_id}}" name="lv_of_caretaker{{$item->user_id}}" type="radio" value="2" {{ (isset($item) && '2' == $item->lv_of_caretaker) ? 'checked' : '' }}>
+                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                <span>
+                                                    ระดับ 2
+                                                </span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                        </div><!-- /.member-info -->
+                    </div><!-- /.member -->
+                    @endforeach
                 </div><!-- /.carousel -->
             </div><!-- /.col-12 -->
         </div><!-- /.row -->
+
     </div><!-- /.container -->
-</section> --}}
-
-
+</section><!-- /.Team -->
 
 
 @endsection
@@ -378,4 +442,71 @@
       alert("Copied !!!" );
     }
 
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        let x = document.querySelector('#div_member_of_room_card');
+        for(i = 0; i<x.length; i++){
+            document.getElementById('takecare_fr'+x).classList.add('d-none');
+            document.getElementById('lv_caretaker_fr'+x).classList.add('d-none');
+        }
+
+});
+
+function show_input_fr(user_id){
+    let select_takecare = document.getElementsByName("select_takecare"+ user_id);
+    //  console.log(show_input_fr(user_id));
+    if (document.getElementById("status_member_of_room"+ user_id).checked) {
+        let takecare_fr = document.querySelector('#takecare_fr'+user_id).classList ;
+            // console.log(div_date);
+            takecare_fr.remove('d-none');
+            // takecare_fr.add('col-12');
+        document.querySelector('#lv_caretaker_fr'+user_id).classList.add('d-none');
+        document.querySelector('#lv_caretaker_fr'+user_id).required = false ;
+
+
+        let radio_lv_takecare = document.getElementsByName('lv_of_caretaker'+user_id);
+            // document.querySelector('#select_takecare').value = "";
+
+        for (let i = 0; i < radio_lv_takecare.length; i++) {
+            radio_lv_takecare[i].checked = false ;
+            }
+
+    }else {
+         let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr'+user_id).classList;
+            // console.log(div_date);
+            lv_caretaker_fr.remove('d-none');
+            // lv_caretaker_fr.add('col-12');
+            document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
+            document.querySelector('#takecare_fr'+user_id).required = false ;
+            document.querySelector('.lv_of_caretaker'+user_id).required = true ;
+
+            let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
+            document.querySelector('#select_takecare'+user_id).value = "";
+
+            for (let i = 0; i < checkbox_select_takecare.length; i++) {
+                checkbox_select_takecare[i].checked = false ;
+            }
+    }
+}
+
+</script>
+
+<script>
+function click_Select_Takecare(user_id){
+    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+ user_id);
+    let select_takecare = document.querySelector('#select_takecare'+ user_id);
+    // console.log(checkbox_select_takecare);
+    select_takecare.value = "" ;
+    for (let i = 0; i < checkbox_select_takecare.length; i++) {
+        if (checkbox_select_takecare[i].checked) {
+            if (select_takecare.value === "") {
+                select_takecare.value = checkbox_select_takecare[i].value ;
+            }else{
+                select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
+            }
+        }
+    }
+}
 </script>

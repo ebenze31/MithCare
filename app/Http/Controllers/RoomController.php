@@ -26,14 +26,13 @@ class RoomController extends Controller
         $check_url = $request->get('check_url');
         $type = $request->get('type');
         // echo"<pre>";
-        // print_r($my_room);
+        // print_r($keyword);
         // echo"</pre>";
         // exit();
 
         if (!empty($keyword)) {
             $my_room = Member_of_room::where('user_id',$id)
                 ->where('name', 'LIKE', "%$keyword%")
-                ->orWhere('pass', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $my_room = Member_of_room::where('user_id',$id)->latest()->paginate($perPage);
@@ -92,7 +91,11 @@ class RoomController extends Controller
 
         $amount_member = Member_of_room::where('room_id',$id)->count('id');
 
-        return view('room.show', compact('room','member','amount_member'));
+        $room_test = Room::get();
+
+        $this_room = Member_of_room::where('room_id',$id)->where('status', 'patient')->get();
+
+        return view('room.show', compact('room','member','amount_member','room_test','this_room'));
     }
 
     public function member_of_room_edit(Request $request)

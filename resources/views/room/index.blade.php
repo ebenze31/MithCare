@@ -103,38 +103,28 @@
 
                                 <div class="container">
                                     <h3><i class="fa-solid fa-right-to-bracket"></i> ค้นหาบ้าน</h3>
-                                    {{-- <a href="#" onclick="goBack()">
-                                        <button class="btn btn-info btn-sm main-shadow main-radius" style="font-size: 20px;">
-                                            <i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ
-                                        </button>
-                                    </a> --}}
                                     <br />
                                     <br />
-
-
                                         {{-- @include ('room.form_join') --}}
                                         {{-- <input type="text" class="form-control" placeholder="Search..."> --}}
-                                        <div class="form-group ">
-                                            <label for="pass" class="control-label">{{ 'ชื่อบ้านหรือรหัสบ้าน' }}</label>
-                                            <input id="user_login_fullname" type="text" class="form-control d-none" name="user_login_fullname" value="{{Auth::user()->id}}">
-                                            <input id="input_search" type="text" class="form-control" name="find_room_search" value="" >
+                                    <div class="form-group ">
+                                        <label for="pass" class="control-label">{{ 'ชื่อบ้านหรือรหัสบ้าน' }}</label>
+                                        <input id="user_login_fullname" type="text" class="form-control d-none" name="user_login_fullname" value="{{Auth::user()->id}}">
+                                        <input id="input_search" type="text" class="form-control" name="find_room_search" value="" >
 
 
-                                            <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" onclick="Super_search()">
-                                                ค้นหาบ้าน
-                                            </button>
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div id="show_data_room" name="show_data_room" class="col-12 d-none" >
-
-                                            </div><!--  col-md-4 col-sm-12 -->
-                                        </div>
+                                        <button class="btn btn-primary form-control mt-4" style="background-color: #3490dc; font-size: 25px; color: white;" onclick="Super_search()">
+                                            ค้นหาบ้าน
+                                        </button>
+                                    </div>
 
 
 
+                                    <div class="row">
+                                        <div id="show_data_room" name="show_data_room" class="col-12 d-none" >
+
+                                        </div><!--  col-md-4 col-sm-12 -->
+                                    </div>
                                 </div>
 
                             </div>
@@ -165,7 +155,7 @@
                         <div class="widget widget-search">
                             <div class="widget__content">
                                 <form method="GET" action="{{ url('/room') }}" accept-charset="UTF-8" class="widget__form-search">
-                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <input id="search" name="search" type="text" class="form-control" placeholder="Search...">
                                     <button class="btn" type="submit"><i class="icon-search"></i></button>
                                 </form>
                             </div><!-- /.widget-content -->
@@ -370,12 +360,10 @@
                             // if(user === result[i]['owner_id'])
                             // let photo_home_pic = 'www.mithcare.com/storage' + '/' + result[i]['home_pic'];
 
-
-
                             html =  '<form method="POST" action="{{ url("/room_find") }}" accept-charset="UTF-8" class="" enctype="multipart/form-data">' +
-                                                   '{{ csrf_field() }}' +
+                                        '{{ csrf_field() }}' +
                                             '<div class="card product-item ">' +
-                                                '<div class="card-body">' +
+                                                '<div class="card-body ">' +
                                                     '<div class="row d-flex justify-content-center align-items-center">' +
                                                         '<div class="col-12 col-md-3 col-lg-4">' +
                                                             //  if(result[i]['home_pic']){
@@ -391,9 +379,9 @@
 
                                                         '</div>' +
                                                         '<div class="col-12 col-md-6 col-lg-4">' +
-                                                            '<h5 class="mt-2">' + '<i class="fa-solid fa-house">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
-                                                            '<p class="text-bold">' + 'เจ้าของ' + '<br>' + result[i]['full_name_owner'] + '</p>' +
-                                                            '<p class="text-bold">' + '(' + result[i]['name_owner']+ ')' + '</p>' +
+                                                            '<h5 id="div_name_room_join_room'+result[i]['id']+'" class="mt-2 text-primary">' + '<i class="fa-solid fa-house ">&nbsp;' + '</i>' + result[i]['name'] +'</h5>' +
+                                                            '<p class="text-bold" style="font-weight: bold;">' + 'เจ้าของ' + '<br>' + result[i]['full_name_owner'] + '</p>' +
+                                                            '<p class="text-bold" style="font-weight: bold;">' + '(' + result[i]['name_owner']+ ')' + '</p>' +
                                                         '</div>' +
 
 
@@ -421,6 +409,8 @@
                                     '</form>' ;
 
 
+
+
                             // document.querySelector('#imgResource' + result[i]['home_pic']).innerHTML = html;
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
                         }
@@ -429,6 +419,9 @@
                         for(x=0; x<user_in_room.length; x++){
                             document.querySelector("#div_btn_join_room"+ user_in_room[x]).classList.add('d-none');
                             document.querySelector("#div_btn_join_laew_room"+ user_in_room[x]).classList.remove('d-none');
+
+                            document.querySelector("#div_name_room_join_room"+ user_in_room[x]).classList.add('text-success');
+                            document.querySelector("#div_name_room_join_room"+ user_in_room[x]).classList.remove('text-primary');
                             // console.log(user_in_room[x]);
                         }
                     }

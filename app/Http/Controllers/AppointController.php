@@ -26,8 +26,6 @@ class AppointController extends Controller
         // TEST APPOINT NOTI
         // ===================
 
-        // $ap_test = Carbon::parse("2021-06-26 22:00:00")->addMinutes(10)->format('H:i:s');
-
         $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
         $date_now = Carbon::now()->format('Y-m-d');
 
@@ -39,15 +37,14 @@ class AppointController extends Controller
         ->orWhere('status','=','sent')
         ->get();
 
+         // ใช้เช็ค status ตอนกดสร้าง นัดหมายว่าเป็นใคร
+        $check_status_member = Member_of_room::where('user_id' , $user_id)->where('room_id' , $room_id)->first();
 
-
-        // foreach($ap_pill_test as $item){
-        //     if($item['date'] == $date_now){
-        //         if($item['date_time'] == $time_10){
-
-        //         }
-        //     }
-        // }
+        // ดึงข้อมูลผู้ป่วย จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า appoint.blade
+        $patient_this_room = Member_of_room::where('room_id',$room_id)
+        ->where('status', 'patient')
+        ->where('lv_of_caretaker','=',2)
+        ->get();
 
         // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
         $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
@@ -57,8 +54,6 @@ class AppointController extends Controller
                 $check = "Yes" ;
             }
         }
-
-
 
         if ($check == "Yes"){
             $room = Room::where('id',$room_id)->first();
@@ -70,7 +65,18 @@ class AppointController extends Controller
 
             }
 
-            return view('appoint.appoint_index', compact('room','room_id','appoint','type','ap_pill_test','date_now','time_10'));
+            return view('appoint.appoint_index',
+
+            compact('room',
+            'room_id',
+            'appoint',
+            'type',
+            'check_status_member',
+            'patient_this_room',
+            'ap_pill_test',
+            'date_now',
+            'time_10',
+            ));
 
         }else{
             return view('404');
@@ -84,17 +90,48 @@ class AppointController extends Controller
         return view('appoint.create');
     }
 
+    public function get_data_member_of_this_room($room_id)
+    {
+        // ดึงข้อมูลผู้ป่วย จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า appoint.blade
+        $patient_this_room = Member_of_room::where('room_id',$room_id)->where('status', 'patient')->get();
+
+        return $patient_this_room;
+    }
+
     public function store(Request $request, $id)
     {
         $create_by_id = Auth::id();
+        $user_id = $request->get('patient_id');
 
-        $requestData = $request->all();
-        $requestData["create_by_id"] = $create_by_id;
-        $requestData["room_id"] = $id;
+        // $requestData = $request->all();
 
-        Appoint::create($requestData);
+        // Appoint::create($requestData);
 
-        return back();
+        // return back();
+
+        // กรณีเลือกสร้างนัดหมายให้คนอื่น -> ได้ user_id คนที่จะนัดหมายให้
+        if(!empty($user_id)){
+            $requestData = $request->all();
+            $requestData["create_by_id"] = $create_by_id;
+            $requestData["room_id"] = $id;
+            $requestData['patient_id'] = $user_id;
+
+            Appoint::create($requestData);
+
+            return back();
+        }
+        // กรณีเลือกสร้างนัดหมายให้ตัวเอง -> ได้ user_id คนที่จะนัดหมายให้
+        else{
+            $requestData = $request->all();
+            $requestData["create_by_id"] = $create_by_id;
+            $requestData["room_id"] = $id;
+            $requestData['patient_id'] = $create_by_id;
+
+            Appoint::create($requestData);
+
+            return back();
+        }
+
         // return view('appoint');
     }
 

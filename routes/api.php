@@ -28,6 +28,9 @@ Route::get('/zipcodes', 'API\TambonController@getZipcodes');
 
 Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint');
 
+// ดึงข้อมูลผู้ป่วยจาก DB: member_of_rooms -> appoint.index.blade
+Route::get('/member_of_this_room/{room_id}', 'AppointController@get_data_member_of_this_room');
+
 Route::get('/game', 'API\GameController@update_Click');
 Route::get('/find_room', 'RoomController@search_find_room');
 

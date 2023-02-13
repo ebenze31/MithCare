@@ -182,7 +182,7 @@ class RoomController extends Controller
         }
         // $room_id = Room::findOrFail($find_room->id);
 
-        $this_room = Member_of_room::where('room_id',$find_room->id)->where('status', 'patient')->get();
+        $this_room = Member_of_room::where('room_id',$find_room->id)->where('status', 'patient')->where('lv_of_caretaker', '2')->where('caregiver','=',null)->get();
 
         // echo"<pre>";
         // print_r($keyword);
@@ -196,10 +196,41 @@ class RoomController extends Controller
     {
 
         $requestData = $request->all();
+        // id caregiver
+
+
+        $status_of_room = $request->get('status_of_room');
+        $select_takecare = $request->get('select_takecare');
+        $lv_of_caretaker = $request->get('lv_of_caretaker');
+
+        // echo"<pre>";
+        // print_r($select_takecare);
+        // echo"</pre>";
+        // exit();
+
+        $requestData['status'] = $status_of_room;
+        $requestData['lv_of_caretaker'] = $lv_of_caretaker;
+        $requestData['member_takecare'] = $select_takecare;
 
 
 
-        Member_of_room::Create($requestData);
+        $S = Member_of_room::firstOrNew(array('user_id' => $requestData['user_id']));
+        $S->fill($requestData)->save();
+
+        if($requestData['status'] == "member"){
+            $member_takecare = $requestData['member_takecare'];
+            $member_takecare_ep = explode(",",$member_takecare);
+            $count_ep = count($member_takecare_ep);
+
+
+            for ($i=0; $i < $count_ep; $i++) {
+                DB::table('member_of_rooms')
+                ->where('user_id', $member_takecare_ep[$i])
+                ->update([
+                    'caregiver' => $requestData['user_id'],
+                ]);
+            }
+        }
 
         return redirect('room'.'/'.$requestData['room_id'])->with('flash_message', 'Room deleted!');
         // return view('room.join' , compact('find_room','this_room'));

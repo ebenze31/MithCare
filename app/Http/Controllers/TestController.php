@@ -12,6 +12,7 @@ use App\Models\Appoint;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\For_;
 use App\Models\Mylog;
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -29,11 +30,10 @@ class TestController extends Controller
         // TEST APPOINT NOTI
         // ===================
 
-        // $ap_test = Carbon::parse("2021-06-26 22:00:00")->addMinutes(10)->format('H:i:s');
-
         $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
         $date_now = Carbon::now()->format('Y-m-d');
 
+        // ค้นหา status appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
         $ap_pill_test = Appoint::where('status','=',null)
         ->orWhere('status','=','sent')
         ->where('room_id','=',$room_id)
@@ -48,31 +48,73 @@ class TestController extends Controller
 
            echo $ap_pill_test[$i]['patient_id'];
            echo "<br>";
+            // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
             $data_members = Member_of_room::where('user_id',$ap_pill_test[$i]['patient_id'])->where('room_id',$room_id)->first();
-            if($data_members->lv_of_caretaker == 1){
+
+
+            if($data_members->lv_of_caretaker == 2){
+                // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
+                // echo $ap_pill_test[$i]['patient_id'];
+                // echo "<br>";
+                // echo 'ไม่สามารถดูแลตัวเองได้';
+                // echo "<br>";
+
+                // $data_takecare = Member_of_room::where('user_id',$ap_pill_test[$i]['patient_id'])
+                // ->where('room_id',$room_id)
+                // ->first();
+            }else{
+                  // LV_1 OR NULL
                 echo 'ดูแลตัวเองได้';
                 echo "<br>";
-                if($ap_pill_test[$i]['sent_round'] > 2){
+                    // ถ้าจำนวนการส่งเกิน 2 ครั้ง
+                if($ap_pill_test[$i]['sent_round'] >= 2){
                     echo 'ส่งมากกว่า 2 ครั้ง';
                     echo "<br>";
-                }else{
-                    echo 'ยังไม่ 2 ครั้ง';
-                    echo "<br>";
 
-                   $this->sentLineToPatient($ap_pill_test[$i]);
+                    $this->sentLineToPatient($ap_pill_test[$i],"tomember");
+
+                    DB::table('appoints')
+                    ->where('id', $ap_pill_test[$i]['id'])
+                    ->update([
+                        'status' => 'sent_success',
+                        'sent_round' => DB::raw('sent_round+1'),
+                    ]);
+
+                }else{
+                    // ถ้าจำนวนการส่งยังไม่เกิน 2 ครั้ง
+                    echo 'ยังไม่ 2 ครั้ง ' ;
+                    echo "<br>";
+                    $this->sentLineToPatient($ap_pill_test[$i],"topatient");
+
+                    // ถ้า send_round ไม่เป็นค่าว่าง
+                    if(!empty($ap_pill_test[$i]['sent_round'])){
+                        DB::table('appoints')
+                        ->where('id', $ap_pill_test[$i]['id'])
+                        ->update([
+                            'status' => 'sent',
+                            'sent_round' => DB::raw('sent_round+1'),
+                        ]);
+                    }else{
+                        //ถ้า send_round เป็นค่าว่าง
+                        DB::table('appoints')
+                        ->where('id', $ap_pill_test[$i]['id'])
+                        ->update([
+                            'sent_round' => 1,
+                        ]);
+                    }
+
 
                 }
-            }else{
-                echo 'ไม่สามารถดูแลตัวเองได้';
-                echo "<br>";
             }
+
+
 
         //  echo"<pre>";
         //    print_r($data_members);
         //    echo"</pre>";
 
         }
- exit();
+        exit();
 
         // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
         $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
@@ -103,23 +145,40 @@ class TestController extends Controller
 
     }
 
-    public function sentLineToPatient($data_pill){
+    public function sentLineToPatient($data_pill,$sendto){
+
+        if($sendto == "tomember"){
+             // sendto Member
+            $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
+
+            $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
+            $provider_id = $sendto->provider_id;
+        }else{
+            // sendto Patient
+            $sendto = User::where('id','=',$data_pill['patient_id'])->first();
+            $provider_id = $sendto->provider_id;
+        }
+        echo $sendto->id;
 
 
-        $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
 
-        echo $data_pill['title'];
-        echo '<br>';
-        echo $data_patient->provider_id;
+
 
         $template_path = storage_path('../public/json/flex_line_text.json');
         $string_json = file_get_contents($template_path);
-
-        $string_json = str_replace("ใส่ข้อความตรงนี้ครับ",$data_pill['title'],$string_json);
+        // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
+        if(!empty($data_pill['patient_id'])){
+            $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_pill['patient_id'],$string_json);
+        }else{
+            $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_pill['create_by_id'],$string_json);
+        }
+        $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
+        $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
+        $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [
-            "to" => $data_patient->provider_id,
+            "to" => $provider_id,
             "messages" => $messages,
         ];
         $opts = [

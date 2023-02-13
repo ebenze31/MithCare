@@ -182,7 +182,7 @@
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <label>
                                         {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                    <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare();" value="{{$item->id}}">
+                                    <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare();" value="{{$item->user_id}}">
                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                             <span>
                                                 {{$item->user->full_name}}
@@ -192,6 +192,7 @@
                                 </div>
                                 @endforeach
                            </div>
+                           <input class="form-control d-none" type="text" name="caregiver" id="caregiver" value="{{Auth::user()->id}}">
                             <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                             <input class="form-control d-none" type="text" name="room_id" id="room_id" value="{{$find_room->id}}">
                             <input class="form-control d-none" type="text" name="select_takecare" id="select_takecare">
@@ -215,7 +216,7 @@
 
                             <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_1_of_caretaker') is-invalid @enderror">
                                 <label>
-                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_1_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="1" >
+                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_1_of_caretaker"  name="lv_of_caretaker" type="radio" value="1" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                         <span>
                                             ระดับ 1 (กดยืนยันใช้ยาเองได้)
@@ -231,7 +232,7 @@
 
                             <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_2_of_caretaker') is-invalid @enderror">
                                 <label>
-                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_2_of_caretaker" autocomplete="off" name="lv_of_caretaker" type="radio" value="2" >
+                                    <input class="card-input-element d-none lv_of_caretaker" id="lv_2_of_caretaker"  name="lv_of_caretaker" type="radio" value="2" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                         <span>
                                             ระดับ 2 (ไม่สามารถกดยืนยันใช้ยาเองได้)(ผู้ดูแลกดให้)
@@ -270,14 +271,14 @@
 
     function show_input_fr(){
         let select_takecare = document.getElementsByName("select_takecare");
-
+        //เลือกเป็น สมาชิก
         if (document.getElementById("status_member_of_room").checked) {
             let takecare_fr = document.querySelector('#takecare_fr').classList ;
                 // console.log(div_date);
                 takecare_fr.remove('d-none');
                 takecare_fr.add('col-12');
             document.querySelector('#lv_caretaker_fr').classList.add('d-none');
-            document.querySelector('#lv_caretaker_fr').required = false ;
+            // document.getElementsByName('lv_of_caretaker').required = false ;
 
 
             let radio_lv_takecare = document.getElementsByName('lv_of_caretaker');
@@ -285,9 +286,11 @@
 
             for (let i = 0; i < radio_lv_takecare.length; i++) {
                 radio_lv_takecare[i].checked = false ;
+                radio_lv_takecare[i].required = false ;
                 }
 
         }else {
+            //เลือกเป็น ผู้ป่วย
              let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr').classList;
                 // console.log(div_date);
                 lv_caretaker_fr.remove('d-none');

@@ -1,10 +1,81 @@
 @extends('layouts.mithcare')
 
 @section('content')
-    @foreach ($ap_pill_test as $item)
-        {{$item->id}}
-    @endforeach
-{{$time_10}}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+    label{
+        width: 100%
+    }
+    .card-input-element+.card {
+    height: calc(36px + 2*1rem);
+    color: #0d6efd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    }
+
+    .card-input-element+.card:hover {
+    cursor: pointer;
+    }
+
+    .card-input-element:checked+.card {
+    border: 2px solid #0d6efd;
+    color: #4170A2 !important;
+    background-color: #ffffff !important;
+    -webkit-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+    }
+
+    .card-input-element:checked+.card::after {
+    content: '\e5ca';
+    color: #AFB8EA;
+    font-family: 'Material Icons';
+    font-size: 24px;
+    -webkit-animation-name: fadeInCheckbox;
+    animation-name: fadeInCheckbox;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @-webkit-keyframes fadeInCheckbox {
+    from {
+    opacity: 0;
+    -webkit-transform: rotateZ(-20deg);
+    }
+    to {
+    opacity: 1;
+    -webkit-transform: rotateZ(0deg);
+    }
+    }
+
+    @keyframes fadeInCheckbox {
+    from {
+    opacity: 0;
+    transform: rotateZ(-20deg);
+    }
+    to {
+    opacity: 1;
+    transform: rotateZ(0deg);
+    }
+    }
+</style>
+
+
+
+
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
     <div class="container">
@@ -59,6 +130,9 @@
                     </a>
 
 
+
+
+
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -86,14 +160,76 @@
                                                 </ul>
                                                 @endif
 
+
+
                                                 <form method="POST"
                                                     action="{{ url('/appoint/'. $room->id . '/create') }}"
                                                     accept-charset="UTF-8" class="form-horizontal h5"
                                                     enctype="multipart/form-data">
                                                     {{ csrf_field() }}
 
+                                                    {{-- <div class="form-group">
+                                                        <span id="select_a" class="form-control btn btn-info text-white bg-info" onclick="select_takecare_lv2(this.id)">นัดหมายให้ผู้ป่วยคนอื่น</span>
+                                                        <span id="select_b" class="form-control btn btn-info text-white bg-success d-none" onclick="select_takecare_lv2(this.id)">นัดหมายให้ตัวเอง</span>
+                                                    </div> --}}
+
+                                                    <div class="home-demo">
+                                                        <div class="owl-carousel aasdaa owl-theme">
+                                                            <div class="col-12 ">
+                                                                <label>
+                                                                    {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
+                                                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                        <span style="font-size:16px;">
+                                                                            {{Auth::user()->name}}
+                                                                        </span>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                            @foreach($patient_this_room as $item)
+                                                                <div class="item">
+                                                                    <!--///  เลือกผู้ป่วย /// -->
+                                                                    {{-- <div id="div_select_takecare_of_create_appoint" class="form-group col-12 col-md-12 ">
+                                                                            <input class="card-input-element" type="radio" value="{{ $item->user_id }}">{{$item->user->name}}>
+                                                                    </div> --}}
+
+                                                                    <div class="col-12 ">
+                                                                        <label>
+                                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                        <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}">
+                                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                <span style="font-size:16px;">
+                                                                                    {{$item->user->full_name}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+
+                                                        </div>
+                                                      </div>
+
+
+
                                                     @include ('appoint.appoint_form_create')
                                                 </form>
+
+                                                <script>
+
+                                                    $(function() {
+                                                    // Owl Carousel
+                                                    var owl = $(".aasdaa");
+                                                    owl.owlCarousel({
+                                                        items: 2,
+                                                        margin: 10,
+                                                        loop: false,
+                                                        nav: false,
+                                                    });
+                                                    });
+                                            </script>
+
+
 
                                             </div>
                                         </div>
@@ -378,5 +514,54 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#date_time_edit').required = true
         }
     }
+
+</script>
+
+<script>
+
+    // function select_takecare_lv2() {
+    //   let button_switch = document.querySelector('#select_takecare_patient_2').value;
+
+    //   if (type === 'doc') {
+    //         let div_date = document.querySelector('#div_date_edit').classList ;
+    //             // console.log(div_date);
+    //             div_date.remove("col-md-6");
+    //             div_date.remove('d-none');
+    //             div_date.add('col-md-12');
+    //         document.querySelector('#div_datetime_edit').classList.add('d-none');
+    //         document.querySelector('#date_time_edit').required = false ;
+    //     }else {
+    //         let div_date = document.querySelector('#div_date_edit').classList;
+    //             // console.log(div_date);
+    //             div_date.remove("col-md-12");
+    //             div_date.remove('d-none');
+    //             div_date.add('col-md-6');
+    //         document.querySelector('#div_datetime_edit').classList.remove('d-none');
+    //         document.querySelector('#date_time_edit').required = true
+    //     }
+    // }
+
+    function select_takecare_lv2(id){
+    switch(id){
+        case "select_a":
+
+            document.getElementById("select_a").classList.add('d-none');
+            document.getElementById("select_b").classList.remove('d-none');
+
+            document.getElementById("div_select_takecare_of_create_appoint").classList.remove('d-none');
+            document.getElementById("input_patient_this_room").required = true;
+
+            break;
+        case "select_b":
+
+            document.getElementById("select_a").classList.remove('d-none');
+            document.getElementById("select_b").classList.add('d-none');
+
+            document.getElementById("div_select_takecare_of_create_appoint").classList.add('d-none');
+            document.getElementById("input_patient_this_room").required = false;
+            document.getElementById("input_patient_this_room").value = "";
+    }
+}
+
 
 </script>

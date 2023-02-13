@@ -1,4 +1,56 @@
 {
-    "type": "text",
-    "text": "ใส่ข้อความตรงนี้ครับ"
- }
+    "type": "flex",
+    "altText": "แจ้งเตือนการใช้ยา",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "kilo",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ผู้ใช้ : USER_NAMEแทนตรงนี้",
+                  "color": "#ffffff",
+                  "size": "lg",
+                  "flex": 4,
+                  "weight": "bold"
+                },
+                {
+                  "type": "text",
+                  "text": "หัวข้อ : TITLEแทนตรงนี้",
+                  "color": "#ffffff",
+                  "size": "md",
+                  "flex": 4,
+                  "weight": "bold"
+                },
+                {
+                  "type": "text",
+                  "text": "วันที่ : DATEแทนตรงนี้ ",
+                  "color": "#ffffff",
+                  "size": "md"
+                },
+                {
+                  "type": "text",
+                  "text": "เวลา : TIMEแทนตรงนี้",
+                  "color": "#ffffff",
+                  "size": "md"
+                }
+              ]
+            }
+          ],
+          "paddingAll": "20px",
+          "backgroundColor": "#8BCB8F",
+          "spacing": "md",
+          "height": "140px",
+          "paddingTop": "22px"
+        }
+      }
+}
+
+

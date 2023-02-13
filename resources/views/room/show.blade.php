@@ -298,7 +298,7 @@
         <!-- ======================
             TEST CARD EDIT V.1
         ========================= -->
-        <div id="member_edit_of_room" class="row ">
+        <div id="member_edit_of_room" class="row d-none">
             <div class="col-12">
                 <div class="slick-carousel"
                     data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": false, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>

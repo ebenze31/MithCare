@@ -360,7 +360,7 @@
 
                                                 {{-- คอม --}}
                                     <div class="home-demo d-none d-lg-block">
-                                        <div class="owl-carousel owl-theme">
+                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px" alt="gallery img">
                                             </div>
@@ -378,7 +378,7 @@
 
                                                 {{-- มือถือ --}}
                                     <div class="home-demo d-block d-md-none">
-                                        <div class="owl-carousel owl-theme">
+                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px"  alt="gallery img">
                                             </div>
@@ -429,7 +429,7 @@
     <script>
         $(function() {
             // Owl Carousel
-            var owl = $(".owl-carousel");
+            var owl = $(".owl-carousel-mithcare");
             owl.owlCarousel({
                 items: 8,
                 margin: 40,

@@ -15,7 +15,7 @@
               "contents": [
                 {
                   "type": "text",
-                  "text": "ผู้ใช้ : USER_NAMEแทนตรงนี้",
+                  "text": "USER_NAMEแทนตรงนี้",
                   "color": "#ffffff",
                   "size": "md",
                   "flex": 4,

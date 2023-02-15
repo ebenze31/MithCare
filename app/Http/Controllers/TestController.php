@@ -140,16 +140,19 @@ class TestController extends Controller
                 //    exit();
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
+                $message_of_patient = "เลยเวลาแทนยาแล้ว กรุณาติดต่อคนไข้ ";
             }else{
                  //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
                 $sendto = User::where('id','=',$data_pill['patient_id'])->first();
                 $provider_id = $sendto->provider_id;
+                $message_of_patient = "";
             }
         }else{
             // sendto Patient
             $sendto = User::where('id','=',$data_pill['patient_id'])->first();
             $provider_id = $sendto->provider_id;
+            $message_of_patient = "";
         }
         // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
 
@@ -161,7 +164,7 @@ class TestController extends Controller
         $string_json = file_get_contents($template_path);
         // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
 
-        $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_patient->name,$string_json);
+        $string_json = str_replace("USER_NAMEแทนตรงนี้",$message_of_patient.$data_patient->name,$string_json);
         $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
         $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
         $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);

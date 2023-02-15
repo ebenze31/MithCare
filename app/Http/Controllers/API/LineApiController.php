@@ -96,8 +96,10 @@ class LineApiController extends Controller
         // print_r( $event);
         // echo"</pre>";
         // exit();
-        $data_postback_explode = explode("?",$event["postback"]["data"]);
-        $data_postback = $data_postback_explode[0] ;
+        // $data_postback_explode = explode("?",$event["postback"]["data"]);
+        // $data_postback = $data_postback_explode[0] ;
+
+        $data_postback = $event["postback"]["data"] ;
 
         switch($data_postback){
             // case "accept_pill" :

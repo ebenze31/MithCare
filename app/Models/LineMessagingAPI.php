@@ -143,10 +143,8 @@ class LineMessagingAPI extends Model
     public function select_reply($data, $event, $postback_data)
     {
 
-
     $template_path = storage_path('../public/json/flex_accept_reply.json');
     $string_json = file_get_contents($template_path);
-    // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
 
     $messages = [ json_decode($string_json, true) ];
     $body = [

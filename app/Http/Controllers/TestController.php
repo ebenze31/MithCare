@@ -55,11 +55,10 @@ class TestController extends Controller
             if($data_members->lv_of_caretaker == 2){
                 // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
-
                 DB::table('appoints')
                 ->where('id', $ap_pill_test[$i]['id'])
                 ->update([
-                    'status' => 'sent',
+                    'status' => 'sent_success',
                     'sent_round' => 1,
                 ]);
 
@@ -144,14 +143,15 @@ class TestController extends Controller
             }else{
                  //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
-                exit();
+                $sendto = User::where('id','=',$data_pill['patient_id'])->first();
+                $provider_id = $sendto->provider_id;
             }
         }else{
             // sendto Patient
             $sendto = User::where('id','=',$data_pill['patient_id'])->first();
             $provider_id = $sendto->provider_id;
         }
-        echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
+        // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
 
         $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
 

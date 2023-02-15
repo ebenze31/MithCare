@@ -268,7 +268,7 @@
 
                             @if(empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ asset('/img/logo_mithcare/x-icon-2.png') }}" alt="member img" height="300px" width="100%">
+                                    <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
                         </div><!-- /.member-img -->
@@ -321,7 +321,7 @@
 
                             @if(empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ asset('/img/logo_mithcare/x-icon-2.png') }}" alt="member img" height="300px" width="100%">
+                                    <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
                         </div><!-- /.member-img -->

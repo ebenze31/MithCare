@@ -100,17 +100,17 @@ class LineApiController extends Controller
         $data_postback = $data_postback_explode[0] ;
 
         switch($data_postback){
-            case "accept_pill" :
-                $line->_pushguestLine(null, $event, "thx");
-                $line->reply_success($event , $data_postback);
-                break;
+            // case "accept_pill" :
+            //     $line->_pushguestLine(null, $event, "accept_pill");
+            //     $line->reply_success($event , $data_postback);
+            //     break;
             // case "wait" :
             //     $line->_pushguestLine(null, $event, "wait");
             //     $line->reply_success($event , $data_postback);
             //     break;
-            // case "การตอบกลับ" :
-            //     $line->select_reply(null, $event, "reply");
-            //     break;
+            case "accept_pill" :
+                $line->select_reply(null, $event, "reply");
+                break;
             // case "help_complete" :
             //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);
             //     break;

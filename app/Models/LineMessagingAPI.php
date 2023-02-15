@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Mylog;
 
 use App\User;
+use SebastianBergmann\CodeCoverage\Report\Xml\Source;
+
 // use Carbon\Carbon;
 
 class LineMessagingAPI extends Model
@@ -135,6 +137,43 @@ class LineMessagingAPI extends Model
         ];
         MyLog::create($data);
         return $result;
+
+    }
+
+    public function select_reply($data, $event, $postback_data)
+    {
+
+
+    $template_path = storage_path('../public/json/flex_accept_reply.json');
+    $string_json = file_get_contents($template_path);
+    // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
+
+    $messages = [ json_decode($string_json, true) ];
+    $body = [
+        "to" => $event['source']['user_id'],
+        "messages" => $messages,
+    ];
+    $opts = [
+        'http' =>[
+            'method'  => 'POST',
+            'header'  => "Content-Type: application/json \r\n".
+                        'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+            'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+            //'timeout' => 60
+        ]
+    ];
+
+    $context  = stream_context_create($opts);
+    $url = "https://api.line.me/v2/bot/message/push";
+    $result = file_get_contents($url, false, $context);
+
+    //SAVE LOG
+    $data = [
+        "title" => "ส่งไลน์",
+        "content" => json_encode($result, JSON_UNESCAPED_UNICODE),
+    ];
+
+    Mylog::Create($data);
 
     }
 

@@ -173,42 +173,44 @@
                                                         <span id="select_b" class="form-control btn btn-info text-white bg-success d-none" onclick="select_takecare_lv2(this.id)">นัดหมายให้ตัวเอง</span>
                                                     </div> --}}
 
-                                                    <div class="home-demo">
-                                                        <div class="owl-carousel aasdaa owl-theme">
-                                                            <div class="col-12 ">
-                                                                <label>
-                                                                    {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
-                                                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                                        <span style="font-size:16px;">
-                                                                            {{Auth::user()->name}}
-                                                                        </span>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                            @foreach($patient_this_room as $item)
-                                                                <div class="item">
-                                                                    <!--///  เลือกผู้ป่วย /// -->
-                                                                    {{-- <div id="div_select_takecare_of_create_appoint" class="form-group col-12 col-md-12 ">
-                                                                            <input class="card-input-element" type="radio" value="{{ $item->user_id }}">{{$item->user->name}}>
-                                                                    </div> --}}
-
-                                                                    <div class="col-12 ">
-                                                                        <label>
-                                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                        <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}">
-                                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                                                <span style="font-size:16px;">
-                                                                                    {{$item->user->full_name}}
-                                                                                </span>
-                                                                            </div>
-                                                                        </label>
-                                                                    </div>
+                                                        <div class="home-demo">
+                                                            <div class="owl-carousel aasdaa owl-theme">
+                                                                <div class="col-12 p-0">
+                                                                    <label>
+                                                                        {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
+                                                                        <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                            <span style="font-size:16px;">
+                                                                                {{Auth::user()->name}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
-                                                            @endforeach
+                                                                @foreach($patient_this_room as $item)
+                                                                    <div class="item">
+                                                                        <!--///  เลือกผู้ป่วย /// -->
+                                                                        {{-- <div id="div_select_takecare_of_create_appoint" class="form-group col-12 col-md-12 ">
+                                                                                <input class="card-input-element" type="radio" value="{{ $item->user_id }}">{{$item->user->name}}>
+                                                                        </div> --}}
 
+                                                                        <div class="col-12 p-0">
+                                                                            <label>
+                                                                                {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}">
+                                                                                <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                    <span style="font-size:16px;">
+                                                                                        {{$item->user->full_name}}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+
+                                                            </div>
                                                         </div>
-                                                      </div>
+
+
 
 
 

@@ -89,4 +89,40 @@ class LineApiController extends Controller
 
     }
 
+    function postbackHandler($event){
+
+        $line = new LineMessagingAPI();
+        // echo"<pre>";
+        // print_r( $event);
+        // echo"</pre>";
+        // exit();
+        $data_postback_explode = explode("?",$event["postback"]["data"]);
+        $data_postback = $data_postback_explode[0] ;
+
+        switch($data_postback){
+            case "accept_pill" :
+                $line->_pushguestLine(null, $event, "thx");
+                $line->reply_success($event , $data_postback);
+                break;
+            // case "wait" :
+            //     $line->_pushguestLine(null, $event, "wait");
+            //     $line->reply_success($event , $data_postback);
+            //     break;
+            // case "การตอบกลับ" :
+            //     $line->select_reply(null, $event, "reply");
+            //     break;
+            // case "help_complete" :
+            //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);
+            //     break;
+            // case "sos" :
+            //     $this->sos_helper($data_postback_explode[1] , $event["source"]["userId"] , $event);
+            //     break;
+            // case "Chinese" :
+            //     $line->replyToUser(null, $event, "Chinese");
+            //     break;
+        }
+
+    }
+
+
 }

@@ -164,9 +164,9 @@ class RoomController extends Controller
         return redirect('room')->with('flash_message', 'Room deleted!');
         // return back();
     }
-            //////////////////////////
+            //======================//
             //      ค้นหาบ้าน        //
-            /////////////////////////
+            //=====================//
 
     public function room_find_index(Request $request)
     {

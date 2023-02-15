@@ -17,7 +17,7 @@
                   "type": "text",
                   "text": "ผู้ใช้ : USER_NAMEแทนตรงนี้",
                   "color": "#ffffff",
-                  "size": "lg",
+                  "size": "md",
                   "flex": 4,
                   "weight": "bold"
                 },
@@ -33,13 +33,34 @@
                   "type": "text",
                   "text": "วันที่ : DATEแทนตรงนี้ ",
                   "color": "#ffffff",
-                  "size": "md"
+                  "size": "sm"
                 },
                 {
                   "type": "text",
                   "text": "เวลา : TIMEแทนตรงนี้",
                   "color": "#ffffff",
-                  "size": "md"
+                  "size": "sm"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "action": {
+                        "type": "postback",
+                        "label": "ยืนยันการใช้ยา",
+                        "data": "accept_pill"
+                      },
+                      "offsetBottom": "4px",
+                      "color": "#CDF3C2",
+                      "height": "sm"
+                    }
+                  ],
+                  "height": "35px",
+                  "backgroundColor": "#309214",
+                  "cornerRadius": "xxl",
+                  "offsetTop": "2px"
                 }
               ]
             }
@@ -47,7 +68,7 @@
           "paddingAll": "20px",
           "backgroundColor": "#8BCB8F",
           "spacing": "md",
-          "height": "140px",
+          "height": "150px",
           "paddingTop": "22px"
         }
       }

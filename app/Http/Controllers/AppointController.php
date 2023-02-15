@@ -44,6 +44,7 @@ class AppointController extends Controller
         $patient_this_room = Member_of_room::where('room_id',$room_id)
         ->where('status', 'patient')
         ->where('lv_of_caretaker','=',2)
+        ->where('caregiver','=',null)
         ->get();
 
         // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า

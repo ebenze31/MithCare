@@ -46,7 +46,7 @@ class TestController extends Controller
         echo "<br>=============================================================================================================<br>";
         for($i = 0; $i < count($ap_pill_test); $i++){
 
-           echo $ap_pill_test[$i]['patient_id'];
+           echo 'ID ผู้ป่วย : '.$ap_pill_test[$i]['patient_id'];
            echo "<br>";
             // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
             $data_members = Member_of_room::where('user_id',$ap_pill_test[$i]['patient_id'])->where('room_id',$room_id)->first();
@@ -54,21 +54,23 @@ class TestController extends Controller
 
             if($data_members->lv_of_caretaker == 2){
                 // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
-                // echo $ap_pill_test[$i]['patient_id'];
-                // echo "<br>";
-                // echo 'ไม่สามารถดูแลตัวเองได้';
-                // echo "<br>";
 
-                // $data_takecare = Member_of_room::where('user_id',$ap_pill_test[$i]['patient_id'])
-                // ->where('room_id',$room_id)
-                // ->first();
+                    // ถ้าจำนวนการส่งเกิน 2 ครั้ง
+                    if($ap_pill_test[$i]['sent_round'] >= 2){
+
+                        echo 'คนนี้คือ ผู้ป่วย LV2 ที่ส่งเกินสองครั้ง';
+                        exit();
+                    }else{
+                        $this->sentLineToPatient($ap_pill_test[$i],"tomember");
+                    }
+
             }else{
                   // LV_1 OR NULL
-                echo 'ดูแลตัวเองได้';
+                echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
                 echo "<br>";
                     // ถ้าจำนวนการส่งเกิน 2 ครั้ง
                 if($ap_pill_test[$i]['sent_round'] >= 2){
-                    echo 'ส่งมากกว่า 2 ครั้ง';
+                    echo 'การส่งแจ้งเตือนมากกว่าหรือเท่ากับ 2 ครั้งแล้ว';
                     echo "<br>";
 
                     $this->sentLineToPatient($ap_pill_test[$i],"tomember");
@@ -82,12 +84,13 @@ class TestController extends Controller
 
                 }else{
                     // ถ้าจำนวนการส่งยังไม่เกิน 2 ครั้ง
-                    echo 'ยังไม่ 2 ครั้ง ' ;
+                    echo 'การส่งแจ้งเตือนยังไม่ 2 ครั้ง ' ;
                     echo "<br>";
                     $this->sentLineToPatient($ap_pill_test[$i],"topatient");
 
-                    // ถ้า send_round ไม่เป็นค่าว่าง
+
                     if(!empty($ap_pill_test[$i]['sent_round'])){
+                        // ถ้า send_round ไม่เป็นค่าว่าง
                         DB::table('appoints')
                         ->where('id', $ap_pill_test[$i]['id'])
                         ->update([
@@ -125,8 +128,6 @@ class TestController extends Controller
             }
         }
 
-
-
         if ($check == "Yes"){
             $room = Room::where('id',$room_id)->first();
 
@@ -134,11 +135,8 @@ class TestController extends Controller
                 $appoint = Appoint::where('room_id', $room_id)->where('type' , $type)->get();
             }else{
                 $appoint = Appoint::where('room_id', $room_id)->get();
-
             }
-
             return view('appoint.appoint_index', compact('room','room_id','appoint','type','ap_pill_test','date_now','time_10'));
-
         }else{
             return view('404');
         }
@@ -148,30 +146,40 @@ class TestController extends Controller
     public function sentLineToPatient($data_pill,$sendto){
 
         if($sendto == "tomember"){
-             // sendto Member
-            $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
+                //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
+            $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
 
-            $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
-            $provider_id = $sendto->provider_id;
+            if($data_check_patient->caregiver != null){
+                //กรณี user_id นี้มีคนดูแลอยู่
+                // sendto Member
+                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
+                //    echo"<pre>";
+                //    print_r($data_pill);
+                //    echo"</pre>";
+                //    exit();
+                $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
+                $provider_id = $sendto->provider_id;
+            }else{
+                 //กรณี user_id นี้มีไม่มีคนดูแล
+                echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
+                exit();
+            }
         }else{
             // sendto Patient
             $sendto = User::where('id','=',$data_pill['patient_id'])->first();
             $provider_id = $sendto->provider_id;
         }
-        echo $sendto->id;
+        echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
 
-
+        $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
 
 
 
         $template_path = storage_path('../public/json/flex_line_text.json');
         $string_json = file_get_contents($template_path);
         // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
-        if(!empty($data_pill['patient_id'])){
-            $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_pill['patient_id'],$string_json);
-        }else{
-            $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_pill['create_by_id'],$string_json);
-        }
+
+        $string_json = str_replace("USER_NAMEแทนตรงนี้",$data_patient->name,$string_json);
         $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
         $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
         $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);

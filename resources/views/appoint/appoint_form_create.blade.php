@@ -1,12 +1,5 @@
 <div class="row">
 
-    @if($check_status_member->lv_of_caretaker == 2)
-
-    @else
-
-    @endif
-
-
     <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
         <label for="type" class="control-label" style="font-size: 20px;">{{ 'นัดหมอ/ใช้ยา' }}</label>
         <select name="type" class="form-control" id="type" onchange="show_input();" required>

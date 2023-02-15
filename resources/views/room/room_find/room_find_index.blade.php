@@ -209,12 +209,12 @@
                             </select>
                         </div>  --}}
 
-                        <div id="lv_caretaker_fr" class="row form-group col-12 col-md-12">
-                            <div class="col-12 col-md-12 col-lg-12 from-group">
+                        <div id="lv_caretaker_fr" class="row form-group col-12 col-md-12 ">
+                            <div class="col-12 col-md-12 col-lg-12 from-group p-0">
                                 <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
                             </div>
 
-                            <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_1_of_caretaker') is-invalid @enderror">
+                            <div class="col-12 col-md-6 col-lg-6 from-group  @error('lv_1_of_caretaker') is-invalid @enderror">
                                 <label>
                                     <input class="card-input-element d-none lv_of_caretaker" id="lv_1_of_caretaker"  name="lv_of_caretaker" type="radio" value="1" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
@@ -230,7 +230,7 @@
                                     </span>
                                 @enderror
 
-                            <div class="col-12 col-md-6 col-lg-6 from-group @error('lv_2_of_caretaker') is-invalid @enderror">
+                            <div class="col-12 col-md-6 col-lg-6 from-group   @error('lv_2_of_caretaker') is-invalid @enderror">
                                 <label>
                                     <input class="card-input-element d-none lv_of_caretaker" id="lv_2_of_caretaker"  name="lv_of_caretaker" type="radio" value="2" >
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">

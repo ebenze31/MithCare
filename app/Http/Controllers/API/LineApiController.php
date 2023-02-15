@@ -111,7 +111,7 @@ class LineApiController extends Controller
             //     $line->reply_success($event , $data_postback);
             //     break;
             case "accept_pill" :
-                $line->select_reply(null, $event, "reply");
+                $line->select_reply(null, $event, "reply_accept_pill");
                 break;
             // case "help_complete" :
             //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);

@@ -148,9 +148,10 @@ class LineMessagingAPI extends Model
 
     $messages = [ json_decode($string_json, true) ];
     $body = [
-        "to" => $event["source"]["user_id"],
+        "replyToken" => $event["replyToken"],
         "messages" => $messages,
     ];
+
     $opts = [
         'http' =>[
             'method'  => 'POST',
@@ -162,7 +163,8 @@ class LineMessagingAPI extends Model
     ];
 
     $context  = stream_context_create($opts);
-    $url = "https://api.line.me/v2/bot/message/push";
+    //https://api-data.line.me/v2/bot/message/11914912908139/content
+    $url = "https://api.line.me/v2/bot/message/reply";
     $result = file_get_contents($url, false, $context);
 
     //SAVE LOG

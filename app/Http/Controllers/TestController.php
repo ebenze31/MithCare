@@ -55,22 +55,14 @@ class TestController extends Controller
             if($data_members->lv_of_caretaker == 2){
                 // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
-                    // ถ้าจำนวนการส่งเกิน 2 ครั้ง
-                    if($ap_pill_test[$i]['sent_round'] >= 2){
+                $this->sentLineToPatient($ap_pill_test[$i],"tomember");
 
-                        echo 'คนนี้คือ ผู้ป่วย LV2 ที่ส่งเกินสองครั้ง';
-                        exit();
-                    }else{
-                        $this->sentLineToPatient($ap_pill_test[$i],"tomember");
-
-                        DB::table('appoints')
-                        ->where('id', $ap_pill_test[$i]['id'])
-                        ->update([
-                            'status' => 'sent',
-                            'sent_round' => 2,
-                        ]);
-
-                    }
+                DB::table('appoints')
+                ->where('id', $ap_pill_test[$i]['id'])
+                ->update([
+                    'status' => 'sent',
+                    'sent_round' => 2,
+                ]);
 
             }else{
                   // LV_1 OR NULL

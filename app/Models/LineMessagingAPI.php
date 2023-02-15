@@ -148,7 +148,7 @@ class LineMessagingAPI extends Model
 
     $messages = [ json_decode($string_json, true) ];
     $body = [
-        "to" => $event['source']['user_id'],
+        "to" => $event["source"]["user_id"],
         "messages" => $messages,
     ];
     $opts = [

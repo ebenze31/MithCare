@@ -40,12 +40,19 @@ class AppointController extends Controller
          // ใช้เช็ค status ตอนกดสร้าง นัดหมายว่าเป็นใคร
         $check_status_member = Member_of_room::where('user_id' , $user_id)->where('room_id' , $room_id)->first();
 
-        // ดึงข้อมูลผู้ป่วย จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า appoint.blade
+        // ดึงข้อมูลผู้ป่วย lv2 ที่ไม่มีคนดูแล จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า appoint.blade
         $patient_this_room = Member_of_room::where('room_id',$room_id)
         ->where('status', 'patient')
         ->where('lv_of_caretaker','=',2)
         ->where('caregiver','=',null)
         ->get();
+
+         // ดึงข้อมูลผู้ป่วย lv2 ที่มีคนดูแล จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า appoint.blade
+        $patient_with_caregiver = Member_of_room::where('room_id',$room_id)
+         ->where('status', 'patient')
+         ->where('lv_of_caretaker','=',2)
+         ->where('caregiver','=',$user_id)
+         ->get();
 
         // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
         $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
@@ -74,6 +81,7 @@ class AppointController extends Controller
             'type',
             'check_status_member',
             'patient_this_room',
+            'patient_with_caregiver',
             'ap_pill_test',
             'date_now',
             'time_10',

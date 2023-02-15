@@ -62,6 +62,14 @@ class TestController extends Controller
                         exit();
                     }else{
                         $this->sentLineToPatient($ap_pill_test[$i],"tomember");
+
+                        DB::table('appoints')
+                        ->where('id', $ap_pill_test[$i]['id'])
+                        ->update([
+                            'status' => 'sent',
+                            'sent_round' => 2,
+                        ]);
+
                     }
 
             }else{

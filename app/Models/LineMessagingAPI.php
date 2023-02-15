@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Mylog;
-
+use App\Models\Appoint;
 use App\User;
 use SebastianBergmann\CodeCoverage\Report\Xml\Source;
 
@@ -140,11 +140,35 @@ class LineMessagingAPI extends Model
 
     }
 
-    public function select_reply($data, $event, $postback_data)
+    public function select_reply( $event, $postback_data, $data)
     {
 
-    $template_path = storage_path('../public/json/flex_accept_reply.json');
-    $string_json = file_get_contents($template_path);
+        switch($postback_data){
+            case "accept_pill" :
+                $id_appoint = $data;
+
+                $appoint = Appoint::where('id',$id_appoint)->first();
+                if($appoint->status == 'success'){
+                    $text_sendto_user = "ขออภัยค่ะ รายการนี้ดำเนินการเรียบร้อยแล้ว";
+
+                }else{
+                    $text_sendto_user = "เย้ ยืนยันการทานยาเรียบร้อยแล้ว";
+
+                    DB::table('appoints')
+                    ->where('id', $id_appoint)
+                    ->update([
+                        'status' => 'success',
+                    ]);
+
+                }
+                $template_path = storage_path('../public/json/flex_accept_reply.json');
+                $string_json = file_get_contents($template_path);
+                $string_json = str_replace("ยืนยันเรียบร้อยแล้ว" , $text_sendto_user ,$string_json);
+
+                break;
+        }
+
+
 
     $messages = [ json_decode($string_json, true) ];
     $body = [
@@ -168,12 +192,12 @@ class LineMessagingAPI extends Model
     $result = file_get_contents($url, false, $context);
 
     //SAVE LOG
-    $data = [
+    $data_savelog = [
         "title" => "ส่งไลน์",
         "content" => json_encode($result, JSON_UNESCAPED_UNICODE),
     ];
 
-    Mylog::Create($data);
+    Mylog::Create($data_savelog);
 
     }
 

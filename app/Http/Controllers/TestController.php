@@ -55,14 +55,19 @@ class TestController extends Controller
             if($data_members->lv_of_caretaker == 2){
                 // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
-                $this->sentLineToPatient($ap_pill_test[$i],"tomember");
 
                 DB::table('appoints')
                 ->where('id', $ap_pill_test[$i]['id'])
                 ->update([
                     'status' => 'sent',
-                    'sent_round' => 2,
+                    'sent_round' => 1,
                 ]);
+
+                // $find_caregiver_this_room = Member_of_room::where('user_id',$ap_pill_test[$i]['patient_id'])->where('room_id',$room_id)->first();
+                // $id_caregiver = $find_caregiver_this_room->caregiver;
+
+
+                $this->sentLineToPatient($ap_pill_test[$i],"tomember");
 
             }else{
                   // LV_1 OR NULL
@@ -117,29 +122,6 @@ class TestController extends Controller
         //    echo"</pre>";
 
         }
-        exit();
-
-        // คนที่กำลังเข้าหน้าตารางนัดอยู่เป็นสมาชิกบ้านรึเปล่า
-        $Member_of_room = Member_of_room::select('user_id')->where('room_id' , $room_id)->get();
-
-        foreach ($Member_of_room as $key ) {
-            if ($key->user_id == $user_id) {
-                $check = "Yes" ;
-            }
-        }
-
-        if ($check == "Yes"){
-            $room = Room::where('id',$room_id)->first();
-
-            if(!empty($type)){
-                $appoint = Appoint::where('room_id', $room_id)->where('type' , $type)->get();
-            }else{
-                $appoint = Appoint::where('room_id', $room_id)->get();
-            }
-            return view('appoint.appoint_index', compact('room','room_id','appoint','type','ap_pill_test','date_now','time_10'));
-        }else{
-            return view('404');
-        }
 
     }
 
@@ -183,6 +165,7 @@ class TestController extends Controller
         $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
         $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
         $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);
+        $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [

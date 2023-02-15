@@ -50,7 +50,7 @@
                       "action": {
                         "type": "postback",
                         "label": "ยืนยันการใช้ยา",
-                        "data": "accept_pill"
+                        "data": "accept_pill?id_pill"
                       },
                       "offsetBottom": "4px",
                       "color": "#CDF3C2",

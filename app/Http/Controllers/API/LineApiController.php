@@ -96,10 +96,11 @@ class LineApiController extends Controller
         // print_r( $event);
         // echo"</pre>";
         // exit();
-        // $data_postback_explode = explode("?",$event["postback"]["data"]);
-        // $data_postback = $data_postback_explode[0] ;
 
-        $data_postback = $event["postback"]["data"] ;
+        $data_postback_explode = explode("?",$event["postback"]["data"]);
+        $data_postback = $data_postback_explode[0] ;
+
+        // $data_postback = $event["postback"]["data"] ;
 
         switch($data_postback){
             // case "accept_pill" :
@@ -111,7 +112,10 @@ class LineApiController extends Controller
             //     $line->reply_success($event , $data_postback);
             //     break;
             case "accept_pill" :
-                $line->select_reply(null, $event, "reply_accept_pill");
+                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
+                break;
+            case "accept_doc" :
+                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
                 break;
             // case "help_complete" :
             //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);

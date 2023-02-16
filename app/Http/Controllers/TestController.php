@@ -42,7 +42,7 @@ class TestController extends Controller
         ->where('date_time','<=',$time_10)
         ->get();
 
-        echo 'จำนวนนัดหมาย'.count($ap_pill_test);
+        echo 'จำนวนนัดหมาย : '.count($ap_pill_test);
         echo "<br>=============================================================================================================<br>";
         for($i = 0; $i < count($ap_pill_test); $i++){
 

@@ -140,13 +140,14 @@ class TestController extends Controller
                 //    exit();
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "เลยเวลาแทนยาแล้ว กรุณาติดต่อคนไข้ ";
+                $message_of_patient = "ถึงเวลาทานยา/ใช้ยา กรุณาติดต่อคนไข้";
             }else{
                  //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
-                $sendto = User::where('id','=',$data_pill['patient_id'])->first();
+                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->first();
+                $sendto = User::where('id','=',$data_member_of_room->user_id)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "";
+                $message_of_patient = "เลยเวลาทานยา/ใช้ยาแล้ว กรุณายืนยันการทานยา/ใช้ยา";
             }
         }else{
             // sendto Patient

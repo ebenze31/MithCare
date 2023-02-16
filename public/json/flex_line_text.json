@@ -19,7 +19,8 @@
                   "color": "#ffffff",
                   "size": "md",
                   "flex": 4,
-                  "weight": "bold"
+                  "weight": "bold",
+                  "wrap": true
                 },
                 {
                   "type": "text",
@@ -68,7 +69,6 @@
           "paddingAll": "20px",
           "backgroundColor": "#8BCB8F",
           "spacing": "md",
-          "height": "150px",
           "paddingTop": "22px"
         }
       }

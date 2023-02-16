@@ -134,10 +134,8 @@ class TestController extends Controller
                 //กรณี user_id นี้มีคนดูแลอยู่
                 // sendto Member
                 $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
-                //    echo"<pre>";
-                //    print_r($data_pill);
-                //    echo"</pre>";
-                //    exit();
+
+
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
                 $message_of_patient = "ถึงเวลาทานยา/ใช้ยา กรุณาติดต่อคนไข้";
@@ -147,7 +145,7 @@ class TestController extends Controller
 
                 $sendto = User::where('id','=',$data_check_patient->user_id)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "เลยเวลาทานยา/ใช้ยาแล้ว กรุณายืนยันการทานยา/ใช้ยา";
+                $message_of_patient = "เลยเวลาแล้ว กรุณายืนยันการทานยา/ใช้ยา ชื่อผู้ใช้";
             }
         }else{
             // sendto Patient
@@ -156,8 +154,8 @@ class TestController extends Controller
             $message_of_patient = "";
         }
         // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
-
         $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
+
 
 
 

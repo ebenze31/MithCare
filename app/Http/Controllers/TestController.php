@@ -144,8 +144,8 @@ class TestController extends Controller
             }else{
                  //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
-                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->first();
-                $sendto = User::where('id','=',$data_member_of_room->user_id)->first();
+
+                $sendto = User::where('id','=',$data_check_patient->user_id)->first();
                 $provider_id = $sendto->provider_id;
                 $message_of_patient = "เลยเวลาทานยา/ใช้ยาแล้ว กรุณายืนยันการทานยา/ใช้ยา";
             }

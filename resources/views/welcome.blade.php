@@ -164,7 +164,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
             <div class="heading-layout2">
-              <h3 class="heading__title mb-60">Improving The Quality Of Your <br> Life Through Better Health.</h3>
+              <h3 class="heading__title mb-60">เกี่ยวกับเรา</h3>
             </div><!-- /heading -->
           </div><!-- /.col-12 -->
         </div><!-- /.row -->
@@ -180,41 +180,35 @@
                   compassionate manner. We hope you will allow us to care for you and strive to be the first and best
                   choice for healthcare.
                 </p>
-                <a href="doctors-timetable.html" class="btn btn__secondary btn__rounded mb-70">
+                {{-- <a href="doctors-timetable.html" class="btn btn__secondary btn__rounded mb-70">
                   <span>Find A Doctor</span> <i class="icon-arrow-right"></i>
-                </a>
+                </a> --}}
               </div>
             </div>
             <div class="video-banner-layout2 bg-overlay">
-              <img src="assets/images/about/2.jpg" alt="about" class="w-100">
+              {{-- <img src="assets/images/about/2.jpg" alt="about" class="w-100"> --}}
+              <img class="Image" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="642" height="427">
               <a class="video__btn video__btn-white popup-video" href="https://www.youtube.com/watch?v=nrJtHemSPW4">
                 <div class="video__player">
                   <i class="fa fa-play"></i>
                 </div>
-                <span class="video__btn-title color-white">Watch Our Video!</span>
+                <span class="video__btn-title color-white">MithCare</span>
               </a>
             </div><!-- /.video-banner -->
           </div><!-- /.col-lg-6 -->
           <div class="col-sm-12 col-md-12 col-lg-7">
             <div class="about__text bg-white">
-              <p class="heading__desc mb-30">Our goal is to deliver quality of care in a courteous, respectful, and
-                compassionate
-                manner. We hope you will allow us to care for you and to be the first and best choice for healthcare.
-              </p>
-              <p class="heading__desc mb-30">We will work with you to develop individualised care plans, including
-                management of
-                chronic diseases. We are committed to being the region’s premier healthcare network providing patient
-                centered care that inspires clinical and service excellence.</p>
+              <p class="heading__desc mb-30" style="font-size: 16px;">ข้อมูลจากสหประชาชาติ จากการเก็บผลสำรวจทำให้ทราบว่าจำนวนผู้สูงอายุไทยเพิ่มขึ้นอย่างต่อเนื่องและอัตราการเกิดต่ำ โดยประชากรผู้สูงอายุในปี 2565 คิดเป็น 18.5% ของประชากรทั้งหมด
+              <p class="heading__desc mb-30" style="font-size: 16px;"> ซึ่งปัจจุบันสังคมเมืองมีแนวโน้มที่วัยแรงงานจะย้ายถิ่นฐานไปทำงานและปล่อยให้ผู้สูงอายุหรือคนเจ็บป่วยอยู่ที่บ้านโดยลำพัง ทำให้ขาดคนดูแลและไม่สามารถทราบได้ว่าเมื่อพวกเขาเหล่านั้นเจ็บป่วยได้รับการดูแล ทานยา หรือไปพบแพทย์ตามกำหนดหรือไม่
+                ทำให้แพลตฟอร์มมิตรแคร์ได้กำเนิดขึ้น แพลตฟอร์มนี้ทำงานผ่านระบบไลน์ออฟฟิตเชียล
+                 ซึ่งจะสามารถช่วยเหลือและแก้ไขปัญหาต่างๆเปรียบเสมือนเป็นผู้ช่วยดูแลผู้สูงอายุและผู้เจ็บป่วยตลอด 24 ชั่วโมง</p>
               <ul class="list-items list-unstyled">
-                <li>We conduct a range of tests to help us work out why you're not feeling well and determine the
-                  right
-                  treatment for you.</li>
-                <li>Our expert doctors, nurses and allied health professionals manage patients with a broad range of
-                  medical issues.
-                </li>
-                <li>We offer a wide range of care and support to our patients, from diagnosis to treatment and
+                <li style="font-size: 18px;">ครอบคลุมพื้นที่ 77 จังหวัด</li>
+                <li style="font-size: 18px;">บริการตลอด 24 ชม.</li>
+
+                {{-- <li>We offer a wide range of care and support to our patients, from diagnosis to treatment and
                   rehabilitation.
-                </li>
+                </li> --}}
               </ul>
             </div>
           </div><!-- /.col-lg-6 -->
@@ -222,553 +216,189 @@
       </div><!-- /.container -->
     </section><!-- /.About Layout 2 -->
 
-    <!-- ========================
-        Services Layout 1
+      <!-- ========================
+        ข่าวเกี่ยวกับสุขภาพ
     =========================== -->
-    <section class="services-layout1 services-carousel">
-      <div class="bg-img"><img src="assets/images/backgrounds/2.jpg" alt="background"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-            <div class="heading text-center mb-60">
-              <h2 class="heading__subtitle">The Best Medical And General Practice Care!</h2>
-              <h3 class="heading__title">Providing Medical Care For The Sickest In Our Community.</h3>
-            </div><!-- /.heading -->
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <div class="col-12">
-            <div class="slick-carousel"
-              data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": true, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-              <!-- service item #1 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-head"></i>
-                  <i class="icon-head"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Neurology Clinic</h4>
-                  <p class="service__desc">Some neurologists receive subspecialty training focusing on a particular area
-                    of
-                    the fields, these training programs are called fellowships, and are one to two years.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Neurocritical Care</li>
-                    <li>Neuro Oncology</li>
-                    <li>Geriatric Neurology</li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-              <!-- service item #2 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-heart"></i>
-                  <i class="icon-heart"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Cardiology Clinic</h4>
-                  <p class="service__desc">All cardiologists study the disorders of the heart, but the study of adult
-                    and
-                    child heart disorders are trained to take care of small children and adult heart disease.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Neurocritical Care</li>
-                    <li>Neuro Oncology</li>
-                    <li>Geriatric Neurology</li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-              <!-- service item #3 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-microscope"></i>
-                  <i class="icon-microscope"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Pathology Clinic</h4>
-                  <p class="service__desc">Pathology is the study of disease, it is the bridge between science and
-                    medicine.
-                    Also it underpins every aspect of patient care, from diagnostic testing and treatment.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Surgical Pathology</li>
-                    <li>Histopathology</li>
-                    <li>Cytopathology </li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-              <!-- service item #4 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-dropper"></i>
-                  <i class="icon-dropper"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Laboratory Analysis</h4>
-                  <p class="service__desc">Analyzing the radon or radon progeny concentrations with passive devices, or
-                    the
-                    act of calibrating radon or radon progeny measurement devices.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Newborn Care</li>
-                    <li>Umbilical Cord Appearance </li>
-                    <li>Repositioning Techniques</li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-              <!-- service item #5 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-heart3"></i>
-                  <i class="icon-heart3"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Pediatric Clinic</h4>
-                  <p class="service__desc">Pediatric providers see patients from birth into early adulthood to make sure
-                    children achieve stay healthy. Our care includes preventive health checkups.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Clinical laboratory</li>
-                    <li>Research Analyst</li>
-                    <li>Quality Assurance</li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-              <!-- service item #6 -->
-              <div class="service-item">
-                <div class="service__icon">
-                  <i class="icon-heart2"></i>
-                  <i class="icon-heart2"></i>
-                </div><!-- /.service__icon -->
-                <div class="service__content">
-                  <h4 class="service__title">Cardiac Clinic</h4>
-                  <p class="service__desc">For people requiring additional follow up, the Cardiac Clinic provides rapid
-                    access to professionals specialized in diagnosing and treating heart disease.
-                  </p>
-                  <ul class="list-items list-items-layout1 list-unstyled">
-                    <li>Macular degeneration</li>
-                    <li>Diabetic retinopathy</li>
-                    <li>Excessive tearing</li>
-                  </ul>
-                  <a href="services-single.html" class="btn btn__secondary btn__outlined btn__rounded">
-                    <span>Read More</span>
-                    <i class="icon-arrow-right"></i>
-                  </a>
-                </div><!-- /.service__content -->
-              </div><!-- /.service-item -->
-            </div>
-          </div><!-- /.col-12 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.Services Layout 1 -->
+    <section id="Health_news" class="team-layout2 pb-80">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
+              <div class="heading text-center mb-40">
+                <h3 class="heading__title">ข่าวเกี่ยวกับสุขภาพ</h3>
+              </div><!-- /.heading -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+          <div class="row">
+            <div class="col-12">
+              <div class="slick-carousel"
+                data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                <!-- News #1 -->
+                <div class="member">
+                  <div class="member__img">
+                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                  </div><!-- /.member-img -->
+                  <div class="member__info">
+                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <p></p>
+                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                        <span>Read More</span>
+                        <i class="icon-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div><!-- /.member-info -->
+                </div><!-- /.member -->
+                <!-- News #2 -->
+                <div class="member">
+                  <div class="member__img">
+                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img " height="250px">
+                  </div><!-- /.member-img -->
+                  <div class="member__info">
+                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                        <span>Read More</span>
+                        <i class="icon-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div><!-- /.member-info -->
+                </div><!-- /.member -->
+                <!-- News #3 -->
+                <div class="member">
+                  <div class="member__img">
+                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                  </div><!-- /.member-img -->
+                  <div class="member__info">
+                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                        <span>Read More</span>
+                        <i class="icon-arrow-right"></i>
+                      </a>
 
-    <!-- ========================
-        Notses
-    =========================== -->
-    <section class="notes border-top pt-60 pb-60">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-6">
-            <div class="note font-weight-bold">
-              <i class="far fa-file-alt color-primary"></i>
-              <span>Delivering tomorrow’s health care for your family.</span>
-              <a href="doctors-timetable.html" class="btn btn__link btn__secondary">
-                <span>View Doctors’ Timetable</span><i class="icon-arrow-right"></i>
-              </a>
-            </div>
-          </div><!-- /.col-sm-6 -->
-          <div class="col-sm-12 col-md-12 col-lg-6">
-            <div class="info__meta d-flex flex-wrap justify-content-between align-items-center">
-              <div class="testimonials__rating">
-                <div class="testimonials__rating-inner d-flex align-items-center">
-                  <span class="total__rate">4.9</span>
-                  <div>
-                    <span class="overall__rate">Zocdoc Overall Rating</span>
-                    <span>, based on 7541 reviews.</span>
-                  </div>
-                </div><!-- /.testimonials__rating-inner -->
-              </div><!-- /.testimonials__rating -->
-              <a href="appointment.html" class="btn btn__primary btn__rounded">
-                <span>Make Appointment</span> <i class="icon-arrow-right"></i>
-              </a>
-            </div><!-- /.info__meta -->
-          </div><!-- /.col-sm-6 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.notes -->
+                    </div>
+                  </div><!-- /.member-info -->
+                </div><!-- /.member -->
+                <!-- News #4 -->
+                <div class="member">
+                  <div class="member__img">
+                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                  </div><!-- /.member-img -->
+                  <div class="member__info">
+                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                        <span>Read More</span>
+                        <i class="icon-arrow-right"></i>
+                      </a>
+
+                    </div>
+                  </div><!-- /.member-info -->
+                </div><!-- /.member -->
+
+              </div><!-- /.carousel -->
+            </div><!-- /.col-12 -->
+          </div><!-- /.row -->
+        </div><!-- /.container -->
+      </section><!-- /.Team -->
 
     <!-- ======================
-    Features Layout 2
+    MithCare_Dee_Yang_Rai
     ========================= -->
-    <section class="features-layout2 pt-130 bg-overlay bg-overlay-primary">
-      <div class="bg-img"><img src="assets/images/backgrounds/2.jpg" alt="background"></div>
-      <div class="container">
+    <section id="MithCare_Dee_Yang_Rai" class="features-layout1 pt-130 pb-50 mt--90">
+        <div class="bg-img"><img src="assets/images/backgrounds/1.jpg" alt="background"></div>
+        <div class="container">
+        <h3 class="text-center">MithCare ดีอย่างไร</h3>
         <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-8 offset-lg-1">
-            <div class="heading__layout2 mb-50">
-              <h3 class="heading__title color-white">Medcity Has Touched The Lives Of Patients & Providing Care for The
-                Sickest In Our Community.</h3>
-            </div>
-          </div><!-- /col-lg-5 -->
+            <!-- Feature item #1 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="feature-item">
+                <div class="feature__content">
+                <div class="feature__icon">
+                    <i class="icon-heart"></i>
+                    <i class="icon-heart feature__overlay-icon"></i>
+                </div>
+                <h4 class="feature__title">สร้างครอบครัวของตัวเอง</h4>
+                </div><!-- /.feature__content -->
+
+            </div><!-- /.feature-item -->
+            </div><!-- /.col-lg-3 -->
+            <!-- Feature item #2 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature__content">
+                    <div class="feature__icon">
+                        <i class="icon-ambulance"></i>
+                        <i class="icon-ambulance feature__overlay-icon"></i>
+                    </div>
+                    <h4 class="feature__title">ขอความช่วยเหลือฉุกเฉิน</h4>
+                    </div><!-- /.feature__content -->
+                </div><!-- /.feature-item -->
+                </div><!-- /.col-lg-3 -->
+            <!-- Feature item #3 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature__content">
+                    <div class="feature__icon">
+                        <i class="icon-doctor"></i>
+                        <i class="icon-doctor feature__overlay-icon"></i>
+                    </div>
+                    <h4 class="feature__title">แจ้งเตือนการนัดหมอ</h4>
+                    </div><!-- /.feature__content -->
+                </div><!-- /.feature-item -->
+                </div><!-- /.col-lg-3 -->
+            <!-- Feature item #4 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="feature-item">
+                <div class="feature__content">
+                <div class="feature__icon">
+                    <i class="icon-drugs"></i>
+                    <i class="icon-drugs feature__overlay-icon"></i>
+                </div>
+                <h4 class="feature__title">แจ้งเตือนการใช้ยา</h4>
+                </div><!-- /.feature__content -->
+
+            </div><!-- /.feature-item -->
+            </div><!-- /.col-lg-3 -->
+
+            <!-- Feature item #5 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="feature-item">
+                <div class="feature__content">
+                <div class="feature__icon">
+                    <i class="icon-hospital"></i>
+                    <i class="icon-hospital feature__overlay-icon"></i>
+                </div>
+                <h4 class="feature__title">ตามหาโรงพยาบาลใกล้ฉัน</h4>
+                </div><!-- /.feature__content -->
+
+            </div><!-- /.feature-item -->
+            </div><!-- /.col-lg-3 -->
+            <!-- Feature item #6 -->
+            <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="feature-item">
+                <div class="feature__content">
+                <div class="feature__icon">
+                    <i class="icon-expenses"></i>
+                    <i class="icon-expenses feature__overlay-icon"></i>
+                </div>
+                <h4 class="feature__title">ตามหาร้านขายยาใกล้ฉัน</h4>
+                </div><!-- /.feature__content -->
+
+            </div><!-- /.feature-item -->
+            </div><!-- /.col-lg-3 -->
+
         </div><!-- /.row -->
-        <div class="row mb-100">
-          <div class="col-sm-3 col-md-3 col-lg-1 offset-lg-5">
-            <div class="heading__icon">
-              <i class="icon-insurance"></i>
-            </div>
-          </div><!-- /.col-lg-5 -->
-          <div class="col-sm-9 col-md-9 col-lg-6">
-            <p class="heading__desc font-weight-bold color-white mb-30">Medcity has been present in Europe since 1990,
-              offering innovative
-              solutions, specializing in medical services for treatment of medical infrastructure. With over 100
-              professionals actively participates in numerous initiatives aimed at creating sustainable change for
-              patients!
-            </p>
-            <a href="#" class="btn btn__white btn__link">
-              <i class="icon-arrow-right icon-filled"></i>
-              <span>Our Core Values</span>
-            </a>
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <!-- Feature item #1 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/1.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-heart"></i>
-                </div>
-                <h4 class="feature__title">Medical Advices & Check Ups</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #2 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/2.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-doctor"></i>
-                </div>
-                <h4 class="feature__title">Trusted Medical Treatment </h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #3 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/3.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-ambulance"></i>
-                </div>
-                <h4 class="feature__title">Emergency Help Available 24/7</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #4 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/4.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-drugs"></i>
-                </div>
-                <h4 class="feature__title">Medical Research Professionals </h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #5 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/5.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-first-aid-kit"></i>
-                </div>
-                <h4 class="feature__title">Only Qualified Doctors</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #6 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/6.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-hospital"></i>
-                </div>
-                <h4 class="feature__title">Cutting Edge <br> Facility</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #7 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/7.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-expenses"></i>
-                </div>
-                <h4 class="feature__title">Affordable Prices For All Patients</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-          <!-- Feature item #8 -->
-          <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-              <div class="feature__img">
-                <img src="assets/images/services/8.jpg" alt="service" loading="lazy">
-              </div><!-- /.feature__img -->
-              <div class="feature__content">
-                <div class="feature__icon">
-                  <i class="icon-bandage"></i>
-                </div>
-                <h4 class="feature__title">Quality Care For Every Patient</h4>
-              </div><!-- /.feature__content -->
-              <a href="#" class="btn__link">
-                <i class="icon-arrow-right icon-outlined"></i>
-              </a>
-            </div><!-- /.feature-item -->
-          </div><!-- /.col-lg-3 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <div class="col-md-12 col-lg-6 offset-lg-3 text-center">
-            <p class="font-weight-bold color-gray mb-0">We hope you will allow us to care for you and strive to be the
-              first and best choice for healthcare.
-              <a href="#" class="color-secondary">
-                <span>Contact Us For More Information</span> <i class="icon-arrow-right"></i>
-              </a>
-            </p>
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.Features Layout 2 -->
+
+        </div><!-- /.container -->
+    </section><!-- /.Features Layout 1 -->
+
+
 
     <!-- ======================
-      Team
+     Work Process
     ========================= -->
-    <section class="team-layout2 pb-80">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-            <div class="heading text-center mb-40">
-              <h3 class="heading__title">Meet Our Doctors</h3>
-              <p class="heading__desc">Our administration and support staff all have exceptional people skills and
-                trained to assist you with all medical enquiries.
-              </p>
-            </div><!-- /.heading -->
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <div class="col-12">
-            <div class="slick-carousel"
-              data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-              <!-- Member #1 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/1.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Mike Dooley</a></h5>
-                  <p class="member__job">Cardiology Specialist</p>
-                  <p class="member__desc">Muldoone obtained his undergraduate degree in Biomedical Engineering at Tulane
-                    University prior to attending St George's University School of Medicine</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-              <!-- Member #2 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/2.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Dermatologists</a></h5>
-                  <p class="member__job">Cardiology Specialist</p>
-                  <p class="member__desc">Brian specializes in treating skin, hair, nail, and mucous membrane. He also
-                    address cosmetic issues, helping to revitalize the appearance of the skin</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-              <!-- Member #3 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/3.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Maria Andaloro</a></h5>
-                  <p class="member__job">Pediatrician</p>
-                  <p class="member__desc">Andaloro graduated from medical school and completed 3 years residency program
-                    in pediatrics. She passed rigorous exams by the American Board of Pediatrics.</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-              <!-- Member #4 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/4.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Dupree Black</a></h5>
-                  <p class="member__job">Urologist</p>
-                  <p class="member__desc">Black diagnose and treat diseases of the urinary tract in both men and women.
-                    He
-                    also diagnose and treat anything involving the reproductive tract in men.</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-              <!-- Member #5 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/5.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Markus skar</a></h5>
-                  <p class="member__job">Laboratory</p>
-                  <p class="member__desc">Skar play a very important role in your health care. People working in the
-                    clinical laboratory are responsible for conducting tests that provide crucial information.</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-              <!-- Member #6 -->
-              <div class="member">
-                <div class="member__img">
-                  <img src="assets/images/team/6.jpg" alt="member img">
-                </div><!-- /.member-img -->
-                <div class="member__info">
-                  <h5 class="member__name"><a href="doctors-single-doctor1.html">Kiano Barker</a></h5>
-                  <p class="member__job">Pathologist </p>
-                  <p class="member__desc">Barker help care for patients every day by providing their doctors with the
-                    information needed to ensure appropriate care. He also valuable resources for other physicians.</p>
-                  <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                    <a href="doctors-single-doctor1.html" class="btn btn__secondary btn__link btn__rounded">
-                      <span>Read More</span>
-                      <i class="icon-arrow-right"></i>
-                    </a>
-                    <ul class="social-icons list-unstyled mb-0">
-                      <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                      <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                      <li><a href="#" class="phone"><i class="fas fa-phone-alt"></i></a></li>
-                    </ul><!-- /.social-icons -->
-                  </div>
-                </div><!-- /.member-info -->
-              </div><!-- /.member -->
-            </div><!-- /.carousel -->
-          </div><!-- /.col-12 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.Team -->
-
-    <!-- ======================
-     Work Process 
-    ========================= -->
-    <section class="work-process work-process-carousel pt-130 pb-0 bg-overlay bg-overlay-secondary">
+    {{-- <section class="work-process work-process-carousel pt-130 pb-0 bg-overlay bg-overlay-secondary">
       <div class="bg-img"><img src="assets/images/banners/1.jpg" alt="background"></div>
       <div class="container">
         <div class="row heading-layout2">
@@ -898,121 +528,12 @@
           </div><!-- /.row -->
         </div><!-- /.container -->
       </div><!-- /.cta -->
-    </section><!-- /.Work Process -->
-
-    <!-- ========================= 
-      Testimonials layout 2
-      =========================  -->
-    <section class="testimonials-layout2 pt-130 pb-40">
-      <div class="container">
-        <div class="testimonials-wrapper">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-5">
-              <div class="heading-layout2">
-                <h3 class="heading__title">Inspiring Stories!</h3>
-              </div><!-- /.heading -->
-            </div><!-- /.col-lg-5 -->
-            <div class="col-sm-12 col-md-12 col-lg-7">
-              <div class="slider-with-navs">
-                <!-- Testimonial #1 -->
-                <div class="testimonial-item">
-                  <h3 class="testimonial__title">“Their doctors include highly qualified practitioners who come from a
-                    range of backgrounds and bring with them a diversity of skills and special interests. They also have
-                    registered nurses on staff who are available to triage any urgent matters, and the administration
-                    and support staff all have exceptional people skills”
-                  </h3>
-                </div><!-- /. testimonial-item -->
-                <!-- Testimonial #2 -->
-                <div class="testimonial-item">
-                  <h3 class="testimonial__title">“Their doctors include highly qualified practitioners who come from a
-                    range of backgrounds and bring with them a diversity of skills and special interests. They also have
-                    registered nurses on staff who are available to triage any urgent matters, and the administration
-                    and support staff all have exceptional people skills”
-                  </h3>
-                </div><!-- /. testimonial-item -->
-                <!-- Testimonial #3 -->
-                <div class="testimonial-item">
-                  <h3 class="testimonial__title">“Their doctors include highly qualified practitioners who come from a
-                    range of backgrounds and bring with them a diversity of skills and special interests. They also have
-                    registered nurses on staff who are available to triage any urgent matters, and the administration
-                    and support staff all have exceptional people skills”
-                  </h3>
-                </div><!-- /. testimonial-item -->
-              </div><!-- /.slick-carousel -->
-              <div class="slider-nav mb-60">
-                <div class="testimonial__meta">
-                  <div class="testimonial__thmb">
-                    <img src="assets/images/testimonials/thumbs/1.png" alt="author thumb">
-                  </div><!-- /.testimonial-thumb -->
-                  <div>
-                    <h4 class="testimonial__meta-title">Sami Wade</h4>
-                    <p class="testimonial__meta-desc">7oroof Inc</p>
-                  </div>
-                </div><!-- /.testimonial-meta -->
-                <div class="testimonial__meta">
-                  <div class="testimonial__thmb">
-                    <img src="assets/images/testimonials/thumbs/2.png" alt="author thumb">
-                  </div><!-- /.testimonial-thumb -->
-                  <div>
-                    <h4 class="testimonial__meta-title">Ahmed</h4>
-                    <p class="testimonial__meta-desc">Web Inc</p>
-                  </div>
-                </div><!-- /.testimonial-meta -->
-                <div class="testimonial__meta">
-                  <div class="testimonial__thmb">
-                    <img src="assets/images/testimonials/thumbs/3.png" alt="author thumb">
-                  </div><!-- /.testimonial-thumb -->
-                  <div>
-                    <h4 class="testimonial__meta-title">Sonia Blake</h4>
-                    <p class="testimonial__meta-desc">Web Inc</p>
-                  </div>
-                </div><!-- /.testimonial-meta -->
-              </div><!-- /.slider-nav -->
-            </div><!-- /.col-lg-7 -->
-          </div><!-- /.row -->
-        </div><!-- /.testimonials-wrapper -->
-      </div><!-- /.container -->
-    </section><!-- /.testimonials layout 2 -->
-
-    <!-- ========================
-       gallery
-      =========================== -->
-    <section class="gallery pt-0 pb-90">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="slick-carousel"
-              data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "autoplay": true, "arrows": true, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-              <a class="popup-gallery-item" href="assets/images/gallery/1.jpg">
-                <img src="assets/images/gallery/1.jpg" alt="gallery img">
-              </a>
-              <a class="popup-gallery-item" href="assets/images/gallery/2.jpg">
-                <img src="assets/images/gallery/2.jpg" alt="gallery img">
-              </a>
-              <a class="popup-gallery-item" href="assets/images/gallery/3.jpg">
-                <img src="assets/images/gallery/3.jpg" alt="gallery img">
-              </a>
-              <a class="popup-gallery-item" href="assets/images/gallery/4.jpg">
-                <img src="assets/images/gallery/4.jpg" alt="gallery img">
-              </a>
-              <a class="popup-gallery-item" href="assets/images/gallery/5.jpg">
-                <img src="assets/images/gallery/5.jpg" alt="gallery img">
-              </a>
-              <a class="popup-gallery-item" href="assets/images/gallery/6.jpg">
-                <img src="assets/images/gallery/6.jpg" alt="gallery img">
-              </a>
-            </div><!-- /.gallery-images-wrapper -->
-          </div><!-- /.col-xl-5 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.gallery 2 -->
-
-   
+    </section><!-- /.Work Process --> --}}
 
     <!-- ==========================
-        contact layout 3
+        นัดหมาย
     =========================== -->
-    <section class="contact-layout3 bg-overlay bg-overlay-primary-gradient pb-60">
+    {{-- <section class="contact-layout3 bg-overlay bg-overlay-primary-gradient pb-60">
       <div class="bg-img"><img src="assets/images/banners/3.jpg" alt="banner"></div>
       <div class="container">
         <div class="row">
@@ -1146,111 +667,156 @@
               </div><!-- /.client -->
             </div><!-- /.carousel -->
 
-    
+
 
           </div><!-- /.col-lg-5 -->
         </div><!-- /.row -->
       </div><!-- /.container -->
-    </section><!-- /.contact layout 3 -->
+    </section><!-- /.contact layout 3 --> --}}
 
     <!-- ======================
-      Blog Grid
+            ViiCheck
     ========================= -->
-    <section class="blog-grid pb-50">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-            <div class="heading text-center mb-40">
-              <h2 class="heading__subtitle">Resource Library</h2>
-              <h3 class="heading__title">Recent Articles</h3>
-            </div><!-- /.heading -->
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <!-- Post Item #1 -->
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="post-item">
-              <div class="post__img">
-                <a href="blog-single-post.html">
-                  <img src="assets/images/blog/grid/1.jpg" alt="post image" loading="lazy">
-                </a>
-              </div><!-- /.post__img -->
-              <div class="post__body">
-                <div class="post__meta-cat">
-                  <a href="#">Mental Health</a>
-                </div><!-- /.blog-meta-cat -->
-                <div class="post__meta d-flex">
-                  <span class="post__meta-date">Jan 30, 2022</span>
-                  <a class="post__meta-author" href="#">Martin King</a>
-                </div>
-                <h4 class="post__title"><a href="#">6 Tips to Protect Your Mental Health When You’re Sick</a></h4>
 
-                <p class="post__desc">It’s normal to feel anxiety, worry and grief any time you’re diagnosed with a
-                  condition that’s certainly true if you test positive for COVID-19, or are presumed to be positive...
-                </p>
-                <a href="blog-single-post.html" class="btn btn__secondary btn__link btn__rounded">
-                  <span>Read More</span>
+    <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color: #ffefef;padding-top:20px;padding-bottom:20px;">
+        <h2 class="text-center" style="color: black">บริการดีๆจาก <br class="d-block d-md-none"> ViiCHECK</h2>
+      <div class="row">
+        <div class="col-12">
+          <div class="carousel-container mt-40 mr-2 ml-2">
+            <div class="slick-carousel"
+              data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "infinite":false, "arrows": false, "dots": true, "responsive": [{"breakpoint": 1200, "settings": {"slidesToShow": 3}}, {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+              <!-- process item #1 -->
+              <div class="process-item">
+                <span class="process__number">01</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.peddyhub.com/peddyhub/images/sticker_vc/2.png" class="img-fluid text-center " alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color:#EB2424;"> ติดต่อเจ้าของรถ</h4>
+                <p class="process__desc h6">ติดต่อเจ้าของรถได้ง่ายๆ โดยผ่าน Line Official: @Viicheck  เพียงแค่สแกน QR-CODE บนสติ๊กเกอร์</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                  <span class="p-2" style="color:#EB2424;">กดเพื่อดูเพิ่มเติม</span>
                   <i class="icon-arrow-right"></i>
                 </a>
-              </div><!-- /.post__body -->
-            </div><!-- /.post-item -->
-          </div><!-- /.col-lg-4 -->
-          <!-- Post Item #2 -->
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="post-item">
-              <div class="post__img">
-                <a href="blog-single-post.html">
-                  <img src="assets/images/blog/grid/2.jpg" alt="post image" loading="lazy">
-                </a>
-              </div><!-- /.post__img -->
-              <div class="post__body">
-                <div class="post__meta-cat">
-                  <a href="#">Infectious</a><a href="#">Tips</a>
-                </div><!-- /.blog-meta-cat -->
-                <div class="post__meta d-flex">
-                  <span class="post__meta-date">Jan 30, 2022</span>
-                  <a class="post__meta-author" href="#">John Ezak</a>
-                </div>
-                <h4 class="post__title"><a href="#">Unsure About Wearing a Face Mask? Here’s How and Why</a></h4>
-                <p class="post__desc">That means that you should still be following any shelter-in-place orders in your
-                  community. But when you’re venturing out to the grocery store, pharmacy or hospital..
-                </p>
-                <a href="blog-single-post.html" class="btn btn__secondary btn__link btn__rounded">
-                  <span>Read More</span>
-                  <i class="icon-arrow-right"></i>
-                </a>
-              </div><!-- /.post__body -->
-            </div><!-- /.post-item -->
-          </div><!-- /.col-lg-4 -->
-          <!-- Post Item #3 -->
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="post-item">
-              <div class="post__img">
-                <a href="blog-single-post.html">
-                  <img src="assets/images/blog/grid/3.jpg" alt="post image" loading="lazy">
-                </a>
-              </div><!-- /.post__img -->
-              <div class="post__body">
-                <div class="post__meta-cat">
-                  <a href="#">Life Style</a><a href="#">Nutrition</a>
-                </div><!-- /.blog-meta-cat -->
-                <div class="post__meta d-flex">
-                  <span class="post__meta-date">Jan 28, 2022</span>
-                  <a class="post__meta-author" href="#">Saul Wade</a>
-                </div>
-                <h4 class="post__title"><a href="#">Tips for Eating Healthy When You’re Working From Home </a></h4>
+              </div><!-- /.process-item -->
 
-                <p class="post__desc">It’s normal to feel anxiety, worry and grief any time you’re diagnosed with a
-                  condition that’s certainly true if you test positive for COVID-19, or are presumed to be positive...
-                </p>
-                <a href="blog-single-post.html" class="btn btn__secondary btn__link btn__rounded">
-                  <span>Read More</span>
+              <!-- process-item #2 -->
+              <div class="process-item">
+                <span class="process__number">02</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.peddyhub.com/peddyhub/images/sticker_vc/1.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color:#EB2424;">ติดต่อแจ้งเหตุฉุกเฉิน</h4>
+                <p class="process__desc h6">ติดต่อแจ้งเหตุฉุกเฉิน 24 ชั่วโมงเพียงแค่กดปุ่มก็จะมีเบอร์ที่จำเป็นแสดงขึ้นมา</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color:#EB2424;">กดเพื่อดูเพิ่มเติม</span>
                   <i class="icon-arrow-right"></i>
                 </a>
-              </div><!-- /.post__body -->
-            </div><!-- /.post-item -->
-          </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.blog Grid -->
+              </div><!-- /.process-item -->
+              <!-- process-item #3 -->
+              <div class="process-item">
+                <span class="process__number">03</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.peddyhub.com/peddyhub/images/sticker_vc/4.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color:#EB2424;">แจ้งเตือน พรบ./ประกัน</h4>
+                <p class="process__desc h6">หายห่วงเรื่องลืมต่ออายุ พรบ./ประกันระบบจะแจ้งเตือนเมื่อใกล้วันครบกำหนด</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color:#EB2424;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+              <!-- process-item #4 -->
+              <div class="process-item">
+                <span class="process__number">04</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.peddyhub.com/peddyhub/images/sticker_vc/6.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color:#EB2424;">โปรโมชั่นเกี่ยวกับยานพาหนะ</h4>
+                <p class="process__desc h6">โปรโมชั่นของยานพาหนะมากมายที่รอเสนอให้คุณใช้บริการรีบเลยก่อนหมดเวลา !</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color:#EB2424;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+
+            </div><!-- /.carousel -->
+          </div>
+        </div><!-- /.col-12 -->
+      </div><!-- /.row -->
+    </section>
+
+    <!-- ======================
+            Peddy_Hub
+    ========================= -->
+
+    <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color:rgb(232, 216, 247)">
+        <div class="bg-img"><img src="{{asset('/img/peddy_hub/app-bg.png')}}" width="90%" alt="background"></div>
+        <h2 class="text-center" style="color: black">บริการดีๆจาก PEDDyHUB</h2>
+        <h5 class="text-center" style="color: black">PeddyHub ศูนย์รวมบริการ ข้อมูล และ community สำหรับคนรักสัตว์ peddy hub ครบจบในที่เดียว !!</h5>
+      <div class="row">
+        <div class="col-12">
+          <div class="carousel-container mt-40 mr-2 ml-2">
+            <div class="slick-carousel"
+              data-slick='{"slidesToShow": 4, "slidesToScroll": 1, "infinite":false, "arrows": false, "dots": false, "responsive": [{"breakpoint": 1200, "settings": {"slidesToShow": 3}}, {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 2}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+              <!-- process item #1 -->
+              <div class="process-item">
+                <span class="process__number">01</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.viicheck.com/img/sticker_ph/1.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color :#B8205B;">ตามหาเจ้าตัวแสบ</h4>
+                <p class="process__desc h6">ตามหาเจ้าตัวแสบได้ง่ายๆ เพียงลงทะเบียนสัตว์เลี้ยงกับระบบ ของเรา เพียงเท่านี้ ผู้คนที่อยู่ในบริเวณใกล้เคียงก็พร้อมช่วยเหลือท่านทันที</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                  <span class="p-2" style="color :#B8205B;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+
+              <!-- process-item #2 -->
+              <div class="process-item">
+                <span class="process__number">02</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.viicheck.com/img/sticker_ph/5.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color :#B8205B;">บัตรประจำตัวสัตว์เลี้ยง</h4>
+                <p class="process__desc h6">เมื่อลงทะเบียนสัตว์ เรามีบัตรประจำตัวสัตว์เลี้ยงให้ ภายในบัตรมีรายละเอียดสัตว์เลี้ยงอย่าครบถ้วนรวมไปถึงข้อมูลติดต่อเจ้าของอีกด้วย </p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color :#B8205B;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+              <!-- process-item #3 -->
+              <div class="process-item">
+                <span class="process__number">03</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.viicheck.com/img/sticker_ph/2.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color :#B8205B;">โรงพยาบาลสัตว์ </h4>
+                <p class="process__desc h6">เมื่อต้องการหาโรงพยาบาลสัตว์ ก็สามารถค้นหาโรงพยาบาลสัตว์ใกล้คุณได้ทันที</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color :#B8205B;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+              <!-- process-item #4 -->
+              <div class="process-item">
+                <span class="process__number">04</span>
+                <div class="process__icon">
+                    <img width="25%" src="https://www.viicheck.com/img/sticker_ph/4.png" class="img-fluid" alt="">
+                </div><!-- /.process__icon -->
+                <h4 class="process__title" style="color :#B8205B;">ชุมชนคนรักสัตว์</h4>
+                <p class="process__desc h6">เรามีชุมชนสำหรับคนรักสัตว์ สามารถชมหรือมาแชร์ความน่ารักของสัตว์เลี้ยงของทุกๆคนได้เลย</p>
+                <a href="https://lin.ee/y3gA8A3" class="btn btn__secondary btn__link">
+                    <span class="p-2" style="color :#B8205B;">กดเพื่อดูเพิ่มเติม</span>
+                  <i class="icon-arrow-right"></i>
+                </a>
+              </div><!-- /.process-item -->
+
+
+            </div><!-- /.carousel -->
+          </div>
+        </div><!-- /.col-12 -->
+      </div><!-- /.row -->
+    </section>
+
 @endsection

@@ -122,15 +122,15 @@
                                             <div class="emergency__icon">
                                                 <i class="icon-call3"></i>
                                             </div>
-                                            <a href="tel:+201061245741" class="phone__number">
-                                                <i class="icon-phone"></i> <span>02-0277856</span>
+                                            <a  class="phone__number">
+                                                <i class="icon-phone"></i> <span>090-559-2624</span>
                                             </a>
                                             <!-- <a href="tel:+201061245741" class="phone__number">
                                                 <i class="icon-mail"></i> <span>contact.mithcare@gmail.com</span>
                                             </a> -->
-                                            <a href="" class="btn btn__secondary btn__link btn__block">
-                                                <span>Make Appointment</span> <i class="icon-arrow-right"></i>
-                                            </a>
+                                            {{-- <a href="" class="btn btn__secondary btn__link btn__block">
+                                                <span>ติดต่อเรา</span> <i class="icon-arrow-right"></i>
+                                            </a> --}}
 
                                             <!-- เช็คว่ามีข้อมูลเบอร์? ไปหน้าแรก , ไปหน้าลงทะเบียน-->
                                             @if (Auth::check())
@@ -177,64 +177,36 @@
                     <button class="navbar-toggler" type="button">
                         <span class="menu-lines"><span></span></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="mainNavigation">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">หน้าแรก</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav__item">
-                                        <a href="{{ url('/') }}" class="nav__item-link">Home Main</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-modern.html" class="nav__item-link">Home Modern</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-classic.html" class="nav__item-link">Home Classic</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-dentist.html" class="nav__item-link">Home Dentist</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="home-pharmacy.html" class="nav__item-link">Home pharmacy</a>
-                                    </li><!-- /.nav-item -->
-                                </ul><!-- /.dropdown-menu -->
+                    <div class="collapse navbar-collapse" id="mainNavigation" >
+                        <ul class="navbar-nav ml-auto" >
+                            <li class="nav__item ">
+                                <a href="{{ url('/') }}" class="nav__item-link active fz-30">หน้าแรก</a>
                             </li><!-- /.nav-item -->
                             <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">เกี่ยวกับเรา</a>
+                                <a href="" data-toggle="dropdown" class="dropdown-toggle nav__item-link">เกี่ยวกับเรา</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
-                                        <a href="about-us.html" class="nav__item-link">About Us</a>
+                                        <a href="#Health_news" class="nav__item-link">ข่าวสารเกี่ยวกับสุขภาพ</a>
                                     </li><!-- /.nav-item -->
                                     <li class="nav__item">
-                                        <a href="services.html" class="nav__item-link">Our Services</a>
+                                        <a href="#MithCare_Dee_Yang_Rai" class="nav__item-link">MithCare ดีอย่างไร</a>
                                     </li><!-- /.nav-item -->
                                     <li class="nav__item">
                                         <a href="services-single.html" class="nav__item-link">single Services</a>
                                     </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="pricing.html" class="nav__item-link">Pricing & Plans</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="appointment.html" class="nav__item-link">Appointments</a>
-                                    </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="faqs.html" class="nav__item-link">Help & FAQs</a>
-                                    </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="gallery.html" class="nav__item-link">Our Gallery</a>
-                                    </li><!-- /.nav-item -->
+
                                 </ul><!-- /.dropdown-menu -->
                             </li><!-- /.nav-item -->
                             <li class="nav__item has-dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">หมอ</a>
+                                <a href=""  class="nav__item-link">รพ./ร้านขายยา</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
-                                        <a href="doctors-timetable.html" class="nav__item-link">Doctors Timetable</a>
+                                        <a href="doctors-timetable.html" class="nav__item-link">โรงพยาบาลใกล้ฉัน</a>
                                     </li> <!-- /.nav-item -->
                                     <li class="nav__item">
-                                        <a href="doctors-standard.html" class="nav__item-link">Our Doctors Standard</a>
+                                        <a href="doctors-standard.html" class="nav__item-link">ร้านขายยาใกล้ฉัน</a>
                                     </li> <!-- /.nav-item -->
-                                    <li class="nav__item">
+                                    {{-- <li class="nav__item">
                                         <a href="doctors-modern.html" class="nav__item-link">Our Doctors Modern</a>
                                     </li> <!-- /.nav-item -->
                                     <li class="nav__item">
@@ -245,10 +217,10 @@
                                     </li> <!-- /.nav-item -->
                                     <li class="nav__item">
                                         <a href="doctors-single-doctor2.html" class="nav__item-link">Single Doctor 02</a>
-                                    </li> <!-- /.nav-item -->
+                                    </li> <!-- /.nav-item --> --}}
                                 </ul><!-- /.dropdown-menu -->
                             </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
+                            {{-- <li class="nav__item has-dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Blog</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
@@ -258,8 +230,8 @@
                                         <a href="blog-single-post.html" class="nav__item-link">Single Blog Post</a>
                                     </li><!-- /.nav-item -->
                                 </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item has-dropdown">
+                            </li><!-- /.nav-item --> --}}
+                            {{-- <li class="nav__item has-dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Shop</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
@@ -272,10 +244,10 @@
                                         <a href="cart.html" class="nav__item-link">Cart</a>
                                     </li><!-- /.nav-item -->
                                 </ul><!-- /.dropdown-menu -->
-                            </li><!-- /.nav-item -->
-                            <li class="nav__item">
+                            </li><!-- /.nav-item --> --}}
+                            {{-- <li class="nav__item">
                                 <a href="contact-us.html" class="nav__item-link">ติดต่อ</a>
-                            </li><!-- /.nav-item -->
+                            </li><!-- /.nav-item --> --}}
 
                             <li class="nav__item">
                                 @guest

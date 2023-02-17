@@ -384,6 +384,20 @@
                                                 <input class="form-control d-none" type="text" name="select_takecare{{$item->user_id}}" id="select_takecare{{$item->user_id}}">
                                             </div>
                                         </div><!-- /.slick-carousel -->
+                                        <div class="home-demo">
+                                                            <div class="owl-carousel aasdaa owl-theme">
+                                                                <div class="col-12 p-0">
+                                                                    <label>
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
+                                                                        <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                            <span style="font-size:16px;">
+                                                                                {{Auth::user()->name}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                     </div> <!-- /.col-12 -->
                                 </div><!-- /.row -->
 

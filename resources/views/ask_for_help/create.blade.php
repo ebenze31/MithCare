@@ -1,9 +1,18 @@
 @extends('layouts.mithcare')
 
 @section('content')
+
+<style>
+    #map_google_ask_for_help {
+        height: calc(40vh);
+
+        background-color: #3490dc;
+    }
+</style>
+
+<section class="page-title page-title-layout5 p-3 ">
     <div class="container">
         <div class="row">
-
 
             <div class="col-md-12 col-12 ">
                 <div class="card product-item">
@@ -11,10 +20,11 @@
 
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <div class="col-12">
-                                <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background">
+                            <div class="col-12 p-0">
+                                {{-- <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"> --}}
+                                <div id="map_google_ask_for_help"></div>
                             </div>
-                         </div>
+                        </div>
                     </div>
                     {{-- justify-content end --}}
                     <div class="justify-content-center">
@@ -55,7 +65,7 @@
                         <form method="POST" action="{{ url('/ask_for_help') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
-                            @include ('ask_for_help.form', ['formMode' => 'create'])
+                            {{-- @include ('ask_for_help.form', ['formMode' => 'create']) --}}
 
                         </form>
 
@@ -67,4 +77,33 @@
             </div>
         </div>
     </div>
+</section><!-- /.page-title -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrxXDgk1tgXngalZF3eWtcTWI-LPdeus&language=th"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+            // console.log("START");
+            initMap();
+
+        });
+</script>
+
+<script>
+    var map;
+
+    function initMap() {
+        // 13.7248936,100.4930264 lat lng ประเทศไทย
+        map = new google.maps.Map(document.getElementById("map_google_ask_for_help"), {
+            center: {lat: 13.7248936, lng: 100.4930264 },
+            zoom: 6,
+        });
+
+    }
+    window.initMap = initMap;
+
+</script>
+
 @endsection
+
+

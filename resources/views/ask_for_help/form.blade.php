@@ -26,6 +26,8 @@
             <div class="col-12 p-0">
                 <div class="d-none" id="map_google_ask_for_help"></div>
                 <div class="d-" id="map_sos"></div>
+                <div id="message_sos"></div>
+
             </div>
         </div>
     </div>
@@ -36,26 +38,23 @@
     <div class="justify-content-center">
         <div class="column">
             <div class="col-12 mb-2">
-                <span id="sos_by_btn" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
-                style="background-color: #3490dc; font-size: 20px; color: white;" onclick="SOS_by_Btn( {{Auth::user()->id}} )">
+                <span id="sos_by_btn" value="{{Auth::user()->id}}" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                style="background-color: #3490dc; font-size: 20px; color: white;" >
                     <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
                 </span>
             </div>
             <div class="col-12 mb-2">
-                <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none"> 
-                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone( {{Auth::user()->id}} )" >
+                <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
+                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone()" >
                     <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_sos_btn_user">
-        Launch demo modal
-    </button>
-
-    <!-- Modal -->
+    <!--===============
+            Modal
+    =================-->
     <div class="modal fade" id="modal_sos_btn_user" tabindex="-1" role="dialog" aria-labelledby="modal_sos_btn_userTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -67,14 +66,14 @@
             </div>
             <div class="modal-body">
                 <div class="row d-flex justify-content-around">
-                    <div class="col-12 col-md-4 p-1 ">
+                    <div class="col-6 col-md-4 p-1 ">
                         <a href="#heading" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome();">
                             <i class="fa-solid fa-house-user"></i> บ้านของฉัน
                         </a>
                     </div>
-                    <div class="col-12 col-md-4 p-1 ">
+                    <div class="col-6 col-md-4 p-1 ">
                         <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="">
-                            <i class="fa-solid fa-house-user"></i> ตำแหน่งปัจจุบัน
+                            <i class="fa-solid fa-location-dot"></i> ตำแหน่งปัจจุบัน
                         </a>
                     </div>
                 </div>
@@ -109,19 +108,19 @@
                         <input class="form-control" name="input_address" type="text" id="input_address" value="" required>
                         {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                     </div>
-                    <!-- lat,lng -->
-                      <div id="div_latlng" class="d-none form-group col-12 col-md-4">
-                        <label for="lng" class="control-label">{{ 'lat,lng' }}</label>
-                        <input class="form-control" name="latlng" type="text" id="latlng" value="" readonly>
-                        {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
-                    </div>
-                      <!-- phone -->
+                    <!-- phone -->
                     <div id="div_phone" class=" form-group col-12 col-md-4">
                         <label for="phone" class="control-label">{{ 'เบอร์โทรศัพท์' }}</label>
                         <input class="form-control" name="input_phone" type="text" id="input_phone" value="" required>
                         {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                     </div>
 
+                    <!-- lat,lng -->
+                      <div id="div_latlng" class="d-none form-group col-12 col-md-4">
+                        <label for="lng" class="control-label">{{ 'lat,lng' }}</label>
+                        <input class="form-control" name="latlng" type="text" id="latlng" value="" readonly>
+                        {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
+                    </div>
                      <!-- lat -->
                     <input class="form-control d-none" name="lat" type="text" id="lat" value="" readonly>
                      <!-- lng -->
@@ -132,13 +131,11 @@
             </div>
             <div class="modal-footer">
                 <div class="row d-flex justify-content-between">
-                    <a href="#heading" class="col-6 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
-                    style="width:100%;border-radius: 20px;" onclick="">
-                        <i class="fa-solid fa-house-user"></i> ยืนยัน
+                    <a href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
+                        style="width:100%;border-radius: 20px;" onclick="SOS_by_Btn();"> ยืนยัน
                     </a>
-                    <a href="#heading" class="col-6 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
-                    style="width:100%;border-radius: 20px;" onclick="update_add_to_user();">
-                        <i class="fa-solid fa-house-user"></i> แก้ไขข้อมูล
+                    <a href="#heading" class="col-5 m-2 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
+                        style="width:100%;border-radius: 20px;" onclick="update_add_to_user();"> แก้ไขข้อมูล
                     </a>
                 </div>
             </div>
@@ -166,7 +163,7 @@
 
 </script>
 
-<script>
+{{-- <script>
     function check_lat_lng(){
             var user_id = '{{Auth::user()->id}}';
             var lat = '{{Auth::user()->lat}}';
@@ -189,33 +186,8 @@
                     // }
                 });
             }
-
-
     }
-</script>
-
-<script>
-
-    function SOS_by_Btn(user_id){
-
-        let div_btn_sos_btn = document.querySelector('#sos_by_btn').classList;
-        div_btn_sos_btn.add('btn-dark');
-        div_btn_sos_btn.remove('btn-primary');
-        // div_btn_sos_btn.add('d-none');
-        div_btn_sos_btn.disable = true;
-        // console.log(result);
-
-        // let url = "{{ url('/api/sos_btn') }}?user_id=" + user_id;
-        // console.log(url);
-        // fetch(url)
-        //     .then(response => response.json())
-        //     .then(result => {
-
-        //     });
-
-    }
-
-</script>
+</script> --}}
 
 <script>
     function SOS_by_Phone(user_id){
@@ -480,9 +452,10 @@ function select_province() {
     }
 
     function update_add_to_user(){
-        let check_data = document.querySelector('#select_province').value;
-            let user_id = document.querySelector('#input_user_id').value;
+        let user_id = document.querySelector('#input_user_id').value;
 
+        //เช็คค่า จ. อ. ต. ว่ามาจาก select หรือ input
+        let check_data = document.querySelector('#select_province').value;
         if(check_data){
             var province = document.querySelector('#select_province').value;
             var district = document.querySelector('#select_amphoe').value;
@@ -497,11 +470,11 @@ function select_province() {
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
         let phone = document.querySelector('#input_phone').value;
-        
+
 
         let url = "{{ url('/api/update_info_sos') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
         "&address=" + address + "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id;
-       
+
         fetch(url)
             .then(response => response.json())
             .then(result => {
@@ -511,63 +484,44 @@ function select_province() {
             });
     }
 
-    // function select_lat_lng() {
-    //     // document.querySelector('#select-area').classList.add('d-none');
-    //     // document.querySelector('#div_form').classList.add('wow');
-    //     // document.querySelector('#div_form').classList.add('fadeInDown');
+</script>
 
-    //     // setTimeout(function() {
-    //     //     document.querySelector('#div_form').classList.remove('d-none');
-    //     // }, 1000);
+<script>
+    function SOS_by_Btn(){
 
-    //     let select_province = document.querySelector('#select_province');
+        // let div_btn_sos_btn = document.querySelector('#sos_by_btn').classList;
+        // div_btn_sos_btn.add('btn-dark');
+        // div_btn_sos_btn.remove('btn-primary');
 
-    //     if (select_province.value) {
-    //         let select_amphoe = document.querySelector('#select_amphoe');
-    //         let select_tambon = document.querySelector('#select_tambon');
+        //เช็คค่า จ. อ. ต. ว่ามาจาก select หรือ input
+        let check_data = document.querySelector('#select_province').value;
+        if(check_data){
+            var province = document.querySelector('#select_province').value;
+            var district = document.querySelector('#select_amphoe').value;
+            var sub_district = document.querySelector('#select_tambon').value;
+        }else{
+            var province = document.querySelector('#input_province').value;
+            var district = document.querySelector('#input_amphoe').value;
+            var sub_district = document.querySelector('#input_tambon').value;
+        }
 
-    //         fetch("{{ url('/') }}/api/select_lat_lng" + "/" + select_province.value + "/" + select_amphoe.value + "/" + select_tambon.value)
-    //             .then(response => response.json())
-    //             .then(result => {
-    //                 // console.log(result + "if");
+        let address = document.querySelector('#input_address').value;
+        let phone = document.querySelector('#input_phone').value;
+        let user_id = "{{ Auth::user()->id }}";
+        // let lat = document.querySelector('#lat').value;
+        // let lng = document.querySelector('#lng').value;
 
-    //                 let lat = document.querySelector('#lat');
-    //                 lat.value = result[0]['lat'];
+        // "&lat=" + lat + "&lng=" + lng +
+        let url = "{{ url('/api/sos_btn') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
+        "&address=" + address + "&phone=" + phone + "&user_id=" + user_id;
 
-    //                 let lng = document.querySelector('#lng');
-    //                 lng.value = result[0]['lng'];
-
-    //                 document.querySelector('#map_google_ask_for_help').classList.remove('d-none');
-    //                 initMap();
-
-    //             });
-    //     } else {
-    //         let input_province = document.querySelector('#input_province');
-    //         let input_amphoe = document.querySelector('#input_amphoe');
-    //         let input_tambon = document.querySelector('#input_tambon');
-
-    //         fetch("{{ url('/') }}/api/select_lat_lng" + "/" + input_province.value + "/" + input_amphoe.value + "/" + input_tambon.value)
-    //             .then(response => response.json())
-    //             .then(result => {
-    //                 // console.log(result + "else");
-
-    //                 let lat = document.querySelector('#lat');
-    //                 lat.value = result[0]['lat'];
-
-    //                 let lng = document.querySelector('#lng');
-    //                 lng.value = result[0]['lng'];
-
-    //                 document.querySelector('#map_google_ask_for_help').classList.remove('d-none');
-    //                 initMap();
-
-    //             });
-    //     }
-
-
-    // }
-
-
-
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+                html = '<div> ได้รับข้อมูลขอความช่วยเหลือแล้ว </div>'
+                document.querySelector('#message_sos').innerHTML = html;
+            });
+    }
 </script>
 
 

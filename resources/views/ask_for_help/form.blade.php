@@ -42,7 +42,7 @@
                 </span>
             </div>
             <div class="col-12 mb-2">
-                {{-- <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none"> --}}
+                <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none"> 
                 <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone( {{Auth::user()->id}} )" >
                     <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
                 </span>
@@ -481,6 +481,7 @@ function select_province() {
 
     function update_add_to_user(){
         let check_data = document.querySelector('#select_province').value;
+            let user_id = document.querySelector('#input_user_id').value;
 
         if(check_data){
             var province = document.querySelector('#select_province').value;
@@ -496,16 +497,16 @@ function select_province() {
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
         let phone = document.querySelector('#input_phone').value;
-
-
+        
 
         let url = "{{ url('/api/update_info_sos') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
-        "&address=" + address + "&lat=" + lat + "&lng=" + lng + "&phone=" + phone;
-        // console.log(url);
-
+        "&address=" + address + "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id;
+       
         fetch(url)
             .then(response => response.json())
             .then(result => {
+
+                alert('แก้ไขข้อมูล '+result['name'] +' เรียบร้อย');
 
             });
     }

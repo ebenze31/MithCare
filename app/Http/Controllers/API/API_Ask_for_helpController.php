@@ -52,13 +52,15 @@ class API_Ask_for_helpController extends Controller
     }
 
     public function update_info_sos(Request $request){
-        $user_id = Auth::id();
+        $user_id = $request->get('user_id');
+
         $requestData = $request->all();
+        
+        $data_sos = User::findOrFail($user_id);
+        $data_sos->update($requestData);
 
-        $user = User::findOrFail($user_id);
-        $user->update($requestData);
-
-        return $user;
+       
+        return $data_sos ;
     }
 
 }

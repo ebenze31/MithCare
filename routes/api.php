@@ -57,7 +57,7 @@ Route::get('/sos_btn', 'API\API_Ask_for_helpController@get_sos_by_btn');
 // ดึงข้อมูล user มาใช้
 Route::get('/ask_user_info/{user_id}','ProfileController@location_map_user');
 // update ข้อมูล user ลง db
-Route::get('/update_info_sos','API\API_Ask_for_helpController@update_info_sos');
+Route::get('/update_info_sos/','API\API_Ask_for_helpController@update_info_sos');
 
 // หาจังหวัด
 Route::get('/select_province','API\LocationController@show_location_P');

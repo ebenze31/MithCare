@@ -481,26 +481,28 @@ function select_province() {
 
     function update_add_to_user(){
         let check_data = document.querySelector('#select_province').value;
+
         if(check_data){
-            let province = document.querySelector('#select_province').value;
-            let district = document.querySelector('#select_amphoe').value;
-            let sub_district = document.querySelector('#select_tambon').value;
+            var province = document.querySelector('#select_province').value;
+            var district = document.querySelector('#select_amphoe').value;
+            var sub_district = document.querySelector('#select_tambon').value;
         }else{
-            let province = document.querySelector('#input_province').value;
-            let district = document.querySelector('#input_amphoe').value;
-            let sub_district = document.querySelector('#input_tambon').value;
+            var province = document.querySelector('#input_province').value;
+            var district = document.querySelector('#input_amphoe').value;
+            var sub_district = document.querySelector('#input_tambon').value;
         }
 
-        let address = document.querySelector('#input_address');
+        let address = document.querySelector('#input_address').value;
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
         let phone = document.querySelector('#input_phone').value;
 
-        alert('ได้รับแล้ว'+ province + district + sub_district + address.value + phone);
+
 
         let url = "{{ url('/api/update_info_sos') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
         "&address=" + address + "&lat=" + lat + "&lng=" + lng + "&phone=" + phone;
         // console.log(url);
+
         fetch(url)
             .then(response => response.json())
             .then(result => {

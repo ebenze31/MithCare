@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Ask_for_help;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+
 class API_Ask_for_helpController extends Controller
 {
     public function get_sos_by_phone(Request $request)
@@ -49,8 +52,13 @@ class API_Ask_for_helpController extends Controller
     }
 
     public function update_info_sos(Request $request){
-        $user_id = $request->get('user_id');
+        $user_id = Auth::id();
+        $requestData = $request->all();
 
+        $user = User::findOrFail($user_id);
+        $user->update($requestData);
+
+        return $user;
     }
 
 }

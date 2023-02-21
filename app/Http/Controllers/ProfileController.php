@@ -102,6 +102,13 @@ class ProfileController extends Controller
 
     }
 
+    public function location_map_user(Request $request,$id){
+
+        $user = User::findOrFail($id);
+
+        return $user;
+    }
+
 
 
 }

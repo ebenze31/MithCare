@@ -114,7 +114,7 @@
                 <p class="contact__desc">Please feel free to contact our friendly reception staff with any general or
                   medical enquiry.</p>
                 <a href="tel:+201061245741" class="phone__number">
-                  <i class="icon-phone"></i> <span>01061245741</span>
+                  <i class="icon-phone"></i> <span>090-559-2624</span>
                 </a>
               </div><!-- /.contact__content -->
             </div><!-- /.contact-box -->
@@ -131,8 +131,8 @@
                   2.นัดหมายนัดพบแพทย์<br>
                   3.แจ้งเตือนการรับประทานยานัดพบแพทย์<br>
                 </p>
-                <a href="{{url('/room')}}" class="btn btn__white btn__outlined btn__rounded">
-                  <span>ไปยังหน้าบ้านของฉัน</span><i class="icon-arrow-right"></i>
+                <a href="#" class="btn btn__white btn__outlined btn__rounded">
+                  <span></span><i class="icon-arrow-right"></i>
                 </a>
               </div><!-- /.contact__content -->
             </div><!-- /.contact-box -->
@@ -186,8 +186,10 @@
               </div>
             </div>
             <div class="video-banner-layout2 bg-overlay">
-              {{-- <img src="assets/images/about/2.jpg" alt="about" class="w-100"> --}}
-              <img class="Image" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="642" height="427">
+                <!-- Computer Mode-->
+              <img class="Image d-none d-lg-block" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="642" height="427">
+                <!-- Mobile Mode-->
+              <img class="Image d-block d-md-none" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="100%" >
               <a class="video__btn video__btn-white popup-video" href="https://www.youtube.com/watch?v=nrJtHemSPW4">
                 <div class="video__player">
                   <i class="fa fa-play"></i>
@@ -235,13 +237,13 @@
                 <!-- News #1 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-cancer-1024x1024.jpg" alt="member img" width="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
-                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-cancer-self-care/">กรมอนามัย แนะ เริ่มต้นป้องกัน “โรคมะเร็ง” ด้วยตนเอง เพียงปรับพฤติกรรมการใช้ชีวิต และตรวจคัดกรอง</a></h5>
                     <p></p>
                     <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                      <a href="https://www.princhealth.com/prinh-cancer-self-care/" class="btn btn__secondary btn__link btn__rounded">
                         <span>Read More</span>
                         <i class="icon-arrow-right"></i>
                       </a>
@@ -251,12 +253,12 @@
                 <!-- News #2 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img " height="250px">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1-1024x1024.jpg" alt="member img " height="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
-                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-self-care/">กรมการแพทย์ แนะ วิธีการดูแลตนเองให้ปลอดภัยจากฝุ่น PM2.5</a></h5>
                     <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                      <a href="https://www.princhealth.com/prinh-pm25-self-care/" class="btn btn__secondary btn__link btn__rounded">
                         <span>Read More</span>
                         <i class="icon-arrow-right"></i>
                       </a>
@@ -266,12 +268,12 @@
                 <!-- News #3 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1024x1024.jpg" alt="member img" height="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
-                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-suggestions/">กรมอนามัย เตือน 1 – 4 ก.พ. 66 ค่าฝุ่น PM2.5 สูงถึงระดับสีแดงหลายพื้นที่ เน้นย้ำ สวมหน้ากากอนามัย-งดกิจกรรมกลางแจ้ง</a></h5>
                     <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                      <a href="https://www.princhealth.com/prinh-pm25-suggestions/" class="btn btn__secondary btn__link btn__rounded">
                         <span>Read More</span>
                         <i class="icon-arrow-right"></i>
                       </a>
@@ -282,12 +284,12 @@
                 <!-- News #4 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="member img" height="250px">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/01/PRINH-mental-health-fam-care-1024x1024.jpg" alt="member img" height="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
-                    <h5 class="member__name"><a href="#Health_news">หัวเรื่อง</a></h5>
+                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-mental-health-fam-care/">กรมสุขภาพจิต แนะ ญาติของผู้ป่วยจิตเวชและผู้ติดยาเสพติด หมั่นสังเกตอาการ พาเข้าพบแพทย์ตามนัด</a></h5>
                     <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="#Health_news" class="btn btn__secondary btn__link btn__rounded">
+                      <a href="https://www.princhealth.com/prinh-mental-health-fam-care/" class="btn btn__secondary btn__link btn__rounded">
                         <span>Read More</span>
                         <i class="icon-arrow-right"></i>
                       </a>
@@ -318,7 +320,7 @@
                     <i class="icon-heart"></i>
                     <i class="icon-heart feature__overlay-icon"></i>
                 </div>
-                <h4 class="feature__title">สร้างครอบครัวของตัวเอง</h4>
+                <h4 class="feature__title">ระบบที่ช่วยดูแลครอบครัวของคุณ</h4>
                 </div><!-- /.feature__content -->
 
             </div><!-- /.feature-item -->

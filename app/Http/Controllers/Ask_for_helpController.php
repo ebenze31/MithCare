@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Models\Ask_for_help;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Tambon;
+use Illuminate\Support\Facades\DB;
 
 
 class Ask_for_helpController extends Controller
@@ -62,6 +64,12 @@ class Ask_for_helpController extends Controller
      */
     public function create()
     {
+
+
+        // $provinces = Tambon::select('province')->distinct()->get();
+        // $amphoes = Tambon::select('amphoe')->distinct()->get();
+        // $tambons = Tambon::select('tambon')->distinct()->get();
+
         return view('ask_for_help.create');
     }
 
@@ -74,6 +82,7 @@ class Ask_for_helpController extends Controller
      */
     public function store(Request $request)
     {
+
 
         $requestData = $request->all();
 

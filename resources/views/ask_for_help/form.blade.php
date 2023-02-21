@@ -1,146 +1,572 @@
-<div class="form-group {{ $errors->has('name_user') ? 'has-error' : '' }}">
-    <label for="name_user" class="control-label">{{ 'Name User' }}</label>
-    <input class="form-control" name="name_user" type="text" id="name_user"
-        value="{{ isset($ask_for_help->name_user) ? $ask_for_help->name_user : '' }}">
-    {!! $errors->first('name_user', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-    <label for="content" class="control-label">{{ 'Content' }}</label>
-    <input class="form-control" name="content" type="text" id="content" value="{{ isset($ask_for_help->content) ? $ask_for_help->content : ''}}" >
-    {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
-</div>
-{{-- <div class="form-group {{ $errors->has('lat') ? 'has-error' : ''}}">
-    <label for="lat" class="control-label">{{ 'Lat' }}</label>
-    <input class="form-control" name="lat" type="text" id="lat" value="{{ isset($ask_for_help->lat) ? $ask_for_help->lat : ''}}" >
-    {!! $errors->first('lat', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('lng') ? 'has-error' : ''}}">
-    <label for="lng" class="control-label">{{ 'Lng' }}</label>
-    <input class="form-control" name="lng" type="text" id="lng" value="{{ isset($ask_for_help->lng) ? $ask_for_help->lng : ''}}" >
-    {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('province') ? 'has-error' : ''}}">
-    <label for="province" class="control-label">{{ 'Province' }}</label>
-    <input class="form-control" name="province" type="text" id="province" value="{{ isset($ask_for_help->province) ? $ask_for_help->province : ''}}" >
-    {!! $errors->first('province', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('district') ? 'has-error' : ''}}">
-    <label for="district" class="control-label">{{ 'District' }}</label>
-    <input class="form-control" name="district" type="text" id="district" value="{{ isset($ask_for_help->district) ? $ask_for_help->district : ''}}" >
-    {!! $errors->first('district', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('sub_district') ? 'has-error' : ''}}">
-    <label for="sub_district" class="control-label">{{ 'Sub District' }}</label>
-    <input class="form-control" name="sub_district" type="text" id="sub_district" value="{{ isset($ask_for_help->sub_district) ? $ask_for_help->sub_district : ''}}" >
-    {!! $errors->first('sub_district', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
-    <label for="address" class="control-label">{{ 'Address' }}</label>
-    <input class="form-control" name="address" type="text" id="address" value="{{ isset($ask_for_help->address) ? $ask_for_help->address : ''}}" >
-    {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
-</div>
 
- <div class="form-group {{ $errors->has('photo_sos') ? 'has-error' : ''}}">
-    <label for="photo_sos" class="control-label">{{ 'Photo Sos' }}</label>
-    <input class="form-control" name="photo_sos" type="text" id="photo_sos" value="{{ isset($ask_for_help->photo_sos) ? $ask_for_help->photo_sos : ''}}" >
-    {!! $errors->first('photo_sos', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('organization_helper') ? 'has-error' : ''}}">
-    <label for="organization_helper" class="control-label">{{ 'Organization Helper' }}</label>
-    <input class="form-control" name="organization_helper" type="text" id="organization_helper" value="{{ isset($ask_for_help->organization_helper) ? $ask_for_help->organization_helper : ''}}" >
-    {!! $errors->first('organization_helper', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('name_helper') ? 'has-error' : ''}}">
-    <label for="name_helper" class="control-label">{{ 'Name Helper' }}</label>
-    <input class="form-control" name="name_helper" type="text" id="name_helper" value="{{ isset($ask_for_help->name_helper) ? $ask_for_help->name_helper : ''}}" >
-    {!! $errors->first('name_helper', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('help_complete') ? 'has-error' : ''}}">
-    <label for="help_complete" class="control-label">{{ 'Help Complete' }}</label>
-    <input class="form-control" name="help_complete" type="text" id="help_complete" value="{{ isset($ask_for_help->help_complete) ? $ask_for_help->help_complete : ''}}" >
-    {!! $errors->first('help_complete', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('help_complete_time') ? 'has-error' : ''}}">
-    <label for="help_complete_time" class="control-label">{{ 'Help Complete Time' }}</label>
-    <input class="form-control" name="help_complete_time" type="datetime-local" id="help_complete_time" value="{{ isset($ask_for_help->help_complete_time) ? $ask_for_help->help_complete_time : ''}}" >
-    {!! $errors->first('help_complete_time', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('score_impression') ? 'has-error' : ''}}">
-    <label for="score_impression" class="control-label">{{ 'Score Impression' }}</label>
-    <input class="form-control" name="score_impression" type="number" id="score_impression" value="{{ isset($ask_for_help->score_impression) ? $ask_for_help->score_impression : ''}}" >
-    {!! $errors->first('score_impression', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('score_period') ? 'has-error' : ''}}">
-    <label for="score_period" class="control-label">{{ 'Score Period' }}</label>
-    <input class="form-control" name="score_period" type="number" id="score_period" value="{{ isset($ask_for_help->score_period) ? $ask_for_help->score_period : ''}}" >
-    {!! $errors->first('score_period', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('score total') ? 'has-error' : ''}}">
-    <label for="score total" class="control-label">{{ 'Score Total' }}</label>
-    <input class="form-control" name="score total" type="number" id="score total" value="{{ isset($ask_for_help->score total) ? $ask_for_help->score total : ''}}" >
-    {!! $errors->first('score total', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('commemt_help') ? 'has-error' : ''}}">
-    <label for="commemt_help" class="control-label">{{ 'Commemt Help' }}</label>
-    <input class="form-control" name="commemt_help" type="text" id="commemt_help" value="{{ isset($ask_for_help->commemt_help) ? $ask_for_help->commemt_help : ''}}" >
-    {!! $errors->first('commemt_help', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('notify') ? 'has-error' : ''}}">
-    <label for="notify" class="control-label">{{ 'Notify' }}</label>
-    <input class="form-control" name="notify" type="text" id="notify" value="{{ isset($ask_for_help->notify) ? $ask_for_help->notify : ''}}" >
-    {!! $errors->first('notify', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('photo_succeed') ? 'has-error' : ''}}">
-    <label for="photo_succeed" class="control-label">{{ 'Photo Succeed' }}</label>
-    <input class="form-control" name="photo_succeed" type="text" id="photo_succeed" value="{{ isset($ask_for_help->photo_succeed) ? $ask_for_help->photo_succeed : ''}}" >
-    {!! $errors->first('photo_succeed', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('photo_succeed_by') ? 'has-error' : ''}}">
-    <label for="photo_succeed_by" class="control-label">{{ 'Photo Succeed By' }}</label>
-    <input class="form-control" name="photo_succeed_by" type="text" id="photo_succeed_by" value="{{ isset($ask_for_help->photo_succeed_by) ? $ask_for_help->photo_succeed_by : ''}}" >
-    {!! $errors->first('photo_succeed_by', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('remark_helper') ? 'has-error' : ''}}">
-    <label for="remark_helper" class="control-label">{{ 'Remark Helper' }}</label>
-    <input class="form-control" name="remark_helper" type="text" id="remark_helper" value="{{ isset($ask_for_help->remark_helper) ? $ask_for_help->remark_helper : ''}}" >
-    {!! $errors->first('remark_helper', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('time_go_to_help') ? 'has-error' : ''}}">
-    <label for="time_go_to_help" class="control-label">{{ 'Time Go To Help' }}</label>
-    <input class="form-control" name="time_go_to_help" type="datetime-local" id="time_go_to_help" value="{{ isset($ask_for_help->time_go_to_help) ? $ask_for_help->time_go_to_help : ''}}" >
-    {!! $errors->first('time_go_to_help', '<p class="help-block">:message</p>') !!}
-</div> --}}
-{{-- <div class="form-group {{ $errors->has('helper_id') ? 'has-error' : '' }}">
-    <label for="helper_id" class="control-label">{{ 'Helper Id' }}</label>
-    <input class="form-control" name="helper_id" type="text" id="helper_id"
-        value="{{ isset($ask_for_help->helper_id) ? $ask_for_help->helper_id : '' }}">
-    {!! $errors->first('helper_id', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
-    <label for="user_id" class="control-label">{{ 'User Id' }}</label>
-    <input class="form-control" name="user_id" type="text" id="user_id"
-        value="{{ isset($ask_for_help->user_id) ? $ask_for_help->user_id : '' }}">
-    {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('partner_id') ? 'has-error' : '' }}">
-    <label for="partner_id" class="control-label">{{ 'Partner Id' }}</label>
-    <input class="form-control" name="partner_id" type="text" id="partner_id"
-        value="{{ isset($ask_for_help->partner_id) ? $ask_for_help->partner_id : '' }}">
-    {!! $errors->first('partner_id', '<p class="help-block">:message</p>') !!}
-</div> --}}
+<style>
+    #map_google_ask_for_help {
+        height: calc(40vh);
 
-<div class="row mt-2">
-    <div class="col-3">
-        <a href="{{ url('/ask_for_help') }}" title="กลับ">
-            <button class="btn btn-warning btn-sm form-control" style="background-color: #21CDC0; font-size: 25px; color: white;">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>กลับ
-            </button>
-        </a>
-    </div>
-    <div class="col-6">
-        <div class="form-group">
-            <input class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;"
-            type="submit" value="{{ $formMode === 'edit' ? 'แก้ไข' : 'ขอความช่วยเหลือ' }}">
+        background-color: #3490dc;
+    }
+    #map_sos {
+        height: calc(40vh);
+
+        background-color: #80bbeb;
+    }
+</style>
+
+        <!--===================
+            Select Address
+        =====================-->
+
+
+
+    <!--===================
+            Map
+    =====================-->
+    <div class="card-body">
+        <div class="d-flex justify-content-center">
+            <div class="col-12 p-0">
+                <div class="d-none" id="map_google_ask_for_help"></div>
+                <div class="d-" id="map_sos"></div>
+            </div>
         </div>
     </div>
-</div>
+    <div id="location_users">
+
+    </div>
+
+    <div class="justify-content-center">
+        <div class="column">
+            <div class="col-12 mb-2">
+                <span id="sos_by_btn" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                style="background-color: #3490dc; font-size: 20px; color: white;" onclick="SOS_by_Btn( {{Auth::user()->id}} )">
+                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
+                </span>
+            </div>
+            <div class="col-12 mb-2">
+                {{-- <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none"> --}}
+                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone( {{Auth::user()->id}} )" >
+                    <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_sos_btn_user">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_sos_btn_user" tabindex="-1" role="dialog" aria-labelledby="modal_sos_btn_userTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modal_sos_btn_userTitle">ยืนยันข้อมูล</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex justify-content-around">
+                    <div class="col-12 col-md-4 p-1 ">
+                        <a href="#heading" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome();">
+                            <i class="fa-solid fa-house-user"></i> บ้านของฉัน
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-4 p-1 ">
+                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="">
+                            <i class="fa-solid fa-house-user"></i> ตำแหน่งปัจจุบัน
+                        </a>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-around">
+                    <!-- province -->
+                      <div class="form-group col-lg-4 col-12 p-1 m-0">
+                        <label for="address" class="control-label">{{ 'จังหวัด' }}</label>
+                        <select name="select_province" id="select_province" class="input-provice form-control kanit" onchange="select_A();" required>
+                            <option value="" selected>- เลือกจังหวัด -</option>
+                        </select>
+                        <input type="text" name="input_province" id="input_province" class=" input-provice form-control d-none" readonly>
+                    </div>
+                    <!-- amphoe -->
+                    <div class="form-group col-lg-4 col-12 p-1 m-0">
+                        <label for="address" class="control-label">{{ 'อำเภอ' }}</label>
+                        <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice " onchange="select_T();" required>
+                            <option value="" selected>- เลือกอำเภอ -</option>
+                        </select>
+                        <input type="text" name="input_amphoe" id="input_amphoe" class="input-provice form-control d-none" readonly>
+                    </div>
+                    <!-- tambon -->
+                    <div class="form-group col-lg-4 col-12 p-1 m-0">
+                        <label for="address" class="control-label">{{ 'ตำบล' }}</label>
+                        <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice " onchange="select_lat_lng();" required>
+                            <option value="" selected>- เลือกตำบล -</option>
+                        </select>
+                        <input type="text" name="input_tambon" id="input_tambon" class="input-provice form-control d-none" readonly>
+                    </div>
+                      <!-- address detail -->
+                    <div id="div_address_detail" class=" form-group col-12 col-md-4">
+                        <label for="address" class="control-label">{{ 'รายละเอียดที่อยู่' }}</label>
+                        <input class="form-control" name="input_address" type="text" id="input_address" value="" required>
+                        {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
+                    </div>
+                    <!-- lat,lng -->
+                      <div id="div_latlng" class="d-none form-group col-12 col-md-4">
+                        <label for="lng" class="control-label">{{ 'lat,lng' }}</label>
+                        <input class="form-control" name="latlng" type="text" id="latlng" value="" readonly>
+                        {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
+                    </div>
+                      <!-- phone -->
+                    <div id="div_phone" class=" form-group col-12 col-md-4">
+                        <label for="phone" class="control-label">{{ 'เบอร์โทรศัพท์' }}</label>
+                        <input class="form-control" name="input_phone" type="text" id="input_phone" value="" required>
+                        {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+                    </div>
+
+                     <!-- lat -->
+                    <input class="form-control d-none" name="lat" type="text" id="lat" value="" readonly>
+                     <!-- lng -->
+                    <input class="form-control d-none" name="lng" type="text" id="lng" value="" readonly>
+
+                </div><!--/.row -->
+
+            </div>
+            <div class="modal-footer">
+                <div class="row d-flex justify-content-between">
+                    <a href="#heading" class="col-6 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
+                    style="width:100%;border-radius: 20px;" onclick="">
+                        <i class="fa-solid fa-house-user"></i> ยืนยัน
+                    </a>
+                    <a href="#heading" class="col-6 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
+                    style="width:100%;border-radius: 20px;" onclick="update_add_to_user();">
+                        <i class="fa-solid fa-house-user"></i> แก้ไขข้อมูล
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+<!--=============================================================================================================
+                            JAVASCRIPT JAVASCRIPT JAVASCRIPT JAVASCRIPT JAVASCRIPT
+===============================================================================================================-->
+
+<script src="{{ asset('js/map_location.js')}}"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+            initMap();
+
+            select_province();
+
+            // check_lat_lng();
+
+    });
+
+</script>
+
+<script>
+    function check_lat_lng(){
+            var user_id = '{{Auth::user()->id}}';
+            var lat = '{{Auth::user()->lat}}';
+            //  console.log(user_id);
+
+            // console.log( "NOT lat lng");
+            if(lat){
+
+            }else{
+                fetch("{{ url('/') }}/api/ask_user_info" + "/" + user_id)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result['full_name']);
+                    // result_area = result ;
+                    getLocation();
+
+                    // if (typeof result_area !== "undefined") {
+                    //     // console.log(result_area)
+                    //     getLocation();
+                    // }
+                });
+            }
+
+
+    }
+</script>
+
+<script>
+
+    function SOS_by_Btn(user_id){
+
+        let div_btn_sos_btn = document.querySelector('#sos_by_btn').classList;
+        div_btn_sos_btn.add('btn-dark');
+        div_btn_sos_btn.remove('btn-primary');
+        // div_btn_sos_btn.add('d-none');
+        div_btn_sos_btn.disable = true;
+        // console.log(result);
+
+        // let url = "{{ url('/api/sos_btn') }}?user_id=" + user_id;
+        // console.log(url);
+        // fetch(url)
+        //     .then(response => response.json())
+        //     .then(result => {
+
+        //     });
+
+    }
+
+</script>
+
+<script>
+    function SOS_by_Phone(user_id){
+
+        let div_btn_sos_phone = document.querySelector('#sos_by_phone').classList;
+        div_btn_sos_phone.add('btn-dark');
+        div_btn_sos_phone.remove('btn-primary');
+        div_btn_sos_phone.add('d-none');
+        div_btn_sos_phone.disable = true;
+        // console.log(result);
+
+        let url = "{{ url('/api/sos_phone') }}?user_id=" + user_id;
+        console.log(url);
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+
+            });
+    }
+
+</script>
+
+
+  <!--==========================================
+                Google Map Api
+  ============================================-->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrxXDgk1tgXngalZF3eWtcTWI-LPdeus&language=th"></script>
+
+<script>
+    var map;
+
+    function initMap() {
+        // 13.7248936,100.4930264 lat lng ประเทศไทย
+        map = new google.maps.Map(document.getElementById("map_google_ask_for_help"), {
+            center: {lat: 13.7248936, lng: 100.4930264 },
+            zoom: 6,
+        });
+
+        // window.initMap = initMap;
+
+
+
+}
+</script>
+
+<script>
+    var map_sos;
+    var marker_user;
+
+    function Open_map_sos() {
+        // 13.7248936,100.4930264 lat lng ประเทศไทย
+        let lat_text = document.querySelector("#lat");
+        let lng_text = document.querySelector("#lng");
+        let latlng = document.querySelector("#latlng");
+
+        let lat = parseFloat(lat_text.value) ;
+        let lng = parseFloat(lng_text.value) ;
+
+        console.log(lat);
+        console.log(lng);
+
+        map_sos = new google.maps.Map(document.getElementById("map_sos"), {
+            center: {lat: lat, lng: lng },
+            zoom: 6,
+        });
+
+        if (marker_user) {
+            marker_user.setMap(null);
+        }
+        marker_user = new google.maps.Marker({
+            position: {lat: lat , lng: lng },
+            map: map_sos,
+            // icon: image,
+        });
+
+
+        // window.initMap = initMap;
+
+}
+</script>
+
+
+  <!--==========================================
+                Script   ที่อยู่
+  ============================================-->
+
+<script>
+    function locations_myhome() {
+
+        document.querySelector('#select_province').classList.add('d-none');
+        document.querySelector('#select_amphoe').classList.add('d-none');
+        document.querySelector('#select_tambon').classList.add('d-none');
+
+        document.querySelector('#input_province').classList.remove('d-none');
+        document.querySelector('#input_amphoe').classList.remove('d-none');
+        document.querySelector('#input_tambon').classList.remove('d-none');
+
+        document.querySelector('#div_address_detail').classList.remove('d-none');
+        document.querySelector('#div_phone').classList.remove('d-none');
+        // document.querySelector('#div_latlng').classList.remove('d-none');
+
+        let select_province = document.querySelector('#select_province');
+        let select_amphoe = document.querySelector('#select_amphoe');
+        let select_tambon = document.querySelector('#select_tambon');
+
+
+        select_province.value = "";
+        select_amphoe.value = "";
+        select_tambon.value = "";
+
+        select_province.required = "";
+        select_amphoe.required = "";
+        select_tambon.required = "";
+
+
+        let input_province = document.querySelector('#input_province');
+        let input_amphoe = document.querySelector('#input_amphoe');
+        let input_tambon = document.querySelector('#input_tambon');
+        let input_address = document.querySelector('#input_address');
+        let input_phone = document.querySelector('#input_phone');
+
+        let lat_user = "{{ Auth::user()->lat }}";
+        let lng_user = "{{ Auth::user()->lng }}";
+
+        document.querySelector('#lat').value = lat_user;
+        document.querySelector('#lng').value = lng_user;
+        document.querySelector('#latlng').value = lat_user + ',' + lng_user;
+
+        input_province.value = "{{ Auth::user()->province }}";
+        input_amphoe.value = "{{ Auth::user()->district }}";
+        input_tambon.value = "{{ Auth::user()->sub_district }}";
+        input_address.value = "{{ Auth::user()->address }}";
+        input_phone.value = "{{ Auth::user()->phone }}";
+
+        if(lat_user && lng_user){
+            console.log("if")
+            Open_map_sos();
+        }else{
+            console.log("else")
+            getLocation_SOS();
+        }
+
+        // console.log(input_province.value);
+        // console.log(input_province.value);
+        // console.log(input_province.value);
+        // console.log(input_province.value);
+        // console.log(input_province.value);
+
+        // select_lat_lng();
+
+    }
+    function getLocation_SOS() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition_SOS);
+        // navigator.geolocation.getCurrentPosition(geocodeLatLng);
+    } else {
+        // x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition_SOS(position) {
+        let lat_text = document.querySelector("#lat");
+        let lng_text = document.querySelector("#lng");
+        let latlng = document.querySelector("#latlng");
+
+        lat_text.value = position.coords.latitude ;
+        lng_text.value = position.coords.longitude ;
+        latlng.value = position.coords.latitude+","+position.coords.longitude ;
+
+        let lat = parseFloat(lat_text.value) ;
+        let lng = parseFloat(lng_text.value) ;
+
+        Open_map_sos();
+        // console.log(lat);
+        // console.log(lng);
+
+        //   let location_users = document.querySelector("#location_user");
+        //       location_users.innerHTML = '<a class=" shadow-box text-white btn btn-primary shadow" style="position:absolute;margin-top:-100px;margin-left:10px;border-radius:10px" id="submit"><i class="fas fa-search-location"></i></a>';
+        //   check_area(lat,lng);
+    }
+
+</script>
+
+<script>
+
+function select_province() {
+        let select_province = document.querySelector('#select_province');
+
+        fetch("{{ url('/') }}/api/select_province/")
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+
+                select_province.innerHTML = "";
+                console.log(select_province);
+                let option_select = document.createElement("option");
+                option_select.text = "- เลือกจังหวัด -";
+                option_select.value = "";
+                select_province.add(option_select);
+
+                for (let item of result) {
+                    let option = document.createElement("option");
+                    option.text = item.changwat_th;
+                    option.value = item.changwat_th;
+                    select_province.add(option);
+                }
+            });
+    }
+
+    function select_A() {
+        let select_province = document.querySelector('#select_province');
+        let select_amphoe = document.querySelector('#select_amphoe');
+
+        fetch("{{ url('/') }}/api/select_amphoe" + "/" + select_province.value)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+
+                select_amphoe.innerHTML = "";
+
+                let option_select = document.createElement("option");
+                option_select.text = "- เลือกอำเภอ -";
+                option_select.value = "";
+                select_amphoe.add(option_select);
+
+                for (let item of result) {
+                    let option = document.createElement("option");
+                    option.text = item.amphoe_th;
+                    option.value = item.amphoe_th;
+                    select_amphoe.add(option);
+                }
+            });
+    }
+
+    function select_T() {
+        let select_province = document.querySelector('#select_province');
+        let select_amphoe = document.querySelector('#select_amphoe');
+        let select_tambon = document.querySelector('#select_tambon');
+
+        fetch("{{ url('/') }}/api/select_tambon" + "/" + select_province.value + "/" + select_amphoe.value)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+
+                select_tambon.innerHTML = "";
+
+                let option_select = document.createElement("option");
+                option_select.text = "- เลือกตำบล -";
+                option_select.value = "";
+                select_tambon.add(option_select);
+
+                for (let item of result) {
+                    let option = document.createElement("option");
+                    option.text = item.tambon_th;
+                    option.value = item.tambon_th;
+                    select_tambon.add(option);
+                }
+            });
+
+    }
+
+    function update_add_to_user(){
+        let check_data = document.querySelector('#select_province').value;
+        if(check_data){
+            let province = document.querySelector('#select_province').value;
+            let district = document.querySelector('#select_amphoe').value;
+            let sub_district = document.querySelector('#select_tambon').value;
+        }else{
+            let province = document.querySelector('#input_province').value;
+            let district = document.querySelector('#input_amphoe').value;
+            let sub_district = document.querySelector('#input_tambon').value;
+        }
+
+        let address = document.querySelector('#input_address');
+        let lat = document.querySelector('#lat').value;
+        let lng = document.querySelector('#lng').value;
+        let phone = document.querySelector('#input_phone').value;
+
+        alert('ได้รับแล้ว'+ province + district + sub_district + address.value + phone);
+
+        let url = "{{ url('/api/update_info_sos') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
+        "&address=" + address + "&lat=" + lat + "&lng=" + lng + "&phone=" + phone;
+        // console.log(url);
+        fetch(url)
+            .then(response => response.json())
+            .then(result => {
+
+            });
+    }
+
+    // function select_lat_lng() {
+    //     // document.querySelector('#select-area').classList.add('d-none');
+    //     // document.querySelector('#div_form').classList.add('wow');
+    //     // document.querySelector('#div_form').classList.add('fadeInDown');
+
+    //     // setTimeout(function() {
+    //     //     document.querySelector('#div_form').classList.remove('d-none');
+    //     // }, 1000);
+
+    //     let select_province = document.querySelector('#select_province');
+
+    //     if (select_province.value) {
+    //         let select_amphoe = document.querySelector('#select_amphoe');
+    //         let select_tambon = document.querySelector('#select_tambon');
+
+    //         fetch("{{ url('/') }}/api/select_lat_lng" + "/" + select_province.value + "/" + select_amphoe.value + "/" + select_tambon.value)
+    //             .then(response => response.json())
+    //             .then(result => {
+    //                 // console.log(result + "if");
+
+    //                 let lat = document.querySelector('#lat');
+    //                 lat.value = result[0]['lat'];
+
+    //                 let lng = document.querySelector('#lng');
+    //                 lng.value = result[0]['lng'];
+
+    //                 document.querySelector('#map_google_ask_for_help').classList.remove('d-none');
+    //                 initMap();
+
+    //             });
+    //     } else {
+    //         let input_province = document.querySelector('#input_province');
+    //         let input_amphoe = document.querySelector('#input_amphoe');
+    //         let input_tambon = document.querySelector('#input_tambon');
+
+    //         fetch("{{ url('/') }}/api/select_lat_lng" + "/" + input_province.value + "/" + input_amphoe.value + "/" + input_tambon.value)
+    //             .then(response => response.json())
+    //             .then(result => {
+    //                 // console.log(result + "else");
+
+    //                 let lat = document.querySelector('#lat');
+    //                 lat.value = result[0]['lat'];
+
+    //                 let lng = document.querySelector('#lng');
+    //                 lng.value = result[0]['lng'];
+
+    //                 document.querySelector('#map_google_ask_for_help').classList.remove('d-none');
+    //                 initMap();
+
+    //             });
+    //     }
+
+
+    // }
+
+
+
+</script>
+
+
+
+

@@ -191,20 +191,16 @@
                                     <li class="nav__item">
                                         <a href="#MithCare_Dee_Yang_Rai" class="nav__item-link">MithCare ดีอย่างไร</a>
                                     </li><!-- /.nav-item -->
-                                    <li class="nav__item">
-                                        <a href="services-single.html" class="nav__item-link">single Services</a>
-                                    </li><!-- /.nav-item -->
-
                                 </ul><!-- /.dropdown-menu -->
                             </li><!-- /.nav-item -->
                             <li class="nav__item has-dropdown">
                                 <a href=""  class="nav__item-link">รพ./ร้านขายยา</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav__item">
-                                        <a href="doctors-timetable.html" class="nav__item-link">โรงพยาบาลใกล้ฉัน</a>
+                                        <a href="#" class="nav__item-link">โรงพยาบาลใกล้ฉัน</a>
                                     </li> <!-- /.nav-item -->
                                     <li class="nav__item">
-                                        <a href="doctors-standard.html" class="nav__item-link">ร้านขายยาใกล้ฉัน</a>
+                                        <a href="#" class="nav__item-link">ร้านขายยาใกล้ฉัน</a>
                                     </li> <!-- /.nav-item -->
                                     {{-- <li class="nav__item">
                                         <a href="doctors-modern.html" class="nav__item-link">Our Doctors Modern</a>
@@ -384,7 +380,9 @@
                         <a href="{{url('terms_of_service')}}">
                             <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
                         </a>
+
                     </div>
+                    <a class="h6">เว็บไซต์นี้ อ้างอิงมาจากเว็บไซต์ www.princhealth.com เพื่อใช้ในการพัฒนาระบบเท่านั้น ไม่ได้มีเจตนาแสวงหาผลกำไร</a>
                 </center>
             </div><!-- /.container -->
         </div><!-- /.footer-secondary -->

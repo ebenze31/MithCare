@@ -32,9 +32,10 @@ class API_Ask_for_helpController extends Controller
 
     public function get_sos_by_btn(Request $request)
     {
-
+        $user_id = $request->get('user_id');
         $requestData = $request->all();
 
+        $requestData['user_id'] = $user_id;
         $requestData['content'] = "help_by_partner";
         $requestData['name_helper'] = "partner_name";
         $requestData['partner_id'] = "partner_id";

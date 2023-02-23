@@ -7,6 +7,7 @@
     <section class="slider">
       <div class="slick-carousel m-slides-0"
         data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700,"fade": true,"cssEase": "linear"}'>
+            <!-- #Slide 1 -->
         <div class="slide-item align-v-h">
           <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="slide img"></div>
           <div class="container">
@@ -51,50 +52,10 @@
             </div><!-- /.row -->
           </div><!-- /.container -->
         </div><!-- /.slide-item -->
-        <div class="slide-item align-v-h">
-          <div class="bg-img"><img src="assets/images/sliders/2.jpg" alt="slide img"></div>
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">
-                <div class="slide__content">
-                  <h2 class="slide__title">All Aspects Of Medical Practice</h2>
-                  <p class="slide__desc">The health and well-being of our patients and their health care team will
-                    always be our priority, so we follow the best practices for cleanliness.</p>
-                  <ul class="features-list list-unstyled mb-0 d-flex flex-wrap">
-                    <!-- feature item #1 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-heart"></i>
-                      </div>
-                      <h2 class="feature__title">Examination</h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #2 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-medicine"></i>
-                      </div>
-                      <h2 class="feature__title">Prescription </h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #3 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-heart2"></i>
-                      </div>
-                      <h2 class="feature__title">Cardiogram</h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #4 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-blood-test"></i>
-                      </div>
-                      <h2 class="feature__title">Blood Pressure</h2>
-                    </li><!-- /.feature-item-->
-                  </ul><!-- /.features-list -->
-                </div><!-- /.slide-content -->
-              </div><!-- /.col-xl-7 -->
-            </div><!-- /.row -->
-          </div><!-- /.container -->
-        </div><!-- /.slide-item -->
+
+         <!-- #Slide 2 -->
+
+
       </div><!-- /.carousel -->
     </section><!-- /.slider -->
 
@@ -110,7 +71,7 @@
                 <i class="icon-call3"></i>
               </div><!-- /.contact__icon -->
               <div class="contact__content">
-                <h2 class="contact__title">Emergency Cases</h2>
+                <h2 class="contact__title">Contract</h2>
                 <p class="contact__desc">Please feel free to contact our friendly reception staff with any general or
                   medical enquiry.</p>
                 <a href="tel:+201061245741" class="phone__number">
@@ -175,10 +136,7 @@
                 <i class="icon-doctor"></i>
               </div>
               <div class="text__content">
-                <p class="heading__desc font-weight-bold color-secondary mb-30">Our goal is to deliver quality of care
-                  in a courteous, respectful, and
-                  compassionate manner. We hope you will allow us to care for you and strive to be the first and best
-                  choice for healthcare.
+                <p class="heading__desc font-weight-bold color-secondary mb-30" style="font-size: 16px;">รักคนที่แคร์ ดูแลคนที่ใช่  <br> ทุกวินาทีอุ่นใจ เมื่อใช้มิตรแคร์
                 </p>
                 {{-- <a href="doctors-timetable.html" class="btn btn__secondary btn__rounded mb-70">
                   <span>Find A Doctor</span> <i class="icon-arrow-right"></i>

@@ -53,28 +53,6 @@ function getLocation() {
       const user = { lat: lat, lng: lng };
       const marker_user = new google.maps.Marker({ map, position: user });
 
-      draw_area(map);
-
-      const geocoder = new google.maps.Geocoder();
-      const infowindow = new google.maps.InfoWindow();
-
-      document.getElementById("location_user").addEventListener("click", () => {
-
-          geocodeLatLng(geocoder, map, infowindow);
-      });
-
-      marker_user.addListener("click", () => {
-          geocodeLatLng(geocoder, map, infowindow);
-      });
-
-    //   document.querySelector('#btn_emergency_volunteer').classList.remove('d-none');
-
-    //   let text_sos = document.querySelector('#text_sos').value;
-
-    //   if (text_sos === "insurance") {
-    //       document.querySelector('#btn_contact_insurance').click();
-    //   }
-
 
   }
 

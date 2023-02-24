@@ -211,7 +211,7 @@
                 <!-- News #2 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1-1024x1024.jpg" alt="member img " height="100%">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1-1024x1024.jpg" alt="member img " width="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
                     <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-self-care/">กรมการแพทย์ แนะ วิธีการดูแลตนเองให้ปลอดภัยจากฝุ่น PM2.5</a></h5>
@@ -226,7 +226,7 @@
                 <!-- News #3 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1024x1024.jpg" alt="member img" height="100%">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1024x1024.jpg" alt="member img" width="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
                     <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-suggestions/">กรมอนามัย เตือน 1 – 4 ก.พ. 66 ค่าฝุ่น PM2.5 สูงถึงระดับสีแดงหลายพื้นที่ เน้นย้ำ สวมหน้ากากอนามัย-งดกิจกรรมกลางแจ้ง</a></h5>
@@ -242,7 +242,7 @@
                 <!-- News #4 -->
                 <div class="member">
                   <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/01/PRINH-mental-health-fam-care-1024x1024.jpg" alt="member img" height="100%">
+                    <img src="https://www.princhealth.com/wp-content/uploads/2023/01/PRINH-mental-health-fam-care-1024x1024.jpg" alt="member img" width="100%">
                   </div><!-- /.member-img -->
                   <div class="member__info">
                     <h5 class="member__name"><a href="https://www.princhealth.com/prinh-mental-health-fam-care/">กรมสุขภาพจิต แนะ ญาติของผู้ป่วยจิตเวชและผู้ติดยาเสพติด หมั่นสังเกตอาการ พาเข้าพบแพทย์ตามนัด</a></h5>

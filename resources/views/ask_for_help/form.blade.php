@@ -76,12 +76,12 @@
             <div class="modal-body">
                 <div class="row d-flex justify-content-around">
                     <div class="col-6 col-md-4 p-1 ">
-                        <a href="#heading" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome();">
+                        <a href="#heading" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome(null);">
                             <i class="fa-solid fa-house-user"></i> บ้านของฉัน
                         </a>
                     </div>
                     <div class="col-6 col-md-4 p-1 ">
-                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_current();">
+                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="Select_Position();">
                             <i class="fa-solid fa-location-dot"></i> เลือกตำแหน่ง
                         </a>
                     </div>
@@ -91,7 +91,7 @@
                     <!-- province -->
                         <div id="div_province" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'จังหวัด' }}</label>
-                            <select name="select_province" id="select_province" class="input-provice form-control kanit" onchange="select_A();" required>
+                            <select name="select_province" id="select_province" class="input-provice form-control kanit" onchange="select_A(); check_input_value_address();" required>
                                 <option value="" selected>- เลือกจังหวัด -</option>
                             </select>
                             <input type="text" name="input_province" id="input_province" class=" input-provice form-control d-none" readonly>
@@ -99,7 +99,7 @@
                         <!-- amphoe -->
                         <div id="div_amphoe" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'อำเภอ' }}</label>
-                            <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice " onchange="select_T();" required>
+                            <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice " onchange="select_T(); check_input_value_address();" required>
                                 <option value="" selected>- เลือกอำเภอ -</option>
                             </select>
                             <input type="text" name="input_amphoe" id="input_amphoe" class="input-provice form-control d-none" readonly>
@@ -107,7 +107,7 @@
                         <!-- tambon -->
                         <div id="div_tambon" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'ตำบล' }}</label>
-                            <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice " onchange="select_lat_lng();" required required>
+                            <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice " onchange="select_lat_lng(); check_input_value_address();" required required>
                                 <option value="" selected>- เลือกตำบล -</option>
                             </select>
                             <input type="text" name="input_tambon" id="input_tambon" class="input-provice form-control d-none" readonly >
@@ -115,13 +115,13 @@
                           <!-- address detail -->
                         <div id="div_address_detail" class="d-none form-group col-12 col-md-4">
                             <label for="address" class="control-label">{{ 'รายละเอียดที่อยู่' }}</label>
-                            <input class="form-control" name="input_address" type="text" id="input_address" value="" readonly required>
+                            <input class="form-control" name="input_address" type="text" id="input_address" value="" onchange="check_input_value_address();" readonly required>
                             {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- phone -->
                         <div id="div_phone" class="d-none form-group col-12 col-md-4">
                             <label for="phone" class="control-label">{{ 'เบอร์โทรศัพท์' }}</label>
-                            <input class="form-control" name="input_phone" type="text" id="input_phone" value="" readonly required>
+                            <input class="form-control" name="input_phone" type="text" id="input_phone" value="" onchange="check_input_value_address();" readonly required>
                             {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- lat,lng -->
@@ -153,18 +153,20 @@
             </div>
             <div id="modal-footer" class="modal-footer">
                 <div class="row d-flex justify-content-between">
-                    <a id="btn_confirm_sos" href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
+
+                    <span id="btn_confirm_sos" href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
                         style="width:100%;border-radius: 20px;" onclick="SOS_by_Btn();"> ยืนยันขอความช่วยเหลือ
-                    </a>
-                    <a id="btn_change_address" href="#heading" class="col-5 m-2 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
+                    </span>
+                    <span id="btn_change_address" class="col-5 m-2 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
                         style="width:100%;border-radius: 20px;" onclick="edit_add_to_user();"> เปลี่ยนที่อยู่
-                    </a>
-                    <a id="btn_cancel_change_add" href="#" class="col-5 m-2 mt-0 btn btn-dark btn-md d-none  kanit btn-block text-white" width="100%"
-                        style="width:100%;border-radius: 20px;" onclick="locations_myhome();"> ยกเลิก
-                    </a>
-                    <a id="btn_confirm_address" href="#" class="col-5 m-2 mt-0 btn btn-info btn-md d-none  kanit btn-block text-white" width="100%"
-                        style="width:100%;border-radius: 20px;" onclick="update_add_to_user()"> บันทึก
-                    </a>
+                    </span>
+                    <span id="btn_confirm_address" href="#" class="col-5 m-2 mt-0 btn btn-info btn-md d-none  kanit btn-block text-white" width="100%"
+                        style="width:100%;border-radius: 20px;" disable> บันทึก
+                    </span>
+                    <span id="btn_cancel_change_add" href="#" class="col-5 m-2 mt-0 btn btn-dark btn-md d-none  kanit btn-block text-white" width="100%"
+                        style="width:100%;border-radius: 20px;" onclick="locations_myhome(null);"> ยกเลิก
+                    </span>
+
                 </div>
             </div>
         </div>
@@ -182,7 +184,7 @@
 
     document.addEventListener('DOMContentLoaded', (event) => {
             select_province();
-
+            getLocation();
 
     });
 
@@ -287,8 +289,8 @@
 
                 let marker_lng = lng_Arr[1].replace("\n}", "");
 
-            console.log(marker_lat)
-            console.log(marker_lng)
+            // console.log(marker_lat)
+            // console.log(marker_lng)
 
             let lat = parseFloat(marker_lat) ;
             let lng = parseFloat(marker_lng) ;
@@ -346,8 +348,8 @@
         let lat = parseFloat(lat_from_select) ;
         let lng = parseFloat(lng_from_select) ;
 
-        console.log(lat_from_select);
-        console.log(lng_from_select);
+        // console.log(lat_from_select);
+        // console.log(lng_from_select);
 
         map_select_location_from_address = new google.maps.Map(document.getElementById("map_select_location_from_address"), {
             center: {lat: lat, lng: lng },
@@ -397,8 +399,8 @@
 
                 let marker_lng = lng_Arr[1].replace("\n}", "");
 
-            console.log(marker_lat)
-            console.log(marker_lng)
+            // console.log(marker_lat)
+            // console.log(marker_lng)
 
             let lat = parseFloat(marker_lat) ;
             let lng = parseFloat(marker_lng) ;
@@ -447,14 +449,20 @@
     function locations_current(){
 
         document.getElementById("map_select_location").innerHTML = "";
-
+        document.getElementById("map_select_location_from_address").innerHTML = "";
+        //add
+        document.querySelector('#map_select_location_from_address').classList.add('d-none');
         document.querySelector('#div_province').classList.add('d-none');
         document.querySelector('#div_amphoe').classList.add('d-none');
         document.querySelector('#div_tambon').classList.add('d-none');
         document.querySelector('#div_address_detail').classList.add('d-none');
         document.querySelector('#btn_change_address').classList.add('d-none');
-
+        document.querySelector('#btn_cancel_change_add').classList.add('d-none');
+        document.querySelector('#btn_confirm_address').classList.add('d-none');
+        //remove
+        document.querySelector('#map_select_location').classList.remove('d-none');
         document.querySelector('#div_phone').classList.remove('d-none');
+        document.querySelector('#btn_confirm_sos').classList.remove('d-none');
 
         let lat_text = document.querySelector("#lat");
         let lng_text = document.querySelector("#lng");
@@ -478,7 +486,7 @@
     function edit_add_to_user(){
 
         //ล้าง value
-        document.getElementById("map_select_location").innerHTML = "";
+        document.getElementById("map_select_location_from_address").innerHTML = "";
 
         //add
         document.querySelector('#map_select_location').classList.add('d-none');
@@ -498,11 +506,13 @@
         document.querySelector('#btn_cancel_change_add').classList.remove('d-none');
         document.querySelector('#btn_confirm_address').classList.remove('d-none');
 
+
         document.querySelector('#input_address').removeAttribute('readonly');
         document.querySelector('#input_phone').removeAttribute('readonly');
-        document.querySelector('#input_address').setAttribute('required',true);
-        document.querySelector('#input_phone').setAttribute('required',true);
-
+        // document.querySelector('#input_address').setAttribute('required',true);
+        // document.querySelector('#input_phone').setAttribute('required',true);
+        document.querySelector('#input_address').required = true;
+        document.querySelector('#input_phone').required = true;
 
         // html =  '<div class="row d-flex justify-content-between">' +
         //             '<a id="btn_cancel_change_add" href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
@@ -518,10 +528,14 @@
         let input_province = document.querySelector('#input_province');
         let input_amphoe = document.querySelector('#input_amphoe');
         let input_tambon = document.querySelector('#input_tambon');
+        let input_address = document.querySelector('#input_address');
+        let input_phone = document.querySelector('#input_phone');
 
         input_province.value = "";
         input_amphoe.value = "";
         input_tambon.value = "";
+        document.querySelector('#input_address').value = "";
+        document.querySelector('#input_phone').value = "";
 
         let select_province = document.querySelector('#select_province');
         let select_amphoe = document.querySelector('#select_amphoe');
@@ -531,8 +545,30 @@
 
     }
 
+    function check_input_value_address(){
+        let input_province = document.querySelector('#select_province').value;
+        let input_amphoe = document.querySelector('#select_amphoe').value;
+        let input_tambon = document.querySelector('#select_tambon').value;
+        let input_address = document.querySelector('#input_address').value;
+        let input_phone = document.querySelector('#input_phone').value;
+        console.log(input_province);
+        console.log(input_amphoe);
+        console.log(input_tambon);
+        console.log(input_address);
+        console.log(input_phone);
+        if(input_province != "" && input_amphoe != "" && input_tambon != "" && input_address != "" && input_phone != ""){
+            document.querySelector('#btn_confirm_address').disable = false;
+            document.querySelector('#btn_confirm_address').onclick = function() { update_add_to_user(); alert("เข้าแล้ว");};
+        }else{
+            document.querySelector('#btn_confirm_address').disable = true;
+            document.querySelector('#btn_confirm_address').onclick = function() {};
+        }
 
-    function locations_myhome() {
+    }
+
+
+    function locations_myhome(type) {
+
         document.getElementById("map_select_location").innerHTML = "";
         //add
         document.querySelector('#map_select_location_from_address').classList.add('d-none');
@@ -564,19 +600,6 @@
         document.querySelector('#div_phone').classList.remove('d-none');
         // document.querySelector('#div_latlng').classList.remove('d-none');
 
-        let select_province = document.querySelector('#select_province');
-        let select_amphoe = document.querySelector('#select_amphoe');
-        let select_tambon = document.querySelector('#select_tambon');
-
-
-        select_province.value = "";
-        select_amphoe.value = "";
-        select_tambon.value = "";
-
-        select_province.required = "";
-        select_amphoe.required = "";
-        select_tambon.required = "";
-
 
         let input_province = document.querySelector('#input_province');
         let input_amphoe = document.querySelector('#input_amphoe');
@@ -584,26 +607,48 @@
         let input_address = document.querySelector('#input_address');
         let input_phone = document.querySelector('#input_phone');
 
-        let lat_user = "{{ Auth::user()->lat }}";
-        let lng_user = "{{ Auth::user()->lng }}";
+        let lat_user;
+        let lng_user;
 
-        document.querySelector('#lat').value = lat_user;
-        document.querySelector('#lng').value = lng_user;
-        document.querySelector('#latlng').value = lat_user + ',' + lng_user;
+        if(type === "edit_address"){
+            input_province.value = document.querySelector('#select_province').value;
+            input_amphoe.value = document.querySelector('#select_amphoe').value;
+            input_tambon.value = document.querySelector('#select_tambon').value;
+        }else{
+            let select_province = document.querySelector('#select_province');
+            let select_amphoe = document.querySelector('#select_amphoe');
+            let select_tambon = document.querySelector('#select_tambon');
 
-        input_province.value = "{{ Auth::user()->province }}";
-        input_amphoe.value = "{{ Auth::user()->district }}";
-        input_tambon.value = "{{ Auth::user()->sub_district }}";
-        input_address.value = "{{ Auth::user()->address }}";
-        input_phone.value = "{{ Auth::user()->phone }}";
+            select_province.value = "";
+            select_amphoe.value = "";
+            select_tambon.value = "";
+
+            select_province.required = "";
+            select_amphoe.required = "";
+            select_tambon.required = "";
+
+            lat_user = "{{ Auth::user()->lat }}";
+            lng_user = "{{ Auth::user()->lng }}";
+
+            document.querySelector('#lat').value = lat_user;
+            document.querySelector('#lng').value = lng_user;
+            document.querySelector('#latlng').value = lat_user + ',' + lng_user;
+
+            input_province.value = "{{ Auth::user()->province }}";
+            input_amphoe.value = "{{ Auth::user()->district }}";
+            input_tambon.value = "{{ Auth::user()->sub_district }}";
+            input_address.value = "{{ Auth::user()->address }}";
+            input_phone.value = "{{ Auth::user()->phone }}";
+        }
+
 
 
         //เช็ค lat,lng ใน db user
         if(lat_user && lng_user){
-            console.log("if")
+            // console.log("if")
             Open_map_select_location();
         }else{
-            console.log("else")
+            // console.log("else")
             getLocation_select();
         }
 
@@ -655,7 +700,8 @@
 function select_province() {
         let select_province = document.querySelector('#select_province');
 
-        fetch("{{ url('/') }}/api/select_province/")
+        try {
+            fetch("{{ url('/') }}/api/select_province/")
             .then(response => response.json())
             .then(result => {
                 // console.log(result);
@@ -674,6 +720,12 @@ function select_province() {
                     select_province.add(option);
                 }
             });
+        }
+        catch(err) {
+            select_province();
+            alert("ผมทำ catch นะคร๊าบ");
+        }
+
     }
 
     function select_A() {
@@ -819,7 +871,7 @@ function select_province() {
             });
 
 
-            locations_myhome();
+            locations_myhome("edit_address");
     }
 
 </script>
@@ -859,6 +911,11 @@ function select_province() {
     }
 </script>
 
+{{-- <script>
+    function Select_Position(){
+
+    }
+</script> --}}
 
 
 

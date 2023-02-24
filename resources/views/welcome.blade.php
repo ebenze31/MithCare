@@ -62,7 +62,7 @@
     <!-- ============================
         contact info
     ============================== -->
-    <section class="contact-info py-0">
+    {{-- <section class="contact-info py-0">
       <div class="container">
         <div class="row row-no-gutter boxes-wrapper">
           <div class="col-sm-12 col-md-4">
@@ -106,7 +106,7 @@
               <div class="contact__content">
                 <h2 class="contact__title">Opening Hours</h2>
                 <ul class="time__list list-unstyled mb-0">
-                  <li><span>Monday - Friday</span><span>8.00 - 7:00 pm</span></li>
+                  <li><span>Allday</span><span>8.00 - 7:00 pm</span></li>
                   <li><span>Saturday</span><span>9.00 - 10:00 pm</span></li>
                   <li><span>Sunday</span><span>10.00 - 12:00 pm</span></li>
                 </ul>
@@ -115,7 +115,7 @@
           </div><!-- /.col-md-4 -->
         </div><!-- /.row -->
       </div><!-- /.container -->
-    </section><!-- /.contact-info -->
+    </section><!-- /.contact-info --> --}}
 
     <!-- ========================
       About Layout 2
@@ -309,43 +309,16 @@
                 </div><!-- /.col-lg-3 -->
             <!-- Feature item #4 -->
             <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-                <div class="feature__content">
-                <div class="feature__icon">
-                    <i class="icon-drugs"></i>
-                    <i class="icon-drugs feature__overlay-icon"></i>
-                </div>
-                <h4 class="feature__title">แจ้งเตือนการใช้ยา</h4>
-                </div><!-- /.feature__content -->
+                <div class="feature-item">
+                    <div class="feature__content">
+                        <div class="feature__icon">
+                            <i class="icon-drugs"></i>
+                            <i class="icon-drugs feature__overlay-icon"></i>
+                        </div>
+                        <h4 class="feature__title">แจ้งเตือนการใช้ยา</h4>
+                    </div><!-- /.feature__content -->
 
-            </div><!-- /.feature-item -->
-            </div><!-- /.col-lg-3 -->
-
-            <!-- Feature item #5 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-                <div class="feature__content">
-                <div class="feature__icon">
-                    <i class="icon-hospital"></i>
-                    <i class="icon-hospital feature__overlay-icon"></i>
-                </div>
-                <h4 class="feature__title">ตามหาโรงพยาบาลใกล้ฉัน</h4>
-                </div><!-- /.feature__content -->
-
-            </div><!-- /.feature-item -->
-            </div><!-- /.col-lg-3 -->
-            <!-- Feature item #6 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-                <div class="feature__content">
-                <div class="feature__icon">
-                    <i class="icon-expenses"></i>
-                    <i class="icon-expenses feature__overlay-icon"></i>
-                </div>
-                <h4 class="feature__title">ตามหาร้านขายยาใกล้ฉัน</h4>
-                </div><!-- /.feature__content -->
-
-            </div><!-- /.feature-item -->
+                </div><!-- /.feature-item -->
             </div><!-- /.col-lg-3 -->
 
         </div><!-- /.row -->
@@ -638,7 +611,7 @@
             ViiCheck
     ========================= -->
 
-    <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color: #ffefef;padding-top:20px;padding-bottom:20px;">
+    {{-- <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color: #ffefef;padding-top:20px;padding-bottom:20px;">
         <h2 class="text-center" style="color: black">บริการดีๆจาก <br class="d-block d-md-none"> ViiCHECK</h2>
       <div class="row">
         <div class="col-12">
@@ -703,7 +676,7 @@
           </div>
         </div><!-- /.col-12 -->
       </div><!-- /.row -->
-    </section>
+    </section> --}}
 
     <!-- ======================
             Peddy_Hub

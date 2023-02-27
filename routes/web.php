@@ -140,3 +140,6 @@ Route::get('/Calendar_test', function () {
 ////////////////////////
 
 
+
+Route::resource('partner', 'PartnerController');
+Route::resource('group_line', 'Group_lineController');

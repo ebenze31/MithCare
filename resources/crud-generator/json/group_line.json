@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "name": "group_id",
+            "type": "string"
+        },
+        {
+            "name": "group_name",
+            "type": "string"
+        },
+        {
+            "name": "picture_url",
+            "type": "string"
+        },
+        {
+            "name": "owner",
+            "type": "string"
+        },
+        {
+            "name": "partner_id",
+            "type": "string"
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "full_name",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "type": "string"
+        },
+        {
+            "name": "mail",
+            "type": "string"
+        },
+        {
+            "name": "name_line_group",
+            "type": "string"
+        },
+        {
+            "name": "show_homepage",
+            "type": "string"
+        },
+        {
+            "name": "line_group_id",
+            "type": "string"
+        }
+    ]
+}

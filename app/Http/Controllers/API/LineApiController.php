@@ -142,15 +142,15 @@ class LineApiController extends Controller
 
         $group_id = $event['source']['groupId'];
 
+        $data_2 = [
+            "title" => "บันทึก Name Group Line",
+            "content" => "check".$group_id,
+        ];
+        MyLog::create($data_2);
+
         $context  = stream_context_create($opts);
         $url = "https://api.line.me/v2/bot/group/".$group_id."/summary";
         $result = file_get_contents($url, false, $context);
-
-        $data_2 = [
-            "title" => "บันทึก Name Group Line",
-            "content" => "check",
-        ];
-        MyLog::create($data_2);
 
         $data_group_line = json_decode($result);
 

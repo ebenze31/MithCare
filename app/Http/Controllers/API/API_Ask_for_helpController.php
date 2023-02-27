@@ -34,7 +34,9 @@ class API_Ask_for_helpController extends Controller
     {
         $user_id = $request->get('user_id');
         $requestData = $request->all();
+        $name_user = User::where('id',$user_id)->first();
 
+        $requestData['name_user'] = $name_user->name;
         $requestData['user_id'] = $user_id;
         $requestData['content'] = "help_by_partner";
         $requestData['name_helper'] = "partner_name";
@@ -49,6 +51,10 @@ class API_Ask_for_helpController extends Controller
 
     public function update_info_sos(Request $request){
         $user_id = $request->get('user_id');
+
+
+
+
 
         $requestData = $request->all();
 

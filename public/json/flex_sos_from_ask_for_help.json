@@ -1,0 +1,138 @@
+{
+    "type": "flex",
+    "altText": "SOS",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "giga",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "การขอความช่วยเหลือ",
+                  "align": "center",
+                  "weight": "bold",
+                  "size": "xl"
+                }
+              ],
+              "cornerRadius": "md",
+              "backgroundColor": "#ffffff",
+              "offsetTop": "2%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "User_name",
+                  "align": "center"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "รายละเอียดที่อยู่",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "text": "ตำบล",
+                  "wrap": true,
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "อำเภอ",
+                  "wrap": true,
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "จังหวัด",
+                  "wrap": true,
+                  "align": "center"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "กำลังไปช่วยเหลือ",
+                      "size": "lg",
+                      "weight": "bold",
+                      "align": "center",
+                      "wrap": true
+                    }
+                  ],
+                  "flex": 2,
+                  "backgroundColor": "#6EFBDB",
+                  "cornerRadius": "md"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "โทร",
+                      "size": "lg",
+                      "weight": "bold",
+                      "align": "center",
+                      "wrap": true
+                    }
+                  ],
+                  "flex": 1,
+                  "cornerRadius": "md",
+                  "backgroundColor": "#E8A26C"
+                }
+              ],
+              "borderWidth": "bold",
+              "paddingBottom": "sm",
+              "spacing": "25px"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "แผนที่",
+                  "size": "xl",
+                  "weight": "bold",
+                  "align": "center"
+                }
+              ],
+              "backgroundColor": "#EDF75E",
+              "cornerRadius": "md",
+              "maxWidth": "75%",
+              "alignItems": "center",
+              "offsetStart": "12%"
+            }
+          ],
+          "paddingAll": "20px",
+          "backgroundColor": "#8BCB8F",
+          "spacing": "md",
+          "paddingTop": "22px"
+        }
+      }
+}
+
+

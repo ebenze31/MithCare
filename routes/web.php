@@ -104,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
     //========================
 
     Route::resource('ask_for_help', 'Ask_for_helpController');
-
+    Route::get('/test_sos', 'Ask_for_helpController@sos_to_line');
 
     //========================
     //     HEALTH_CHECK

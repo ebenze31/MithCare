@@ -16,6 +16,6 @@ class Appoint extends Model
     protected $fillable = ['title', 'type', 'date_time','date', 'status', 'sent_round', 'patient_id','room_id','create_by_id'];
 
     public function user(){
-        return $this->belongsTo('App\Appoint','user_id','id');
+        return $this->belongsTo('App\User','user_id','id');
     }
 }

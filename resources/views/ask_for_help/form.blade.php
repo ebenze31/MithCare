@@ -81,11 +81,15 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-4 p-1 ">
-                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="Select_Position();">
+                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_current();">
                             <i class="fa-solid fa-location-dot"></i> เลือกตำแหน่ง
                         </a>
                     </div>
                 </div>
+                <div id="from_select_position" class="row d-flex justify-content-around ">
+                    <div id="btn_select_map"></div>
+                </div>
+
                 <!-- บ้านของฉัน mode -->
                 <div class="row d-flex justify-content-around">
                     <!-- province -->
@@ -179,6 +183,7 @@
 ===============================================================================================================-->
 
 <script src="{{ asset('js/map_location.js')}}"></script>
+<script src="{{ asset('js/map_from_myHome.js')}}"></script>
 
 <script>
 
@@ -218,117 +223,6 @@
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrxXDgk1tgXngalZF3eWtcTWI-LPdeus&language=th"></script>
-
-<!--============================
-    map จากการกดรับตำแหน่งบ้าน
-  ============================-->
-<script>
-    var marker_select_location;
-    var map_select_location;
-    var marker_icon_mithcare = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
-
-    // const image_sos = "{{ url('/img/icon/operating_unit/sos.png') }}";
-    function Open_map_select_location()
-    {
-        // 13.7248936,100.4930264 lat lng ประเทศไทย
-        let lat_text = document.querySelector("#lat");
-        let lng_text = document.querySelector("#lng");
-        let latlng = document.querySelector("#latlng");
-
-        let lat = parseFloat(lat_text.value) ;
-        let lng = parseFloat(lng_text.value) ;
-
-        console.log(lat);
-        console.log(lng);
-
-        map_select_location = new google.maps.Map(document.getElementById("map_select_location"), {
-            center: {lat: lat, lng: lng },
-            zoom: 14,
-        });
-
-        if (marker_select_location) {
-            marker_select_location.setMap(null);
-        }
-        marker_select_location = new google.maps.Marker({
-            position: {lat: lat , lng: lng },
-            map: map_select_location,
-            icon: marker_icon_mithcare,
-        });
-
-        // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
-            // content: "คลิกที่แผนที่เพื่อรับโลเคชั่น",
-            // position: myLatlng,
-        });
-
-        infoWindow.open(map_select_location);
-        // Configure the click listener.
-        map_select_location.addListener("click", (mapsMouseEvent) => {
-            // Close the current InfoWindow.
-            infoWindow.close();
-            // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-                // position: mapsMouseEvent.latLng,
-            });
-
-            infoWindow.setContent(
-                JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-            );
-
-            let text_content = infoWindow.content ;
-
-            // console.log(text_content)
-
-            const contentArr = text_content.split(",");
-
-            const lat_Arr = contentArr[0].split(":");
-
-                let marker_lat = lat_Arr[1];
-
-            const lng_Arr = contentArr[1].split(":");
-
-                let marker_lng = lng_Arr[1].replace("\n}", "");
-
-            // console.log(marker_lat)
-            // console.log(marker_lng)
-
-            let lat = parseFloat(marker_lat) ;
-            let lng = parseFloat(marker_lng) ;
-
-
-
-            let center_lat_map_show = document.querySelector('#center_lat_map_show') ;
-            let center_lng_map_show = document.querySelector('#center_lng_map_show') ;
-                center_lat_map_show.value = marker_lat ;
-                center_lng_map_show.value = marker_lng ;
-
-            addMarker_select_location(marker_lat , marker_lng);
-
-            infoWindow.open(map_select_location);
-
-            // add_location(text_content,  map_sos , marker_lat , marker_lng)
-            // check_area_new();
-        });
-    }
-
-    function addMarker_select_location(marker_lat , marker_lng) {
-
-        if(marker_select_location){
-            marker_select_location.setMap(null);
-        }
-            marker_select_location = new google.maps.Marker({
-            position: {lat: parseFloat(marker_lat) , lng: parseFloat(marker_lng) },
-            // label: {text: count_position.value, color: "white"},
-            map: map_select_location,
-            icon: marker_icon_mithcare,
-        });
-
-        document.querySelector("#lat").value = marker_lat;
-        document.querySelector("#lng").value = marker_lng;
-        document.querySelector("#latlng").value = marker_lat + ',' + marker_lng;
-    }
-
-</script>
 
 <!--============================
         map จากการเลือกที่อยู่เอง
@@ -438,50 +332,11 @@
 
 </script>
 
-
-
-
   <!--==========================================
                 Script   ที่อยู่
   ============================================-->
 
 <script>
-    function locations_current(){
-
-        document.getElementById("map_select_location").innerHTML = "";
-        document.getElementById("map_select_location_from_address").innerHTML = "";
-        //add
-        document.querySelector('#map_select_location_from_address').classList.add('d-none');
-        document.querySelector('#div_province').classList.add('d-none');
-        document.querySelector('#div_amphoe').classList.add('d-none');
-        document.querySelector('#div_tambon').classList.add('d-none');
-        document.querySelector('#div_address_detail').classList.add('d-none');
-        document.querySelector('#btn_change_address').classList.add('d-none');
-        document.querySelector('#btn_cancel_change_add').classList.add('d-none');
-        document.querySelector('#btn_confirm_address').classList.add('d-none');
-        //remove
-        document.querySelector('#map_select_location').classList.remove('d-none');
-        document.querySelector('#div_phone').classList.remove('d-none');
-        document.querySelector('#btn_confirm_sos').classList.remove('d-none');
-
-        let lat_text = document.querySelector("#lat");
-        let lng_text = document.querySelector("#lng");
-        let latlng = document.querySelector("#latlng");
-        let input_address = document.querySelector('#input_address');
-        let input_phone = document.querySelector('#input_phone');
-
-        input_phone.value = "{{ Auth::user()->phone }}";
-
-        let lat = parseFloat(lat_text.value) ;
-        let lng = parseFloat(lng_text.value) ;
-
-        // console.log(lat);
-        // console.log(lng);
-
-        getLocation_select();
-
-    }
-
 
     function edit_add_to_user(){
 
@@ -558,14 +413,13 @@
         console.log(input_phone);
         if(input_province != "" && input_amphoe != "" && input_tambon != "" && input_address != "" && input_phone != ""){
             document.querySelector('#btn_confirm_address').disable = false;
-            document.querySelector('#btn_confirm_address').onclick = function() { update_add_to_user(); alert("เข้าแล้ว");};
+            document.querySelector('#btn_confirm_address').onclick = function() { update_add_to_user(); };
         }else{
             document.querySelector('#btn_confirm_address').disable = true;
-            document.querySelector('#btn_confirm_address').onclick = function() {};
+            document.querySelector('#btn_confirm_address').onclick = function() { alert("กรุณากรอกข้อมูลให้ครบก่อน"); };
         }
 
     }
-
 
     function locations_myhome(type) {
 
@@ -723,7 +577,7 @@ function select_province() {
         }
         catch(err) {
             select_province();
-            alert("ผมทำ catch นะคร๊าบ");
+            alert("ทำซ้ำ");
         }
 
     }
@@ -911,11 +765,75 @@ function select_province() {
     }
 </script>
 
-{{-- <script>
+<script>
     function Select_Position(){
 
-    }
-</script> --}}
+        document.getElementById("map_select_location").innerHTML = "";
+        document.getElementById("map_select_location_from_address").innerHTML = "";
+        //add
+        document.querySelector('#map_select_location_from_address').classList.add('d-none');
+        document.querySelector('#div_province').classList.add('d-none');
+        document.querySelector('#div_amphoe').classList.add('d-none');
+        document.querySelector('#div_tambon').classList.add('d-none');
+        document.querySelector('#div_address_detail').classList.add('d-none');
 
+        // document.querySelector('#from_select_position').classList.remove('d-none');
+        let html;
+        let show_btn_address = document.querySelector('#btn_select_map');
+            show_btn_address.innerHTML = "";
+
+        html =  '<div class="col-6 col-md-4 p-1 ">' +
+                    '<a class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
+                        '<i class="fa-solid fa-house-user">' + '</i>' + 'เลือกจากแผนที'่ +
+                    '</a>' +
+                '</div>' +
+                '<div class="col-6 col-md-4 p-1 ">' +
+                    '<a  class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" ' +
+                       ' <i class="fa-solid fa-location-dot">' + '</i>' + 'ตำแหน่งปัจจุบัน' +
+                    '</a>' +
+                '</div>' ;
+
+                show_btn_address.innerHTML = html;
+
+    }
+
+</script>
+
+<script>
+    function locations_current(){
+        document.getElementById("map_select_location").innerHTML = "";
+        document.getElementById("map_select_location_from_address").innerHTML = "";
+        //add
+        document.querySelector('#map_select_location_from_address').classList.add('d-none');
+        document.querySelector('#div_province').classList.add('d-none');
+        document.querySelector('#div_amphoe').classList.add('d-none');
+        document.querySelector('#div_tambon').classList.add('d-none');
+        document.querySelector('#div_address_detail').classList.add('d-none');
+
+        document.querySelector('#btn_change_address').classList.add('d-none');
+        document.querySelector('#btn_cancel_change_add').classList.add('d-none');
+        document.querySelector('#btn_confirm_address').classList.add('d-none');
+        //remove
+        document.querySelector('#map_select_location').classList.remove('d-none');
+        document.querySelector('#div_phone').classList.remove('d-none');
+        document.querySelector('#btn_confirm_sos').classList.remove('d-none');
+
+        let lat_text = document.querySelector("#lat");
+        let lng_text = document.querySelector("#lng");
+        let latlng = document.querySelector("#latlng");
+        let input_address = document.querySelector('#input_address');
+        let input_phone = document.querySelector('#input_phone');
+
+        input_phone.value = "{{ Auth::user()->phone }}";
+
+        let lat = parseFloat(lat_text.value) ;
+        let lng = parseFloat(lng_text.value) ;
+
+        // console.log(lat);
+        // console.log(lng);
+
+        getLocation_select();
+    }
+</script>
 
 

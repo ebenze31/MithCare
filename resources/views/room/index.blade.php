@@ -408,9 +408,6 @@
                                             '</div>' +
                                     '</form>' ;
 
-
-
-
                             // document.querySelector('#imgResource' + result[i]['home_pic']).innerHTML = html;
                             document.querySelector('#dataid' + result[i]['id']).innerHTML = html;
                         }

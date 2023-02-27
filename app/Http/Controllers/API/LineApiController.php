@@ -146,11 +146,6 @@ class LineApiController extends Controller
 
         $context  = stream_context_create($opts);
         $url = "https://api.line.me/v2/bot/group/".$group_id."/summary";
-        $data_2 = [
-            "title" => "บันทึก Name Group Line",
-            "content" => "check".$url,
-        ];
-        MyLog::create($data_2);
         $result = file_get_contents($url, false, $context);
 
         $data_group_line = json_decode($result);
@@ -159,8 +154,6 @@ class LineApiController extends Controller
             "groupId" => $data_group_line->groupId,
             "groupName" => $data_group_line->groupName,
             "pictureUrl" => $data_group_line->pictureUrl,
-            "time_zone" => "Asia/Bangkok",
-            "language" => "en",
         ];
 
         Group_line::firstOrCreate($save_name_group);

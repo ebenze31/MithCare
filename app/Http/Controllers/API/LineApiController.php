@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mylog;
 use App\Models\LineMessagingAPI;
-
+use App\Models\Group_line;
 
 class LineApiController extends Controller
 {
@@ -127,6 +127,46 @@ class LineApiController extends Controller
             //     $line->replyToUser(null, $event, "Chinese");
             //     break;
         }
+
+    }
+
+    public function save_group_line($event)
+    {
+        $opts = [
+            'http' =>[
+                'method'  => 'GET',
+                'header'  => "Content-Type: application/json \r\n".
+                            'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+            ]
+        ];
+
+        $group_id = $event['source']['groupId'];
+
+        $context  = stream_context_create($opts);
+        $url = "https://api.line.me/v2/bot/group/".$group_id."/summary";
+        $result = file_get_contents($url, false, $context);
+
+        $data_group_line = json_decode($result);
+
+        $save_name_group = [
+            "groupId" => $data_group_line->groupId,
+            "groupName" => $data_group_line->groupName,
+            "pictureUrl" => $data_group_line->pictureUrl,
+            "time_zone" => "Asia/Bangkok",
+            "language" => "en",
+        ];
+
+        Group_line::firstOrCreate($save_name_group);
+
+        $data = [
+            "title" => "บันทึก Name Group Line",
+            "content" => $data_group_line->groupName,
+        ];
+        MyLog::create($data);
+
+        //ฟังก์ชั่น ส่งทักทาย กลุ่มไลน์ใหม่
+        // $line = new LineMessagingAPI();
+        // $line->send_HelloLinegroup($event,$save_name_group);
 
     }
 

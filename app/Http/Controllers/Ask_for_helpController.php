@@ -183,6 +183,7 @@ class Ask_for_helpController extends Controller
 
     public function send_Line_To_Group_SOS($data_sos){
 
+        $text_at = "@";
          // sendto Provider_id
          $sendto = User::where('id','=',$data_sos['user_id'])->first();
          $provider_id = $sendto->provider_id;
@@ -196,6 +197,10 @@ class Ask_for_helpController extends Controller
         $string_json = str_replace("อำเภอ",$data_sos['district'],$string_json);
         $string_json = str_replace("ตำบล",$data_sos['sub_district'],$string_json);
         $string_json = str_replace("รายละเอียดที่อยู่",$data_sos['address'],$string_json);
+        $string_json = str_replace("gg_lat",$data_sos['lat'],$string_json);
+        $string_json = str_replace("gg_lng",$data_sos['lng'],$string_json);
+        $string_json = str_replace("gg_lat_mail",$text_at.$data_sos['lat'],$string_json);
+        $string_json = str_replace("0999999999",$sendto->phone,$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [

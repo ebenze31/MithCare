@@ -336,7 +336,7 @@
                                                 <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/green-logo-01.png')}}" width="50px" alt="gallery img">
+                                                <img src="{{asset('/img/logo_partner/2begreen.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px" alt="gallery img">
@@ -354,7 +354,7 @@
                                                 <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px"  alt="gallery img">
                                             </div>
                                             <div class="item">
-                                                <img src="{{asset('/img/logo_partner/green-logo-01.png')}}" width="50px"   alt="gallery img">
+                                                <img src="{{asset('/img/logo_partner/2begreen.png')}}" width="50px"   alt="gallery img">
                                             </div>
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px"   alt="gallery img">

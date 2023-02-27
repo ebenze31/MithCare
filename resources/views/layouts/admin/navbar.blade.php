@@ -66,6 +66,13 @@
 						<div class="menu-title">ขอความช่วยเหลือ</div>
 					</a>
 				</li>
+                <li>
+					<a href="{{ url('/partner') }}">
+						<div class="parent-icon"><i class="fa-solid fa-handshake"></i>
+						</div>
+						<div class="menu-title">Partner</div>
+					</a>
+				</li>
 
 				{{-- <li>
 					<a href="javascript:;" class="has-arrow">

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-
+use Illuminate\Support\Facades\Schema;
 class CreateGroupLinesTable extends Migration
 {
     /**
@@ -15,9 +15,9 @@ class CreateGroupLinesTable extends Migration
         Schema::create('group_lines', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('group_id')->nullable();
-            $table->string('group_name')->nullable();
-            $table->string('picture_url')->nullable();
+            $table->string('groupId')->nullable();
+            $table->string('groupName')->nullable();
+            $table->string('pictureUrl')->nullable();
             $table->string('owner')->nullable();
             $table->string('partner_id')->nullable();
             });

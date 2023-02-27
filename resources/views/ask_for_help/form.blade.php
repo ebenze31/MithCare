@@ -22,9 +22,7 @@
     }
 </style>
 
-        <!--===================
-            Select Address
-        =====================-->
+
 
 
 
@@ -47,13 +45,14 @@
     <div class="justify-content-center">
         <div class="column">
             <div class="col-12 mb-2">
-                <span id="sos_by_btn" value="{{Auth::user()->id}}" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                <span id="sos_by_btn" value="{{Auth::user()->id}}" onclick="locations_myhome(null);" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
                 style="background-color: #3490dc; font-size: 20px; color: white;" >
                     <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
                 </span>
             </div>
             <div class="col-12 mb-2">
                 <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
+                <!-- onclick="SOS_by_Phone()" -->
                 <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone()" >
                     <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
                 </span>
@@ -95,7 +94,7 @@
                     <!-- province -->
                         <div id="div_province" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'จังหวัด' }}</label>
-                            <select name="select_province" id="select_province" class="input-provice form-control kanit" onchange="select_A(); check_input_value_address();" required>
+                            <select name="select_province" id="select_province" class="input-provice form-control kanit d-none" onchange="select_A(); check_input_value_address();" required>
                                 <option value="" selected>- เลือกจังหวัด -</option>
                             </select>
                             <input type="text" name="input_province" id="input_province" class=" input-provice form-control d-none" readonly>
@@ -103,7 +102,7 @@
                         <!-- amphoe -->
                         <div id="div_amphoe" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'อำเภอ' }}</label>
-                            <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice " onchange="select_T(); check_input_value_address();" required>
+                            <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice d-none" onchange="select_T(); check_input_value_address();" required>
                                 <option value="" selected>- เลือกอำเภอ -</option>
                             </select>
                             <input type="text" name="input_amphoe" id="input_amphoe" class="input-provice form-control d-none" readonly>
@@ -111,7 +110,7 @@
                         <!-- tambon -->
                         <div id="div_tambon" class=" form-group col-lg-4 col-12 p-1 m-0">
                             <label for="address" class="control-label">{{ 'ตำบล' }}</label>
-                            <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice " onchange="select_lat_lng(); check_input_value_address();" required required>
+                            <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice d-none" onchange="select_lat_lng(); check_input_value_address();" required required>
                                 <option value="" selected>- เลือกตำบล -</option>
                             </select>
                             <input type="text" name="input_tambon" id="input_tambon" class="input-provice form-control d-none" readonly >

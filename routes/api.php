@@ -67,3 +67,8 @@ Route::get('/select_lat_lng/{province}/{amphoe}/{tambon}','API\LocationControlle
 Route::get('/select_lat_lng_province/{province}','API\LocationController@show_location_latlng_province');
 Route::get('/select_lat_lng_amphoe/{province}/{amphoe}','API\LocationController@show_location_latlng_amphoe');
 
+//========================
+//  partner
+//========================
+Route::get('/submit_show_homepage/{partner_id}/{input_show_homepage}', 'API\PartnersController@submit_show_homepage');
+

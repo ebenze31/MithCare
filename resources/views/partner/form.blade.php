@@ -1,45 +1,63 @@
-<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-    <label for="name" class="control-label">{{ 'Name' }}</label>
-    <input class="form-control" name="name" type="text" id="name" value="{{ isset($partner->name) ? $partner->name : ''}}" >
-    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('full_name') ? 'has-error' : ''}}">
-    <label for="full_name" class="control-label">{{ 'Full Name' }}</label>
-    <input class="form-control" name="full_name" type="text" id="full_name" value="{{ isset($partner->full_name) ? $partner->full_name : ''}}" >
-    {!! $errors->first('full_name', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
-    <label for="type" class="control-label">{{ 'Type' }}</label>
-    <input class="form-control" name="type" type="text" id="type" value="{{ isset($partner->type) ? $partner->type : ''}}" >
-    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
-    <label for="phone" class="control-label">{{ 'Phone' }}</label>
-    <input class="form-control" name="phone" type="text" id="phone" value="{{ isset($partner->phone) ? $partner->phone : ''}}" >
-    {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('mail') ? 'has-error' : ''}}">
-    <label for="mail" class="control-label">{{ 'Mail' }}</label>
-    <input class="form-control" name="mail" type="text" id="mail" value="{{ isset($partner->mail) ? $partner->mail : ''}}" >
-    {!! $errors->first('mail', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('name_line_group') ? 'has-error' : ''}}">
-    <label for="name_line_group" class="control-label">{{ 'Name Line Group' }}</label>
-    <input class="form-control" name="name_line_group" type="text" id="name_line_group" value="{{ isset($partner->name_line_group) ? $partner->name_line_group : ''}}" >
-    {!! $errors->first('name_line_group', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('show_homepage') ? 'has-error' : ''}}">
-    <label for="show_homepage" class="control-label">{{ 'Show Homepage' }}</label>
-    <input class="form-control" name="show_homepage" type="text" id="show_homepage" value="{{ isset($partner->show_homepage) ? $partner->show_homepage : ''}}" >
-    {!! $errors->first('show_homepage', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('line_group_id') ? 'has-error' : ''}}">
-    <label for="line_group_id" class="control-label">{{ 'Line Group Id' }}</label>
-    <input class="form-control" name="line_group_id" type="text" id="line_group_id" value="{{ isset($partner->line_group_id) ? $partner->line_group_id : ''}}" >
-    {!! $errors->first('line_group_id', '<p class="help-block">:message</p>') !!}
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+                <label for="name" class="control-label">{{ 'ชื่อพาร์ทเนอร์' }}</label>
+                <input class="form-control" name="name" type="text" id="name" value="{{ isset($partner->name) ? $partner->name : ''}}" required>
+                {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
+                <label for="phone" class="control-label">{{ 'เบอร์' }}</label>
+                <input class="form-control" name="phone" type="phone" id="phone" value="{{ isset($partner->phone) ? $partner->phone : ''}}" required pattern="[0-9]{9-10}">
+                {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('mail') ? 'has-error' : ''}}">
+                <label for="mail" class="control-label">{{ 'mail' }}</label>
+                <input class="form-control" name="mail" type="mail" id="mail" value="{{ isset($partner->mail) ? $partner->mail : ''}}" required >
+                {!! $errors->first('mail', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('logo') ? 'has-error' : ''}}">
+                <label for="logo" class="control-label">{{ 'โลโก้' }}</label>
+                <input class="form-control" name="logo" type="file" id="logo" value="{{ isset($partner->logo) ? $partner->logo : ''}}" >
+                {!! $errors->first('logo', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
+                <label for="type" class="control-label">{{ 'ประเภทพาร์ทเนอร์' }}</label>
+
+                <select name="type" class="form-control"  id="type">
+                        <option selected value="">- กรุณาเลือก -</option>
+                        <option value="sos">- การช่วยเหลือ -</option>
+                        <option value="shop">- ร้านขายของ -</option>
+                </select>
+                {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
+                <label for="full_name" class="control-label">{{ 'ชื่อเต็ม' }}</label>
+                <input class="form-control" name="full_name" type="text" id="full_name" value="{{ isset($partner->full_name) ? $partner->full_name : ''}}" required >
+                {!! $errors->first('full_name', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+
+        <div id="btn_submit_new_partner" class="form-group col-12">
+            <br>
+            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'บันทึก' : 'บันทึก' }}">
+        </div>
+    </div>
 </div>
 
 
-<div class="form-group">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-</div>
+
+
+
+

@@ -330,10 +330,12 @@
                             <div class="row">
                                 <div class="col-12">
 
+
+
                                                 {{-- คอม --}}
                                     <div class="home-demo d-none d-lg-block">
                                         <div class="owl-carousel owl-carousel-mithcare owl-theme">
-                                            <div class="item">
+                                            {{-- <div class="item">
                                                 <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px" alt="gallery img">
                                             </div>
                                             <div class="item">
@@ -344,13 +346,23 @@
                                             </div>
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px" alt="gallery img">
-                                            </div>
+                                            </div> --}}
+                                            @php
+                                                $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
+                                            @endphp
+                                            @foreach($partner as $item)
+                                                <div class="item">
+                                                    <img src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
+                                                </div>
+                                            @endforeach
                                         </div>
+
+
                                     </div>
 
                                                 {{-- มือถือ --}}
                                     <div class="home-demo d-block d-md-none">
-                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
+                                        {{-- <div class="owl-carousel owl-carousel-mithcare owl-theme">
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px"  alt="gallery img">
                                             </div>
@@ -363,7 +375,15 @@
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px"   alt="gallery img">
                                             </div>
-                                        </div>
+                                        </div> --}}
+                                        @php
+                                            $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
+                                        @endphp
+                                        @foreach($partner as $item)
+                                            <div class="item">
+                                                <img src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
+                                            </div>
+                                        @endforeach
                                     </div>
 
 
@@ -434,7 +454,6 @@
         });
         window.addEventListener("DOMContentLoaded", document, false);
     </script>
-
 
 
 </body>

@@ -56,9 +56,12 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
+        if ($request->hasFile('logo')) {
+            $requestData['logo'] = $request->file('logo')->store('uploads', 'public');
+        }
         Partner::create($requestData);
 
         return redirect('partner')->with('flash_message', 'Partner added!');
@@ -102,9 +105,13 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
+        if ($request->hasFile('logo')) {
+            $requestData['logo'] = $request->file('logo')->store('uploads', 'public');
+        }
+
         $partner = Partner::findOrFail($id);
         $partner->update($requestData);
 

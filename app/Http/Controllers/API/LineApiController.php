@@ -175,7 +175,7 @@ class LineApiController extends Controller
 
         $data = [
             "title" => "check id",
-            "content" => $data_data,
+            "content" => $data_data[0],
         ];
         MyLog::create($data);
 

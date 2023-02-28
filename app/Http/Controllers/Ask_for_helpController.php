@@ -172,17 +172,25 @@ class Ask_for_helpController extends Controller
         echo count($ask_for_help);
         echo "<br>=============================================================================================================<br>";
 
+        // หา $id_sos_map
+        $sos_map_latests = Ask_for_help::get();
+        foreach ($sos_map_latests as $latest) {
+            $id_sos_map = $latest->id;
+
+        }
+
         for($i = 0; $i < count($ask_for_help); $i++)
         {
             echo 'Name User : '.$ask_for_help[$i]['name_user'];
             echo "<br>";
 
-            $this->send_Line_To_Group_SOS($ask_for_help[$i]);
+
+            $this->send_Line_To_Group_SOS($ask_for_help[$i],$id_sos_map);
         }
 
     }
 
-    public function send_Line_To_Group_SOS($data_sos){
+    public function send_Line_To_Group_SOS($data_sos,$id_sos_map){
 
         $sosTo = "mithcare";
         $data_groupline = Group_line::where('owner','mithcare')->first();
@@ -204,6 +212,8 @@ class Ask_for_helpController extends Controller
         $string_json = str_replace("gg_lng",$data_sos['lng'],$string_json);
         $string_json = str_replace("gg_lat_mail",$text_at.$data_sos['lat'],$string_json);
         $string_json = str_replace("0999999999",$sendto->phone,$string_json);
+
+        $string_json = str_replace("id_sos_map",$id_sos_map,$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [

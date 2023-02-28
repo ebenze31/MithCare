@@ -101,6 +101,16 @@ class LineApiController extends Controller
         // $data_postback = $event["postback"]["data"] ;
 
         switch($data_postback){
+
+            case "accept_pill" :
+                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
+                break;
+            case "accept_doc" :
+                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
+                break;
+            case "sos" :
+                $this->sos_helper($data_postback_explode[1] , $event["source"]["userId"] , $event);
+                break;
             // case "accept_pill" :
             //     $line->_pushguestLine(null, $event, "accept_pill");
             //     $line->reply_success($event , $data_postback);
@@ -109,18 +119,9 @@ class LineApiController extends Controller
             //     $line->_pushguestLine(null, $event, "wait");
             //     $line->reply_success($event , $data_postback);
             //     break;
-            case "accept_pill" :
-                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
-                break;
-            case "accept_doc" :
-                $line->select_reply( $event, $data_postback , $data_postback_explode[1]);
-                break;
             // case "help_complete" :
             //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);
             //     break;
-            case "sos" :
-                $this->sos_helper($data_postback_explode[1] , $event["source"]["userId"] , $event);
-                break;
         }
 
     }
@@ -243,7 +244,7 @@ class LineApiController extends Controller
                                     'organization_helper' => $data_sos_map->organization_helper . ',' . $data_partner_helpers->name,
                             ]);
 
-                            $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id , $condo_id) ;
+                            $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id ) ;
 
                         }else{
                             // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
@@ -260,7 +261,7 @@ class LineApiController extends Controller
                                 'time_go_to_help' => date('Y-m-d\TH:i:s'),
                         ]);
 
-                        $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id , $condo_id);
+                        $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id );
 
                     }
 

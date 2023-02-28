@@ -84,7 +84,12 @@
                   ],
                   "flex": 2,
                   "backgroundColor": "#6EFBDB",
-                  "cornerRadius": "md"
+                  "cornerRadius": "md",
+                  "action": {
+                    "type": "postback",
+                    "data": "sos?id_sos_map/organization",
+                    "displayText": "กำลังไปช่วยเหลือ"
+                  }
                 },
                 {
                   "type": "box",

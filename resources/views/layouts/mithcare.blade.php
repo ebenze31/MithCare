@@ -276,6 +276,10 @@
                                         <a class="nav__item-link text-center" href="{{url('/room_admin')}}">
                                             <i class="fa-solid fa-user-tie"></i> หน้า Admin
                                         </a>
+                                        <a class="nav__item-link text-center" href="{{ url('/partner') }}">
+                                            <i class="fa-solid fa-handshake"></i> Partner
+                                        </a>
+
                                     </li>
                                     <hr style="width: 75%;">
                                     <li class="nav__item">

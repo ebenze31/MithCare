@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Ask_for_help;
+use App\Models\Group_line;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Tambon;
@@ -183,6 +184,8 @@ class Ask_for_helpController extends Controller
 
     public function send_Line_To_Group_SOS($data_sos){
 
+        $sosTo = "mithcare";
+        $data_groupline = Group_line::where('owner','mithcare')->first();
         $text_at = "@";
          // sendto Provider_id
          $sendto = User::where('id','=',$data_sos['user_id'])->first();
@@ -204,7 +207,7 @@ class Ask_for_helpController extends Controller
 
         $messages = [ json_decode($string_json, true) ];
         $body = [
-            "to" => $provider_id,
+            "to" => $data_groupline->groupId,
             "messages" => $messages,
         ];
         $opts = [

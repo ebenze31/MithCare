@@ -85,11 +85,11 @@ class Ask_for_helpController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $requestData = $request->all();
 
         Ask_for_help::create($requestData);
+
+
 
         return redirect('ask_for_help')->with('flash_message', 'Ask_for_help added!');
     }
@@ -172,12 +172,7 @@ class Ask_for_helpController extends Controller
         echo count($ask_for_help);
         echo "<br>=============================================================================================================<br>";
 
-        // หา $id_sos_map
-        $sos_map_latests = Ask_for_help::get();
-        foreach ($sos_map_latests as $latest) {
-            $id_sos_map = $latest->id;
 
-        }
 
         for($i = 0; $i < count($ask_for_help); $i++)
         {
@@ -185,7 +180,7 @@ class Ask_for_helpController extends Controller
             echo "<br>";
 
 
-            $this->send_Line_To_Group_SOS($ask_for_help[$i],$id_sos_map);
+
         }
 
     }

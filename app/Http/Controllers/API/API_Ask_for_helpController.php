@@ -45,16 +45,24 @@ class API_Ask_for_helpController extends Controller
 
         $ask_for_help = Ask_for_help::create($requestData);
 
+         // หา $id_sos_map
+         foreach ($ask_for_help as $latest) {
+             $id_sos_map = $latest->id;
+         }
+
+         switch ($requestData['content']) {
+             case 'help_by_partner':
+                 // ตรวจสอบ area แล้วส่งข้อมูลผ่านไลน์
+                 $this->send_Line_To_Group_SOS($requestData , $id_sos_map);
+                 break;
+         }
+
         return $ask_for_help;
         //  break;
     }
 
     public function update_info_sos(Request $request){
         $user_id = $request->get('user_id');
-
-
-
-
 
         $requestData = $request->all();
 

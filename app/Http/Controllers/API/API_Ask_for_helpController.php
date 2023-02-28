@@ -48,7 +48,8 @@ class API_Ask_for_helpController extends Controller
         $ask_for_help = Ask_for_help::create($requestData);
 
          // หา $id_sos_map
-        foreach ($ask_for_help as $latest) {
+        $sos_map_latests = Ask_for_help::get();
+        foreach ($sos_map_latests as $latest) {
             $id_sos_map = $latest->id;
         }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Models\Group_line;
 use App\Models\Mylog;
+use App\Models\Partner;
 
 class API_Ask_for_helpController extends Controller
 {
@@ -43,7 +44,7 @@ class API_Ask_for_helpController extends Controller
         $requestData['content'] = "help_by_partner";
         $requestData['name_helper'] = "partner_name";
         $requestData['partner_id'] = "partner_id";
-        $requestData['organization_helper'] = "name_partner";
+        $requestData['organization_helper'] = "mithcare";
 
         $ask_for_help = Ask_for_help::create($requestData);
 
@@ -59,6 +60,7 @@ class API_Ask_for_helpController extends Controller
                  $this->send_Line_To_Group_SOS($requestData , $id_sos_map);
                  break;
          }
+
 
         return $ask_for_help;
         //  break;
@@ -78,8 +80,29 @@ class API_Ask_for_helpController extends Controller
 
     public function send_Line_To_Group_SOS($data_sos,$id_sos_map){
 
-        $sosTo = "mithcare";
-        $data_groupline = Group_line::where('owner','mithcare')->first();
+        $find_organize = Partner::get();
+
+        for($i = 0; $i < count($find_organize); $i++){
+
+            $data_partners = DB::table('partners')
+            ->where('id', $data_sos[$i]['id'])
+            ->where('name','LIKE', "%$data_sos[$i]['name']%")
+            ->get();
+
+        }
+
+        foreach ($data_partners as $data_partner) {
+            $id_partner = $data_partner->id ;
+            $name_partner = $data_partner->name ;
+            $mail_partner = $data_partner->mail ;
+            $name_line_group = $data_partner->name_line_group ;
+            $line_group_id = $data_partner->line_group_id;
+        }
+
+        $sosTo = $data_sos['organization_helper'];
+
+        $data_groupline = Group_line::where('owner',$sosTo)->first();
+
         $text_at = "@";
          // sendto Provider_id
          $sendto = User::where('id','=',$data_sos['user_id'])->first();
@@ -100,6 +123,7 @@ class API_Ask_for_helpController extends Controller
         $string_json = str_replace("0999999999",$sendto->phone,$string_json);
 
         $string_json = str_replace("id_sos_map",$id_sos_map,$string_json);
+        $string_json = str_replace("organization",$id_partner,$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [

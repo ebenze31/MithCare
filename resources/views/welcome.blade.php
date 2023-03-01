@@ -5,59 +5,266 @@
         Slider
     ============================== -->
     <section class="slider">
-      <div class="slick-carousel m-slides-0"
+        <div class="slick-carousel m-slides-0"
         data-slick='{"slidesToShow": 1, "arrows": true, "dots": false, "speed": 700,"fade": true,"cssEase": "linear"}'>
             <!-- #Slide 1 -->
-        <div class="slide-item align-v-h">
-          <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="slide img"></div>
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">
-                <div class="slide__content">
-                  <h2 class="slide__title">ยินดีต้อนรับสู่ MithCare</h2>
-                  <!-- <p class="slide__desc">The health and well-being of our patients and their health care team will
-                    always be our priority, so we follow the best practices for cleanliness.</p> -->
-                  <ul class="features-list list-unstyled mb-0 d-flex flex-wrap">
-                    <!-- feature item #1 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-heart"></i>
-                      </div>
-                      <h2 class="feature__title">แจ้งเตือนนัดหมอ</h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #2 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-medicine"></i>
-                      </div>
-                      <h2 class="feature__title">แจ้งเตือนการทานยา</h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #3 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-heart2"></i>
-                      </div>
-                      <h2 class="feature__title">ช่วยเหลือเหตุฉุกเฉิน</h2>
-                    </li><!-- /.feature-item-->
-                    <!-- feature item #4 -->
-                    <li class="feature-item">
-                      <div class="feature__icon">
-                        <i class="icon-blood-test"></i>
-                      </div>
-                      <h2 class="feature__title">ค้นหาโรงพยาบาลใกล้คุณ</h2>
-                    </li><!-- /.feature-item-->
-                  </ul><!-- /.features-list -->
-                </div><!-- /.slide-content -->
-              </div><!-- /.col-xl-7 -->
-            </div><!-- /.row -->
-          </div><!-- /.container -->
-        </div><!-- /.slide-item -->
+            <div class="slide-item align-v-h">
+                <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-04.png')}}" alt="slide img"></div>
+                <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-7">
+                                    <div class="slide__content">
+                                        <h2 class="slide__title">ยินดีต้อนรับสู่ MithCare</h2>
+                                    <!-- <p class="slide__desc">The health and well-being of our patients and their health care team will
+                                        always be our priority, so we follow the best practices for cleanliness.</p> -->
+                                        <ul class="features-list list-unstyled mb-0 d-flex flex-wrap">
+                                            <!-- feature item #1 -->
+                                            <li class="feature-item">
+                                                <div class="feature__icon">
+                                                    <i class="icon-heart"></i>
+                                                </div>
+                                                <h2 class="feature__title">แจ้งเตือนนัดหมอ</h2>
+                                            </li><!-- /.feature-item-->
+                                            <!-- feature item #2 -->
+                                            <li class="feature-item">
+                                                <div class="feature__icon">
+                                                    <i class="icon-medicine"></i>
+                                                </div>
+                                                <h2 class="feature__title">แจ้งเตือนการทานยา</h2>
+                                            </li><!-- /.feature-item-->
+                                            <!-- feature item #3 -->
+                                            <li class="feature-item">
+                                                <div class="feature__icon">
+                                                    <i class="icon-heart2"></i>
+                                                </div>
+                                                <h2 class="feature__title">ช่วยเหลือเหตุฉุกเฉิน</h2>
+                                            </li><!-- /.feature-item-->
+                                            <!-- feature item #4 -->
+                                            <li class="feature-item">
+                                                <div class="feature__icon">
+                                                    <i class="icon-blood-test"></i>
+                                                </div>
+                                                <h2 class="feature__title">ค้นหาโรงพยาบาลใกล้คุณ</h2>
+                                            </li><!-- /.feature-item-->
+                                        </ul><!-- /.features-list -->
+                                    </div><!-- /.slide-content -->
+                            </div><!-- /.col-xl-7 -->
+                        </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.slide-item -->
 
          <!-- #Slide 2 -->
-
-
-      </div><!-- /.carousel -->
+        </div><!-- /.carousel -->
     </section><!-- /.slider -->
+
+    <!-- ========================
+      About Layout 2
+    =========================== -->
+    <section class="about-layout2 pb-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
+              <div class="heading-layout2">
+                <h3 class="heading__title mb-60">เกี่ยวกับเรา</h3>
+              </div><!-- /heading -->
+            </div><!-- /.col-12 -->
+          </div><!-- /.row -->
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-5">
+              <div class="text-with-icon">
+                <div class="text__icon">
+                  <i class="icon-doctor"></i>
+                </div>
+                <div class="text__content">
+                  <p class="heading__desc font-weight-bold color-secondary mb-30" style="font-size: 16px;">รักคนที่แคร์ ดูแลคนที่ใช่  <br> ทุกวินาทีอุ่นใจ เมื่อใช้มิตรแคร์
+                  </p>
+                  {{-- <a href="doctors-timetable.html" class="btn btn__secondary btn__rounded mb-70">
+                    <span>Find A Doctor</span> <i class="icon-arrow-right"></i>
+                  </a> --}}
+                </div>
+              </div>
+              <div class="video-banner-layout2 bg-overlay">
+                  <!-- Computer Mode-->
+                <img class="Image d-none d-lg-block" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="642" height="427">
+                  <!-- Mobile Mode-->
+                <img class="Image d-block d-md-none" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="100%" >
+                <a class="video__btn video__btn-white popup-video" href="https://www.youtube.com/watch?v=nrJtHemSPW4">
+                  <div class="video__player">
+                    <i class="fa fa-play"></i>
+                  </div>
+                  <span class="video__btn-title color-white">MithCare</span>
+                </a>
+              </div><!-- /.video-banner -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-sm-12 col-md-12 col-lg-7">
+              <div class="about__text bg-white">
+                <p class="heading__desc mb-30" style="font-size: 16px;">ข้อมูลจากสหประชาชาติ จากการเก็บผลสำรวจทำให้ทราบว่าจำนวนผู้สูงอายุไทยเพิ่มขึ้นอย่างต่อเนื่องและอัตราการเกิดต่ำ โดยประชากรผู้สูงอายุในปี 2565 คิดเป็น 18.5% ของประชากรทั้งหมด
+                <p class="heading__desc mb-30" style="font-size: 16px;"> ซึ่งปัจจุบันสังคมเมืองมีแนวโน้มที่วัยแรงงานจะย้ายถิ่นฐานไปทำงานและปล่อยให้ผู้สูงอายุหรือคนเจ็บป่วยอยู่ที่บ้านโดยลำพัง ทำให้ขาดคนดูแลและไม่สามารถทราบได้ว่าเมื่อพวกเขาเหล่านั้นเจ็บป่วยได้รับการดูแล ทานยา หรือไปพบแพทย์ตามกำหนดหรือไม่
+                  ทำให้แพลตฟอร์มมิตรแคร์ได้กำเนิดขึ้น แพลตฟอร์มนี้ทำงานผ่านระบบไลน์ออฟฟิตเชียล
+                   ซึ่งจะสามารถช่วยเหลือและแก้ไขปัญหาต่างๆเปรียบเสมือนเป็นผู้ช่วยดูแลผู้สูงอายุและผู้เจ็บป่วยตลอด 24 ชั่วโมง</p>
+                <ul class="list-items list-unstyled">
+                  <li style="font-size: 18px;">ครอบคลุมพื้นที่ 77 จังหวัด</li>
+                  <li style="font-size: 18px;">บริการตลอด 24 ชม.</li>
+
+                  {{-- <li>We offer a wide range of care and support to our patients, from diagnosis to treatment and
+                    rehabilitation.
+                  </li> --}}
+                </ul>
+              </div>
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.About Layout 2 -->
+
+        <!-- ========================
+          ข่าวเกี่ยวกับสุขภาพ
+      =========================== -->
+      <section id="Health_news" class="team-layout2 pb-80">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
+                <div class="heading text-center mb-40">
+                  <h3 class="heading__title">ข่าวเกี่ยวกับสุขภาพ</h3>
+                </div><!-- /.heading -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+            <div class="row">
+              <div class="col-12">
+                <div class="slick-carousel"
+                  data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                  <!-- News #1 -->
+                  <div class="member">
+                    <div class="member__img">
+                      <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-cancer-1024x1024.jpg" alt="member img" width="100%">
+                    </div><!-- /.member-img -->
+                    <div class="member__info">
+                      <h5 class="member__name"><a href="https://www.princhealth.com/prinh-cancer-self-care/">กรมอนามัย แนะ เริ่มต้นป้องกัน “โรคมะเร็ง” ด้วยตนเอง เพียงปรับพฤติกรรมการใช้ชีวิต และตรวจคัดกรอง</a></h5>
+                      <p></p>
+                      <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                        <a href="https://www.princhealth.com/prinh-cancer-self-care/" class="btn btn__secondary btn__link btn__rounded">
+                          <span>Read More</span>
+                          <i class="icon-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div><!-- /.member-info -->
+                  </div><!-- /.member -->
+                  <!-- News #2 -->
+                  <div class="member">
+                    <div class="member__img">
+                      <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1-1024x1024.jpg" alt="member img " width="100%">
+                    </div><!-- /.member-img -->
+                    <div class="member__info">
+                      <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-self-care/">กรมการแพทย์ แนะ วิธีการดูแลตนเองให้ปลอดภัยจากฝุ่น PM2.5</a></h5>
+                      <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                        <a href="https://www.princhealth.com/prinh-pm25-self-care/" class="btn btn__secondary btn__link btn__rounded">
+                          <span>Read More</span>
+                          <i class="icon-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div><!-- /.member-info -->
+                  </div><!-- /.member -->
+                  <!-- News #3 -->
+                  <div class="member">
+                    <div class="member__img">
+                      <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1024x1024.jpg" alt="member img" width="100%">
+                    </div><!-- /.member-img -->
+                    <div class="member__info">
+                      <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-suggestions/">กรมอนามัย เตือน 1 – 4 ก.พ. 66 ค่าฝุ่น PM2.5 สูงถึงระดับสีแดงหลายพื้นที่ เน้นย้ำ สวมหน้ากากอนามัย-งดกิจกรรมกลางแจ้ง</a></h5>
+                      <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                        <a href="https://www.princhealth.com/prinh-pm25-suggestions/" class="btn btn__secondary btn__link btn__rounded">
+                          <span>Read More</span>
+                          <i class="icon-arrow-right"></i>
+                        </a>
+
+                      </div>
+                    </div><!-- /.member-info -->
+                  </div><!-- /.member -->
+                  <!-- News #4 -->
+                  <div class="member">
+                    <div class="member__img">
+                      <img src="https://www.princhealth.com/wp-content/uploads/2023/01/PRINH-mental-health-fam-care-1024x1024.jpg" alt="member img" width="100%">
+                    </div><!-- /.member-img -->
+                    <div class="member__info">
+                      <h5 class="member__name"><a href="https://www.princhealth.com/prinh-mental-health-fam-care/">กรมสุขภาพจิต แนะ ญาติของผู้ป่วยจิตเวชและผู้ติดยาเสพติด หมั่นสังเกตอาการ พาเข้าพบแพทย์ตามนัด</a></h5>
+                      <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                        <a href="https://www.princhealth.com/prinh-mental-health-fam-care/" class="btn btn__secondary btn__link btn__rounded">
+                          <span>Read More</span>
+                          <i class="icon-arrow-right"></i>
+                        </a>
+
+                      </div>
+                    </div><!-- /.member-info -->
+                  </div><!-- /.member -->
+
+                </div><!-- /.carousel -->
+              </div><!-- /.col-12 -->
+            </div><!-- /.row -->
+          </div><!-- /.container -->
+      </section><!-- /.Team -->
+
+      <!-- ======================
+      MithCare_Dee_Yang_Rai
+      ========================= -->
+      <section id="MithCare_Dee_Yang_Rai" class="features-layout1 pt-130 pb-50 mt--90">
+          <div class="bg-img"><img src="assets/images/backgrounds/1.jpg" alt="background"></div>
+          <div class="container">
+              <h3 class="text-center">MithCare ดีอย่างไร</h3>
+              <div class="row">
+                  <!-- Feature item #1 -->
+                  <div class="col-sm-6 col-md-6 col-lg-3">
+                  <div class="feature-item">
+                      <div class="feature__content">
+                      <div class="feature__icon">
+                          <i class="icon-heart"></i>
+                          <i class="icon-heart feature__overlay-icon"></i>
+                      </div>
+                      <h4 class="feature__title">ระบบที่ช่วยดูแลครอบครัวของคุณ</h4>
+                      </div><!-- /.feature__content -->
+
+                  </div><!-- /.feature-item -->
+                  </div><!-- /.col-lg-3 -->
+                  <!-- Feature item #2 -->
+                  <div class="col-sm-6 col-md-6 col-lg-3">
+                      <div class="feature-item">
+                          <div class="feature__content">
+                          <div class="feature__icon">
+                              <i class="icon-ambulance"></i>
+                              <i class="icon-ambulance feature__overlay-icon"></i>
+                          </div>
+                          <h4 class="feature__title">ขอความช่วยเหลือฉุกเฉิน</h4>
+                          </div><!-- /.feature__content -->
+                      </div><!-- /.feature-item -->
+                      </div><!-- /.col-lg-3 -->
+                  <!-- Feature item #3 -->
+                  <div class="col-sm-6 col-md-6 col-lg-3">
+                      <div class="feature-item">
+                          <div class="feature__content">
+                          <div class="feature__icon">
+                              <i class="icon-doctor"></i>
+                              <i class="icon-doctor feature__overlay-icon"></i>
+                          </div>
+                          <h4 class="feature__title">แจ้งเตือนการนัดหมอ</h4>
+                          </div><!-- /.feature__content -->
+                      </div><!-- /.feature-item -->
+                      </div><!-- /.col-lg-3 -->
+                  <!-- Feature item #4 -->
+                  <div class="col-sm-6 col-md-6 col-lg-3">
+                      <div class="feature-item">
+                          <div class="feature__content">
+                              <div class="feature__icon">
+                                  <i class="icon-drugs"></i>
+                                  <i class="icon-drugs feature__overlay-icon"></i>
+                              </div>
+                              <h4 class="feature__title">แจ้งเตือนการใช้ยา</h4>
+                          </div><!-- /.feature__content -->
+
+                      </div><!-- /.feature-item -->
+                  </div><!-- /.col-lg-3 -->
+
+              </div><!-- /.row -->
+
+          </div><!-- /.container -->
+      </section><!-- /.Features Layout 1 -->
 
     <!-- ============================
         contact info
@@ -117,214 +324,7 @@
       </div><!-- /.container -->
     </section><!-- /.contact-info --> --}}
 
-    <!-- ========================
-      About Layout 2
-    =========================== -->
-    <section class="about-layout2 pb-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
-            <div class="heading-layout2">
-              <h3 class="heading__title mb-60">เกี่ยวกับเรา</h3>
-            </div><!-- /heading -->
-          </div><!-- /.col-12 -->
-        </div><!-- /.row -->
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-5">
-            <div class="text-with-icon">
-              <div class="text__icon">
-                <i class="icon-doctor"></i>
-              </div>
-              <div class="text__content">
-                <p class="heading__desc font-weight-bold color-secondary mb-30" style="font-size: 16px;">รักคนที่แคร์ ดูแลคนที่ใช่  <br> ทุกวินาทีอุ่นใจ เมื่อใช้มิตรแคร์
-                </p>
-                {{-- <a href="doctors-timetable.html" class="btn btn__secondary btn__rounded mb-70">
-                  <span>Find A Doctor</span> <i class="icon-arrow-right"></i>
-                </a> --}}
-              </div>
-            </div>
-            <div class="video-banner-layout2 bg-overlay">
-                <!-- Computer Mode-->
-              <img class="Image d-none d-lg-block" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="642" height="427">
-                <!-- Mobile Mode-->
-              <img class="Image d-block d-md-none" data-image-size="leadPromoB" alt="about" src="{{asset('/img/logo_mithcare/doctor.jpg')}}" width="100%" >
-              <a class="video__btn video__btn-white popup-video" href="https://www.youtube.com/watch?v=nrJtHemSPW4">
-                <div class="video__player">
-                  <i class="fa fa-play"></i>
-                </div>
-                <span class="video__btn-title color-white">MithCare</span>
-              </a>
-            </div><!-- /.video-banner -->
-          </div><!-- /.col-lg-6 -->
-          <div class="col-sm-12 col-md-12 col-lg-7">
-            <div class="about__text bg-white">
-              <p class="heading__desc mb-30" style="font-size: 16px;">ข้อมูลจากสหประชาชาติ จากการเก็บผลสำรวจทำให้ทราบว่าจำนวนผู้สูงอายุไทยเพิ่มขึ้นอย่างต่อเนื่องและอัตราการเกิดต่ำ โดยประชากรผู้สูงอายุในปี 2565 คิดเป็น 18.5% ของประชากรทั้งหมด
-              <p class="heading__desc mb-30" style="font-size: 16px;"> ซึ่งปัจจุบันสังคมเมืองมีแนวโน้มที่วัยแรงงานจะย้ายถิ่นฐานไปทำงานและปล่อยให้ผู้สูงอายุหรือคนเจ็บป่วยอยู่ที่บ้านโดยลำพัง ทำให้ขาดคนดูแลและไม่สามารถทราบได้ว่าเมื่อพวกเขาเหล่านั้นเจ็บป่วยได้รับการดูแล ทานยา หรือไปพบแพทย์ตามกำหนดหรือไม่
-                ทำให้แพลตฟอร์มมิตรแคร์ได้กำเนิดขึ้น แพลตฟอร์มนี้ทำงานผ่านระบบไลน์ออฟฟิตเชียล
-                 ซึ่งจะสามารถช่วยเหลือและแก้ไขปัญหาต่างๆเปรียบเสมือนเป็นผู้ช่วยดูแลผู้สูงอายุและผู้เจ็บป่วยตลอด 24 ชั่วโมง</p>
-              <ul class="list-items list-unstyled">
-                <li style="font-size: 18px;">ครอบคลุมพื้นที่ 77 จังหวัด</li>
-                <li style="font-size: 18px;">บริการตลอด 24 ชม.</li>
 
-                {{-- <li>We offer a wide range of care and support to our patients, from diagnosis to treatment and
-                  rehabilitation.
-                </li> --}}
-              </ul>
-            </div>
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    </section><!-- /.About Layout 2 -->
-
-      <!-- ========================
-        ข่าวเกี่ยวกับสุขภาพ
-    =========================== -->
-    <section id="Health_news" class="team-layout2 pb-80">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-              <div class="heading text-center mb-40">
-                <h3 class="heading__title">ข่าวเกี่ยวกับสุขภาพ</h3>
-              </div><!-- /.heading -->
-            </div><!-- /.col-lg-6 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <div class="col-12">
-              <div class="slick-carousel"
-                data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-                <!-- News #1 -->
-                <div class="member">
-                  <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-cancer-1024x1024.jpg" alt="member img" width="100%">
-                  </div><!-- /.member-img -->
-                  <div class="member__info">
-                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-cancer-self-care/">กรมอนามัย แนะ เริ่มต้นป้องกัน “โรคมะเร็ง” ด้วยตนเอง เพียงปรับพฤติกรรมการใช้ชีวิต และตรวจคัดกรอง</a></h5>
-                    <p></p>
-                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="https://www.princhealth.com/prinh-cancer-self-care/" class="btn btn__secondary btn__link btn__rounded">
-                        <span>Read More</span>
-                        <i class="icon-arrow-right"></i>
-                      </a>
-                    </div>
-                  </div><!-- /.member-info -->
-                </div><!-- /.member -->
-                <!-- News #2 -->
-                <div class="member">
-                  <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1-1024x1024.jpg" alt="member img " width="100%">
-                  </div><!-- /.member-img -->
-                  <div class="member__info">
-                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-self-care/">กรมการแพทย์ แนะ วิธีการดูแลตนเองให้ปลอดภัยจากฝุ่น PM2.5</a></h5>
-                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="https://www.princhealth.com/prinh-pm25-self-care/" class="btn btn__secondary btn__link btn__rounded">
-                        <span>Read More</span>
-                        <i class="icon-arrow-right"></i>
-                      </a>
-                    </div>
-                  </div><!-- /.member-info -->
-                </div><!-- /.member -->
-                <!-- News #3 -->
-                <div class="member">
-                  <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/02/PRINH-PM25-1024x1024.jpg" alt="member img" width="100%">
-                  </div><!-- /.member-img -->
-                  <div class="member__info">
-                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-pm25-suggestions/">กรมอนามัย เตือน 1 – 4 ก.พ. 66 ค่าฝุ่น PM2.5 สูงถึงระดับสีแดงหลายพื้นที่ เน้นย้ำ สวมหน้ากากอนามัย-งดกิจกรรมกลางแจ้ง</a></h5>
-                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="https://www.princhealth.com/prinh-pm25-suggestions/" class="btn btn__secondary btn__link btn__rounded">
-                        <span>Read More</span>
-                        <i class="icon-arrow-right"></i>
-                      </a>
-
-                    </div>
-                  </div><!-- /.member-info -->
-                </div><!-- /.member -->
-                <!-- News #4 -->
-                <div class="member">
-                  <div class="member__img">
-                    <img src="https://www.princhealth.com/wp-content/uploads/2023/01/PRINH-mental-health-fam-care-1024x1024.jpg" alt="member img" width="100%">
-                  </div><!-- /.member-img -->
-                  <div class="member__info">
-                    <h5 class="member__name"><a href="https://www.princhealth.com/prinh-mental-health-fam-care/">กรมสุขภาพจิต แนะ ญาติของผู้ป่วยจิตเวชและผู้ติดยาเสพติด หมั่นสังเกตอาการ พาเข้าพบแพทย์ตามนัด</a></h5>
-                    <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
-                      <a href="https://www.princhealth.com/prinh-mental-health-fam-care/" class="btn btn__secondary btn__link btn__rounded">
-                        <span>Read More</span>
-                        <i class="icon-arrow-right"></i>
-                      </a>
-
-                    </div>
-                  </div><!-- /.member-info -->
-                </div><!-- /.member -->
-
-              </div><!-- /.carousel -->
-            </div><!-- /.col-12 -->
-          </div><!-- /.row -->
-        </div><!-- /.container -->
-      </section><!-- /.Team -->
-
-    <!-- ======================
-    MithCare_Dee_Yang_Rai
-    ========================= -->
-    <section id="MithCare_Dee_Yang_Rai" class="features-layout1 pt-130 pb-50 mt--90">
-        <div class="bg-img"><img src="assets/images/backgrounds/1.jpg" alt="background"></div>
-        <div class="container">
-        <h3 class="text-center">MithCare ดีอย่างไร</h3>
-        <div class="row">
-            <!-- Feature item #1 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="feature-item">
-                <div class="feature__content">
-                <div class="feature__icon">
-                    <i class="icon-heart"></i>
-                    <i class="icon-heart feature__overlay-icon"></i>
-                </div>
-                <h4 class="feature__title">ระบบที่ช่วยดูแลครอบครัวของคุณ</h4>
-                </div><!-- /.feature__content -->
-
-            </div><!-- /.feature-item -->
-            </div><!-- /.col-lg-3 -->
-            <!-- Feature item #2 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="feature-item">
-                    <div class="feature__content">
-                    <div class="feature__icon">
-                        <i class="icon-ambulance"></i>
-                        <i class="icon-ambulance feature__overlay-icon"></i>
-                    </div>
-                    <h4 class="feature__title">ขอความช่วยเหลือฉุกเฉิน</h4>
-                    </div><!-- /.feature__content -->
-                </div><!-- /.feature-item -->
-                </div><!-- /.col-lg-3 -->
-            <!-- Feature item #3 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="feature-item">
-                    <div class="feature__content">
-                    <div class="feature__icon">
-                        <i class="icon-doctor"></i>
-                        <i class="icon-doctor feature__overlay-icon"></i>
-                    </div>
-                    <h4 class="feature__title">แจ้งเตือนการนัดหมอ</h4>
-                    </div><!-- /.feature__content -->
-                </div><!-- /.feature-item -->
-                </div><!-- /.col-lg-3 -->
-            <!-- Feature item #4 -->
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="feature-item">
-                    <div class="feature__content">
-                        <div class="feature__icon">
-                            <i class="icon-drugs"></i>
-                            <i class="icon-drugs feature__overlay-icon"></i>
-                        </div>
-                        <h4 class="feature__title">แจ้งเตือนการใช้ยา</h4>
-                    </div><!-- /.feature__content -->
-
-                </div><!-- /.feature-item -->
-            </div><!-- /.col-lg-3 -->
-
-        </div><!-- /.row -->
-
-        </div><!-- /.container -->
-    </section><!-- /.Features Layout 1 -->
 
 
 
@@ -682,7 +682,7 @@
             Peddy_Hub
     ========================= -->
 
-    <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color:rgb(232, 216, 247)">
+    {{-- <section class="work-process work-process-carousel pt-60 pb-60 " style="background-color:rgb(232, 216, 247)">
         <div class="bg-img"><img src="{{asset('/img/peddy_hub/app-bg.png')}}" width="90%" alt="background"></div>
         <h2 class="text-center" style="color: black">บริการดีๆจาก PEDDyHUB</h2>
         <h5 class="text-center" style="color: black">PeddyHub ศูนย์รวมบริการ ข้อมูล และ community สำหรับคนรักสัตว์ peddy hub ครบจบในที่เดียว !!</h5>
@@ -750,6 +750,6 @@
           </div>
         </div><!-- /.col-12 -->
       </div><!-- /.row -->
-    </section>
+    </section> --}}
 
 @endsection

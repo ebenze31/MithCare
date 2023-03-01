@@ -166,9 +166,6 @@
                 </div><!-- /.container -->
             </div><!-- /.header-top -->
 
-
-
-
             <nav class="navbar navbar-expand-lg sticky-navbar">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -317,9 +314,6 @@
       Footer
     ========================== -->
     <footer class="footer">
-
-
-
         <hr width="90%">
         <div class="footer-secondary">
             <div class="container">
@@ -329,9 +323,6 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
-
-
-
                                                 {{-- คอม --}}
                                     <div class="home-demo d-none d-lg-block">
                                         <div class="owl-carousel owl-carousel-mithcare owl-theme">
@@ -356,14 +347,12 @@
                                                 </div>
                                             @endforeach
                                         </div>
-
-
                                     </div>
 
                                                 {{-- มือถือ --}}
                                     <div class="home-demo d-block d-md-none">
-                                        {{-- <div class="owl-carousel owl-carousel-mithcare owl-theme">
-                                            <div class="item">
+                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
+                                            {{-- <div class="item">
                                                 <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px"  alt="gallery img">
                                             </div>
                                             <div class="item">
@@ -374,19 +363,18 @@
                                             </div>
                                             <div class="item">
                                                 <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px"   alt="gallery img">
-                                            </div>
-                                        </div> --}}
-                                        @php
-                                            $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
-                                        @endphp
-                                        @foreach($partner as $item)
-                                            <div class="item">
-                                                <img src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
-                                            </div>
-                                        @endforeach
+                                            </div> --}}
+                                            @php
+                                                $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
+                                            @endphp
+                                            @foreach($partner as $item)
+                                                <div class="item">
+                                                    <img src="{{ url('storage/'.$item->logo )}}" alt="gallery img">
+                                                </div>
+                                            @endforeach
+                                        </div>
+
                                     </div>
-
-
                                 </div><!-- /.col-12 -->
                             </div><!-- /.row -->
                         </div><!-- /.container -->
@@ -394,19 +382,19 @@
 
                 </div><!-- /.row -->
                 <center>
-                    <div class="copyright text-center h6" style="margin-top:-15px;">
-                        <span>•</span> WWW.MithCare.COM
-                        <span>•</span>
-                        <a href="{{url('privacy_policy')}}">
-                            <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
-                        </a>
-                        <span>•</span>
-                        <a href="{{url('terms_of_service')}}">
-                            <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
-                        </a>
+                <div class="copyright text-center h6" style="margin-top:-15px;">
+                    <span>•</span> WWW.MithCare.COM
+                    <span>•</span>
+                    <a href="{{url('privacy_policy')}}">
+                        <span>นโยบายเกี่ยวกับข้อมูลส่วนบุคคล</span>
+                    </a>
+                    <span>•</span>
+                    <a href="{{url('terms_of_service')}}">
+                        <span>ข้อกำหนดและเงื่อนไขการใช้บริการ</span>
+                    </a>
 
-                    </div>
-                    <a class="h6">เว็บไซต์นี้ อ้างอิงมาจากเว็บไซต์ www.princhealth.com เพื่อใช้ในการพัฒนาระบบเท่านั้น ไม่ได้มีเจตนาแสวงหาผลกำไร</a>
+                </div>
+                <a class="h6">เว็บไซต์นี้ อ้างอิงมาจากเว็บไซต์ www.princhealth.com เพื่อใช้ในการพัฒนาระบบเท่านั้น ไม่ได้มีเจตนาแสวงหาผลกำไร</a>
                 </center>
             </div><!-- /.container -->
         </div><!-- /.footer-secondary -->

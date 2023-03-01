@@ -75,12 +75,12 @@
             <div class="modal-body">
                 <div class="row d-flex justify-content-around">
                     <div class="col-6 col-md-4 p-1 ">
-                        <a href="#heading" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome(null);">
+                        <a id="btn_myHome" class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_myhome(null);">
                             <i class="fa-solid fa-house-user"></i> บ้านของฉัน
                         </a>
                     </div>
                     <div class="col-6 col-md-4 p-1 ">
-                        <a href="#heading" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_current();">
+                        <a id="btn_myLocation" class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" onclick="locations_current();">
                             <i class="fa-solid fa-location-dot"></i> เลือกตำแหน่ง
                         </a>
                     </div>
@@ -231,7 +231,7 @@
     var map_select_location_from_address;
     var marker_icon_mithcare = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
 
-    function map_select_location_from_address(lat_from_select,lng_from_select)
+    function Open_map_select_location_from_address(lat_from_select,lng_from_select)
     {
         // 13.7248936,100.4930264 lat lng ประเทศไทย
         let lat_text = document.querySelector("#lat");
@@ -341,6 +341,7 @@
 
         //ล้าง value
         document.getElementById("map_select_location_from_address").innerHTML = "";
+        document.getElementById("map_select_location").innerHTML = "";
 
         //add
         document.querySelector('#map_select_location').classList.add('d-none');
@@ -368,16 +369,13 @@
         document.querySelector('#input_address').required = true;
         document.querySelector('#input_phone').required = true;
 
-        // html =  '<div class="row d-flex justify-content-between">' +
-        //             '<a id="btn_cancel_change_add" href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
-        //                  'ยกเลิก' +
-        //             '</a>' +
-        //             '<a id="btn_confirm_address" href="#heading" class="col-5 m-2 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
-        //                  'บันทึก'่ +
-        //             '</a>' +
-        //         '</div>' ;
+        let select_province = document.querySelector('#select_province');
+        let select_amphoe = document.querySelector('#select_amphoe');
+        let select_tambon = document.querySelector('#select_tambon');
 
-        // document.querySelector('#modal-footer').innerHTML = html;
+        select_province.value = "";
+        select_amphoe.value = "";
+        select_tambon.value = "";
 
         let input_province = document.querySelector('#input_province');
         let input_amphoe = document.querySelector('#input_amphoe');
@@ -391,12 +389,6 @@
         document.querySelector('#input_address').value = "";
         document.querySelector('#input_phone').value = "";
 
-        let select_province = document.querySelector('#select_province');
-        let select_amphoe = document.querySelector('#select_amphoe');
-        let select_tambon = document.querySelector('#select_tambon');
-
-
-
     }
 
     function check_input_value_address(){
@@ -405,11 +397,11 @@
         let input_tambon = document.querySelector('#select_tambon').value;
         let input_address = document.querySelector('#input_address').value;
         let input_phone = document.querySelector('#input_phone').value;
-        console.log(input_province);
-        console.log(input_amphoe);
-        console.log(input_tambon);
-        console.log(input_address);
-        console.log(input_phone);
+        // console.log(input_province);
+        // console.log(input_amphoe);
+        // console.log(input_tambon);
+        // console.log(input_address);
+        // console.log(input_phone);
         if(input_province != "" && input_amphoe != "" && input_tambon != "" && input_address != "" && input_phone != ""){
             document.querySelector('#btn_confirm_address').disable = false;
             document.querySelector('#btn_confirm_address').onclick = function() { update_add_to_user(); };
@@ -424,6 +416,8 @@
 
         document.getElementById("map_select_location").innerHTML = "";
         //add
+        document.querySelector('#btn_myHome').classList.add('btn-primary');
+        document.querySelector('#btn_myLocation').classList.add('btn-secondary');
         document.querySelector('#map_select_location_from_address').classList.add('d-none');
         document.querySelector('#btn_cancel_change_add').classList.add('d-none');
         document.querySelector('#btn_confirm_address').classList.add('d-none');
@@ -435,6 +429,8 @@
         document.querySelector('#select_amphoe').classList.add('d-none');
         document.querySelector('#select_tambon').classList.add('d-none');
         //remove
+        document.querySelector('#btn_myHome').classList.remove('btn-secondary');
+        document.querySelector('#btn_myLocation').classList.remove('btn-success');
         document.querySelector('#map_select_location').classList.remove('d-none');
         document.querySelector('#div_province').classList.remove('d-none');
         document.querySelector('#div_amphoe').classList.remove('d-none');
@@ -467,6 +463,10 @@
             input_province.value = document.querySelector('#select_province').value;
             input_amphoe.value = document.querySelector('#select_amphoe').value;
             input_tambon.value = document.querySelector('#select_tambon').value;
+
+            lat_user = document.querySelector('#lat').value;
+            lng_user = document.querySelector('#lng').value;
+
         }else{
             let select_province = document.querySelector('#select_province');
             let select_amphoe = document.querySelector('#select_amphoe');
@@ -644,6 +644,10 @@ function select_province() {
             let select_amphoe = document.querySelector('#select_amphoe');
             let select_tambon = document.querySelector('#select_tambon');
 
+                     console.log(select_province.value);
+                     console.log(select_amphoe.value);
+                     console.log(select_tambon.value);
+
             fetch("{{ url('/') }}/api/select_lat_lng" + "/" + select_province.value + "/" + select_amphoe.value + "/" + select_tambon.value)
                 .then(response => response.json())
                 .then(result => {
@@ -655,12 +659,14 @@ function select_province() {
                     let lng = document.querySelector('#lng');
                     lng.value = result[0]['lng'];
 
-                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
-                    map_select_location_from_address(lat.value,lng.value);
+                    console.log("if");
+                    console.log(lat.value);
+                    console.log(lng.value);
 
-                    // console.log("if");
-                    // console.log(lat);
-                    // console.log(lng);
+                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value);
+
+
 
                 });
         } else {
@@ -679,12 +685,14 @@ function select_province() {
                     let lng = document.querySelector('#lng');
                     lng.value = result[0]['lng'];
 
-                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
-                    map_select_location_from_address(lat.value,lng.value);
+                    console.log("else");
+                    console.log(lat.value);
+                    console.log(lng.value);
 
-                    // console.log("else");
-                    // console.log(lat);
-                    // console.log(lng);
+                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value);
+
+
                 });
         }
 
@@ -777,22 +785,22 @@ function select_province() {
         document.querySelector('#div_address_detail').classList.add('d-none');
 
         // document.querySelector('#from_select_position').classList.remove('d-none');
-        let html;
-        let show_btn_address = document.querySelector('#btn_select_map');
-            show_btn_address.innerHTML = "";
+        // let html;
+        // let show_btn_address = document.querySelector('#btn_select_map');
+        //     show_btn_address.innerHTML = "";
 
-        html =  '<div class="col-6 col-md-4 p-1 ">' +
-                    '<a class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
-                        '<i class="fa-solid fa-house-user">' + '</i>' + 'เลือกจากแผนที'่ +
-                    '</a>' +
-                '</div>' +
-                '<div class="col-6 col-md-4 p-1 ">' +
-                    '<a  class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" ' +
-                       ' <i class="fa-solid fa-location-dot">' + '</i>' + 'ตำแหน่งปัจจุบัน' +
-                    '</a>' +
-                '</div>' ;
+        // html =  '<div class="col-6 col-md-4 p-1 ">' +
+        //             '<a class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
+        //                 '<i class="fa-solid fa-house-user">' + '</i>' + 'เลือกจากแผนที'่ +
+        //             '</a>' +
+        //         '</div>' +
+        //         '<div class="col-6 col-md-4 p-1 ">' +
+        //             '<a  class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" ' +
+        //                ' <i class="fa-solid fa-location-dot">' + '</i>' + 'ตำแหน่งปัจจุบัน' +
+        //             '</a>' +
+        //         '</div>' ;
 
-                show_btn_address.innerHTML = html;
+        //         show_btn_address.innerHTML = html;
 
     }
 
@@ -803,6 +811,8 @@ function select_province() {
         document.getElementById("map_select_location").innerHTML = "";
         document.getElementById("map_select_location_from_address").innerHTML = "";
         //add
+        document.querySelector('#btn_myHome').classList.add('btn-secondary');
+        document.querySelector('#btn_myLocation').classList.add('btn-success');
         document.querySelector('#map_select_location_from_address').classList.add('d-none');
         document.querySelector('#div_province').classList.add('d-none');
         document.querySelector('#div_amphoe').classList.add('d-none');
@@ -813,6 +823,8 @@ function select_province() {
         document.querySelector('#btn_cancel_change_add').classList.add('d-none');
         document.querySelector('#btn_confirm_address').classList.add('d-none');
         //remove
+        document.querySelector('#btn_myHome').classList.remove('btn-primary');
+        document.querySelector('#btn_myLocation').classList.remove('btn-secondary');
         document.querySelector('#map_select_location').classList.remove('d-none');
         document.querySelector('#div_phone').classList.remove('d-none');
         document.querySelector('#btn_confirm_sos').classList.remove('d-none');

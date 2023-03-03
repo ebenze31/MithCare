@@ -229,6 +229,12 @@ class LineApiController extends Controller
                     ]);
                 }
 
+                $data3 = [
+                    "title" => "data3",
+                    "content" => $users->role,
+                ];
+                MyLog::create($data3);
+
                    // ตรวจสอบรายชื่อคนช่วยเหลือ
                 if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
 

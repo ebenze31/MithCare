@@ -386,7 +386,7 @@ class LineApiController extends Controller
     }
 
 
-    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id, )
+    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id )
     {
         $data_line_group = DB::table('group_lines')
                     ->where('groupId', $data_partner_helpers->line_group_id)

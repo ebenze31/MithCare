@@ -363,6 +363,13 @@ class LineApiController extends Controller
                     ->where('groupId', $data_partner_helpers->line_group_id)
                     ->first();
 
+           // SAVE LOG
+           $data = [
+            "title" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
+            "content" => $data_line_group,
+        ];
+        MyLog::create($data);
+
         // foreach ($data_line_group as $key) {
         //     $groupId = $key->groupId ;
         //     $groupName = $key->groupName ;

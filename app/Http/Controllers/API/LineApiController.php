@@ -286,7 +286,7 @@ class LineApiController extends Controller
     protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id )
     {
         $data_line_group = DB::table('group_lines')
-                    ->where('groupId', $data_partner_helpers->line_group_id)
+                    ->where('id', $data_partner_helpers->line_group_id)
                     ->first();
 
            // SAVE LOG
@@ -295,8 +295,6 @@ class LineApiController extends Controller
             "content" => "ทดสอบ",
         ];
         MyLog::create($savelog_linegroup);
-
-
 
         $template_path = storage_path('../public/json/helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
@@ -308,9 +306,7 @@ class LineApiController extends Controller
         // helper
         $string_json = str_replace("name_helper",$name_helper,$string_json);
 
-
         $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
-
 
 
         $messages = [ json_decode($string_json, true) ];

@@ -214,7 +214,7 @@ class LineApiController extends Controller
             if ($users != '[]') { // เป็นสมาชิก
 
                 DB::table('ask_for_helps')
-                ->where('partner_id', $data_sos->partner_id)
+                ->where('id', $data_sos->id)
                 ->update([
                     'helper_id' => $users->id,
                     'name_helper' => $users->name,

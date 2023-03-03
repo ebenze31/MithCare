@@ -204,7 +204,7 @@ class LineApiController extends Controller
 
                 $data = [
                     "title" => "check update partner",
-                    "content" => "เข้าแล้ว"
+                    "content" => "เข้า if แล้ว"
                 ];
                 MyLog::create($data);
 
@@ -276,6 +276,12 @@ class LineApiController extends Controller
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers);
+
+                $data = [
+                    "title" => "check update partner",
+                    "content" => "เข้า else แล้ว"
+                ];
+                MyLog::create($data);
             }
 
 

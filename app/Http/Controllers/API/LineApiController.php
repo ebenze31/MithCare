@@ -282,11 +282,11 @@ class LineApiController extends Controller
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers);
 
-                // $data = [
-                //     "title" => "check update partner",
-                //     "content" => "เข้า else แล้ว"
-                // ];
-                // MyLog::create($data);
+                $data = [
+                    "title" => "เข้า else แล้ว",
+                    "content" => "เข้า else แล้ว"
+                ];
+                MyLog::create($data);
             }
 
 

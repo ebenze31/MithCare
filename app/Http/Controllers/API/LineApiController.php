@@ -182,11 +182,11 @@ class LineApiController extends Controller
         $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
 
-        $data = [
-            "title" => "check update partner",
-            "content" => "ข้อมูลask_for_help :".$data_sos,
-        ];
-        MyLog::create($data);
+        // $data = [
+        //     "title" => "check update partner",
+        //     "content" => "ข้อมูลask_for_help :".$data_sos,
+        // ];
+        // MyLog::create($data);
 
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
         if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
@@ -294,14 +294,14 @@ class LineApiController extends Controller
         //กรุณาลงทะเบียนเพื่อเริ่มใช้งาน
         $data_line_group = DB::table('group_lines')
                 ->where('groupId', $data_partner_helpers->line_group_id)
-                ->get();
+                ->first();
 
-        foreach ($data_line_group as $key) {
-            $groupId = $key->groupId ;
-            $groupName = $key->groupName ;
-            $name_time_zone = $key->time_zone ;
-            $group_language = $key->language ;
-        }
+        // foreach ($data_line_group as $key) {
+        //     $groupId = $key->groupId ;
+        //     $groupName = $key->groupName ;
+        //     $name_time_zone = $key->time_zone ;
+        //     $group_language = $key->language ;
+        // }
 
         // TIME ZONE
         // $API_Time_zone = new API_Time_zone();
@@ -330,7 +330,7 @@ class LineApiController extends Controller
         $messages = [ json_decode($string_json, true) ];
 
         $body = [
-            "to" => $groupId,
+            "to" => $data_line_group->groupId,
             "messages" => $messages,
         ];
 
@@ -361,38 +361,38 @@ class LineApiController extends Controller
     {
         $data_line_group = DB::table('group_lines')
                     ->where('groupId', $data_partner_helpers->line_group_id)
-                    ->get();
+                    ->first();
 
-        foreach ($data_line_group as $key) {
-            $groupId = $key->groupId ;
-            $groupName = $key->groupName ;
-            // $name_time_zone = $key->time_zone ;
-            // $group_language = $key->language ;
-        }
+        // foreach ($data_line_group as $key) {
+        //     $groupId = $key->groupId ;
+        //     $groupName = $key->groupName ;
+        //     // $name_time_zone = $key->time_zone ;
+        //     // $group_language = $key->language ;
+        // }
 
         //user
-        $data_users = DB::table('users')->where('id', $data_sos->user_id)->get();
-        foreach ($data_users as $data_user) {
+        // $data_users = DB::table('users')->where('id', $data_sos->user_id)->get();
+        // foreach ($data_users as $data_user) {
 
-            if (!empty($data_user->photo)) {
-                $photo_user = $data_user->photo ;
-            }
-            if (empty($data_user->photo)) {
-                $photo_user = $data_user->avatar ;
-            }
-        }
+        //     if (!empty($data_user->photo)) {
+        //         $photo_user = $data_user->photo ;
+        //     }
+        //     if (empty($data_user->photo)) {
+        //         $photo_user = $data_user->avatar ;
+        //     }
+        // }
 
         //helper
-        $data_helpers = DB::table('users')->where('id', $helper_id)->get();
-        foreach ($data_helpers as $data_helper) {
+        // $data_helpers = DB::table('users')->where('id', $helper_id)->get();
+        // foreach ($data_helpers as $data_helper) {
 
-            if (!empty($data_helper->photo)) {
-                $photo_helper = $data_helper->photo ;
-            }
-            if (empty($data_helper->photo)) {
-                $photo_helper = $data_helper->avatar ;
-            }
-        }
+        //     if (!empty($data_helper->photo)) {
+        //         $photo_helper = $data_helper->photo ;
+        //     }
+        //     if (empty($data_helper->photo)) {
+        //         $photo_helper = $data_helper->avatar ;
+        //     }
+        // }
 
         // TIME ZONE
         // $API_Time_zone = new API_Time_zone();
@@ -451,7 +451,7 @@ class LineApiController extends Controller
         $messages = [ json_decode($string_json, true) ];
 
         $body = [
-            "to" => $groupId,
+            "to" => $data_line_group->groupId,
             "messages" => $messages,
         ];
 

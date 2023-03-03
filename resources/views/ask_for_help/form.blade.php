@@ -45,13 +45,23 @@
     <div class="justify-content-center">
         <div class="column">
             <div class="col-12 mb-2">
-                <span id="sos_by_btn" value="{{Auth::user()->id}}" onclick="locations_myhome(null);" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
                 style="background-color: #3490dc; font-size: 20px; color: white;" >
-                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
+                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ MithCare
                 </span>
+                <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                    style="background-color: #3490dc; font-size: 20px; color: white;" >
+                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Viicheck
+                </span>
+                <span id="sos_by_peddyhub"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '2';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                style="background-color: #3490dc; font-size: 20px; color: white;" >
+                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Peddyhub
+                </span> -->
             </div>
             <div class="col-12 mb-2">
                 <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
+                <input id="partner_id" class="d-none">
+
                 <!-- onclick="SOS_by_Phone()" -->
                 <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone()" >
                     <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
@@ -739,7 +749,7 @@ function select_province() {
 
 <script>
     function SOS_by_Btn(){
-
+        let partner_id = document.querySelector('#partner_id').value;
         //เช็คค่า จ. อ. ต. ว่ามาจาก select หรือ input
         let check_data = document.querySelector('#select_province').value;
         if(check_data){
@@ -760,7 +770,7 @@ function select_province() {
 
 
         let url = "{{ url('/api/sos_btn') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
-        "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id;
+        "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id + "&partner_id=" + partner_id;
 
         fetch(url)
             .then(response => response.json())

@@ -171,108 +171,178 @@ class LineApiController extends Controller
     {
         $data_data = explode("/",$data_postback_explode);
 
-        $id_sos_map = $data_data[0] ;
+        $id_sos = $data_data[0] ;
         $id_organization_helper = $data_data[1] ;
 
-        $data = [
-            "title" => "check id",
-            "content" => $data_data[0],
-        ];
-        MyLog::create($data);
 
-        $data_sos_map = Ask_for_help::findOrFail($id_sos_map);
-
-        // if (!empty($data_sos_map->condo_id)) {
-        //     $condo_id = $data_sos_map->condo_id ;
-        // }else{
-        //     $condo_id = null ;
-        // }
+        $data_sos = Ask_for_help::findOrFail($id_sos);
 
         $data_partner_helpers = Partner::findOrFail($id_organization_helper);
 
         $users = DB::table('users')->where('provider_id', $provider_id)->get();
 
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
-        if ($data_sos_map->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
+        if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
 
             // ส่งไลน์การช่วยเหลือนี้เสร็จสิ้นแล้ว
             $this->This_help_is_done($data_partner_helpers, $event, "This_help_is_done");
 
         }else{ // การช่วยเหลือ อยู่ระหว่างดำเนินการ
 
-            // ตรวจสอบการเป็นสมาชิก ViiCHECK
-            if ($users != '[]') { // เป็นสมาชิก ViiCHECK
+            // ตรวจสอบการเป็นสมาชิก
+            if ($users != '[]') { // เป็นสมาชิก
 
-                foreach ($users as $user) {
-                    // ตรวจสอบสถานนะ role
-                    if (!empty($user->role)) {
-                        DB::table('users')
-                            ->where('provider_id', $provider_id)
-                            ->update([
-                                'organization' => $data_partner_helpers->name,
-                        ]);
-                    }else{
-                        DB::table('users')
-                            ->where('provider_id', $provider_id)
-                            ->update([
-                                'organization' => $data_partner_helpers->name,
-                                'role' => 'partner',
-                        ]);
-                    }
+                DB::table('ask_for_helps')
+                ->where('partner_id', $data_sos->partner_id)
+                ->update([
+                    'organization' => $data_partner_helpers->name,
+                    'helper_id' => $users->id,
+                    'name_helper' => $users->name,
+                ]);
 
-                    // ตรวจสอบรายชื่อคนช่วยเหลือ
-                    if (!empty($data_sos_map->helper)) {
+                // foreach ($users as $user) {
+                //     // ตรวจสอบสถานนะ role
+                //     if (!empty($user->role)) {
+                //         DB::table('users')
+                //             ->where('provider_id', $provider_id)
+                //             ->update([
+                //                 'organization' => $data_partner_helpers->name,
+                //         ]);
+                //     }else{
+                //         DB::table('users')
+                //             ->where('provider_id', $provider_id)
+                //             ->update([
+                //                 'organization' => $data_partner_helpers->name,
+                //                 'role' => 'partner',
+                //         ]);
+                //     }
 
-                        $explode_helper_id = explode(",",$data_sos_map->helper_id);
-                        for ($i=0; $i < count($explode_helper_id); $i++) {
+                //     // ตรวจสอบรายชื่อคนช่วยเหลือ
+                //     if (!empty($data_sos->helper)) {
 
-                            if ($explode_helper_id[$i] != $user->id) {
-                                $helper_double = "No";
-                            }else{
-                                $helper_double = "Yes";
-                                break;
-                            }
+                //         $explode_helper_id = explode(",",$data_sos->helper_id);
+                //         for ($i=0; $i < count($explode_helper_id); $i++) {
 
-                        }
+                //             if ($explode_helper_id[$i] != $user->id) {
+                //                 $helper_double = "No";
+                //             }else{
+                //                 $helper_double = "Yes";
+                //                 break;
+                //             }
 
-                        if ($helper_double != "Yes") {
-                            DB::table('sos_maps')
-                                ->where('id', $id_sos_map)
-                                ->update([
-                                    'helper' => $data_sos_map->helper . ',' . $user->name,
-                                    'helper_id' => $data_sos_map->helper_id . ',' . $user->id,
-                                    'organization_helper' => $data_sos_map->organization_helper . ',' . $data_partner_helpers->name,
-                            ]);
+                //         }
 
-                            $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id ) ;
+                //         if ($helper_double != "Yes") {
+                //             DB::table('sos_maps')
+                //                 ->where('id', $id_sos)
+                //                 ->update([
+                //                     'helper' => $data_sos->helper . ',' . $user->name,
+                //                     'helper_id' => $data_sos->helper_id . ',' . $user->id,
+                //                     'organization_helper' => $data_sos->organization_helper . ',' . $data_partner_helpers->name,
+                //             ]);
 
-                        }else{
-                            // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
-                            $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
-                        }
+                //             $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $user->name , $user->id ) ;
 
-                    }else {
-                        DB::table('sos_maps')
-                            ->where('id', $id_sos_map)
-                            ->update([
-                                'helper' => $user->name,
-                                'helper_id' => $user->id,
-                                'organization_helper' => $data_partner_helpers->name,
-                                'time_go_to_help' => date('Y-m-d\TH:i:s'),
-                        ]);
+                //         }else{
+                //             // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
+                //             $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
+                //         }
 
-                        $this->_send_helper_to_groupline($data_sos_map , $data_partner_helpers , $user->name , $user->id );
+                //     }else {
+                //         DB::table('sos_maps')
+                //             ->where('id', $id_sos)
+                //             ->update([
+                //                 'helper' => $user->name,
+                //                 'helper_id' => $user->id,
+                //                 'organization_helper' => $data_partner_helpers->name,
+                //                 'time_go_to_help' => date('Y-m-d\TH:i:s'),
+                //         ]);
 
-                    }
+                //         $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $user->name , $user->id );
 
-                }
+                //     }
 
-            }else{ // ไม่ได้เป็นสมาชิก ViiCHECK
+                // }
+
+            }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers);
             }
+
+            $data = [
+                "title" => "check id",
+                "content" => $data_sos,
+            ];
+            MyLog::create($data);
         }
 
+    }
+
+    protected function _send_register_to_groupline($data_partner_helpers)
+    {
+        //กรุณาลงทะเบียนเพื่อเริ่มใช้งาน
+        $data_line_group = DB::table('group_lines')
+                ->where('groupId', $data_partner_helpers->line_group_id)
+                ->get();
+
+        foreach ($data_line_group as $key) {
+            $groupId = $key->groupId ;
+            $groupName = $key->groupName ;
+            $name_time_zone = $key->time_zone ;
+            $group_language = $key->language ;
+        }
+
+        // TIME ZONE
+        // $API_Time_zone = new API_Time_zone();
+        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
+
+        // $data_topic = [
+        //             "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
+        //         ];
+
+        // for ($xi=0; $xi < count($data_topic); $xi++) {
+
+        //     $text_topic = DB::table('text_topics')
+        //             ->select($group_language)
+        //             ->where('th', $data_topic[$xi])
+        //             ->where('en', "!=", null)
+        //             ->get();
+
+        //     foreach ($text_topic as $item_of_text_topic) {
+        //         $data_topic[$xi] = $item_of_text_topic->$group_language ;
+        //     }
+        // }
+
+        $template_path = storage_path('../public/json/register_line.json');
+        $string_json = file_get_contents($template_path);
+
+        $messages = [ json_decode($string_json, true) ];
+
+        $body = [
+            "to" => $groupId,
+            "messages" => $messages,
+        ];
+
+        $opts = [
+            'http' =>[
+                'method'  => 'POST',
+                'header'  => "Content-Type: application/json \r\n".
+                            'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                //'timeout' => 60
+            ]
+        ];
+
+        $context  = stream_context_create($opts);
+        $url = "https://api.line.me/v2/bot/message/push";
+        $result = file_get_contents($url, false, $context);
+
+        // SAVE LOG
+        $data = [
+            "title" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
+            "content" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
+        ];
+        MyLog::create($data);
     }
 
 

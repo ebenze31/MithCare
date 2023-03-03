@@ -35,16 +35,22 @@ class API_Ask_for_helpController extends Controller
 
     public function get_sos_by_btn(Request $request)
     {
-        $user_id = $request->get('user_id');
         $requestData = $request->all();
+
+        // echo"<pre>";
+        // print_r($requestData);
+        // echo"</pre>";
+        // exit();
+
+        $data_partner = Partner::where('id',$requestData['partner_id'])->first();
+        $user_id = $request->get('user_id');
         $name_user = User::where('id',$user_id)->first();
 
         $requestData['name_user'] = $name_user->name;
         $requestData['user_id'] = $user_id;
         $requestData['content'] = "help_by_partner";
-        $requestData['name_helper'] = "partner_name";
-        $requestData['partner_id'] = "partner_id";
-        $requestData['organization_helper'] = "mithcare";
+
+        $requestData['organization_helper'] = $data_partner->name;
 
         $ask_for_help = Ask_for_help::create($requestData);
 
@@ -57,7 +63,7 @@ class API_Ask_for_helpController extends Controller
          switch ($requestData['content']) {
              case 'help_by_partner':
                  // ตรวจสอบ area แล้วส่งข้อมูลผ่านไลน์
-                 $this->send_Line_To_Group_SOS($requestData , $id_sos_map);
+                 $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
                  break;
          }
 
@@ -78,30 +84,12 @@ class API_Ask_for_helpController extends Controller
         return $data_sos ;
     }
 
-    public function send_Line_To_Group_SOS($data_sos,$id_sos_map){
+    public function send_Line_To_Group_SOS($data_sos , $id_sos_map , $data_partner){
 
-        $find_organize = Partner::get();
 
-        for($i = 0; $i < count($find_organize); $i++){
+        // $sosTo = $data_sos['organization_helper'];
 
-            $data_partners = DB::table('partners')
-            ->where('id', $data_sos[$i]['id'])
-            ->where('name','LIKE', "%$data_sos[$i]['name']%")
-            ->get();
-
-        }
-
-        foreach ($data_partners as $data_partner) {
-            $id_partner = $data_partner->id ;
-            $name_partner = $data_partner->name ;
-            $mail_partner = $data_partner->mail ;
-            $name_line_group = $data_partner->name_line_group ;
-            $line_group_id = $data_partner->line_group_id;
-        }
-
-        $sosTo = $data_sos['organization_helper'];
-
-        $data_groupline = Group_line::where('owner',$sosTo)->first();
+        $data_groupline = Group_line::where('partner_id',$data_partner->id)->first();
 
         $text_at = "@";
          // sendto Provider_id
@@ -123,7 +111,7 @@ class API_Ask_for_helpController extends Controller
         $string_json = str_replace("0999999999",$sendto->phone,$string_json);
 
         $string_json = str_replace("id_sos_map",$id_sos_map,$string_json);
-        $string_json = str_replace("organization",$id_partner,$string_json);
+        $string_json = str_replace("organization",$data_partner->id,$string_json);
 
         $messages = [ json_decode($string_json, true) ];
         $body = [

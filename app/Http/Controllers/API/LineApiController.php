@@ -300,7 +300,7 @@ class LineApiController extends Controller
         $string_json = file_get_contents($template_path);
 
         // // user
-        $string_json = str_replace("name_user",$data_sos->name,$string_json);
+        $string_json = str_replace("name_user",$data_sos->name_user,$string_json);
 
         // helper
         $string_json = str_replace("name_helper",$name_helper,$string_json);

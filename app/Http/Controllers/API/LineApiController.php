@@ -181,11 +181,7 @@ class LineApiController extends Controller
 
         $users = DB::table('users')->where('provider_id', $provider_id)->get();
 
-        $data = [
-            "title" => "check update partner",
-            "content" => $users,$data_partner_helpers,$data_sos
-        ];
-        MyLog::create($data);
+
 
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
         if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
@@ -205,6 +201,12 @@ class LineApiController extends Controller
                     'helper_id' => $users->id,
                     'name_helper' => $users->name,
                 ]);
+
+                $data = [
+                    "title" => "check update partner",
+                    "content" => "เข้าแล้ว"
+                ];
+                MyLog::create($data);
 
 
                 // foreach ($users as $user) {

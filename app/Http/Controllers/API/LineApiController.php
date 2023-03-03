@@ -182,11 +182,11 @@ class LineApiController extends Controller
         $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
 
-        // $data = [
-        //     "title" => "check update partner",
-        //     "content" => "ข้อมูลask_for_help :".$data_sos,
-        // ];
-        // MyLog::create($data);
+        $data = [
+            "title" => "check update partner",
+            "content" => "ข้อมูลask_for_help :".$data_sos,
+        ];
+        MyLog::create($data);
 
 
         // $data = [

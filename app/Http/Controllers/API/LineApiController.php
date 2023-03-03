@@ -174,6 +174,18 @@ class LineApiController extends Controller
         $id_sos = $data_data[0] ;
         $id_organization_helper = $data_data[1] ;
 
+        $data = [
+            "title" => "dataSOS",
+            "content" => $id_sos,
+        ];
+        MyLog::create($data);
+
+        $data = [
+            "title" => "dataSOS",
+            "content" => $id_organization_helper,
+        ];
+        MyLog::create($data);
+
 
         $data_sos = Ask_for_help::findOrFail($id_sos);
 

@@ -318,68 +318,26 @@ class LineApiController extends Controller
 
     }
 
-
-
-    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id, )
+    protected function _send_register_to_groupline($data_partner_helpers)
     {
+        //กรุณาลงทะเบียนเพื่อเริ่มใช้งาน
         $data_line_group = DB::table('group_lines')
-                    ->where('groupId', $data_partner_helpers->line_group_id)
-                    ->first();
-
-           // SAVE LOG
-           $data = [
-            "title" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
-            "content" => $data_line_group,
-        ];
-        MyLog::create($data);
+                ->where('groupId', $data_partner_helpers->line_group_id)
+                ->first();
 
         // foreach ($data_line_group as $key) {
         //     $groupId = $key->groupId ;
         //     $groupName = $key->groupName ;
-        //     // $name_time_zone = $key->time_zone ;
-        //     // $group_language = $key->language ;
-        // }
-
-        //user
-        // $data_users = DB::table('users')->where('id', $data_sos->user_id)->get();
-        // foreach ($data_users as $data_user) {
-
-        //     if (!empty($data_user->photo)) {
-        //         $photo_user = $data_user->photo ;
-        //     }
-        //     if (empty($data_user->photo)) {
-        //         $photo_user = $data_user->avatar ;
-        //     }
-        // }
-
-        //helper
-        // $data_helpers = DB::table('users')->where('id', $helper_id)->get();
-        // foreach ($data_helpers as $data_helper) {
-
-        //     if (!empty($data_helper->photo)) {
-        //         $photo_helper = $data_helper->photo ;
-        //     }
-        //     if (empty($data_helper->photo)) {
-        //         $photo_helper = $data_helper->avatar ;
-        //     }
+        //     $name_time_zone = $key->time_zone ;
+        //     $group_language = $key->language ;
         // }
 
         // TIME ZONE
         // $API_Time_zone = new API_Time_zone();
         // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
 
-        // datetime
-        // $time_zone_explode = explode(" ",$time_zone);
-
-        // $date = $time_zone_explode[0] ;
-        // $time = $time_zone_explode[1] ;
-        // $utc = $time_zone_explode[3] ;
-
         // $data_topic = [
-        //             "การขอความช่วยเหลือ",
-        //             "เจ้าหน้าที่",
-        //             "การช่วยเหลือเสร็จสิ้น",
-        //             "กำลังไปช่วยเหลือ",
+        //             "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
         //         ];
 
         // for ($xi=0; $xi < count($data_topic); $xi++) {
@@ -395,28 +353,8 @@ class LineApiController extends Controller
         //     }
         // }
 
-        $template_path = storage_path('../public/json/helper_to_groupline.json');
+        $template_path = storage_path('../public/json/register_line.json');
         $string_json = file_get_contents($template_path);
-
-        // $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
-
-        // $string_json = str_replace("การขอความช่วยเหลือ",$data_topic[0],$string_json);
-        // $string_json = str_replace("เจ้าหน้าที่",$data_topic[1],$string_json);
-        // $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[2],$string_json);
-        // $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[3],$string_json);
-
-        // // user
-        $string_json = str_replace("name_user",$data_sos->name,$string_json);
-        // $string_json = str_replace("TEXT_PHOTO_USER",$photo_user,$string_json);
-        // helper
-        $string_json = str_replace("name_helper",$name_helper,$string_json);
-        // $string_json = str_replace("TEXT_PHOTO_HELPER", $photo_helper,$string_json);
-
-        $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
-        // $string_json = str_replace("date",$date,$string_json);
-        // $string_json = str_replace("time",$time,$string_json);
-        // $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
-
 
         $messages = [ json_decode($string_json, true) ];
 
@@ -441,15 +379,13 @@ class LineApiController extends Controller
 
         // SAVE LOG
         $data = [
-            "title" => "send_helper_to_groupline",
-            "content" => $name_helper . "กำลังไปช่วย" . $data_sos->name,
+            "title" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
+            "content" => "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
         ];
         MyLog::create($data);
-
-        // ส่งไลน์หา user ที่ขอความช่วยเหลือ
-        // $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name );
-
     }
+
+
 
 
 }

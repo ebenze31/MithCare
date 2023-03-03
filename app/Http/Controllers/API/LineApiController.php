@@ -210,9 +210,6 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if (!empty($users)) { // เป็นสมาชิก
 
-
-
-
                     // ตรวจสอบสถานนะ role
                 if (!empty($users->role)) {
                     //อัพเดต ชื่อหน่วยงาน
@@ -246,6 +243,13 @@ class LineApiController extends Controller
                         }
 
                     }
+
+                         // SAVE LOG
+                    $savelog_linegroup = [
+                        "title" => "help",
+                        "content" => $helper_double,
+                    ];
+                    MyLog::create($savelog_linegroup);
 
                     if ($helper_double != "Yes") {
 
@@ -329,62 +333,7 @@ class LineApiController extends Controller
     }
 
 
-    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id , $event)
-    {
-        $data_line_group = DB::table('group_lines')
-                    ->where('id', $data_partner_helpers->line_group_id)
-                    ->first();
 
-        // SAVE LOG
-        $savelog_linegroup = [
-            "title" => "data_group",
-            "content" => "ทดสอบ",
-        ];
-        MyLog::create($savelog_linegroup);
-
-        $template_path = storage_path('../public/json/flex_sos_helper_to_groupline.json');
-        $string_json = file_get_contents($template_path);
-
-        // // user
-        $string_json = str_replace("name_user",$data_sos->name_user,$string_json);
-
-        // helper
-        $string_json = str_replace("name_helper",$name_helper,$string_json);
-
-        $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
-
-
-        $messages = [ json_decode($string_json, true) ];
-
-        $body = [
-            "replyToken" => $event["replyToken"],
-            "messages" => $messages,
-        ];
-
-        $opts = [
-            'http' =>[
-                'method'  => 'POST',
-                'header'  => "Content-Type: application/json \r\n".
-                            'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
-                'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
-                //'timeout' => 60
-            ]
-        ];
-
-        $context  = stream_context_create($opts);
-        $url = "https://api.line.me/v2/bot/message/reply";
-        $result = file_get_contents($url, false, $context);
-
-        // SAVE LOG
-        $data = [
-            "title" => "send_helper_to_groupline",
-            "content" => $name_helper . "กำลังไปช่วย" . $data_sos->name,
-        ];
-        MyLog::create($data);
-
-
-
-    }
 
     protected function This_help_is_done($data_partner_helpers, $event , $type)
     {

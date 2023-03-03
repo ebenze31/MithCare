@@ -1,0 +1,172 @@
+{
+    "type": "flex",
+    "altText": "ตัวอย่าง",
+    "contents": {
+        "type": "bubble",
+        "size": "giga",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "size": "full",
+              "aspectMode": "cover",
+              "url": "https://i.ibb.co/8B53Jkx/flex-by-deer.png",
+              "aspectRatio": "390:490"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "การขอความช่วยเหลือ",
+                  "size": "xl",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "80%",
+              "alignItems": "center",
+              "offsetTop": "5%",
+              "offsetStart": "5%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "name_user",
+                  "weight": "bold",
+                  "size": "lg"
+                }
+              ],
+              "position": "absolute",
+              "width": "50%",
+              "offsetTop": "20%",
+              "offsetStart": "25%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "เจ้าหน้าที่",
+                  "weight": "bold",
+                  "size": "lg"
+                }
+              ],
+              "position": "absolute",
+              "width": "90%",
+              "offsetTop": "36%",
+              "offsetStart": "5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "name_helper",
+                  "weight": "bold",
+                  "size": "lg",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "46%",
+              "offsetTop": "47%",
+              "offsetStart": "28%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "กำลังไปช่วยเหลือ",
+                  "weight": "bold",
+                  "size": "md",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "48%",
+              "offsetTop": "62%",
+              "offsetStart": "25.5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "date",
+                  "weight": "bold",
+                  "size": "md",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "38%",
+              "offsetTop": "77%",
+              "offsetStart": "10%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "time",
+                  "weight": "bold",
+                  "size": "md",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "38%",
+              "offsetTop": "77%",
+              "offsetStart": "52%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "การช่วยเหลือเสร็จสิ้น",
+                  "weight": "bold",
+                  "size": "md",
+                  "color": "#ffffff"
+                }
+              ],
+              "position": "absolute",
+              "width": "68%",
+              "offsetTop": "88.5%",
+              "offsetStart": "17%",
+              "alignItems": "center",
+              "height": "7%",
+              "justifyContent": "center",
+              "action": {
+                "type": "postback",
+                "label": "การช่วยเหลือเสร็จสิ้น",
+                "data": "help_complete?id_sos_map",
+                "displayText": "การช่วยเหลือเสร็จสิ้น"
+              }
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}

@@ -200,15 +200,9 @@ class LineApiController extends Controller
         $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
 
-        $data = [
+        $data_ = [
             "title" => "ID Ask_for_help",
             "content" => "ข้อมูลask_for_help :".$data_sos->id,
-        ];
-        MyLog::create($data);
-
-        $data = [
-            "title" => "ID organizer",
-            "content" => "ข้อมูลask_for_help :".$data_partner_helpers->id,
         ];
         MyLog::create($data);
 
@@ -223,11 +217,11 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if ($users != '[]') { // เป็นสมาชิก
 
-                $data = [
+                $data_525 = [
                     "title" => "เข้า if ",
                     "content" => "ข้อมูลask_for_help :".$users,
                 ];
-                MyLog::create($data);
+                MyLog::create($data_525);
 
                 $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id );
 
@@ -304,7 +298,7 @@ class LineApiController extends Controller
 
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
-                $this->_send_register_to_groupline($data_partner_helpers);
+                // $this->_send_register_to_groupline($data_partner_helpers);
 
                 $data = [
                     "title" => "เข้า else แล้ว",

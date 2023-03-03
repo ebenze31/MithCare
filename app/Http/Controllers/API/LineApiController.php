@@ -202,7 +202,7 @@ class LineApiController extends Controller
 
         $data_55 = [
             "title" => "User",
-            "content" => "ข้อมูลask_for_help :".$users->name,
+            "content" => $users,
         ];
         MyLog::create($data_55);
 

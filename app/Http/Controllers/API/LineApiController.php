@@ -210,13 +210,8 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if (!empty($users)) { // เป็นสมาชิก
 
-                $data_525 = [
-                    "title" => "เข้า if ",
-                    "content" => "เข้า if แล้ว",
-                ];
-                MyLog::create($data_525);
 
-                $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
+
 
                     // ตรวจสอบสถานนะ role
                 if (!empty($users->role)) {
@@ -237,22 +232,55 @@ class LineApiController extends Controller
                     ]);
                 }
 
-                DB::table('ask_for_helps')
-                ->where('id', $data_sos->id)
-                ->update([
-                    'helper_id' => $users->id,
-                    'name_helper' => $users->name,
-                ]);
+                   // ตรวจสอบรายชื่อคนช่วยเหลือ
+                    if (!empty($data_sos->helper_id)) {
+                        $helper_id = $data_sos->helper_id;
+                    // $explode_helper_id = explode(",",$data_sos->helper_id);
+                    for ($i=0; $i < count($helper_id); $i++) {
+
+                        if ($helper_id != $users->id) {
+                            $helper_double = "No";
+                        }else{
+                            $helper_double = "Yes";
+                            break;
+                        }
+
+                    }
+
+                    if ($helper_double != "Yes") {
+
+                        DB::table('ask_for_helps')
+                            ->where('id', $data_sos->id)
+                            ->update([
+                            'helper_id' => $users->id,
+                            'name_helper' => $users->name,
+                        ]);
+
+                        $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
+
+                        }else{
+                            // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
+                            $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
+                        }
+
+                    }else {
+                        DB::table('sos_maps')
+                            ->where('id', $id_sos)
+                            ->update([
+                                'helper' => $users->name,
+                                'helper_id' => $users->id,
+                                'organization_helper' => $data_partner_helpers->name,
+                                'time_go_to_help' => date('Y-m-d\TH:i:s'),
+                        ]);
+
+                        $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
+
+                    }
 
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers, $event);
 
-                $data = [
-                    "title" => "เข้า else แล้ว",
-                    "content" => "เข้า else แล้ว"
-                ];
-                MyLog::create($data);
             }
 
 
@@ -356,6 +384,50 @@ class LineApiController extends Controller
 
 
 
+    }
+
+    protected function This_help_is_done($data_partner_helpers, $event , $type)
+    {
+        //การช่วยเหลือนี้เสร็จสิ้นแล้ว
+        $data_line_group = DB::table('group_lines')
+            ->where('id', $data_partner_helpers->line_group_id)
+            ->first();
+
+        // TIME ZONE
+        // $API_Time_zone = new API_Time_zone();
+        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
+
+        $template_path = storage_path('../public/json/flex_text_done.json');
+        $string_json = file_get_contents($template_path);
+
+
+        $messages = [ json_decode($string_json, true) ];
+
+        $body = [
+            "replyToken" => $event["replyToken"],
+            "messages" => $messages,
+        ];
+
+        $opts = [
+            'http' =>[
+                'method'  => 'POST',
+                'header'  => "Content-Type: application/json \r\n".
+                            'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                //'timeout' => 60
+            ]
+        ];
+
+        $context  = stream_context_create($opts);
+        $url = "https://api.line.me/v2/bot/message/reply";
+        $result = file_get_contents($url, false, $context);
+
+        // SAVE LOG
+        $data = [
+            "title" => "replyToken TO : " . $data_partner_helpers->line_group,
+            "content" => 'ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ',
+        ];
+        MyLog::create($data);
     }
 
 

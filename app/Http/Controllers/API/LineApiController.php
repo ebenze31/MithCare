@@ -180,17 +180,17 @@ class LineApiController extends Controller
         $id_sos = $data_data[0] ;
         $id_organization_helper = $data_data[1] ;
 
-        $data = [
+        $data1 = [
             "title" => "dataSOS",
             "content" => $id_sos,
         ];
-        MyLog::create($data);
+        MyLog::create($data1);
 
-        $data = [
+        $data2 = [
             "title" => "dataSOS",
             "content" => $id_organization_helper,
         ];
-        MyLog::create($data);
+        MyLog::create($data2);
 
 
         $data_sos = Ask_for_help::findOrFail($id_sos);
@@ -200,11 +200,11 @@ class LineApiController extends Controller
         $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
 
-        $data_ = [
+        $data_55 = [
             "title" => "ID Ask_for_help",
-            "content" => "ข้อมูลask_for_help :".$data_sos->id,
+            "content" => "ข้อมูลask_for_help :".$users,
         ];
-        MyLog::create($data);
+        MyLog::create($data_55);
 
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
         if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
@@ -215,11 +215,11 @@ class LineApiController extends Controller
         }else{ // การช่วยเหลือ อยู่ระหว่างดำเนินการ
 
             // ตรวจสอบการเป็นสมาชิก
-            if ($users != '[]') { // เป็นสมาชิก
+            if ($users != '[]' ) { // เป็นสมาชิก
 
                 $data_525 = [
                     "title" => "เข้า if ",
-                    "content" => "ข้อมูลask_for_help :".$users,
+                    "content" => "เข้า if แล้ว",
                 ];
                 MyLog::create($data_525);
 
@@ -231,70 +231,6 @@ class LineApiController extends Controller
                     'helper_id' => $users->id,
                     'name_helper' => $users->name,
                 ]);
-
-                // foreach ($users as $user) {
-                //     // ตรวจสอบสถานนะ role
-                //     if (!empty($user->role)) {
-                //         DB::table('users')
-                //             ->where('provider_id', $provider_id)
-                //             ->update([
-                //                 'organization' => $data_partner_helpers->name,
-                //         ]);
-                //     }else{
-                //         DB::table('users')
-                //             ->where('provider_id', $provider_id)
-                //             ->update([
-                //                 'organization' => $data_partner_helpers->name,
-                //                 'role' => 'partner',
-                //         ]);
-                //     }
-
-                //     // ตรวจสอบรายชื่อคนช่วยเหลือ
-                //     if (!empty($data_sos->helper)) {
-
-                //         $explode_helper_id = explode(",",$data_sos->helper_id);
-                //         for ($i=0; $i < count($explode_helper_id); $i++) {
-
-                //             if ($explode_helper_id[$i] != $user->id) {
-                //                 $helper_double = "No";
-                //             }else{
-                //                 $helper_double = "Yes";
-                //                 break;
-                //             }
-
-                //         }
-
-                //         if ($helper_double != "Yes") {
-                //             DB::table('sos_maps')
-                //                 ->where('id', $id_sos)
-                //                 ->update([
-                //                     'helper' => $data_sos->helper . ',' . $user->name,
-                //                     'helper_id' => $data_sos->helper_id . ',' . $user->id,
-                //                     'organization_helper' => $data_sos->organization_helper . ',' . $data_partner_helpers->name,
-                //             ]);
-
-                //             $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $user->name , $user->id ) ;
-
-                //         }else{
-                //             // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
-                //             $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
-                //         }
-
-                //     }else {
-                //         DB::table('sos_maps')
-                //             ->where('id', $id_sos)
-                //             ->update([
-                //                 'helper' => $user->name,
-                //                 'helper_id' => $user->id,
-                //                 'organization_helper' => $data_partner_helpers->name,
-                //                 'time_go_to_help' => date('Y-m-d\TH:i:s'),
-                //         ]);
-
-                //         $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $user->name , $user->id );
-
-                //     }
-
-                // }
 
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
@@ -319,33 +255,7 @@ class LineApiController extends Controller
                 ->where('groupId', $data_partner_helpers->line_group_id)
                 ->first();
 
-        // foreach ($data_line_group as $key) {
-        //     $groupId = $key->groupId ;
-        //     $groupName = $key->groupName ;
-        //     $name_time_zone = $key->time_zone ;
-        //     $group_language = $key->language ;
-        // }
 
-        // TIME ZONE
-        // $API_Time_zone = new API_Time_zone();
-        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
-
-        // $data_topic = [
-        //             "กรุณาลงทะเบียนเพื่อเริ่มใช้งาน",
-        //         ];
-
-        // for ($xi=0; $xi < count($data_topic); $xi++) {
-
-        //     $text_topic = DB::table('text_topics')
-        //             ->select($group_language)
-        //             ->where('th', $data_topic[$xi])
-        //             ->where('en', "!=", null)
-        //             ->get();
-
-        //     foreach ($text_topic as $item_of_text_topic) {
-        //         $data_topic[$xi] = $item_of_text_topic->$group_language ;
-        //     }
-        // }
 
         $template_path = storage_path('../public/json/register_line.json');
         $string_json = file_get_contents($template_path);
@@ -393,89 +303,21 @@ class LineApiController extends Controller
         ];
         MyLog::create($savelog_linegroup);
 
-        // foreach ($data_line_group as $key) {
-        //     $groupId = $key->groupId ;
-        //     $groupName = $key->groupName ;
-        //     // $name_time_zone = $key->time_zone ;
-        //     // $group_language = $key->language ;
-        // }
 
-        //user
-        // $data_users = DB::table('users')->where('id', $data_sos->user_id)->get();
-        // foreach ($data_users as $data_user) {
-
-        //     if (!empty($data_user->photo)) {
-        //         $photo_user = $data_user->photo ;
-        //     }
-        //     if (empty($data_user->photo)) {
-        //         $photo_user = $data_user->avatar ;
-        //     }
-        // }
-
-        //helper
-        // $data_helpers = DB::table('users')->where('id', $helper_id)->get();
-        // foreach ($data_helpers as $data_helper) {
-
-        //     if (!empty($data_helper->photo)) {
-        //         $photo_helper = $data_helper->photo ;
-        //     }
-        //     if (empty($data_helper->photo)) {
-        //         $photo_helper = $data_helper->avatar ;
-        //     }
-        // }
-
-        // TIME ZONE
-        // $API_Time_zone = new API_Time_zone();
-        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
-
-        // datetime
-        // $time_zone_explode = explode(" ",$time_zone);
-
-        // $date = $time_zone_explode[0] ;
-        // $time = $time_zone_explode[1] ;
-        // $utc = $time_zone_explode[3] ;
-
-        // $data_topic = [
-        //             "การขอความช่วยเหลือ",
-        //             "เจ้าหน้าที่",
-        //             "การช่วยเหลือเสร็จสิ้น",
-        //             "กำลังไปช่วยเหลือ",
-        //         ];
-
-        // for ($xi=0; $xi < count($data_topic); $xi++) {
-
-        //     $text_topic = DB::table('text_topics')
-        //             ->select($group_language)
-        //             ->where('th', $data_topic[$xi])
-        //             ->where('en', "!=", null)
-        //             ->get();
-
-        //     foreach ($text_topic as $item_of_text_topic) {
-        //         $data_topic[$xi] = $item_of_text_topic->$group_language ;
-        //     }
-        // }
 
         $template_path = storage_path('../public/json/helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
 
-        // $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
-
-        // $string_json = str_replace("การขอความช่วยเหลือ",$data_topic[0],$string_json);
-        // $string_json = str_replace("เจ้าหน้าที่",$data_topic[1],$string_json);
-        // $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[2],$string_json);
-        // $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[3],$string_json);
 
         // // user
         $string_json = str_replace("name_user",$data_sos->name,$string_json);
-        // $string_json = str_replace("TEXT_PHOTO_USER",$photo_user,$string_json);
+
         // helper
         $string_json = str_replace("name_helper",$name_helper,$string_json);
-        // $string_json = str_replace("TEXT_PHOTO_HELPER", $photo_helper,$string_json);
+
 
         $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
-        // $string_json = str_replace("date",$date,$string_json);
-        // $string_json = str_replace("time",$time,$string_json);
-        // $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
+
 
 
         $messages = [ json_decode($string_json, true) ];
@@ -506,8 +348,7 @@ class LineApiController extends Controller
         ];
         MyLog::create($data);
 
-        // ส่งไลน์หา user ที่ขอความช่วยเหลือ
-        // $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name );
+
 
     }
 

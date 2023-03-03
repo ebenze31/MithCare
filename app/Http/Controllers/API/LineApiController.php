@@ -296,9 +296,8 @@ class LineApiController extends Controller
         ];
         MyLog::create($savelog_linegroup);
 
-        $template_path = storage_path('../public/json/helper_sos_to_groupline.json');
+        $template_path = storage_path('../public/json/flex_sos_helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
-
 
         // // user
         $string_json = str_replace("name_user",$data_sos->name,$string_json);

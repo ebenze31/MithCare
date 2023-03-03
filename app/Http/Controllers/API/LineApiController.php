@@ -238,25 +238,37 @@ class LineApiController extends Controller
                    // ตรวจสอบรายชื่อคนช่วยเหลือ
                 if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
 
+                    $data4 = [
+                        "title" => "data4",
+                        "content" => "เข้า if",
+                    ];
+                    MyLog::create($data4);
                     $helper_id = $data_sos->helper_id;
 
-                        if($helper_id != $users->id) { // ถ้าไอดีคนช่วย ตรงกับ เจ้าของไอดี
+                    if($helper_id != $users->id) { // ถ้าไอดีคนช่วย ตรงกับ เจ้าของไอดี
 
-                        DB::table('ask_for_helps')
-                            ->where('id', $data_sos->id)
-                            ->update([
-                            'helper_id' => $users->id,
-                            'name_helper' => $users->name,
-                        ]);
+                    DB::table('ask_for_helps')
+                        ->where('id', $data_sos->id)
+                        ->update([
+                        'helper_id' => $users->id,
+                        'name_helper' => $users->name,
+                    ]);
 
-                        $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
+                    $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
 
-                        }else{
-                            // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
-                            $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
-                        }
+                    }else{
+                        // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
+                        $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
+                    }
 
                 }else {
+
+                    $data4 = [
+                        "title" => "data4",
+                        "content" => "เข้า else",
+                    ];
+                    MyLog::create($data4);
+
                     DB::table('sos_maps')
                         ->where('id', $id_sos)
                         ->update([

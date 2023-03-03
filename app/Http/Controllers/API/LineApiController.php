@@ -200,6 +200,12 @@ class LineApiController extends Controller
                     'name_helper' => $users->name,
                 ]);
 
+                $data = [
+                    "title" => "check update partner",
+                    "content" => $users,
+                ];
+                MyLog::create($data);
+
                 // foreach ($users as $user) {
                 //     // ตรวจสอบสถานนะ role
                 //     if (!empty($user->role)) {
@@ -269,11 +275,7 @@ class LineApiController extends Controller
                 $this->_send_register_to_groupline($data_partner_helpers);
             }
 
-            $data = [
-                "title" => "check id",
-                "content" => $data_sos,
-            ];
-            MyLog::create($data);
+
         }
 
     }

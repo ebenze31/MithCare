@@ -395,7 +395,7 @@ class LineApiController extends Controller
            // SAVE LOG
         $savelog_linegroup = [
             "title" => "data_group",
-            "content" => json_encode($data_line_group, JSON_UNESCAPED_UNICODE),
+            "content" => "ทดสอบ",
         ];
         MyLog::create($savelog_linegroup);
 

@@ -199,13 +199,6 @@ class LineApiController extends Controller
 
         $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
-
-        $data_55 = [
-            "title" => "User",
-            "content" => $users,
-        ];
-        MyLog::create($data_55);
-
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
         if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
 
@@ -215,7 +208,7 @@ class LineApiController extends Controller
         }else{ // การช่วยเหลือ อยู่ระหว่างดำเนินการ
 
             // ตรวจสอบการเป็นสมาชิก
-            if ($users != '[]' ) { // เป็นสมาชิก
+            if (!empty($users)) { // เป็นสมาชิก
 
                 $data_525 = [
                     "title" => "เข้า if ",

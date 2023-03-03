@@ -289,14 +289,14 @@ class LineApiController extends Controller
                     ->where('id', $data_partner_helpers->line_group_id)
                     ->first();
 
-           // SAVE LOG
+        // SAVE LOG
         $savelog_linegroup = [
             "title" => "data_group",
             "content" => "ทดสอบ",
         ];
         MyLog::create($savelog_linegroup);
 
-        $template_path = storage_path('../public/json/helper_to_groupline.json');
+        $template_path = storage_path('../public/json/helper_sos_to_groupline.json');
         $string_json = file_get_contents($template_path);
 
 

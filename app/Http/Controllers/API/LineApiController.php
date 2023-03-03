@@ -218,6 +218,25 @@ class LineApiController extends Controller
 
                 $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
 
+                    // ตรวจสอบสถานนะ role
+                if (!empty($users->role)) {
+                    //อัพเดต ชื่อหน่วยงาน
+                    DB::table('users')
+                        ->where('provider_id', $provider_id)
+                        ->update([
+                            'organization' => $data_partner_helpers->name,
+                    ]);
+
+                }else{
+                    //อัพเดต ชื่อหน่วยงาน + role partner
+                    DB::table('users')
+                        ->where('provider_id', $provider_id)
+                        ->update([
+                            'organization' => $data_partner_helpers->name,
+                            'role' => 'partner',
+                    ]);
+                }
+
                 DB::table('ask_for_helps')
                 ->where('id', $data_sos->id)
                 ->update([

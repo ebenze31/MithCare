@@ -199,21 +199,15 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if ($users != '[]') { // เป็นสมาชิก
 
+
+                $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id );
+
                 DB::table('ask_for_helps')
                 ->where('id', $data_sos->id)
                 ->update([
                     'helper_id' => $users->id,
                     'name_helper' => $users->name,
                 ]);
-
-                $data = [
-                    "title" => "check update partner",
-                    "content" => "เข้า if แล้ว"
-                ];
-                MyLog::create($data);
-
-                $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $user->name , $user->id );
-
 
                 // foreach ($users as $user) {
                 //     // ตรวจสอบสถานนะ role
@@ -283,11 +277,11 @@ class LineApiController extends Controller
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers);
 
-                $data = [
-                    "title" => "check update partner",
-                    "content" => "เข้า else แล้ว"
-                ];
-                MyLog::create($data);
+                // $data = [
+                //     "title" => "check update partner",
+                //     "content" => "เข้า else แล้ว"
+                // ];
+                // MyLog::create($data);
             }
 
 
@@ -366,13 +360,14 @@ class LineApiController extends Controller
     protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id, )
     {
         $data_line_group = DB::table('group_lines')
-                    ->where('groupName', $data_partner_helpers->line_group)
+                    ->where('groupId', $data_partner_helpers->line_group_id)
                     ->get();
 
         foreach ($data_line_group as $key) {
             $groupId = $key->groupId ;
-            $name_time_zone = $key->time_zone ;
-            $group_language = $key->language ;
+            $groupName = $key->groupName ;
+            // $name_time_zone = $key->time_zone ;
+            // $group_language = $key->language ;
         }
 
         //user
@@ -410,42 +405,42 @@ class LineApiController extends Controller
         // $time = $time_zone_explode[1] ;
         // $utc = $time_zone_explode[3] ;
 
-        $data_topic = [
-                    "การขอความช่วยเหลือ",
-                    "เจ้าหน้าที่",
-                    "การช่วยเหลือเสร็จสิ้น",
-                    "กำลังไปช่วยเหลือ",
-                ];
+        // $data_topic = [
+        //             "การขอความช่วยเหลือ",
+        //             "เจ้าหน้าที่",
+        //             "การช่วยเหลือเสร็จสิ้น",
+        //             "กำลังไปช่วยเหลือ",
+        //         ];
 
-        for ($xi=0; $xi < count($data_topic); $xi++) {
+        // for ($xi=0; $xi < count($data_topic); $xi++) {
 
-            $text_topic = DB::table('text_topics')
-                    ->select($group_language)
-                    ->where('th', $data_topic[$xi])
-                    ->where('en', "!=", null)
-                    ->get();
+        //     $text_topic = DB::table('text_topics')
+        //             ->select($group_language)
+        //             ->where('th', $data_topic[$xi])
+        //             ->where('en', "!=", null)
+        //             ->get();
 
-            foreach ($text_topic as $item_of_text_topic) {
-                $data_topic[$xi] = $item_of_text_topic->$group_language ;
-            }
-        }
+        //     foreach ($text_topic as $item_of_text_topic) {
+        //         $data_topic[$xi] = $item_of_text_topic->$group_language ;
+        //     }
+        // }
 
         $template_path = storage_path('../public/json/helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
 
-        $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
+        // $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
 
-        $string_json = str_replace("การขอความช่วยเหลือ",$data_topic[0],$string_json);
-        $string_json = str_replace("เจ้าหน้าที่",$data_topic[1],$string_json);
-        $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[2],$string_json);
-        $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[3],$string_json);
+        // $string_json = str_replace("การขอความช่วยเหลือ",$data_topic[0],$string_json);
+        // $string_json = str_replace("เจ้าหน้าที่",$data_topic[1],$string_json);
+        // $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[2],$string_json);
+        // $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[3],$string_json);
 
         // // user
         $string_json = str_replace("name_user",$data_sos->name,$string_json);
-        $string_json = str_replace("TEXT_PHOTO_USER",$photo_user,$string_json);
+        // $string_json = str_replace("TEXT_PHOTO_USER",$photo_user,$string_json);
         // helper
         $string_json = str_replace("name_helper",$name_helper,$string_json);
-        $string_json = str_replace("TEXT_PHOTO_HELPER", $photo_helper,$string_json);
+        // $string_json = str_replace("TEXT_PHOTO_HELPER", $photo_helper,$string_json);
 
         $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
         // $string_json = str_replace("date",$date,$string_json);
@@ -482,7 +477,7 @@ class LineApiController extends Controller
         MyLog::create($data);
 
         // ส่งไลน์หา user ที่ขอความช่วยเหลือ
-        $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name );
+        // $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name );
 
     }
 

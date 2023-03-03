@@ -199,6 +199,11 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if ($users != '[]') { // เป็นสมาชิก
 
+                $data = [
+                    "title" => "เข้า if ",
+                    "content" => "ข้อมูลask_for_help :".$users,
+                ];
+                MyLog::create($data);
 
                 $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id );
 

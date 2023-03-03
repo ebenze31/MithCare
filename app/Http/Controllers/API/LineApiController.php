@@ -98,6 +98,12 @@ class LineApiController extends Controller
         $data_postback_explode = explode("?",$event["postback"]["data"]);
         $data_postback = $data_postback_explode[0] ;
 
+        $data = [
+            "title" => "Line",
+            "content" => $data_postback,
+        ];
+        MyLog::create($data);
+
         // $data_postback = $event["postback"]["data"] ;
 
         switch($data_postback){

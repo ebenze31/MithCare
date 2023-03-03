@@ -179,28 +179,28 @@ class LineApiController extends Controller
 
         $data_partner_helpers = Partner::findOrFail($id_organization_helper);
 
-        $users = DB::table('users')->where('provider_id', $provider_id)->get();
+        $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
 
-        $data = [
-            "title" => "check update partner",
-            "content" => "ข้อมูลask_for_help :".$data_sos,
-        ];
-        MyLog::create($data);
+        // $data = [
+        //     "title" => "check update partner",
+        //     "content" => "ข้อมูลask_for_help :".$data_sos,
+        // ];
+        // MyLog::create($data);
 
 
-        $data = [
-            "title" => "check update partner",
-            "content" => "ข้อมูล partner :".$data_partner_helpers,
-        ];
-        MyLog::create($data);
+        // $data = [
+        //     "title" => "check update partner",
+        //     "content" => "ข้อมูล partner :".$data_partner_helpers,
+        // ];
+        // MyLog::create($data);
 
 
-        $data = [
-            "title" => "check update partner",
-            "content" => "เข้า user :".$users,
-        ];
-        MyLog::create($data);
+        // $data = [
+        //     "title" => "check update partner",
+        //     "content" => "เข้า user :".$users,
+        // ];
+        // MyLog::create($data);
 
         // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
         if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
@@ -216,7 +216,6 @@ class LineApiController extends Controller
                 DB::table('ask_for_helps')
                 ->where('partner_id', $data_sos->partner_id)
                 ->update([
-                    'organization' => $data_partner_helpers->name,
                     'helper_id' => $users->id,
                     'name_helper' => $users->name,
                 ]);

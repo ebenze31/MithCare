@@ -216,7 +216,7 @@ class LineApiController extends Controller
                 ];
                 MyLog::create($data_525);
 
-                $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id );
+                $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
 
                 DB::table('ask_for_helps')
                 ->where('id', $data_sos->id)
@@ -227,7 +227,7 @@ class LineApiController extends Controller
 
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
-                // $this->_send_register_to_groupline($data_partner_helpers);
+                $this->_send_register_to_groupline($data_partner_helpers, $event);
 
                 $data = [
                     "title" => "เข้า else แล้ว",
@@ -241,13 +241,12 @@ class LineApiController extends Controller
 
     }
 
-    protected function _send_register_to_groupline($data_partner_helpers)
+    protected function _send_register_to_groupline($data_partner_helpers , $event)
     {
         //กรุณาลงทะเบียนเพื่อเริ่มใช้งาน
         $data_line_group = DB::table('group_lines')
                 ->where('groupId', $data_partner_helpers->line_group_id)
                 ->first();
-
 
 
         $template_path = storage_path('../public/json/register_line.json');
@@ -256,7 +255,7 @@ class LineApiController extends Controller
         $messages = [ json_decode($string_json, true) ];
 
         $body = [
-            "to" => $data_line_group->groupId,
+            "replyToken" => $event["replyToken"],
             "messages" => $messages,
         ];
 
@@ -271,7 +270,7 @@ class LineApiController extends Controller
         ];
 
         $context  = stream_context_create($opts);
-        $url = "https://api.line.me/v2/bot/message/push";
+        $url = "https://api.line.me/v2/bot/message/reply";
         $result = file_get_contents($url, false, $context);
 
         // SAVE LOG
@@ -283,7 +282,7 @@ class LineApiController extends Controller
     }
 
 
-    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id )
+    protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id , $event)
     {
         $data_line_group = DB::table('group_lines')
                     ->where('id', $data_partner_helpers->line_group_id)
@@ -311,7 +310,7 @@ class LineApiController extends Controller
         $messages = [ json_decode($string_json, true) ];
 
         $body = [
-            "to" => $data_line_group->groupId,
+            "replyToken" => $event["replyToken"],
             "messages" => $messages,
         ];
 
@@ -326,7 +325,7 @@ class LineApiController extends Controller
         ];
 
         $context  = stream_context_create($opts);
-        $url = "https://api.line.me/v2/bot/message/push";
+        $url = "https://api.line.me/v2/bot/message/reply";
         $result = file_get_contents($url, false, $context);
 
         // SAVE LOG

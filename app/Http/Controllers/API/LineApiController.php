@@ -252,6 +252,7 @@ class LineApiController extends Controller
                         ->update([
                         'helper_id' => $users->id,
                         'name_helper' => $users->name,
+                        'time_go_to_help' => date('Y-m-d\TH:i:s'),
                     ]);
 
                     $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
@@ -269,12 +270,11 @@ class LineApiController extends Controller
                     ];
                     MyLog::create($data4);
 
-                    DB::table('sos_maps')
+                    DB::table('ask_for_helps')
                         ->where('id', $id_sos)
                         ->update([
-                            'helper' => $users->name,
+                            'name_helper' => $users->name,
                             'helper_id' => $users->id,
-                            'organization_helper' => $data_partner_helpers->name,
                             'time_go_to_help' => date('Y-m-d\TH:i:s'),
                     ]);
 

@@ -687,9 +687,16 @@ class LineApiController extends Controller
         $date_help = date('d/m/Y', $date_time_help);
         $time_help = date('g:i:sa', $date_time_help);
 
+
+
         //datetime success
         $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
 
+        $data444 = [
+            "title" => "เข้า if 696",
+            "content" => json_encode($time_zone_explode, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data444);
         // $date_success = $time_zone_explode[0];
         // $time_success = $time_zone_explode[1];
 
@@ -697,7 +704,7 @@ class LineApiController extends Controller
         $time_help_complete = $data_sos_map->help_complete_time;
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
-        $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
+        // $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
@@ -733,7 +740,7 @@ class LineApiController extends Controller
             $string_json = str_replace("name_help",$data_sos_map->name_helper,$string_json);
             $string_json = str_replace("date_help",$date_help,$string_json);
             $string_json = str_replace("time_help",$time_help,$string_json);
-            $string_json = str_replace("count_help",$count_time_help,$string_json);
+            // $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
             // $string_json = str_replace("date_success",$date_success,$string_json);

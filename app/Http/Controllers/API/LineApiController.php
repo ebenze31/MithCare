@@ -298,6 +298,13 @@ class LineApiController extends Controller
         $date = $time_zone_explode[0] ;
         $time = $time_zone_explode[1] ;
 
+        // SAVE LOG
+        $data222 = [
+            "title" => "วันเวลา",
+            "content" => $date . "-" . $time,
+        ];
+        MyLog::create($data222);
+
         $template_path = storage_path('../public/json/flex_sos_helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
 

@@ -293,6 +293,14 @@ class LineApiController extends Controller
         //             ->where('id', $data_partner_helpers->line_group_id)
         //             ->first();
         // datetime
+
+          // SAVE LOG
+          $data222 = [
+            "title" => "ข้อมูลsosที่ส่งมา",
+            "content" => json_encode($data_sos, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data222);
+
         $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
 
         $date = $time_zone_explode[0] ;

@@ -301,7 +301,11 @@ class LineApiController extends Controller
         ];
         MyLog::create($data222);
 
-        $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
+        $data_time_go_to_help = DB::table('ask_for_helps')
+                    ->where('id', $data_sos->id)
+                    ->first();
+
+        $time_zone_explode = explode(" ",$data_time_go_to_help->time_go_to_help);
 
         $date = $time_zone_explode[0] ;
         $time = $time_zone_explode[1] ;
@@ -404,6 +408,7 @@ class LineApiController extends Controller
         MyLog::create($data);
     }
 
+
     protected function _send_helper_to_user($helper_id , $data_sos , $name_partner_helpers )
     {
 
@@ -416,8 +421,12 @@ class LineApiController extends Controller
             // $API_Time_zone = new API_Time_zone();
             // $time_zone = $API_Time_zone->change_Time_zone($user->time_zone);
 
-            // datetime
-            $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
+            $data_time_go_to_help = DB::table('ask_for_helps')
+                    ->where('id', $data_sos->id)
+                    ->first();
+
+            //date time
+            $time_zone_explode = explode(" ",$data_time_go_to_help->time_go_to_help);
 
             $date = $time_zone_explode[0] ;
             $time = $time_zone_explode[1] ;

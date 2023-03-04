@@ -747,10 +747,16 @@ class LineApiController extends Controller
             $string_json = str_replace("time_sos",$time_sos,$string_json);
 
             //help
-            $string_json = str_replace("name_help",$data_sos_map->helper,$string_json);
+            $string_json = str_replace("name_help",$data_sos_map->name_helper,$string_json);
             $string_json = str_replace("date_help",$date_help,$string_json);
             $string_json = str_replace("time_help",$time_help,$string_json);
             // $string_json = str_replace("count_help",$count_time_help,$string_json);
+
+            $data555 = [
+                "title" => "เข้า if",
+                "content" => "757",
+            ];
+            MyLog::create($data555);
 
             // success
             // $string_json = str_replace("date_success",$date_success,$string_json);
@@ -761,6 +767,12 @@ class LineApiController extends Controller
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
             $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 
+            $data555 = [
+                "title" => "เข้า if",
+                "content" => "772",
+            ];
+            MyLog::create($data555);
+
             $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
             $string_json = str_replace("ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",$data_topic[0],$string_json);
             $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[1],$string_json);
@@ -769,6 +781,13 @@ class LineApiController extends Controller
             $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[4],$string_json);
             $string_json = str_replace("ช่วยเหลือเสร็จสิ้น",$data_topic[5],$string_json);
             $string_json = str_replace("ใช้เวลา",$data_topic[6],$string_json);
+
+            $data555 = [
+                "title" => "เข้า if",
+                "content" => "775",
+            ];
+            MyLog::create($data555);
+
 
 
             $messages = [ json_decode($string_json, true) ];

@@ -704,17 +704,18 @@ class LineApiController extends Controller
             "content" => json_encode($time_created, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data);
+
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
-                    $data = [
-                        "title" => "708",
-                        "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
-                    ];
-                    MyLog::create($data);
+                    // $data = [
+                    //     "title" => "708",
+                    //     "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
+                    // ];
+                    // MyLog::create($data);
                     // $data = [
                     //     "title" => "713",
                     //     "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),

@@ -707,7 +707,14 @@ class LineApiController extends Controller
 
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
-        $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
+        $data = [
+            "title" => "711",
+            "content" => json_encode($time_go_to_help, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
+
+        //crash
+        // $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 

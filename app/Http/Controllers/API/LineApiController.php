@@ -696,13 +696,13 @@ class LineApiController extends Controller
         $time_success = $time_zone_explode[1];
 
         $time_created = $data_sos_map->created_at;
-        $time_help_complete = "2023-03-04 13:48:49";
+        // $time_help_complete = $time_created;
         // $time_help_complete = $data_sos_map->help_complete_time;
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
-        $count_complete = $this->count_range_time($time_created , $time_help_complete);
+        // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
                     $data = [
                         "title" => "708",
@@ -714,10 +714,10 @@ class LineApiController extends Controller
                     //     "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
                     // ];
                     // MyLog::create($data);
-                    $data = [
-                        "title" => "717",
-                        "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
-                    ];
+                    // $data = [
+                    //     "title" => "717",
+                    //     "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
+                    // ];
                     MyLog::create($data);
         //สถานะการช่วยเหลือ เสร็จสิ้น
         if (empty($data_sos_map->help_complete) ) {
@@ -757,7 +757,7 @@ class LineApiController extends Controller
             $string_json = str_replace("time_success",$time_success,$string_json);
             // $string_json = str_replace("count_success",$count_success,$string_json);
 
-            $string_json = str_replace("count_complete",$count_complete,$string_json);
+            // $string_json = str_replace("count_complete",$count_complete,$string_json);
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
             $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 

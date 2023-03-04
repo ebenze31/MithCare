@@ -700,27 +700,33 @@ class LineApiController extends Controller
         MyLog::create($data123);
 
         // datetime success
-        $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
+        // $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
 
-        $date_success = $time_zone_explode[0];
-        $time_success = $time_zone_explode[1];
+        // $date_success = $time_zone_explode[0];
+        // $time_success = $time_zone_explode[1];
 
-        $time_created = $data_sos_map->created_at;
-        $time_help_complete = $data_sos_map->help_complete_time;
-        $time_go_to_help = $data_sos_map->time_go_to_help;
+        // $time_created = $data_sos_map->created_at;
+        // $time_help_complete = $data_sos_map->help_complete_time;
+        // $time_go_to_help = $data_sos_map->time_go_to_help;
 
-        $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
-        $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
-        $count_complete = $this->count_range_time($time_created , $time_help_complete);
+        // $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
+        // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
+        // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
-        $data444 = [
-            "title" => "format_datetime",
-            "content" => json_encode($count_time_help, $count_success, $count_complete, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data444);
+        // $data444 = [
+        //     "title" => "format_datetime",
+        //     "content" => json_encode($count_time_help, $count_success, $count_complete, JSON_UNESCAPED_UNICODE),
+        // ];
+        // MyLog::create($data444);
 
         //สถานะการช่วยเหลือ เสร็จสิ้น
         if (empty($data_sos_map->help_complete) ) {
+
+            $data444 = [
+                "title" => "เข้า if",
+                "content" => "727",
+            ];
+            MyLog::create($data444);
 
             $data_topic = [
                         "ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",
@@ -745,14 +751,14 @@ class LineApiController extends Controller
             $string_json = str_replace("name_help",$data_sos_map->helper,$string_json);
             $string_json = str_replace("date_help",$date_help,$string_json);
             $string_json = str_replace("time_help",$time_help,$string_json);
-            $string_json = str_replace("count_help",$count_time_help,$string_json);
+            // $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
-            $string_json = str_replace("date_success",$date_success,$string_json);
-            $string_json = str_replace("time_success",$time_success,$string_json);
-            $string_json = str_replace("count_success",$count_success,$string_json);
+            // $string_json = str_replace("date_success",$date_success,$string_json);
+            // $string_json = str_replace("time_success",$time_success,$string_json);
+            // $string_json = str_replace("count_success",$count_success,$string_json);
 
-            $string_json = str_replace("count_complete",$count_complete,$string_json);
+            // $string_json = str_replace("count_complete",$count_complete,$string_json);
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
             $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 
@@ -798,6 +804,13 @@ class LineApiController extends Controller
             return $result;
 
         }else{
+
+            $data444 = [
+                "title" => "เข้า else",
+                "content" => "[บรรทัด 810]",
+            ];
+            MyLog::create($data444);
+
             $data_topic = [
                         "ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",
                     ];

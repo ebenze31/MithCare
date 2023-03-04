@@ -698,6 +698,12 @@ class LineApiController extends Controller
         $time_created = $data_sos_map->created_at;
         // $time_help_complete = $time_created;
         // $time_help_complete = $data_sos_map->help_complete_time;
+
+        $data = [
+            "title" => "703",
+            "content" => json_encode($time_created, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
@@ -750,7 +756,7 @@ class LineApiController extends Controller
             $string_json = str_replace("name_help",$data_sos_map->name_helper,$string_json);
             $string_json = str_replace("date_help",$date_help,$string_json);
             $string_json = str_replace("time_help",$time_help,$string_json);
-            $string_json = str_replace("count_help",$count_time_help,$string_json);
+            // $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
             $string_json = str_replace("date_success",$date_success,$string_json);

@@ -1,0 +1,200 @@
+{
+    "type": "flex",
+    "altText": "ตัวอย่าง",
+    "contents": {
+        "type": "bubble",
+        "size": "giga",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://i.ibb.co/vwYzNDm/Help-to-user.png",
+              "size": "full",
+              "aspectRatio": "2500:3500",
+              "aspectMode": "cover"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "เรียนคุณ user_name",
+                  "color": "#ffffff",
+                  "weight": "bold",
+                  "size": "md"
+                },
+                {
+                  "type": "text",
+                  "size": "md",
+                  "text": "เจ้าหน้าที่กำลังเดินทางไปหาคุณ",
+                  "color": "#ffffff",
+                  "wrap": true,
+                  "maxLines": 2
+                }
+              ],
+              "position": "absolute",
+              "offsetTop": "16.5%",
+              "offsetStart": "24%",
+              "width": "66%",
+              "height": "15%",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "UTC",
+                  "size": "xl",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#ffffff"
+                }
+              ],
+              "width": "22%",
+              "position": "absolute",
+              "offsetStart": "44%",
+              "offsetTop": "39.3%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "date",
+                  "size": "xl",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#ffffff"
+                }
+              ],
+              "width": "40%",
+              "position": "absolute",
+              "offsetStart": "8%",
+              "offsetTop": "54.5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "time",
+                  "size": "xl",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#ffffff"
+                }
+              ],
+              "width": "40%",
+              "position": "absolute",
+              "offsetStart": "53%",
+              "offsetTop": "54.5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ข้อมูลเจ้าหน้าที่",
+                  "size": "xl",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#ffffff"
+                }
+              ],
+              "width": "90%",
+              "position": "absolute",
+              "offsetStart": "5%",
+              "offsetTop": "73.5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "image",
+                  "url": "https://scdn.line-apps.com/clip13.jpg",
+                  "aspectMode": "cover",
+                  "size": "full"
+                }
+              ],
+              "width": "18%",
+              "position": "absolute",
+              "offsetStart": "7%",
+              "offsetTop": "82%",
+              "cornerRadius": "100px",
+              "height": "12.6%"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "hello, world",
+                  "size": "xl",
+                  "contents": [
+                    {
+                      "type": "span",
+                      "text": "เจ้าหน้าที่",
+                      "weight": "bold",
+                      "color": "#ffffff"
+                    },
+                    {
+                      "type": "span",
+                      "text": " "
+                    },
+                    {
+                      "type": "span",
+                      "text": "name_helper",
+                      "color": "#Ffffff"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "text": "hello, world",
+                  "size": "xl",
+                  "contents": [
+                    {
+                      "type": "span",
+                      "text": "จาก",
+                      "weight": "bold",
+                      "color": "#ffffff"
+                    },
+                    {
+                      "type": "span",
+                      "text": " "
+                    },
+                    {
+                      "type": "span",
+                      "text": "zzz",
+                      "color": "#ffffff"
+                    }
+                  ]
+                }
+              ],
+              "width": "80%",
+              "position": "absolute",
+              "offsetStart": "15%",
+              "offsetTop": "83%",
+              "alignItems": "center",
+              "cornerRadius": "250px"
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}

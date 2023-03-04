@@ -238,29 +238,8 @@ class LineApiController extends Controller
                    // ตรวจสอบรายชื่อคนช่วยเหลือ
                 if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
 
-                    $data4 = [
-                        "title" => "data4",
-                        "content" => "เข้า if",
-                    ];
-                    MyLog::create($data4);
-                    $helper_id = $data_sos->helper_id;
-
-                    if($helper_id != $users->id) { // ถ้าไอดีคนช่วย ตรงกับ เจ้าของไอดี
-
-                    DB::table('ask_for_helps')
-                        ->where('id', $data_sos->id)
-                        ->update([
-                        'helper_id' => $users->id,
-                        'name_helper' => $users->name,
-                        'time_go_to_help' => date('Y-m-d\TH:i:s'),
-                    ]);
-
-                    $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
-
-                    }else{
                         // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
                         $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
-                    }
 
                 }else {
 
@@ -296,9 +275,9 @@ class LineApiController extends Controller
     protected function _send_register_to_groupline($data_partner_helpers , $event)
     {
         //กรุณาลงทะเบียนเพื่อเริ่มใช้งาน
-        $data_line_group = DB::table('group_lines')
-                ->where('groupId', $data_partner_helpers->line_group_id)
-                ->first();
+        // $data_line_group = DB::table('group_lines')
+        //         ->where('groupId', $data_partner_helpers->line_group_id)
+        //         ->first();
 
 
         $template_path = storage_path('../public/json/register_line.json');
@@ -335,9 +314,9 @@ class LineApiController extends Controller
 
     protected function _send_helper_to_groupline($data_sos , $data_partner_helpers , $name_helper , $helper_id , $event)
     {
-        $data_line_group = DB::table('group_lines')
-                    ->where('id', $data_partner_helpers->line_group_id)
-                    ->first();
+        // $data_line_group = DB::table('group_lines')
+        //             ->where('id', $data_partner_helpers->line_group_id)
+        //             ->first();
 
         // SAVE LOG
         $savelog_linegroup = [
@@ -386,7 +365,8 @@ class LineApiController extends Controller
         ];
         MyLog::create($data);
 
-
+        // ส่งไลน์หา user ที่ขอความช่วยเหลือ
+        $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name);
 
     }
 
@@ -433,6 +413,81 @@ class LineApiController extends Controller
             "content" => 'ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ',
         ];
         MyLog::create($data);
+    }
+
+    protected function _send_helper_to_user($helper_id , $user_id , $name_partner_helpers )
+    {
+
+        $user = DB::table('users')->where('id', $user_id)->first();
+        $data_helper = DB::table('users')->where('id', $helper_id)->first();
+
+            // $user_language = $user->language ;
+
+            // TIME ZONE
+            // $API_Time_zone = new API_Time_zone();
+            // $time_zone = $API_Time_zone->change_Time_zone($user->time_zone);
+
+            // datetime
+            // $time_zone_explode = explode(" ",$time_zone);
+
+            // $date = $time_zone_explode[0] ;
+            // $time = $time_zone_explode[1] ;
+            // $utc = $time_zone_explode[3] ;
+
+
+            $template_path = storage_path('../public/json/flex_helper_to_user.json');
+            $string_json = file_get_contents($template_path);
+
+            // $string_json = str_replace("date",$date,$string_json);
+            // $string_json = str_replace("time",$time,$string_json);
+            // $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
+
+            // user
+            $string_json = str_replace("user_name",$user->name,$string_json);
+
+            //helper
+
+            if (!empty($data_helper->photo)) {
+                $photo_helper = "https://www.viicheck.com/storage/".$data_helper->photo ;
+            }
+            if (empty($data_helper->photo)) {
+                $photo_helper = $data_helper->avatar ;
+            }
+
+            $name_helper = $data_helper->name ;
+
+            $string_json = str_replace("name_helper",$name_helper,$string_json);
+            $string_json = str_replace("https://scdn.line-apps.com/clip13.jpg",$photo_helper,$string_json);
+            $string_json = str_replace("zzz",$name_partner_helpers,$string_json);
+
+            $messages = [ json_decode($string_json, true) ];
+
+            $body = [
+                "to" => $user->provider_id,
+                "messages" => $messages,
+            ];
+
+            $opts = [
+                'http' =>[
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/json \r\n".
+                                'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                    'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                    //'timeout' => 60
+                ]
+            ];
+
+            $context  = stream_context_create($opts);
+            $url = "https://api.line.me/v2/bot/message/push";
+            $result = file_get_contents($url, false, $context);
+
+            // SAVE LOG
+            $data = [
+                "title" => "send_helper_to_user",
+                "content" => $user->name . 'รอรับการช่วยเหลือจากเจ้าหน้าที่',
+            ];
+            MyLog::create($data);
+
     }
 
 

@@ -739,11 +739,10 @@ class LineApiController extends Controller
                     ];
 
             $template_path = storage_path('../public/json/flex_sos_map_success.json');
-
             $string_json = file_get_contents($template_path);
 
             // sos
-            $string_json = str_replace("name_sos",$data_sos_map->name,$string_json);
+            $string_json = str_replace("name_sos",$data_sos_map->name_user,$string_json);
             $string_json = str_replace("date_sos",$date_sos,$string_json);
             $string_json = str_replace("time_sos",$time_sos,$string_json);
 

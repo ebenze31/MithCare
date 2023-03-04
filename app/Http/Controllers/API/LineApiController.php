@@ -117,6 +117,9 @@ class LineApiController extends Controller
             case "sos" :
                 $this->sos_helper($data_postback_explode[1] , $event["source"]["userId"] , $event);
                 break;
+            case "help_complete" :
+                $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);
+                break;
             // case "accept_pill" :
             //     $line->_pushguestLine(null, $event, "accept_pill");
             //     $line->reply_success($event , $data_postback);
@@ -125,11 +128,45 @@ class LineApiController extends Controller
             //     $line->_pushguestLine(null, $event, "wait");
             //     $line->reply_success($event , $data_postback);
             //     break;
-            // case "help_complete" :
-            //     $this->check_help_complete_by_helper($event, $data_postback, $data_postback_explode[1]);
-            //     break;
         }
 
+    }
+
+    function check_help_complete_by_helper($event, $data_postback, $id_sos){
+
+        $data = [
+            "title" => "Line",
+            "content" => $id_sos,
+        ];
+        MyLog::create($data);
+
+        $data_sos = Ask_for_help::where("id" , $id_sos)->first();
+        $data_helpers = User::where('provider_id' , $event["source"]["userId"])->first();
+
+        $data_groupline = Group_line::where('groupId',$event["source"]["groupId"])->first();
+        $id_organization_helper = $data_groupline->partner_id ;
+        $data_partner_helpers = Partner::findOrFail($id_organization_helper);
+
+        $helper_id_explode = explode(",",$data_sos->helper_id);
+
+        if (count($helper_id_explode) == 1) {
+            if ($helper_id_explode[0] == $data_helpers->id) {
+                $this->reply_success_groupline($event , $data_postback, $id_sos);
+                $this->help_complete($id_sos);
+            }else{
+                // ไม่สามารถกดได้
+                $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
+            }
+        }else{
+            if (in_array($data_helpers->id, $helper_id_explode)){
+                $this->reply_success_groupline($event , $data_postback, $id_sos);
+                $this->help_complete($id_sos);
+            }
+            else{
+                // ไม่สามารถกดได้
+                $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
+            }
+        }
     }
 
     public function save_group_line($event)

@@ -692,25 +692,12 @@ class LineApiController extends Controller
         //datetime success
         $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
 
-        $data444 = [
-            "title" => "เข้า if 696",
-            "content" => json_encode($time_zone_explode, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data444);
         $date_success = $time_zone_explode[0];
         $time_success = $time_zone_explode[1];
-        $data444 = [
-            "title" => "เข้า if 703",
-            "content" => json_encode($date_success, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data444);
-        $data444 = [
-            "title" => "เข้า if 708",
-            "content" => json_encode($time_success, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data444);
+
         $time_created = $data_sos_map->created_at;
-        $time_help_complete = $data_sos_map->help_complete_time;
+        $time_help_complete = "2023-03-04 13:48:49";
+        // $time_help_complete = $data_sos_map->help_complete_time;
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
         // $count_time_help = $this->count_range_time($time_created , $time_go_to_help);

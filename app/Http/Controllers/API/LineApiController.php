@@ -699,7 +699,7 @@ class LineApiController extends Controller
 
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
-        $count_complete = $this->count_range_time($time_created , $time_help_complete);
+        // $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
 
         //สถานะการช่วยเหลือ เสร็จสิ้น
@@ -740,7 +740,7 @@ class LineApiController extends Controller
             // $string_json = str_replace("time_success",$time_success,$string_json);
             // $string_json = str_replace("count_success",$count_success,$string_json);
 
-            $string_json = str_replace("count_complete",$count_complete,$string_json);
+            // $string_json = str_replace("count_complete",$count_complete,$string_json);
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
             $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 

@@ -688,8 +688,13 @@ class LineApiController extends Controller
         $time_help = date('g:i:sa', $date_time_help);
 
         $data123 = [
-            "title" => "แบบฟอร์มให้คะแนนการช่วยเหลือ",
-            "content" => "function reply_success_groupline",
+            "title" => "date_help",
+            "content" => json_encode($date_help, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data123);
+        $data123 = [
+            "title" => "time_help",
+            "content" => json_encode($time_help, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data123);
         // datetime success

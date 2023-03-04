@@ -685,11 +685,6 @@ class LineApiController extends Controller
         $date_time_help = strtotime($data_time_help);
 
 
-        $data44 = [
-            "title" => "format_datetime",
-            "content" => json_encode($date_time_help, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data44);
         $date_help = date('d/m/Y', $date_time_help);
         $time_help = date('g:i:sa', $date_time_help);
 
@@ -703,6 +698,7 @@ class LineApiController extends Controller
             "content" => json_encode($time_help, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data123);
+
         // datetime success
         $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
 
@@ -716,6 +712,12 @@ class LineApiController extends Controller
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         $count_complete = $this->count_range_time($time_created , $time_help_complete);
+
+        $data444 = [
+            "title" => "format_datetime",
+            "content" => json_encode($count_time_help, $count_success, $count_complete, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data444);
 
         //สถานะการช่วยเหลือ เสร็จสิ้น
         if (empty($data_sos_map->help_complete) ) {

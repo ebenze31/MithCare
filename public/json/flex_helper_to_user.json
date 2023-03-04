@@ -49,24 +49,6 @@
               "contents": [
                 {
                   "type": "text",
-                  "text": "UTC",
-                  "size": "xl",
-                  "wrap": false,
-                  "weight": "bold",
-                  "color": "#000000"
-                }
-              ],
-              "width": "22%",
-              "position": "absolute",
-              "offsetStart": "44%",
-              "offsetTop": "39.3%"
-            },
-            {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [
-                {
-                  "type": "text",
                   "text": "date",
                   "size": "xl",
                   "wrap": false,

@@ -180,19 +180,6 @@ class LineApiController extends Controller
         $id_sos = $data_data[0] ;
         $id_organization_helper = $data_data[1] ;
 
-        $data1 = [
-            "title" => "dataSOS",
-            "content" => $id_sos,
-        ];
-        MyLog::create($data1);
-
-        $data2 = [
-            "title" => "dataSOS",
-            "content" => $id_organization_helper,
-        ];
-        MyLog::create($data2);
-
-
         $data_sos = Ask_for_help::findOrFail($id_sos);
 
         $data_partner_helpers = Partner::findOrFail($id_organization_helper);
@@ -229,12 +216,6 @@ class LineApiController extends Controller
                     ]);
                 }
 
-                $data3 = [
-                    "title" => "data3",
-                    "content" => $users->role,
-                ];
-                MyLog::create($data3);
-
                    // ตรวจสอบรายชื่อคนช่วยเหลือ
                 if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
 
@@ -242,12 +223,6 @@ class LineApiController extends Controller
                         $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
 
                 }else {
-
-                    $data4 = [
-                        "title" => "data4",
-                        "content" => "เข้า else",
-                    ];
-                    MyLog::create($data4);
 
                     DB::table('ask_for_helps')
                         ->where('id', $id_sos)
@@ -317,13 +292,11 @@ class LineApiController extends Controller
         // $data_line_group = DB::table('group_lines')
         //             ->where('id', $data_partner_helpers->line_group_id)
         //             ->first();
+        // datetime
+        $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
 
-        // SAVE LOG
-        $savelog_linegroup = [
-            "title" => "data_group",
-            "content" => "ทดสอบ",
-        ];
-        MyLog::create($savelog_linegroup);
+        $date = $time_zone_explode[0] ;
+        $time = $time_zone_explode[1] ;
 
         $template_path = storage_path('../public/json/flex_sos_helper_to_groupline.json');
         $string_json = file_get_contents($template_path);
@@ -333,7 +306,8 @@ class LineApiController extends Controller
 
         // helper
         $string_json = str_replace("name_helper",$name_helper,$string_json);
-
+        $string_json = str_replace("date",$date,$string_json);
+        $string_json = str_replace("time",$time,$string_json);
         $string_json = str_replace("id_sos_map",$data_sos->id,$string_json);
 
 
@@ -366,7 +340,7 @@ class LineApiController extends Controller
         MyLog::create($data);
 
         // ส่งไลน์หา user ที่ขอความช่วยเหลือ
-        $this->_send_helper_to_user($helper_id , $data_sos->user_id , $data_partner_helpers->name);
+        $this->_send_helper_to_user($helper_id , $data_sos , $data_partner_helpers->name);
 
     }
 
@@ -415,10 +389,10 @@ class LineApiController extends Controller
         MyLog::create($data);
     }
 
-    protected function _send_helper_to_user($helper_id , $user_id , $name_partner_helpers )
+    protected function _send_helper_to_user($helper_id , $data_sos , $name_partner_helpers )
     {
 
-        $user = DB::table('users')->where('id', $user_id)->first();
+        $user = DB::table('users')->where('id', $data_sos->user_id)->first();
         $data_helper = DB::table('users')->where('id', $helper_id)->first();
 
             // $user_language = $user->language ;
@@ -428,18 +402,16 @@ class LineApiController extends Controller
             // $time_zone = $API_Time_zone->change_Time_zone($user->time_zone);
 
             // datetime
-            // $time_zone_explode = explode(" ",$time_zone);
+            $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
 
-            // $date = $time_zone_explode[0] ;
-            // $time = $time_zone_explode[1] ;
-            // $utc = $time_zone_explode[3] ;
-
+            $date = $time_zone_explode[0] ;
+            $time = $time_zone_explode[1] ;
 
             $template_path = storage_path('../public/json/flex_helper_to_user.json');
             $string_json = file_get_contents($template_path);
 
-            // $string_json = str_replace("date",$date,$string_json);
-            // $string_json = str_replace("time",$time,$string_json);
+            $string_json = str_replace("date",$date,$string_json);
+            $string_json = str_replace("time",$time,$string_json);
             // $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
 
             // user

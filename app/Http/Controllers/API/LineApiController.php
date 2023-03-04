@@ -10,6 +10,7 @@ use App\Models\Mylog;
 use App\Models\LineMessagingAPI;
 use App\Models\Group_line;
 use App\Models\Partner;
+use App\User;
 
 class LineApiController extends Controller
 {
@@ -141,31 +142,34 @@ class LineApiController extends Controller
         MyLog::create($data);
 
         $data_sos = Ask_for_help::where("id" , $id_sos)->first();
-        $data_helpers = User::where('provider_id' , $event["source"]["userId"])->first();
+        // $data_helpers = User::where('provider_id' , $event["source"]["userId"])->first();
 
         $data_groupline = Group_line::where('groupId',$event["source"]["groupId"])->first();
         $id_organization_helper = $data_groupline->partner_id ;
         $data_partner_helpers = Partner::findOrFail($id_organization_helper);
 
-        $helper_id_explode = explode(",",$data_sos->helper_id);
+        if (!empty($data_sos->helper_id)) {
 
-        if (count($helper_id_explode) == 1) {
-            if ($helper_id_explode[0] == $data_helpers->id) {
+            $data = [
+                "title" => "เข้า if ",
+                "content" => "function check_help_complete_by_helper",
+            ];
+            MyLog::create($data);
+
                 $this->reply_success_groupline($event , $data_postback, $id_sos);
                 $this->help_complete($id_sos);
-            }else{
-                // ไม่สามารถกดได้
-                $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
-            }
+
+
         }else{
-            if (in_array($data_helpers->id, $helper_id_explode)){
-                $this->reply_success_groupline($event , $data_postback, $id_sos);
-                $this->help_complete($id_sos);
-            }
-            else{
+
+            $data = [
+                "title" => "เข้า else ",
+                "content" => "function check_help_complete_by_helper",
+            ];
+            MyLog::create($data);
+
                 // ไม่สามารถกดได้
                 $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
-            }
         }
     }
 
@@ -180,8 +184,6 @@ class LineApiController extends Controller
         ];
 
         $group_id = $event['source']['groupId'];
-
-
 
         $context  = stream_context_create($opts);
         $url = "https://api.line.me/v2/bot/group/".$group_id."/summary";
@@ -412,9 +414,24 @@ class LineApiController extends Controller
         // $API_Time_zone = new API_Time_zone();
         // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
 
+        if ($type == "helper_click_double") {
+            $data_topic = [
+                    "ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",
+                ];
+        }elseif ($type == "no_helper") {
+            $data_topic = [
+                    "ขออภัยค่ะ คุณไม่ได้ทำการกดกำลังไปช่วยเหลือ",
+                ];
+        }else{
+            $data_topic = [
+                    "การช่วยเหลือนี้เสร็จสิ้นแล้ว",
+                ];
+        }
+
         $template_path = storage_path('../public/json/flex_text_done.json');
         $string_json = file_get_contents($template_path);
 
+        $string_json = str_replace("ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",$data_topic[0],$string_json);
 
         $messages = [ json_decode($string_json, true) ];
 
@@ -522,6 +539,131 @@ class LineApiController extends Controller
             MyLog::create($data);
 
     }
+
+    // protected function help_complete($id_sos_map)
+    // {
+    //     $data_sos_map = Sos_map::findOrFail($id_sos_map);
+
+    //     if (!empty($data_sos_map->condo_id)) {
+    //         $condo_id = $data_sos_map->condo_id ;
+    //     }else{
+    //         $condo_id = null ;
+    //     }
+
+    //     if (!empty($condo_id)) {
+    //         $data_condos = Partner_condo::where('id' , $condo_id)->first();
+    //         $channel_access_token = $data_condos->channel_access_token ;
+    //     }else{
+    //         $channel_access_token = env('CHANNEL_ACCESS_TOKEN') ;
+    //     }
+
+    //     $data_users = User::findOrFail($data_sos_map->user_id);
+    //     $date_now = date('Y-m-d\TH:i:s');
+
+    //     if ($data_sos_map->help_complete != 'Yes') {
+
+    //         DB::table('sos_maps')
+    //             ->where('id', $id_sos_map)
+    //             ->update([
+    //                 'help_complete' => 'Yes',
+    //                 'help_complete_time' => $date_now,
+    //         ]);
+
+    //         $user_language = $data_users->language ;
+
+    //         // TIME ZONE
+    //         $API_Time_zone = new API_Time_zone();
+    //         $time_zone = $API_Time_zone->change_Time_zone($data_users->time_zone);
+
+    //         // datetime
+    //         $time_zone_explode = explode(" ",$time_zone);
+
+    //         $date = $time_zone_explode[0] ;
+    //         $time = $time_zone_explode[1] ;
+    //         $utc = $time_zone_explode[3] ;
+
+    //         $data_topic = [
+    //                     "บอกให้เรารู้",
+    //                     "การช่วยเหลือเป็นอย่างไรบ้าง",
+    //                     "พื้นที่",
+    //                     "ให้คะแนน",
+    //                 ];
+
+    //         for ($xi=0; $xi < count($data_topic); $xi++) {
+
+    //             $text_topic = DB::table('text_topics')
+    //                     ->select($user_language)
+    //                     ->where('th', $data_topic[$xi])
+    //                     ->where('en', "!=", null)
+    //                     ->get();
+
+    //             foreach ($text_topic as $item_of_text_topic) {
+    //                 $data_topic[$xi] = $item_of_text_topic->$user_language ;
+    //             }
+    //         }
+    //         //logo organization helper
+    //         $data_helpers = DB::table('partners')->where('name', $data_sos_map->organization_helper)
+    //             ->where('name_area', "=", null)
+    //             ->get();
+
+
+    //          foreach ($data_helpers as $data_helper) {
+
+    //             if (!empty($data_helper->logo)) {
+    //                 $logo_organization = "https://www.viicheck.com/storage/".$data_helper->logo ;
+    //             }
+    //             if (empty($data_helper->logo)) {
+    //                 $logo_organization = "https://www.viicheck.com/img/stickerline/PNG/1.png" ;
+    //             }
+
+    //         }
+
+    //         $template_path = storage_path('../public/json/rate_help.json');
+    //         $string_json = file_get_contents($template_path);
+
+    //         $string_json = str_replace("ตัวอย่าง",$data_topic[3],$string_json);
+    //         $string_json = str_replace("date",$date,$string_json);
+    //         $string_json = str_replace("time",$time,$string_json);
+    //         $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
+    //         $string_json = str_replace("area",$data_sos_map->organization_helper,$string_json);
+    //         $string_json = str_replace("https://scdn.line-apps.com/clip13.jpg",$logo_organization,$string_json);
+    //         $string_json = str_replace("id_sos_map",$id_sos_map,$string_json);
+
+    //         $string_json = str_replace("บอกให้เรารู้",$data_topic[0],$string_json);
+    //         $string_json = str_replace("การช่วยเหลือเป็นอย่างไรบ้าง",$data_topic[1],$string_json);
+    //         $string_json = str_replace("พื้นที่",$data_topic[2],$string_json);
+    //         $string_json = str_replace("ให้คะแนน",$data_topic[3],$string_json);
+
+    //         $messages = [ json_decode($string_json, true) ];
+
+    //         $body = [
+    //             "to" => $data_users->provider_id,
+    //             "messages" => $messages,
+    //         ];
+
+    //         $opts = [
+    //             'http' =>[
+    //                 'method'  => 'POST',
+    //                 'header'  => "Content-Type: application/json \r\n".
+    //                             'Authorization: Bearer '. $channel_access_token,
+    //                 'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+    //                 //'timeout' => 60
+    //             ]
+    //         ];
+
+    //         $context  = stream_context_create($opts);
+    //         $url = "https://api.line.me/v2/bot/message/push";
+    //         $result = file_get_contents($url, false, $context);
+
+    //         // SAVE LOG
+    //         $data = [
+    //             "title" => "แบบฟอร์มให้คะแนนการช่วยเหลือ",
+    //             "content" => $data_users->name,
+    //         ];
+    //         MyLog::create($data);
+    //     }
+
+    // }
 
 
 }

@@ -701,7 +701,7 @@ class LineApiController extends Controller
         $time_go_to_help = $data_sos_map->time_go_to_help;
 
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
-        $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
+        // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
                     $data = [
@@ -709,11 +709,11 @@ class LineApiController extends Controller
                         "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
                     ];
                     MyLog::create($data);
-                    $data = [
-                        "title" => "713",
-                        "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
-                    ];
-                    MyLog::create($data);
+                    // $data = [
+                    //     "title" => "713",
+                    //     "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
+                    // ];
+                    // MyLog::create($data);
                     $data = [
                         "title" => "717",
                         "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
@@ -755,7 +755,7 @@ class LineApiController extends Controller
             // success
             $string_json = str_replace("date_success",$date_success,$string_json);
             $string_json = str_replace("time_success",$time_success,$string_json);
-            $string_json = str_replace("count_success",$count_success,$string_json);
+            // $string_json = str_replace("count_success",$count_success,$string_json);
 
             $string_json = str_replace("count_complete",$count_complete,$string_json);
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);

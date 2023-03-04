@@ -697,9 +697,18 @@ class LineApiController extends Controller
             "content" => json_encode($time_zone_explode, JSON_UNESCAPED_UNICODE),
         ];
         MyLog::create($data444);
-        // $date_success = $time_zone_explode[0];
-        // $time_success = $time_zone_explode[1];
-
+        $date_success = $time_zone_explode[0];
+        $time_success = $time_zone_explode[1];
+        $data444 = [
+            "title" => "เข้า if 703",
+            "content" => json_encode($date_success, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data444);
+        $data444 = [
+            "title" => "เข้า if 708",
+            "content" => json_encode($time_success, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data444);
         $time_created = $data_sos_map->created_at;
         $time_help_complete = $data_sos_map->help_complete_time;
         $time_go_to_help = $data_sos_map->time_go_to_help;
@@ -743,8 +752,8 @@ class LineApiController extends Controller
             // $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
-            // $string_json = str_replace("date_success",$date_success,$string_json);
-            // $string_json = str_replace("time_success",$time_success,$string_json);
+            $string_json = str_replace("date_success",$date_success,$string_json);
+            $string_json = str_replace("time_success",$time_success,$string_json);
             // $string_json = str_replace("count_success",$count_success,$string_json);
 
             // $string_json = str_replace("count_complete",$count_complete,$string_json);

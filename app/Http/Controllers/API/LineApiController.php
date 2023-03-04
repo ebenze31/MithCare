@@ -680,10 +680,16 @@ class LineApiController extends Controller
 
         $date_sos = $data_sos_map->created_at->format('d/m/Y');
         $time_sos = $data_sos_map->created_at->format('g:i:sa');
-
+        // 2023-03-04 13:48:49
         $data_time_help = $data_sos_map->time_go_to_help;
         $date_time_help = strtotime($data_time_help);
 
+
+        $data44 = [
+            "title" => "format_datetime",
+            "content" => json_encode($date_time_help, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data44);
         $date_help = date('d/m/Y', $date_time_help);
         $time_help = date('g:i:sa', $date_time_help);
 

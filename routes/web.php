@@ -40,6 +40,7 @@ Route::get('game_check_login', 'GameController@check_login');
 
 
 Route::get('test', 'TestController@test');
+// Route::get('test_room', 'TestController@sentLineTest');
 
 
 

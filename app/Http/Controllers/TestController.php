@@ -123,6 +123,32 @@ class TestController extends Controller
         }
 
     }
+    // public function sentLineTest(){
+    //     $template_path = storage_path('../public/json/flex_test_to_cap.json');
+    //     $string_json = file_get_contents($template_path);
+    //     // กรณีเป็นนัดหมายของผู้ป่วยlv2 ให้แสดงชื่อผู้ป่วย แทนคนสร้าง
+
+    //     $messages = [ json_decode($string_json, true) ];
+    //     $body = [
+    //         "to" => "U912994894c449f2237f73f18b5703e89",
+    //         "messages" => $messages,
+    //     ];
+    //     $opts = [
+    //         'http' =>[
+    //             'method'  => 'POST',
+    //             'header'  => "Content-Type: application/json \r\n".
+    //                         'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+    //             'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+    //             //'timeout' => 60
+    //         ]
+    //     ];
+
+    //     $context  = stream_context_create($opts);
+    //     $url = "https://api.line.me/v2/bot/message/push";
+    //     $result = file_get_contents($url, false, $context);
+
+
+    // }
 
     public function sentLineToPatient($data_pill,$sendto){
 

@@ -150,23 +150,23 @@ class LineApiController extends Controller
 
         if (!empty($data_sos->helper_id)) {
 
-            $data = [
-                "title" => "เข้า if ",
-                "content" => "function check_help_complete_by_helper",
-            ];
-            MyLog::create($data);
+            // $data = [
+            //     "title" => "เข้า if ",
+            //     "content" => "function check_help_complete_by_helper",
+            // ];
+            // MyLog::create($data);
 
                 $this->reply_success_groupline($event , $data_postback, $id_sos);
-                $this->help_complete($id_sos);
+                // $this->help_complete($id_sos);
 
 
         }else{
 
-            $data = [
-                "title" => "เข้า else ",
-                "content" => "function check_help_complete_by_helper",
-            ];
-            MyLog::create($data);
+            // $data = [
+            //     "title" => "เข้า else ",
+            //     "content" => "function check_help_complete_by_helper",
+            // ];
+            // MyLog::create($data);
 
                 // ไม่สามารถกดได้
                 $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
@@ -664,6 +664,172 @@ class LineApiController extends Controller
     //     }
 
     // }
+
+    public function reply_success_groupline($event , $data_postback , $id_sos)
+    {
+        $data_sos_map = Ask_for_help::where("id" , $id_sos)->first();
+
+        $data_line_group = DB::table('group_lines')
+            ->where('groupId', $event['source']['groupId'])
+            ->first();
+
+
+        // TIME ZONE
+        // $API_Time_zone = new API_Time_zone();
+        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
+
+        $date_sos = $data_sos_map->created_at->format('d/m/Y');
+        $time_sos = $data_sos_map->created_at->format('g:i:sa');
+
+        $data_time_help = $data_sos_map->time_go_to_help;
+        $date_time_help = strtotime($data_time_help);
+
+        $date_help = date('d/m/Y', $date_time_help);
+        $time_help = date('g:i:sa', $date_time_help);
+
+        $data123 = [
+            "title" => "แบบฟอร์มให้คะแนนการช่วยเหลือ",
+            "content" => "function reply_success_groupline",
+        ];
+        MyLog::create($data123);
+        // datetime success
+        $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
+
+        $date_success = $time_zone_explode[0];
+        $time_success = $time_zone_explode[1];
+
+        $time_created = $data_sos_map->created_at;
+        $time_help_complete = $data_sos_map->help_complete_time;
+        $time_go_to_help = $data_sos_map->time_go_to_help;
+
+        $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
+        $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
+        $count_complete = $this->count_range_time($time_created , $time_help_complete);
+
+        //สถานะการช่วยเหลือ เสร็จสิ้น
+        if (empty($data_sos_map->help_complete) ) {
+
+            $data_topic = [
+                        "ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",
+                        "การช่วยเหลือเสร็จสิ้น",
+                        "เพิ่มภาพถ่าย",
+                        "ขอความช่วยเหลือ",
+                        "กำลังไปช่วยเหลือ",
+                        "ช่วยเหลือเสร็จสิ้น",
+                        "ใช้เวลา",
+                    ];
+
+            $template_path = storage_path('../public/json/flex_sos_map_success.json');
+
+            $string_json = file_get_contents($template_path);
+
+            // sos
+            $string_json = str_replace("name_sos",$data_sos_map->name,$string_json);
+            $string_json = str_replace("date_sos",$date_sos,$string_json);
+            $string_json = str_replace("time_sos",$time_sos,$string_json);
+
+            //help
+            $string_json = str_replace("name_help",$data_sos_map->helper,$string_json);
+            $string_json = str_replace("date_help",$date_help,$string_json);
+            $string_json = str_replace("time_help",$time_help,$string_json);
+            $string_json = str_replace("count_help",$count_time_help,$string_json);
+
+            // success
+            $string_json = str_replace("date_success",$date_success,$string_json);
+            $string_json = str_replace("time_success",$time_success,$string_json);
+            $string_json = str_replace("count_success",$count_success,$string_json);
+
+            $string_json = str_replace("count_complete",$count_complete,$string_json);
+            $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
+            $string_json = str_replace("id_sos_map",$id_sos,$string_json);
+
+            $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
+            $string_json = str_replace("ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",$data_topic[0],$string_json);
+            $string_json = str_replace("การช่วยเหลือเสร็จสิ้น",$data_topic[1],$string_json);
+            $string_json = str_replace("เพิ่มภาพถ่าย",$data_topic[2],$string_json);
+            $string_json = str_replace("ขอความช่วยเหลือ",$data_topic[3],$string_json);
+            $string_json = str_replace("กำลังไปช่วยเหลือ",$data_topic[4],$string_json);
+            $string_json = str_replace("ช่วยเหลือเสร็จสิ้น",$data_topic[5],$string_json);
+            $string_json = str_replace("ใช้เวลา",$data_topic[6],$string_json);
+
+
+            $messages = [ json_decode($string_json, true) ];
+
+            $body = [
+                "replyToken" => $event["replyToken"],
+                "messages" => $messages,
+            ];
+
+            $opts = [
+                'http' =>[
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/json \r\n".
+                                'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                    'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                    //'timeout' => 60
+                ]
+            ];
+
+            $context  = stream_context_create($opts);
+            //https://api-data.line.me/v2/bot/message/11914912908139/content
+            $url = "https://api.line.me/v2/bot/message/reply";
+            $result = file_get_contents($url, false, $context);
+
+            //SAVE LOG
+            $data = [
+                "title" => "MithCare ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",
+                "content" => "reply Success",
+            ];
+            MyLog::create($data);
+
+            return $result;
+
+        }else{
+            $data_topic = [
+                        "ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",
+                    ];
+
+            $template_path = storage_path('../public/json/text_done.json');
+
+            $string_json = file_get_contents($template_path);
+
+            $string_json = str_replace("ตัวอย่าง",$data_topic[0],$string_json);
+            $string_json = str_replace("ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",$data_topic[0],$string_json);
+
+            $messages = [ json_decode($string_json, true) ];
+
+            $body = [
+                "replyToken" => $event["replyToken"],
+                "messages" => $messages,
+            ];
+
+            $opts = [
+                'http' =>[
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/json \r\n".
+                                'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                    'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                    //'timeout' => 60
+                ]
+            ];
+
+            $context  = stream_context_create($opts);
+            //https://api-data.line.me/v2/bot/message/11914912908139/content
+            $url = "https://api.line.me/v2/bot/message/reply";
+            $result = file_get_contents($url, false, $context);
+
+            //SAVE LOG
+            $data = [
+                "title" => "ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",
+                "content" => "reply Success",
+            ];
+            MyLog::create($data);
+
+            return $result;
+
+        }
+
+    }
 
 
 }

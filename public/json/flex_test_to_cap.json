@@ -1,0 +1,24 @@
+{
+    "type": "flex",
+    "altText": "แจ้งเตือนการใช้ยา",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "giga",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://i.ibb.co/rt4Lb91/c1c9b10f953718d5.png",
+              "size": "full",
+              "aspectRatio": "2500:3100",
+              "aspectMode": "cover"
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}

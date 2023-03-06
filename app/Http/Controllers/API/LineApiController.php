@@ -695,14 +695,22 @@ class LineApiController extends Controller
         $date_success_before = $time_zone_explode[0];
         $time_success_before = $time_zone_explode[1];
 
-        $date_success_before = strtotime($date_success_before);
-        $time_success_before = strtotime($time_success_before);
+        $data = [
+            "title" => "date_success_before 699",
+            "content" => json_encode($date_success_before, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
+
+        $data = [
+            "title" => "time_success_before 705",
+            "content" => json_encode($time_success_before, JSON_UNESCAPED_UNICODE),
+        ];
+        MyLog::create($data);
 
         $date_success = date('d/m/Y', $date_success_before);
         $time_success = date('g:i:sa', $time_success_before);
 
         $time_created = $data_sos_map->created_at;
-        // $time_help_complete = $time_created;
         $time_help_complete = $data_sos_map->help_complete_time;
 
         $data = [

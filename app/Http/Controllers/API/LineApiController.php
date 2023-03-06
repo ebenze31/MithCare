@@ -767,8 +767,8 @@ class LineApiController extends Controller
             $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
-            $string_json = str_replace("date_success",$date_success,$string_json);
-            $string_json = str_replace("time_success",$time_success,$string_json);
+            // $string_json = str_replace("date_success",$date_success,$string_json);
+            // $string_json = str_replace("time_success",$time_success,$string_json);
             $string_json = str_replace("count_success",$count_success,$string_json);
 
             $string_json = str_replace("count_complete",$count_complete,$string_json);

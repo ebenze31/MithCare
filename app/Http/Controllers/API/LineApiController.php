@@ -696,7 +696,7 @@ class LineApiController extends Controller
         $time_success = $time_zone_explode[1];
 
         $time_created = $data_sos_map->created_at;
-        $time_help_complete = $time_created;
+        // $time_help_complete = $time_created;
         $time_help_complete = $data_sos_map->help_complete_time;
 
         $data = [

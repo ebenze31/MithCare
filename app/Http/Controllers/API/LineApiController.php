@@ -673,14 +673,9 @@ class LineApiController extends Controller
             ->where('groupId', $event['source']['groupId'])
             ->first();
 
-
-        // TIME ZONE
-        // $API_Time_zone = new API_Time_zone();
-        // $time_zone = $API_Time_zone->change_Time_zone($name_time_zone);
-
         $date_sos = $data_sos_map->created_at->format('d/m/Y');
         $time_sos = $data_sos_map->created_at->format('g:i:sa');
-        // 2023-03-04 13:48:49
+
         $data_time_help = $data_sos_map->time_go_to_help;
         $date_time_help = strtotime($data_time_help);
 
@@ -693,63 +688,18 @@ class LineApiController extends Controller
         $date_success = date('d/m/Y', strtotime($time_zone_explode[0]));
         $time_success = date('g:i:sa', strtotime($time_zone_explode[1]));
 
-        $data = [
-            "title" => "date_success_before 699",
-            "content" => json_encode($date_success, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data);
-
-        $data = [
-            "title" => "time_success_before 705",
-            "content" => json_encode($time_success, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data);
-
         $time_created = $data_sos_map->created_at;
         $time_help_complete = $data_sos_map->help_complete_time;
 
-        $data = [
-            "title" => "703",
-            "content" => json_encode($time_created, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data);
-
         $time_go_to_help = $data_sos_map->time_go_to_help;
-
-        $data556 = [
-            "title" => "711",
-            "content" => json_encode($time_go_to_help, JSON_UNESCAPED_UNICODE),
-        ];
-        MyLog::create($data556);
 
         //crash
         $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
         $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
         $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
-                    $data = [
-                        "title" => "722",
-                        "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
-                    ];
-                    MyLog::create($data);
-                    $data = [
-                        "title" => "727",
-                        "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
-                    ];
-                    MyLog::create($data);
-                    $data = [
-                        "title" => "732",
-                        "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
-                    ];
-                    MyLog::create($data);
         //สถานะการช่วยเหลือ เสร็จสิ้น
         if (empty($data_sos_map->help_complete) ) {
-
-            $data444 = [
-                "title" => "เข้า if",
-                "content" => "727",
-            ];
-            MyLog::create($data444);
 
             $data_topic = [
                         "ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",
@@ -826,12 +776,6 @@ class LineApiController extends Controller
             return $result;
 
         }else{
-
-            $data444 = [
-                "title" => "เข้า else",
-                "content" => "[บรรทัด 810]",
-            ];
-            MyLog::create($data444);
 
             $data_topic = [
                         "ขออภัยค่ะมีการดำเนินการแล้ว ขอบคุณค่ะ",

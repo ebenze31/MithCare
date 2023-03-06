@@ -174,7 +174,7 @@ class Ask_for_helpController extends Controller
         }
     }
 
-    public function sos_map_add_photo($id_sos_map)
+    public function ask_for_help_add_photo($id_sos_map)
     {
         $user = Auth::user();
         $data_sos_map = Ask_for_help::findOrFail($id_sos_map);

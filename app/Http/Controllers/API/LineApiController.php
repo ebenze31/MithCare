@@ -695,6 +695,9 @@ class LineApiController extends Controller
         $date_success_before = $time_zone_explode[0];
         $time_success_before = $time_zone_explode[1];
 
+        $date_success_before = strtotime($date_success_before);
+        $time_success_before = strtotime($time_success_before);
+
         $date_success = date('d/m/Y', $date_success_before);
         $time_success = date('g:i:sa', $time_success_before);
 

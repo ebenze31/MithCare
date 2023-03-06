@@ -692,8 +692,11 @@ class LineApiController extends Controller
         //datetime success
         $time_zone_explode = explode(" ",$data_sos_map->time_go_to_help);
 
-        $date_success = $time_zone_explode[0];
-        $time_success = $time_zone_explode[1];
+        $date_success_before = $time_zone_explode[0];
+        $time_success_before = $time_zone_explode[1];
+
+        $date_success = date('d/m/Y', $date_success_before);
+        $time_success = date('g:i:sa', $time_success_before);
 
         $time_created = $data_sos_map->created_at;
         // $time_help_complete = $time_created;
@@ -767,8 +770,8 @@ class LineApiController extends Controller
             $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
-            // $string_json = str_replace("date_success",$date_success,$string_json);
-            // $string_json = str_replace("time_success",$time_success,$string_json);
+            $string_json = str_replace("date_success",$date_success,$string_json);
+            $string_json = str_replace("time_success",$time_success,$string_json);
             $string_json = str_replace("count_success",$count_success,$string_json);
 
             $string_json = str_replace("count_complete",$count_complete,$string_json);

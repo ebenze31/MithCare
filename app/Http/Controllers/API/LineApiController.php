@@ -696,8 +696,8 @@ class LineApiController extends Controller
         $time_success = $time_zone_explode[1];
 
         $time_created = $data_sos_map->created_at;
-        // $time_help_complete = $time_created;
-        // $time_help_complete = $data_sos_map->help_complete_time;
+        $time_help_complete = $time_created;
+        $time_help_complete = $data_sos_map->help_complete_time;
 
         $data = [
             "title" => "703",
@@ -714,24 +714,24 @@ class LineApiController extends Controller
         MyLog::create($data556);
 
         //crash
-        // $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
-        // $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
-        // $count_complete = $this->count_range_time($time_created , $time_help_complete);
+        $count_time_help = $this->count_range_time($time_created , $time_go_to_help);
+        $count_success = $this->count_range_time($time_go_to_help , $time_help_complete);
+        $count_complete = $this->count_range_time($time_created , $time_help_complete);
 
-                    // $data = [
-                    //     "title" => "708",
-                    //     "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
-                    // ];
-                    // MyLog::create($data);
-                    // $data = [
-                    //     "title" => "713",
-                    //     "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
-                    // ];
-                    // MyLog::create($data);
-                    // $data = [
-                    //     "title" => "717",
-                    //     "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
-                    // ];
+                    $data = [
+                        "title" => "722",
+                        "content" => json_encode($count_time_help, JSON_UNESCAPED_UNICODE),
+                    ];
+                    MyLog::create($data);
+                    $data = [
+                        "title" => "727",
+                        "content" => json_encode($count_success, JSON_UNESCAPED_UNICODE),
+                    ];
+                    MyLog::create($data);
+                    $data = [
+                        "title" => "732",
+                        "content" => json_encode($count_complete, JSON_UNESCAPED_UNICODE),
+                    ];
                     MyLog::create($data);
         //สถานะการช่วยเหลือ เสร็จสิ้น
         if (empty($data_sos_map->help_complete) ) {
@@ -764,14 +764,14 @@ class LineApiController extends Controller
             $string_json = str_replace("name_help",$data_sos_map->name_helper,$string_json);
             $string_json = str_replace("date_help",$date_help,$string_json);
             $string_json = str_replace("time_help",$time_help,$string_json);
-            // $string_json = str_replace("count_help",$count_time_help,$string_json);
+            $string_json = str_replace("count_help",$count_time_help,$string_json);
 
             // success
             $string_json = str_replace("date_success",$date_success,$string_json);
             $string_json = str_replace("time_success",$time_success,$string_json);
-            // $string_json = str_replace("count_success",$count_success,$string_json);
+            $string_json = str_replace("count_success",$count_success,$string_json);
 
-            // $string_json = str_replace("count_complete",$count_complete,$string_json);
+            $string_json = str_replace("count_complete",$count_complete,$string_json);
             $string_json = str_replace("date_time",$data_sos_map->time_go_to_help,$string_json);
             $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 
@@ -868,6 +868,37 @@ class LineApiController extends Controller
 
         }
 
+    }
+
+    public function count_range_time($time_start , $time_end)
+    {
+        // count time success
+        $time_s = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%s');
+        $time_i = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%i');
+        $time_h = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%h');
+        $time_d = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%d');
+        $time_m = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%m');
+        $time_y = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%y');
+
+        if ( $time_s != 0 ) {
+            $data = $time_s ." sec";
+        }
+        if( $time_i != 0){
+            $data = $time_i ." min " .$data;
+        }
+        if( $time_h != 0){
+            $data = $time_h ." hours " .$data;
+        }
+       if( $time_d != 0){
+            $data = $time_d ." day " .$data;
+        }
+        if( $time_m != 0){
+            $data = $time_m ." month " .$data;
+        }
+        if( $time_y != 0){
+            $data = $time_y ." year " .$data;
+        }
+        return $data;
     }
 
 

@@ -165,27 +165,34 @@ class Ask_for_helpController extends Controller
 
     }
 
-    public function sos_to_line(Request $request){
-
-        $ask_for_help = Ask_for_help::get();
-
-        echo count($ask_for_help);
-        echo "<br>=============================================================================================================<br>";
-
-
-
-        for($i = 0; $i < count($ask_for_help); $i++)
-        {
-            echo 'Name User : '.$ask_for_help[$i]['name_user'];
-            echo "<br>";
-
-
-
+    public function log_in_ask_for_help_add_photo($id_sos_map)
+    {
+        if(Auth::check()){
+            return redirect('ask_for_help/add_photo' . '/' . $id_sos_map);
+        }else{
+            return redirect('login/line?redirectTo=ask_for_help/add_photo' . '/' . $id_sos_map);
         }
-
     }
 
+    public function sos_map_add_photo($id_sos_map)
+    {
+        $user = Auth::user();
+        $data_sos_map = Ask_for_help::findOrFail($id_sos_map);
 
+        if (!empty($data_sos_map->photo_succeed_by)) {
+            $data_officer = User::where('id' , $data_sos_map->photo_succeed_by)->first();
+        }else{
+            $data_officer = "" ;
+        }
+
+        if (!empty($data_sos_map->photo_succeed)) {
+            $photo_succeed = "Yes" ;
+        }else{
+            $photo_succeed = "No" ;
+        }
+
+        return view('ask_for_help.add_photo_succeed', compact('user' , 'data_sos_map' , 'photo_succeed' ,'data_officer'));
+    }
 
 
 }

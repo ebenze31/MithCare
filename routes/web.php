@@ -37,7 +37,7 @@ Route::get('ask_for_help_check_login', 'Ask_for_helpController@check_login');
 Route::get('profile_check_login', 'ProfileController@check_login');
 Route::get('health_check_check_login', 'Health_checkController@check_login');
 Route::get('game_check_login', 'GameController@check_login');
-
+Route::get('/log_in_ask_for_help_add_photo/{id_sos_map}', 'Ask_for_helpController@log_in_ask_for_help_add_photo');
 
 Route::get('test', 'TestController@test');
 // Route::get('test_room', 'TestController@sentLineTest');
@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('ask_for_help', 'Ask_for_helpController');
     Route::get('/test_sos', 'Ask_for_helpController@sos_to_line');
-
+    Route::get('/ask_for_help/add_photo/{id_sos_map}', 'Ask_for_helpController@ask_for_help_add_photo');
     //========================
     //     HEALTH_CHECK
     //========================

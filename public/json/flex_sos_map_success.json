@@ -23,7 +23,7 @@
                   "type": "text",
                   "text": "ขอขอบคุณที่ร่วมสร้างสังคมที่ดีค่ะ",
                   "weight": "bold",
-                  "size": "20px",
+                  "size": "18px",
                   "color": "#25548F",
                   "maxLines": 2,
                   "wrap": true,
@@ -334,7 +334,7 @@
               "action": {
                 "type": "uri",
                 "label": "action",
-                "uri": "https://www.viicheck.com/log_in_sos_map_add_photo/id_sos_map?openExternalBrowser=1"
+                "uri": "https://www.mithcare.com/log_in_ask_for_help_add_photo/id_sos_map?openExternalBrowser=1"
               }
             }
           ],

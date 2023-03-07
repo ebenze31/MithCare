@@ -11,7 +11,7 @@
                         <h4>สวัสดี <b>{{ $data_users->name }}</b> </h4>
                         บอกให้เรารู้ การช่วยเหลือเป็นอย่างไรบ้าง
                         <hr >
-                        <b>เจ้าหน้าที่ :</b> {{ $data_sos_map->helper }}
+                        <b>เจ้าหน้าที่ :</b> {{ $data_sos_map->name_helper }}
                         <br>
                         <b>จาก :</b> {{ $data_sos_map->organization_helper }}
                     </div>

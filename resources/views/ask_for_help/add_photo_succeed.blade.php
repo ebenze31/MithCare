@@ -73,7 +73,6 @@
                     <br>
                     การช่วยเหลือ : {{ $data_sos_map->name_helper }}
                     <br>
-                    <b>เจ้าหน้าที่ :</b> {{ $data_sos_map->name_helper }}<b>จาก :</b> {{ $data_sos_map->organization_helper }}
                 </div>
                 <input class="d-none" type="text" name="id_officer" id="id_officer" value="{{ $user->id }}">
             </div>

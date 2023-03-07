@@ -539,130 +539,94 @@ class LineApiController extends Controller
 
     }
 
-    // protected function help_complete($id_sos_map)
-    // {
-    //     $data_sos_map = Sos_map::findOrFail($id_sos_map);
+    protected function help_complete($id_sos)
+    {
+        $data_sos = Ask_for_help::findOrFail($id_sos);
 
-    //     if (!empty($data_sos_map->condo_id)) {
-    //         $condo_id = $data_sos_map->condo_id ;
-    //     }else{
-    //         $condo_id = null ;
-    //     }
+        $data_users = User::findOrFail($data_sos->user_id);
+        $date_now = date('Y-m-d\TH:i:s');
 
-    //     if (!empty($condo_id)) {
-    //         $data_condos = Partner_condo::where('id' , $condo_id)->first();
-    //         $channel_access_token = $data_condos->channel_access_token ;
-    //     }else{
-    //         $channel_access_token = env('CHANNEL_ACCESS_TOKEN') ;
-    //     }
+        if ($data_sos->help_complete != 'Yes') {
 
-    //     $data_users = User::findOrFail($data_sos_map->user_id);
-    //     $date_now = date('Y-m-d\TH:i:s');
+            DB::table('ask_for_helps')
+                ->where('id', $id_sos)
+                ->update([
+                    'help_complete' => 'Yes',
+                    'help_complete_time' => $date_now,
+            ]);
 
-    //     if ($data_sos_map->help_complete != 'Yes') {
+            // TIME ZONE
+            // $API_Time_zone = new API_Time_zone();
+            // $time_zone = $API_Time_zone->change_Time_zone($data_users->time_zone);
 
-    //         DB::table('sos_maps')
-    //             ->where('id', $id_sos_map)
-    //             ->update([
-    //                 'help_complete' => 'Yes',
-    //                 'help_complete_time' => $date_now,
-    //         ]);
+            // datetime
+            $time_zone_explode = explode(" ",$data_sos->time_go_to_help);
 
-    //         $user_language = $data_users->language ;
+            $date = $time_zone_explode[0] ;
+            $time = $time_zone_explode[1] ;
 
-    //         // TIME ZONE
-    //         $API_Time_zone = new API_Time_zone();
-    //         $time_zone = $API_Time_zone->change_Time_zone($data_users->time_zone);
+            $data_topic = [
+                        "บอกให้เรารู้",
+                        "การช่วยเหลือเป็นอย่างไรบ้าง",
+                        "พื้นที่",
+                        "ให้คะแนน",
+                    ];
 
-    //         // datetime
-    //         $time_zone_explode = explode(" ",$time_zone);
+            //logo organization helper
+            $data_helpers = DB::table('partners')->where('name', $data_sos->organization_helper)->first();
 
-    //         $date = $time_zone_explode[0] ;
-    //         $time = $time_zone_explode[1] ;
-    //         $utc = $time_zone_explode[3] ;
+            if (!empty($data_helpers->logo)) {
+                $logo_organization = "https://www.mithcare.com/storage/".$data_helpers->logo ;
+            }
+            if (empty($data_helpers->logo)) {
+                $logo_organization = "https://www.viicheck.com/img/stickerline/PNG/1.png" ;
+            }
 
-    //         $data_topic = [
-    //                     "บอกให้เรารู้",
-    //                     "การช่วยเหลือเป็นอย่างไรบ้าง",
-    //                     "พื้นที่",
-    //                     "ให้คะแนน",
-    //                 ];
+            $template_path = storage_path('../public/json/flex_rate_help.json');
+            $string_json = file_get_contents($template_path);
 
-    //         for ($xi=0; $xi < count($data_topic); $xi++) {
+            $string_json = str_replace("ตัวอย่าง",$data_topic[3],$string_json);
+            $string_json = str_replace("date",$date,$string_json);
+            $string_json = str_replace("time",$time,$string_json);
+            $string_json = str_replace("area",$data_sos->organization_helper,$string_json);
+            $string_json = str_replace("https://scdn.line-apps.com/clip13.jpg",$logo_organization,$string_json);
+            $string_json = str_replace("id_sos_map",$id_sos,$string_json);
 
-    //             $text_topic = DB::table('text_topics')
-    //                     ->select($user_language)
-    //                     ->where('th', $data_topic[$xi])
-    //                     ->where('en', "!=", null)
-    //                     ->get();
+            $string_json = str_replace("บอกให้เรารู้",$data_topic[0],$string_json);
+            $string_json = str_replace("การช่วยเหลือเป็นอย่างไรบ้าง",$data_topic[1],$string_json);
+            $string_json = str_replace("พื้นที่",$data_topic[2],$string_json);
+            $string_json = str_replace("ให้คะแนน",$data_topic[3],$string_json);
 
-    //             foreach ($text_topic as $item_of_text_topic) {
-    //                 $data_topic[$xi] = $item_of_text_topic->$user_language ;
-    //             }
-    //         }
-    //         //logo organization helper
-    //         $data_helpers = DB::table('partners')->where('name', $data_sos_map->organization_helper)
-    //             ->where('name_area', "=", null)
-    //             ->get();
+            $messages = [ json_decode($string_json, true) ];
 
+            $body = [
+                "to" => $data_users->provider_id,
+                "messages" => $messages,
+            ];
 
-    //          foreach ($data_helpers as $data_helper) {
+            $opts = [
+                'http' =>[
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/json \r\n".
+                                 'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                    'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                    //'timeout' => 60
+                ]
+            ];
 
-    //             if (!empty($data_helper->logo)) {
-    //                 $logo_organization = "https://www.viicheck.com/storage/".$data_helper->logo ;
-    //             }
-    //             if (empty($data_helper->logo)) {
-    //                 $logo_organization = "https://www.viicheck.com/img/stickerline/PNG/1.png" ;
-    //             }
+            $context  = stream_context_create($opts);
+            $url = "https://api.line.me/v2/bot/message/push";
+            $result = file_get_contents($url, false, $context);
 
-    //         }
+            // SAVE LOG
+            $data = [
+                "title" => "แบบฟอร์มให้คะแนนการช่วยเหลือ",
+                "content" => $data_users->name,
+            ];
+            MyLog::create($data);
+        }
 
-    //         $template_path = storage_path('../public/json/rate_help.json');
-    //         $string_json = file_get_contents($template_path);
-
-    //         $string_json = str_replace("ตัวอย่าง",$data_topic[3],$string_json);
-    //         $string_json = str_replace("date",$date,$string_json);
-    //         $string_json = str_replace("time",$time,$string_json);
-    //         $string_json = str_replace("UTC", "UTC " . $utc,$string_json);
-    //         $string_json = str_replace("area",$data_sos_map->organization_helper,$string_json);
-    //         $string_json = str_replace("https://scdn.line-apps.com/clip13.jpg",$logo_organization,$string_json);
-    //         $string_json = str_replace("id_sos_map",$id_sos_map,$string_json);
-
-    //         $string_json = str_replace("บอกให้เรารู้",$data_topic[0],$string_json);
-    //         $string_json = str_replace("การช่วยเหลือเป็นอย่างไรบ้าง",$data_topic[1],$string_json);
-    //         $string_json = str_replace("พื้นที่",$data_topic[2],$string_json);
-    //         $string_json = str_replace("ให้คะแนน",$data_topic[3],$string_json);
-
-    //         $messages = [ json_decode($string_json, true) ];
-
-    //         $body = [
-    //             "to" => $data_users->provider_id,
-    //             "messages" => $messages,
-    //         ];
-
-    //         $opts = [
-    //             'http' =>[
-    //                 'method'  => 'POST',
-    //                 'header'  => "Content-Type: application/json \r\n".
-    //                             'Authorization: Bearer '. $channel_access_token,
-    //                 'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
-    //                 //'timeout' => 60
-    //             ]
-    //         ];
-
-    //         $context  = stream_context_create($opts);
-    //         $url = "https://api.line.me/v2/bot/message/push";
-    //         $result = file_get_contents($url, false, $context);
-
-    //         // SAVE LOG
-    //         $data = [
-    //             "title" => "แบบฟอร์มให้คะแนนการช่วยเหลือ",
-    //             "content" => $data_users->name,
-    //         ];
-    //         MyLog::create($data);
-    //     }
-
-    // }
+    }
 
     public function reply_success_groupline($event , $data_postback , $id_sos)
     {

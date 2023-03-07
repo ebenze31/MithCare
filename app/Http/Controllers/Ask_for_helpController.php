@@ -174,21 +174,20 @@ class Ask_for_helpController extends Controller
         }
     }
 
-    // public function sos_to_line(Request $request){
+    public function rate_help($id_sos_map)
+    {
+        $data_sos_map = Ask_for_help::findOrFail($id_sos_map);
+        $data_users = User::findOrFail($data_sos_map->user_id);
 
-    //     $ask_for_help = Ask_for_help::get();
+        if (!empty($data_sos_map->score_impression)) {
+            $score = "Yes" ;
+        }else{
+            $score = "No" ;
+        }
 
-    //     echo count($ask_for_help);
-    //     echo "<br>=============================================================================================================<br>";
+        return view('ask_for_help.rate_help', compact('data_sos_map','data_users','score'));
+    }
 
-
-
-    //     for($i = 0; $i < count($ask_for_help); $i++)
-    //     {
-    //         echo 'Name User : '.$ask_for_help[$i]['name_user'];
-    //         echo "<br>";
-    //     }
-    // }
 
     public function ask_for_help_add_photo($id_sos_map)
     {

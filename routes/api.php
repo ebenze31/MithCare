@@ -60,6 +60,8 @@ Route::get('/ask_user_info/{user_id}','ProfileController@location_map_user');
 Route::get('/update_info_sos','API\API_Ask_for_helpController@update_info_sos');
 // เพิ่มภาพถ่าย จาก การช่วยเหลือเสร็จสิ้น ใน line
 Route::post('/submit_add_photo', 'API\API_Ask_for_helpController@submit_add_photo');
+// ให้คะแนนหน่วยงาน จาก User ใน line
+Route::get('/submit_score/{sos_map_id}/{score_1}/{score_2}/{total_score}/{comment_help}', 'API\API_Ask_for_helpController@submit_score');
 // หาจังหวัด
 Route::get('/select_province','API\LocationController@show_location_P');
 Route::get('/select_amphoe/{province}','API\LocationController@show_location_A');

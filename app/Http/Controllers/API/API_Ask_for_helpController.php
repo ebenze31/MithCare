@@ -187,5 +187,24 @@ class API_Ask_for_helpController extends Controller
         return "submit_add_photo ok" ;
     }
 
+    public function submit_score($sos_map_id , $score_1 , $score_2 , $total_score , $comment_help)
+    {
+        $data_sos_map = Ask_for_help::findOrFail($sos_map_id);
+
+        if ($comment_help == 'null') {
+            $comment_help = null ;
+        }
+
+        if (empty($data_sos_map->score_impression)) {
+            DB::table('ask_for_helps')
+                ->where('id', $sos_map_id)
+                ->update([
+                    'score_impression' => $score_1,
+                    'score_period' => $score_2,
+                    'score_total' => number_format($total_score,2),
+                    'comment_help' => $comment_help,
+            ]);
+        }
+    }
 
 }

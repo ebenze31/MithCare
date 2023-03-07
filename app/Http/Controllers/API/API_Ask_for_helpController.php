@@ -141,51 +141,51 @@ class API_Ask_for_helpController extends Controller
         Mylog::Create($data);
     }
 
-    public function submit_add_photo()
-    {
-        $json = file_get_contents("php://input");
-        $data = json_decode($json, true);
+    // public function submit_add_photo()
+    // {
+    //     $json = file_get_contents("php://input");
+    //     $data = json_decode($json, true);
 
-        $sos_map_id = $data['sos_map_id'];
-        $text_img = $data['text_img'];
-        $id_officer = $data['id_officer'];
-        $remark = $data['remark'];
+    //     $sos_map_id = $data['sos_map_id'];
+    //     $text_img = $data['text_img'];
+    //     $id_officer = $data['id_officer'];
+    //     $remark = $data['remark'];
 
-        if (!empty($text_img)) {
+    //     if (!empty($text_img)) {
 
-            $name_file_img = uniqid('photo_sos_succeed-', true);
-            $output_file_img = "./storage/uploads/".$name_file_img.".png";
+    //         $name_file_img = uniqid('photo_sos_succeed-', true);
+    //         $output_file_img = "./storage/uploads/".$name_file_img.".png";
 
-            $data_64_img = explode( ',', $text_img );
+    //         $data_64_img = explode( ',', $text_img );
 
-            $fp_img = fopen($output_file_img, "w+");
+    //         $fp_img = fopen($output_file_img, "w+");
 
-            fwrite($fp_img, base64_decode( $data_64_img[ 1 ] ) );
+    //         fwrite($fp_img, base64_decode( $data_64_img[ 1 ] ) );
 
-            fclose($fp_img);
+    //         fclose($fp_img);
 
-            $url_img_sos = str_replace("./storage/","",$output_file_img);
-            $img_photo_succeed = $url_img_sos ;
-        }
+    //         $url_img_sos = str_replace("./storage/","",$output_file_img);
+    //         $img_photo_succeed = $url_img_sos ;
+    //     }
 
-        $data_sos_map = Ask_for_help::findOrFail($sos_map_id);
+    //     $data_sos_map = Ask_for_help::findOrFail($sos_map_id);
 
-        if ($remark == 'null') {
-            $remark = null ;
-        }
+    //     if ($remark == 'null') {
+    //         $remark = null ;
+    //     }
 
-        if (empty($data_sos_map->photo_succeed)) {
-            DB::table('ask_for_helps')
-                ->where('id', $sos_map_id)
-                ->update([
-                    'photo_succeed' => $img_photo_succeed,
-                    'photo_succeed_by' => $id_officer,
-                    'remark_helper' => $remark,
-            ]);
-        }
+    //     if (empty($data_sos_map->photo_succeed)) {
+    //         DB::table('ask_for_helps')
+    //             ->where('id', $sos_map_id)
+    //             ->update([
+    //                 'photo_succeed' => $img_photo_succeed,
+    //                 'photo_succeed_by' => $id_officer,
+    //                 'remark_helper' => $remark,
+    //         ]);
+    //     }
 
-        return "submit_add_photo ok" ;
-    }
+    //     return "submit_add_photo ok" ;
+    // }
 
 
 }

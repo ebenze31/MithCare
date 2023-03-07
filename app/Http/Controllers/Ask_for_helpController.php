@@ -174,6 +174,22 @@ class Ask_for_helpController extends Controller
         }
     }
 
+    // public function sos_to_line(Request $request){
+
+    //     $ask_for_help = Ask_for_help::get();
+
+    //     echo count($ask_for_help);
+    //     echo "<br>=============================================================================================================<br>";
+
+
+
+    //     for($i = 0; $i < count($ask_for_help); $i++)
+    //     {
+    //         echo 'Name User : '.$ask_for_help[$i]['name_user'];
+    //         echo "<br>";
+    //     }
+    // }
+
     public function ask_for_help_add_photo($id_sos_map)
     {
         $user = Auth::user();

@@ -19,14 +19,14 @@
     <div class="modal-content">
       <div class="modal-body" style="margin:-16.5px;">
         <center>
-            <div id="sos_TH" class="d-none">
+            <div id="sos_TH" >
               <img width="100%" src="{{ asset('/img/logo_mithcare/sticker/thanks.jpg') }}">
             </div>
         </center>
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button> -->
-        <a id="a_line" href="https://lin.ee/xnFKMfc">
+        <a id="a_line" href="#">
             <button type="button" class="btn btn-success">เสร็จสิ้น</button>
         </a>
       </div>

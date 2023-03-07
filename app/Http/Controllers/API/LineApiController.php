@@ -214,6 +214,12 @@ class LineApiController extends Controller
 
     public function sos_helper($data_postback_explode , $provider_id , $event)
     {
+         // SAVE LOG
+         $data = [
+            "title" => "เข้า sos_helper",
+            "content" => "line 220",
+        ];
+        MyLog::create($data);
         $data_data = explode("/",$data_postback_explode);
 
         $id_sos = $data_data[0] ;
@@ -336,7 +342,7 @@ class LineApiController extends Controller
           // SAVE LOG
           $data222 = [
             "title" => "ข้อมูลsosที่ส่งมา",
-            "content" => json_encode($data_sos, JSON_UNESCAPED_UNICODE),
+            "content" => "เข้า _send_helper_to_groupline",
         ];
         MyLog::create($data222);
 

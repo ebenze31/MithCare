@@ -20,43 +20,7 @@
       <div class="modal-body" style="margin:-16.5px;">
         <center>
             <div id="sos_TH" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_th.png') }}">
-            </div>
-            <div id="sos_JP" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_jp.png') }}">
-            </div>
-            <div id="sos_MM" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_mr.png') }}">
-            </div>
-            <div id="sos_BN" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_bn.png') }}">
-            </div>
-            <div id="sos_CN" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_cn.png') }}">
-            </div>
-            <div id="sos_ID" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_id.png') }}">
-            </div>
-            <div id="sos_KH" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_kh.png') }}">
-            </div>
-            <div id="sos_KR" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_kr.png') }}">
-            </div>
-            <div id="sos_LA" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_la.png') }}">
-            </div>
-            <div id="sos_MY" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_my.png') }}">
-            </div>
-            <div id="sos_PH" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_ph.png') }}">
-            </div>
-            <div id="sos_SG" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_sg.png') }}">
-            </div>
-            <div id="sos_VN" class="d-none">
-              <img width="100%" src="{{ asset('/img/more/sos_thx/thx_vn.png') }}">
+              <img width="100%" src="{{ asset('/img/logo_mithcare/sticker/thanks.jpg') }}">
             </div>
         </center>
       </div>
@@ -81,24 +45,5 @@
         }, delayInMilliseconds);
     });
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // console.log("START");
-        let user_id = document.querySelector('#user_id').value;
-
-        fetch("{{ url('/') }}/api/check_sos_country/" + user_id)
-            .then(response => response.json())
-            .then(result => {
-                // console.log(result);
-
-                let countryCode = document.querySelector('#CountryCode');
-                    countryCode.value = result['countryCode'];
-
-                if (result['countryCode']) {
-                    document.querySelector('#sos_'+result['countryCode']).classList.remove('d-none');
-                }
-
-            });
-
-    });
 </script>
 @endsection

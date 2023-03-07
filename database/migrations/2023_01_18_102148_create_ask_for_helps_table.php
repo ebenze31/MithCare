@@ -30,8 +30,8 @@ class CreateAskForHelpsTable extends Migration
             $table->dateTime('help_complete_time')->nullable();
             $table->integer('score_impression')->nullable();
             $table->integer('score_period')->nullable();
-            $table->float('score total')->nullable();
-            $table->string('commemt_help')->nullable();
+            $table->float('score_total')->nullable();
+            $table->string('comment_help')->nullable();
             $table->string('notify')->nullable();
             $table->string('photo_succeed')->nullable();
             $table->string('photo_succeed_by')->nullable();

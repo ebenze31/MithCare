@@ -105,12 +105,6 @@ class LineApiController extends Controller
         ];
         MyLog::create($data);
 
-        $data = [
-            "title" => "Line",
-            "content" => "เข้า postback",
-        ];
-        MyLog::create($data);
-
         // $data_postback = $event["postback"]["data"] ;
 
         switch($data_postback){
@@ -218,85 +212,97 @@ class LineApiController extends Controller
 
     }
 
-    // public function sos_helper($data_postback_explode , $provider_id , $event)
-    // {
-    //      // SAVE LOG
-    //      $data = [
-    //         "title" => "เข้า sos_helper",
-    //         "content" => "line 220",
-    //     ];
-    //     MyLog::create($data);
-    //     $data_data = explode("/",$data_postback_explode);
+    public function sos_helper($data_postback_explode , $provider_id , $event)
+    {
+         // SAVE LOG
+         $data = [
+            "title" => "เข้า sos_helper",
+            "content" => "line 220",
+        ];
+        MyLog::create($data);
+        $data_data = explode("/",$data_postback_explode);
 
-    //     $id_sos = $data_data[0] ;
-    //     $id_organization_helper = $data_data[1] ;
+        $id_sos = $data_data[0] ;
+        $id_organization_helper = $data_data[1] ;
 
-    //     $data_sos = Ask_for_help::findOrFail($id_sos);
+        $data_sos = Ask_for_help::findOrFail($id_sos);
 
-    //     $data_partner_helpers = Partner::findOrFail($id_organization_helper);
+        $data_partner_helpers = Partner::findOrFail($id_organization_helper);
 
-    //     $users = DB::table('users')->where('provider_id', $provider_id)->first();
+        $users = DB::table('users')->where('provider_id', $provider_id)->first();
 
-    //     // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
-    //     if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
+        // ตรวจสอบ "การช่วยเหลือเสร็จสิ้น" แล้วหรือยัง
+        if ($data_sos->help_complete == "Yes") { // การช่วยเหลือเสร็จสิ้น
 
-    //         // ส่งไลน์การช่วยเหลือนี้เสร็จสิ้นแล้ว
-    //         $this->This_help_is_done($data_partner_helpers, $event, "This_help_is_done");
+            // ส่งไลน์การช่วยเหลือนี้เสร็จสิ้นแล้ว
+            $this->This_help_is_done($data_partner_helpers, $event, "This_help_is_done");
 
-    //     }else{ // การช่วยเหลือ อยู่ระหว่างดำเนินการ
+        }else{ // การช่วยเหลือ อยู่ระหว่างดำเนินการ
 
-    //         // ตรวจสอบการเป็นสมาชิก
-    //         if (!empty($users)) { // เป็นสมาชิก
+            // ตรวจสอบการเป็นสมาชิก
+            if (!empty($users)) { // เป็นสมาชิก
 
-    //                 // ตรวจสอบสถานนะ role
-    //             if (!empty($users->role)) {
-    //                 //อัพเดต ชื่อหน่วยงาน
-    //                 DB::table('users')
-    //                     ->where('provider_id', $provider_id)
-    //                     ->update([
-    //                         'organization' => $data_partner_helpers->name,
-    //                 ]);
+                 // SAVE LOG
+         $data = [
+            "title" => "เข้า if",
+            "content" => "line 247",
+        ];
+        MyLog::create($data);
 
-    //             }else{
-    //                 //อัพเดต ชื่อหน่วยงาน + role partner
-    //                 DB::table('users')
-    //                     ->where('provider_id', $provider_id)
-    //                     ->update([
-    //                         'organization' => $data_partner_helpers->name,
-    //                         'role' => 'partner',
-    //                 ]);
-    //             }
+                    // ตรวจสอบสถานนะ role
+                if (!empty($users->role)) {
+                    //อัพเดต ชื่อหน่วยงาน
+                    DB::table('users')
+                        ->where('provider_id', $provider_id)
+                        ->update([
+                            'organization' => $data_partner_helpers->name,
+                    ]);
 
-    //                // ตรวจสอบรายชื่อคนช่วยเหลือ
-    //             if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
+                }else{
+                    //อัพเดต ชื่อหน่วยงาน + role partner
+                    DB::table('users')
+                        ->where('provider_id', $provider_id)
+                        ->update([
+                            'organization' => $data_partner_helpers->name,
+                            'role' => 'partner',
+                    ]);
+                }
 
-    //                     // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
-    //                     $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
+                   // ตรวจสอบรายชื่อคนช่วยเหลือ
+                if (!empty($data_sos->helper_id)) { // ถ้ามีไอดีคนช่วยเหลือ
 
-    //             }else {
+                        // คุณได้ทำการกด "กำลังไปช่วยเหลือ" ซ้ำ
+                        $this->This_help_is_done($data_partner_helpers, $event , "helper_click_double");
 
-    //                 DB::table('ask_for_helps')
-    //                     ->where('id', $id_sos)
-    //                     ->update([
-    //                         'name_helper' => $users->name,
-    //                         'helper_id' => $users->id,
-    //                         'time_go_to_help' => date('Y-m-d\TH:i:s'),
-    //                 ]);
+                }else {
 
-    //                 $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
+                    DB::table('ask_for_helps')
+                        ->where('id', $id_sos)
+                        ->update([
+                            'name_helper' => $users->name,
+                            'helper_id' => $users->id,
+                            'time_go_to_help' => date('Y-m-d\TH:i:s'),
+                    ]);
 
-    //             }
+                    $this->_send_helper_to_groupline($data_sos , $data_partner_helpers , $users->name , $users->id ,$event);
 
-    //         }else{ // ไม่ได้เป็นสมาชิก
-    //             // return redirect('login/line');
-    //             $this->_send_register_to_groupline($data_partner_helpers, $event);
+                }
 
-    //         }
+            }else{ // ไม่ได้เป็นสมาชิก
+                // return redirect('login/line');
+                $this->_send_register_to_groupline($data_partner_helpers, $event);
+ // SAVE LOG
+ $data = [
+    "title" => "เข้า else",
+    "content" => "line 295",
+];
+MyLog::create($data);
+            }
 
 
-    //     }
+        }
 
-    // }
+    }
 
     protected function _send_register_to_groupline($data_partner_helpers , $event)
     {
@@ -346,7 +352,7 @@ class LineApiController extends Controller
         // datetime
 
           // SAVE LOG
-          $data222 = [
+        $data222 = [
             "title" => "ข้อมูลsosที่ส่งมา",
             "content" => "เข้า _send_helper_to_groupline",
         ];

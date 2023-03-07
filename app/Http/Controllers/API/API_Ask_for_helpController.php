@@ -175,7 +175,7 @@ class API_Ask_for_helpController extends Controller
         }
 
         if (empty($data_sos_map->photo_succeed)) {
-            DB::table('ask_for_helps')
+            DB::table('sos_maps')
                 ->where('id', $sos_map_id)
                 ->update([
                     'photo_succeed' => $img_photo_succeed,

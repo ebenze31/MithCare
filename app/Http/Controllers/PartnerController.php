@@ -151,7 +151,7 @@ class PartnerController extends Controller
                 }
 
         // นับจำนวนทั้งหมด
-        $view_maps_all = DB::table('ask_for_helps')->get();
+        $view_maps_all = Ask_for_help::get();
 
         $count_data = count($view_maps_all);
         ////////

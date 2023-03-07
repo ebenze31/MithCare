@@ -125,7 +125,7 @@
                         <div class="row text-center">
                             <div class="col-3">
                                 <div style="margin-top: -10px;" >
-                                    <h5 class="text-success float-left">
+                                    <h5 class="text-primary float-left">
                                         <span style="font-size: 15px;">
                                             <a target="break" href="{{ url('/').'/profile/'.$item->user_id }}">
                                             <i class="far fa-eye text-primary"></i>
@@ -541,7 +541,7 @@
     var draw_area ;
     var map ;
     var marker ;
-
+    var all_lat_lng = '$view_maps_all';
 
     function initMap() {
         // 13.7248936,100.4930264 lat lng ประเทศไทย
@@ -550,10 +550,16 @@
             zoom: 14,
         });
 
+        let bounds = new google.maps.LatLngBounds();
+
+        @foreach($view_maps_all as $view_map)
+            bounds.extend($view_map->lat,);
+        @endforeach
+
         //ปักหมุด
         let image = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
         @foreach($view_maps_all as $view_map)
-            @if(!empty($item->lat))
+            @if(!empty($view_map->lat))
                 marker = new google.maps.Marker({
                     position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
                     map: map,
@@ -563,14 +569,15 @@
             @endif
         @endforeach
 
-        if (marker) {
-            marker.setMap(null);
-        }
-        marker = new google.maps.Marker({
-            position: {lat: lat , lng: lng },
-            map: map,
-            icon: image,
-        });
+        map.fitBounds(bounds);
+        // if (marker) {
+        //     marker.setMap(null);
+        // }
+        // marker = new google.maps.Marker({
+        //     position: {lat: lat , lng: lng },
+        //     map: map,
+        //     icon: image,
+        // });
 
     }
 

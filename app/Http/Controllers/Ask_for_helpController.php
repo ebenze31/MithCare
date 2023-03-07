@@ -174,6 +174,15 @@ class Ask_for_helpController extends Controller
         }
     }
 
+    public function log_in_ask_for_help_rate_help($id_sos_map)
+    {
+        if(Auth::check()){
+            return redirect('/ask_for_help/rate_help'. '/' . $id_sos_map);
+        }else{
+            return redirect('login/line?redirectTo=ask_for_help/rate_help'. '/' . $id_sos_map);
+        }
+    }
+
     public function rate_help($id_sos_map)
     {
         $data_sos_map = Ask_for_help::findOrFail($id_sos_map);

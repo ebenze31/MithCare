@@ -168,7 +168,7 @@
               "action": {
                 "type": "uri",
                 "label": "ให้คะแนน",
-                "uri": "https://www.mithcare.com/sos_map/rate_help/id_sos_map"
+                "uri": "https://www.mithcare.com/log_in_ask_for_help_rate_help/id_sos_map"
               }
             }
           ],

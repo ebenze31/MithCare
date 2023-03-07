@@ -26,7 +26,7 @@
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button> -->
-        <a id="a_line" href="www.mithcare.com">
+        <a id="a_line" href="https://www.mithcare.com/">
             <button type="button" class="btn btn-success">เสร็จสิ้น</button>
         </a>
       </div>

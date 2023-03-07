@@ -242,13 +242,6 @@ class LineApiController extends Controller
             // ตรวจสอบการเป็นสมาชิก
             if (!empty($users)) { // เป็นสมาชิก
 
-                 // SAVE LOG
-         $data = [
-            "title" => "เข้า if",
-            "content" => "line 247",
-        ];
-        MyLog::create($data);
-
                     // ตรวจสอบสถานนะ role
                 if (!empty($users->role)) {
                     //อัพเดต ชื่อหน่วยงาน
@@ -291,12 +284,7 @@ class LineApiController extends Controller
             }else{ // ไม่ได้เป็นสมาชิก
                 // return redirect('login/line');
                 $this->_send_register_to_groupline($data_partner_helpers, $event);
- // SAVE LOG
- $data = [
-    "title" => "เข้า else",
-    "content" => "line 295",
-];
-MyLog::create($data);
+
             }
 
 
@@ -350,13 +338,6 @@ MyLog::create($data);
         //             ->where('id', $data_partner_helpers->line_group_id)
         //             ->first();
         // datetime
-
-          // SAVE LOG
-        $data222 = [
-            "title" => "ข้อมูลsosที่ส่งมา",
-            "content" => "เข้า _send_helper_to_groupline",
-        ];
-        MyLog::create($data222);
 
         $data_time_go_to_help = DB::table('ask_for_helps')
                     ->where('id', $data_sos->id)

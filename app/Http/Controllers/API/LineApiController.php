@@ -149,25 +149,9 @@ class LineApiController extends Controller
         $data_partner_helpers = Partner::findOrFail($id_organization_helper);
 
         if (!empty($data_sos->helper_id)) {
-
-            // $data = [
-            //     "title" => "เข้า if ",
-            //     "content" => "function check_help_complete_by_helper",
-            // ];
-            // MyLog::create($data);
-
                 $this->reply_success_groupline($event , $data_postback, $id_sos);
-                // $this->help_complete($id_sos);
-
-
+                $this->help_complete($id_sos);
         }else{
-
-            // $data = [
-            //     "title" => "เข้า else ",
-            //     "content" => "function check_help_complete_by_helper",
-            // ];
-            // MyLog::create($data);
-
                 // ไม่สามารถกดได้
                 $this->This_help_is_done($data_partner_helpers, $event, "no_helper");
         }
@@ -548,6 +532,13 @@ class LineApiController extends Controller
 
         if ($data_sos->help_complete != 'Yes') {
 
+            // SAVE LOG
+            $data = [
+                "title" => "เข้า if",
+                "content" => "554",
+            ];
+            MyLog::create($data);
+
             DB::table('ask_for_helps')
                 ->where('id', $id_sos)
                 ->update([
@@ -581,6 +572,13 @@ class LineApiController extends Controller
             if (empty($data_helpers->logo)) {
                 $logo_organization = "https://www.viicheck.com/img/stickerline/PNG/1.png" ;
             }
+
+              // SAVE LOG
+            $data = [
+                "title" => "เข้า 595",
+                "content" => "595",
+            ];
+            MyLog::create($data);
 
             $template_path = storage_path('../public/json/flex_rate_help.json');
             $string_json = file_get_contents($template_path);

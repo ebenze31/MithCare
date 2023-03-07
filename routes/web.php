@@ -57,6 +57,11 @@ Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 //========================
 //  END ADMIN MithCare
 //========================
+Route::middleware(['auth', 'role:isAdmin'])->group(function () {
+
+    Route::get('/sos_partner', 'PartnerController@view_sos');
+
+});
 
 
 Route::middleware(['auth'])->group(function () {

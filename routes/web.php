@@ -120,8 +120,10 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-
-
+    //=============================
+    // ASK_FOR_HELP No Middleware
+    //=============================
+Route::get('/sos_thank_submit_score/{user_id}', 'Ask_for_helpController@sos_thank_submit_score');
 
 
 

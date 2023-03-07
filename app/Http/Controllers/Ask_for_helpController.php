@@ -209,5 +209,10 @@ class Ask_for_helpController extends Controller
         return view('ask_for_help.add_photo_succeed', compact('user' , 'data_sos_map' , 'photo_succeed' ,'data_officer'));
     }
 
+    public function sos_thank_submit_score($user_id)
+    {
+        return view('ask_for_help.sos_thank_submit_score', compact('user_id'));
+    }
+
 
 }

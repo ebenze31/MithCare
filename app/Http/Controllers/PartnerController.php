@@ -156,8 +156,8 @@ class PartnerController extends Controller
         $count_data = count($view_maps_all);
         ////////
 
-        $view_maps = DB::table('ask_for_helps')
-            ->latest()->paginate($perPage);
+        $view_maps = Ask_for_help::latest()->paginate($perPage);
+
 
         $select_name_areas = DB::table('ask_for_helps')
             ->get();

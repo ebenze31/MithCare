@@ -6,7 +6,7 @@
         <div class="item sos-map col-md-4 col-12 col-lg-4">
             <div class="row">
                 <div class="col-6">
-                    <a href="{{ url('/sos_partner') }}" style="float: left; background-color: green;" type="button" class="btn text-white" > <!-- onclick="initMap();" -->
+                    <a href="{{ url('/sos_partner') }}" style="float: left; background-color: rgb(1, 86, 156);" type="button" class="btn text-white" > <!-- onclick="initMap();" -->
                         <i class="fas fa-sync-alt"></i> คืนค่าแผนที่
                     </a>
                     <br><br>
@@ -132,7 +132,7 @@
                                             </a>
                                         </span>&nbsp;{{ $item->name_user }}<br>
                                     </h5>
-                                    เบอร์มือถือ
+                                    {{ $item->user->phone }}
                                 </div>
                             </div>
                             <div class="col-3">
@@ -529,21 +529,19 @@
         let name_area = document.querySelector('#name_area').value;
         let type_partner = document.querySelector('#type_partner').value;
 
-        if (name_area) {
-            select_name_area(name_area);
+        if (type_partner != 'volunteer') {
+            initMap();
         }else{
-            if (type_partner != 'volunteer') {
-                initMap();
-            }else{
-                initMap_not_Polygon('12.870032' , '100.992541','6');
-            }
+            initMap_not_Polygon('12.870032' , '100.992541','6');
         }
+
 
     });
 
     var draw_area ;
     var map ;
     var marker ;
+
 
     function initMap() {
         // 13.7248936,100.4930264 lat lng ประเทศไทย
@@ -552,247 +550,9 @@
             zoom: 14,
         });
 
-        let all_lat = [];
-        let all_lng = [];
-        let all_lat_lng = [];
-
-        let lat_average ;
-        let lng_average ;
-
-        let lat_sum = 0 ;
-        let lng_sum = 0 ;
-
-        let name_partner = document.querySelector('#name_partner');
-
-        fetch("{{ url('/') }}/api/all_area_partner/" + name_partner.value)
-            .then(response => response.json())
-            .then(result => {
-                // console.log(result);
-
-                for (let ii = 0; ii < result.length; ii++) {
-
-                    for (let xx = 0; xx < JSON.parse(result[ii]['sos_area']).length; xx++) {
-                        // console.log(JSON.parse(result[ii]['sos_area'])[xx]);
-
-                        all_lat_lng.push(JSON.parse(result[ii]['sos_area'])[xx]);
-
-                        // all_lat.push(JSON.parse(result[ii]['sos_area'])[xx]['lat']);
-                        // all_lng.push(JSON.parse(result[ii]['sos_area'])[xx]['lng']);
-
-                    }
-
-                }
-
-                // หาจุดกลาง polygons ทั้งหมด
-                // for (let zz = 0; zz < all_lat.length; zz++) {
-
-                //     lat_sum = lat_sum + all_lat[zz] ;
-                //     lng_sum = lng_sum + all_lng[zz] ;
-
-                //     lat_average = lat_sum / all_lat.length ;
-                //     lng_average = lng_sum / all_lng.length ;
-                // }
-
-                // map = new google.maps.Map(document.getElementById("map"), {
-                //     center: {lat: lat_average, lng: lng_average },
-                //     zoom: 14,
-                // });
-
-                let bounds = new google.maps.LatLngBounds();
-
-                    for (let vc = 0; vc < all_lat_lng.length; vc++) {
-                        bounds.extend(all_lat_lng[vc]);
-                    }
-
-                    map = new google.maps.Map(document.getElementById("map"), {
-                        // zoom: num_zoom,
-                        // center: bounds.getCenter(),
-                    });
-                    map.fitBounds(bounds);
-
-                for (let xi = 0; xi < result.length; xi++) {
-
-                    // วาดพื้นที่รวมทั้งหมด
-                    let draw_sum_area = new google.maps.Polygon({
-                        paths: all_lat_lng,
-                        strokeColor: "red",
-                        strokeOpacity: 0,
-                        strokeWeight: 0,
-                        fillColor: "red",
-                        fillOpacity: 0,
-                    });
-                    draw_sum_area.setMap(map);
-
-                    // วาดแยกแต่ละพื้นที่
-                    let draw_area_other = new google.maps.Polygon({
-                        paths: JSON.parse(result[xi]['sos_area']),
-                        strokeColor: "#008450",
-                        strokeOpacity: 0.8,
-                        strokeWeight: 1,
-                        fillColor: "#008450",
-                        fillOpacity: 0.25,
-                        zIndex:10,
-                    });
-                    draw_area_other.setMap(map);
-
-                    // mouseover on polygon
-                    google.maps.event.addListener(draw_area_other, 'mouseover', function (event) {
-                        this.setOptions({
-                            strokeColor: '#00ff00',
-                            fillColor: '#00ff00'
-                        });
-
-                        let image_empty = "https://www.viicheck.com/img/icon/flag_empty.png";
-
-                        for (let mm = 0; mm < JSON.parse(result[xi]['sos_area']).length; mm++) {
-
-                            all_lat.push(JSON.parse(result[xi]['sos_area'])[mm]['lat']);
-                            all_lng.push(JSON.parse(result[xi]['sos_area'])[mm]['lng']);
-
-                        }
-
-                        for (let zz = 0; zz < all_lat.length; zz++) {
-
-                            lat_sum = lat_sum + all_lat[zz] ;
-                            lng_sum = lng_sum + all_lng[zz] ;
-
-                            lat_average = lat_sum / all_lat.length ;
-                            lng_average = lng_sum / all_lng.length ;
-                        }
-
-                        marker_mouseover = new google.maps.Marker({
-                            // position: JSON.parse(result[xi]['sos_area'])[0],
-                            position: {lat: lat_average, lng: lng_average },
-                            map: map,
-                            icon: image_empty,
-                            label: {
-                                text: result[xi]['name_area'],
-                                color: 'black',
-                                fontSize: "18px",
-                                fontWeight: 'bold',
-                            },
-                            zIndex:10,
-                        });
-
-                    });
-
-                    // mouseout polygon
-                    google.maps.event.addListener(draw_area_other, 'mouseout', function (event) {
-                        this.setOptions({
-                            strokeColor: '#008450',
-                            fillColor: '#008450'
-                        });
-                        marker_mouseover.setMap(null);
-
-                        lat_sum = 0 ;
-                        lng_sum = 0 ;
-                        lat_average = 0 ;
-                        lng_average = 0 ;
-                        all_lat = [] ;
-                        all_lng = [] ;
-                    });
-
-                    draw_area_other.addListener("click", () => {
-                        // select_name_area(result[xi]['name_area']);
-                        try {
-                            document.querySelector('#select_name_area_' + result[xi]['name_area']).click();
-                        }
-                        catch(err) {
-                            alert('ไม่มีข้อมูลการขอความช่วยเหลือ');
-                        }
-
-                    });
-                }
-
-
-                //ปักหมุด
-                let image = "https://www.viicheck.com/img/icon/flag_2.png";
-                @foreach($view_maps_all as $view_map)
-                @if(!empty($item->lat))
-                    marker = new google.maps.Marker({
-                        position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-                        map: map,
-                        icon: image,
-                        zIndex:5,
-                    });
-                @endif
-                @endforeach
-
-
-            });
-
-    }
-
-    function initMap_not_Polygon(lat , lng , numZoom) {
-
-        let m_lat = parseFloat(lat);
-        let m_lng = parseFloat(lng);
-        let m_numZoom = parseFloat(numZoom);
-        // 13.7248936,100.4930264 lat lng ประเทศไทย
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: m_lat, lng: m_lng },
-            zoom: m_numZoom,
-        });
-
-        let all_lat = [];
-        let all_lng = [];
-        let all_lat_lng = [];
-
-        let lat_average ;
-        let lng_average ;
-
-        let lat_sum = 0 ;
-        let lng_sum = 0 ;
-
         //ปักหมุด
-        let image = "https://www.viicheck.com/img/icon/flag_2.png";
+        let image = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
         @foreach($view_maps_all as $view_map)
-        @if(!empty($item->lat))
-            marker = new google.maps.Marker({
-                position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-                map: map,
-                icon: image,
-                zIndex:5,
-            });
-        @endif
-        @endforeach
-
-    }
-
-    function select_name_area(name_area){
-
-        let name_partner = document.querySelector('#name_partner').value;
-
-        fetch("{{ url('/') }}/api/area_current/"+name_partner  + '/' + name_area)
-            .then(response => response.json())
-            .then(result => {
-                // console.log(result);
-
-                var bounds = new google.maps.LatLngBounds();
-
-                for (let ix = 0; ix < result.length; ix++) {
-                    bounds.extend(result[ix]);
-                }
-
-            map = new google.maps.Map(document.getElementById("map"), {
-                // zoom: 18,
-            });
-            map.fitBounds(bounds);
-
-            // Construct the polygon.
-            draw_area = new google.maps.Polygon({
-                paths: result,
-                strokeColor: "#008450",
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: "#008450",
-                fillOpacity: 0.25,
-            });
-            draw_area.setMap(map);
-
-            //ปักหมุด
-            let image = "https://www.viicheck.com/img/icon/flag_2.png";
-            @foreach($view_maps_all as $view_map)
             @if(!empty($item->lat))
                 marker = new google.maps.Marker({
                     position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
@@ -801,137 +561,228 @@
                     zIndex:5,
                 });
             @endif
-            @endforeach
-        });
+        @endforeach
 
-    }
-
-
-    function view_marker(lat , lng , sos_id , name_area){
-
-        let name_partner = document.querySelector('#name_partner').value;
-        // let name_area = 'คอนโด' ;
-
-        fetch("{{ url('/') }}/api/area_current/"+name_partner  + '/' + name_area)
-            .then(response => response.json())
-            .then(result => {
-                // console.log(result);
-
-                var bounds = new google.maps.LatLngBounds();
-
-                for (let ix = 0; ix < result.length; ix++) {
-                    bounds.extend(result[ix]);
-                }
-
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 18,
-                center: { lat: parseFloat(lat), lng: parseFloat(lng) },
-            });
-
-            // Construct the polygon.
-            draw_area = new google.maps.Polygon({
-                paths: result,
-                strokeColor: "#008450",
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: "#008450",
-                fillOpacity: 0.25,
-            });
-            draw_area.setMap(map);
-
-            let image = "https://www.viicheck.com/img/icon/flag_2.png";
-            let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
-            marker = new google.maps.Marker({
-                position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
-                map: map,
-                icon: image,
-            });
-
-            @foreach($view_maps as $view_map)
-                if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
-                    marker = new google.maps.Marker({
-                        position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-                        map: map,
-                        icon: image2,
-                    });
-                }
-            @endforeach
-
-            const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-
-            const contentString =
-                '<div id="content">' +
-                '<div id="siteNotice">' +
-                "</div>" +
-                '<h4 id="firstHeading" class="firstHeading">'+name_area +'</h4>' +
-                '<div id="bodyContent">' +
-                "<p>lat : "+ lat + "<br>" +
-                "lng : "+ lng + "</p>" +
-                "</div>" +
-                "</div>";
-
-            let infoWindow = new google.maps.InfoWindow({
-                // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
-                content: contentString,
-                position: myLatlng,
-            });
-
-            infoWindow.open(map);
-        });
-
-    }
-
-    function view_marker_volunteer(lat , lng , sos_id , name_user){
-
-        let lat_mail = '@' + lat ;
-
-        map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 17,
-            center: { lat: parseFloat(lat), lng: parseFloat(lng) },
-        });
-
-        let image = "https://www.viicheck.com/img/icon/flag_2.png";
-        let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
-
+        if (marker) {
+            marker.setMap(null);
+        }
         marker = new google.maps.Marker({
-            position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
+            position: {lat: lat , lng: lng },
             map: map,
             icon: image,
         });
 
-        @foreach($view_maps_all as $view_map)
-            if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
-                marker = new google.maps.Marker({
-                    position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-                    map: map,
-                    icon: image2,
-                });
-            }
-        @endforeach
-
-        const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-
-        const contentString =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            "</div>" +
-            '<h4 id="firstHeading" class="firstHeading"> คุณ: '+ name_user +'</h4>' +
-            '<div id="bodyContent">' +
-            "<p>lat : "+ lat + "<br>" +
-            "lng : "+ lng + "</p>" +
-            "</div>" +
-            '<a href="https://www.google.co.th/maps/search/'+lat+','+lng+'/'+lat_mail+','+lng+',16z" target="bank" type="button" class="btn btn-sm btn-info text-white" style="width:100%;"><i class="fas fa-location-arrow"></i> นำทาง</a>' +
-            "</div>";
-
-        let infoWindow = new google.maps.InfoWindow({
-            // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
-            content: contentString,
-            position: myLatlng,
-        });
-
-        infoWindow.open(map);
-
     }
+
+    // function initMap_not_Polygon(lat , lng , numZoom) {
+
+    //     let m_lat = parseFloat(lat);
+    //     let m_lng = parseFloat(lng);
+    //     let m_numZoom = parseFloat(numZoom);
+    //     // 13.7248936,100.4930264 lat lng ประเทศไทย
+    //     map = new google.maps.Map(document.getElementById("map"), {
+    //         center: {lat: m_lat, lng: m_lng },
+    //         zoom: m_numZoom,
+    //     });
+
+    //     let all_lat = [];
+    //     let all_lng = [];
+    //     let all_lat_lng = [];
+
+    //     let lat_average ;
+    //     let lng_average ;
+
+    //     let lat_sum = 0 ;
+    //     let lng_sum = 0 ;
+
+    //     //ปักหมุด
+    //     let image = "https://www.viicheck.com/img/icon/flag_2.png";
+    //     @foreach($view_maps_all as $view_map)
+    //     @if(!empty($item->lat))
+    //         marker = new google.maps.Marker({
+    //             position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
+    //             map: map,
+    //             icon: image,
+    //             zIndex:5,
+    //         });
+    //     @endif
+    //     @endforeach
+
+    // }
+
+    // function select_name_area(name_area){
+
+    //     let name_partner = document.querySelector('#name_partner').value;
+
+    //     fetch("{{ url('/') }}/api/area_current/"+name_partner  + '/' + name_area)
+    //         .then(response => response.json())
+    //         .then(result => {
+    //             // console.log(result);
+
+    //             var bounds = new google.maps.LatLngBounds();
+
+    //             for (let ix = 0; ix < result.length; ix++) {
+    //                 bounds.extend(result[ix]);
+    //             }
+
+    //         map = new google.maps.Map(document.getElementById("map"), {
+    //             // zoom: 18,
+    //         });
+    //         map.fitBounds(bounds);
+
+    //         // Construct the polygon.
+    //         draw_area = new google.maps.Polygon({
+    //             paths: result,
+    //             strokeColor: "#008450",
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 1,
+    //             fillColor: "#008450",
+    //             fillOpacity: 0.25,
+    //         });
+    //         draw_area.setMap(map);
+
+    //         //ปักหมุด
+    //         let image = "https://www.viicheck.com/img/icon/flag_2.png";
+    //         @foreach($view_maps_all as $view_map)
+    //         @if(!empty($item->lat))
+    //             marker = new google.maps.Marker({
+    //                 position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
+    //                 map: map,
+    //                 icon: image,
+    //                 zIndex:5,
+    //             });
+    //         @endif
+    //         @endforeach
+    //     });
+
+    // }
+
+
+    // function view_marker(lat , lng , sos_id , name_area){
+
+    //     let name_partner = document.querySelector('#name_partner').value;
+    //     // let name_area = 'คอนโด' ;
+
+    //     fetch("{{ url('/') }}/api/area_current/"+name_partner  + '/' + name_area)
+    //         .then(response => response.json())
+    //         .then(result => {
+    //             // console.log(result);
+
+    //             var bounds = new google.maps.LatLngBounds();
+
+    //             for (let ix = 0; ix < result.length; ix++) {
+    //                 bounds.extend(result[ix]);
+    //             }
+
+    //         map = new google.maps.Map(document.getElementById("map"), {
+    //             zoom: 18,
+    //             center: { lat: parseFloat(lat), lng: parseFloat(lng) },
+    //         });
+
+    //         // Construct the polygon.
+    //         draw_area = new google.maps.Polygon({
+    //             paths: result,
+    //             strokeColor: "#008450",
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 1,
+    //             fillColor: "#008450",
+    //             fillOpacity: 0.25,
+    //         });
+    //         draw_area.setMap(map);
+
+    //         let image = "https://www.viicheck.com/img/icon/flag_2.png";
+    //         let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
+    //         marker = new google.maps.Marker({
+    //             position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
+    //             map: map,
+    //             icon: image,
+    //         });
+
+    //         @foreach($view_maps as $view_map)
+    //             if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
+    //                 marker = new google.maps.Marker({
+    //                     position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
+    //                     map: map,
+    //                     icon: image2,
+    //                 });
+    //             }
+    //         @endforeach
+
+    //         const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+
+    //         const contentString =
+    //             '<div id="content">' +
+    //             '<div id="siteNotice">' +
+    //             "</div>" +
+    //             '<h4 id="firstHeading" class="firstHeading">'+name_area +'</h4>' +
+    //             '<div id="bodyContent">' +
+    //             "<p>lat : "+ lat + "<br>" +
+    //             "lng : "+ lng + "</p>" +
+    //             "</div>" +
+    //             "</div>";
+
+    //         let infoWindow = new google.maps.InfoWindow({
+    //             // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
+    //             content: contentString,
+    //             position: myLatlng,
+    //         });
+
+    //         infoWindow.open(map);
+    //     });
+
+    // }
+
+    // function view_marker_volunteer(lat , lng , sos_id , name_user){
+
+    //     let lat_mail = '@' + lat ;
+
+    //     map = new google.maps.Map(document.getElementById("map"), {
+    //         zoom: 17,
+    //         center: { lat: parseFloat(lat), lng: parseFloat(lng) },
+    //     });
+
+    //     let image = "https://www.viicheck.com/img/icon/flag_2.png";
+    //     let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
+
+    //     marker = new google.maps.Marker({
+    //         position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
+    //         map: map,
+    //         icon: image,
+    //     });
+
+    //     @foreach($view_maps_all as $view_map)
+    //         if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
+    //             marker = new google.maps.Marker({
+    //                 position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
+    //                 map: map,
+    //                 icon: image2,
+    //             });
+    //         }
+    //     @endforeach
+
+    //     const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+
+    //     const contentString =
+    //         '<div id="content">' +
+    //         '<div id="siteNotice">' +
+    //         "</div>" +
+    //         '<h4 id="firstHeading" class="firstHeading"> คุณ: '+ name_user +'</h4>' +
+    //         '<div id="bodyContent">' +
+    //         "<p>lat : "+ lat + "<br>" +
+    //         "lng : "+ lng + "</p>" +
+    //         "</div>" +
+    //         '<a href="https://www.google.co.th/maps/search/'+lat+','+lng+'/'+lat_mail+','+lng+',16z" target="bank" type="button" class="btn btn-sm btn-info text-white" style="width:100%;"><i class="fas fa-location-arrow"></i> นำทาง</a>' +
+    //         "</div>";
+
+    //     let infoWindow = new google.maps.InfoWindow({
+    //         // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
+    //         content: contentString,
+    //         position: myLatlng,
+    //     });
+
+    //     infoWindow.open(map);
+
+    // }
 
 </script>
 

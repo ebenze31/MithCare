@@ -28,4 +28,6 @@ class Partner extends Model
     protected $fillable = ['name', 'full_name', 'type', 'phone', 'mail', 'name_line_group', 'show_homepage', 'line_group_id','logo'];
 
 
+
+
 }

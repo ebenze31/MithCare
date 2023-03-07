@@ -259,7 +259,7 @@
                                                 <h5>คะแนนการช่วยเหลือ</h5>
                                                 <div class="row">
                                                     <div class="col-2" style="padding:0px">
-                                                        <b>เจ้าหน้าที่ : </b><br>{{$item->helper}}
+                                                        <b>เจ้าหน้าที่ : </b><br>{{$item->name_helper}}
                                                     </div>
                                                     <div class="col-2" style="padding:0px">
                                                         @if($item->score_impression < 3)

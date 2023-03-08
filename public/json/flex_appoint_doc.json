@@ -1,0 +1,136 @@
+{
+    "type": "flex",
+    "altText": "แจ้งเตือนการใช้ยา",
+    "contents":
+    {
+        "type": "bubble",
+        "size": "kilo",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "image",
+              "url": "https://i.ibb.co/KDm5gCq/flex-help-success-2500x3500.png",
+              "size": "full",
+              "aspectRatio": "2500:3500",
+              "aspectMode": "cover"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "แจ้งเตือนตารางนัดหมอ",
+                  "color": "#2F84B9",
+                  "weight": "bold",
+                  "size": "md",
+                  "wrap": true
+                },
+                {
+                  "type": "text",
+                  "size": "md",
+                  "text": "User_name",
+                  "color": "#2F84B9",
+                  "wrap": true,
+                  "maxLines": 2,
+                  "weight": "bold"
+                }
+              ],
+              "position": "absolute",
+              "offsetTop": "16%",
+              "offsetStart": "22%",
+              "width": "73%",
+              "height": "13.5%",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "หัวข้อ",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#000000"
+                }
+              ],
+              "width": "90%",
+              "position": "absolute",
+              "offsetStart": "5%",
+              "offsetTop": "35%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "Title",
+                  "color": "#ffffff",
+                  "weight": "bold",
+                  "size": "lg",
+                  "align": "center"
+                }
+              ],
+              "position": "absolute",
+              "offsetTop": "43.3%",
+              "offsetStart": "12%",
+              "width": "77%",
+              "height": "10%",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "วันนัดหมอ",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#000000"
+                }
+              ],
+              "width": "90%",
+              "position": "absolute",
+              "offsetStart": "5%",
+              "offsetTop": "55.5%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "date",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#ffffff"
+                }
+              ],
+              "width": "77%",
+              "position": "absolute",
+              "offsetStart": "12%",
+              "offsetTop": "64.3%",
+              "alignItems": "center",
+              "height": "10%",
+              "justifyContent": "center"
+            }
+          ],
+          "position": "relative",
+          "paddingAll": "0px"
+        }
+      }
+}
+
+

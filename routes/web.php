@@ -39,7 +39,9 @@ Route::get('health_check_check_login', 'Health_checkController@check_login');
 Route::get('game_check_login', 'GameController@check_login');
 Route::get('/log_in_ask_for_help_add_photo/{id_sos_map}', 'Ask_for_helpController@log_in_ask_for_help_add_photo');
 Route::get('/log_in_ask_for_help_rate_help/{id_sos_map}', 'Ask_for_helpController@log_in_ask_for_help_rate_help');
+
 Route::get('test', 'TestController@test');
+Route::get('test_doc', 'TestController@test_doc');
 // Route::get('test_room', 'TestController@sentLineTest');
 
 

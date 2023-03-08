@@ -172,13 +172,13 @@
                             document.getElementById('div_cam').style.display='',
                             document.querySelector('#i_down').classList.add('d-none'),
                             document.querySelector('#i_up').classList.remove('d-none'),
-                            document.querySelector('#div_data_phone').classList.add('d-none'),
+                            // document.querySelector('#div_data_phone').classList.add('d-none'),
                             capture_registration();
                         }else{
                             document.getElementById('div_cam') .style.display='none',
                             document.querySelector('#i_down').classList.remove('d-none'),
                             document.querySelector('#i_up').classList.add('d-none'),
-                            document.querySelector('#div_data_phone').classList.remove('d-none'),
+                            // document.querySelector('#div_data_phone').classList.remove('d-none'),
                             stop();
                         }">
 
@@ -833,8 +833,8 @@ function select_province() {
         let user_id = "{{ Auth::user()->id }}";
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
-        let photo_sos = document.querySelector('#photo2').value;
-
+        let photo_sos = document.querySelector('#photo2').src;
+        console.log(photo_sos);
         let url = "{{ url('/api/sos_btn') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
         "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id + "&partner_id=" + partner_id + "&photo_sos=" + photo_sos;
 
@@ -927,7 +927,6 @@ function select_province() {
             text_img.value = canvas.toDataURL('image/png');
 
         document.querySelector('#btn_check_time').classList.remove('d-none');
-        document.querySelector('#btn_help_area').disabled = false;
     }
 
     function capture_registration(){
@@ -958,7 +957,7 @@ function select_province() {
         });
         }
 
-        document.querySelector('#btn_help_area').disabled = true;
+
 
     }
 

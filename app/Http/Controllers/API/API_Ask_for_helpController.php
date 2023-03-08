@@ -46,6 +46,9 @@ class API_Ask_for_helpController extends Controller
         $user_id = $request->get('user_id');
         $name_user = User::where('id',$user_id)->first();
 
+        if ($request->hasFile('photo_sos')) {
+            $requestData['photo_sos'] = $request->file('photo_sos')->store('uploads', 'public');
+        }
         $requestData['name_user'] = $name_user->name;
         $requestData['user_id'] = $user_id;
         $requestData['content'] = "help_by_partner";
@@ -55,17 +58,17 @@ class API_Ask_for_helpController extends Controller
         $ask_for_help = Ask_for_help::create($requestData);
 
          // หา $id_sos_map
-        $sos_map_latests = Ask_for_help::get();
-        foreach ($sos_map_latests as $latest) {
-            $id_sos_map = $latest->id;
-        }
+        // $sos_map_latests = Ask_for_help::get();
+        // foreach ($sos_map_latests as $latest) {
+        //     $id_sos_map = $latest->id;
+        // }
 
-         switch ($requestData['content']) {
-             case 'help_by_partner':
-                 // ตรวจสอบ area แล้วส่งข้อมูลผ่านไลน์
-                 $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
-                 break;
-         }
+        //  switch ($requestData['content']) {
+        //      case 'help_by_partner':
+        //          // ตรวจสอบ area แล้วส่งข้อมูลผ่านไลน์
+        //          $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
+        //          break;
+        //  }
 
 
         return $ask_for_help;

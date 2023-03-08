@@ -75,3 +75,5 @@ Route::get('/select_lat_lng_amphoe/{province}/{amphoe}','API\LocationController@
 //========================
 Route::get('/submit_show_homepage/{partner_id}/{input_show_homepage}', 'API\PartnersController@submit_show_homepage');
 
+Route::get('/marker_current/{name_partner}', 'API\PartnersController@marker_current');
+

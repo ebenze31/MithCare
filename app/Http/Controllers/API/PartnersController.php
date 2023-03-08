@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MailToPartner_area;
 use App\Models\LineMessagingAPI;
 use App\Http\Controllers\API\API_Time_zone;
+use App\Models\Ask_for_help;
 use App\Models\Mylog;
 use App\Models\Check_in;
 use App\Models\Partner;
@@ -30,6 +31,14 @@ class PartnersController extends Controller
         ]);
 
         return "OK" ;
+    }
+
+    public function marker_current($name_partner)
+    {
+        $data_sos = Partner::where('name', $name_partner)->first();
+
+        return $data_sos ;
+
     }
 
 

@@ -47,7 +47,7 @@
             <div class="col-12 mb-2">
                 <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
                 style="background-color: #3490dc; font-size: 20px; color: white;" >
-                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ MithCare
+                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
                 </span>
                 <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
                     style="background-color: #3490dc; font-size: 20px; color: white;" >
@@ -164,6 +164,72 @@
                     <div class="d-none" id="map_select_location_from_address"></div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h6 style="margin-top:4px;" class="control-label " data-toggle="collapse" data-target="#div_photo" aria-expanded="false" aria-controls="div_photo"
+                        onclick="if(document.getElementById('div_cam').style.display=='none'){
+                            document.getElementById('div_cam').style.display='',
+                            document.querySelector('#i_down').classList.add('d-none'),
+                            document.querySelector('#i_up').classList.remove('d-none'),
+                            document.querySelector('#div_data_phone').classList.add('d-none'),
+                            capture_registration();
+                        }else{
+                            document.getElementById('div_cam') .style.display='none',
+                            document.querySelector('#i_down').classList.remove('d-none'),
+                            document.querySelector('#i_up').classList.add('d-none'),
+                            document.querySelector('#div_data_phone').classList.remove('d-none'),
+                            stop();
+                        }">
+
+                        ถ่ายภาพเพื่อระบุตำแหน่งที่ชัดเจน &nbsp;
+                        <br><br>
+                        <a class="align-self-end text-white btn-primary btn-circle">
+                            <i id="i_down" class="fas fa-camera"></i>
+                            <i id="i_up" class="fas fa-chevron-up d-none"></i>
+                        </a>
+                        <br>
+                        <br>
+                        <span id="text_add_img" class="text-danger d-none">กรุณาเพิ่มภาพถ่าย</span>
+                        <!-- <i id="i_down" style="font-size: 20px;" class="fas fa-camera text-info"></i>
+                        <i id="i_up" style="font-size: 20px" class="fas fa-arrow-alt-circle-up text-info d-none"></i> -->
+                    </h6>
+                    <div class="collapse" id="div_photo">
+                        {{-- <div style="margin-top:15px;" class="control-label" data-toggle="collapse" data-target="#img_ex" aria-expanded="false" aria-controls="img_ex" >
+                            ตัวอย่างการถ่ายภาพ <i class="fas fa-angle-down"></i>
+                        </div>
+                        <img id="img_ex" class="collapse" style="filter: backscale(50%);margin-top:15px;" width="100%" src="{{ asset('/img/more/ป้ายอาคารจอดรถ.jpg') }}"> --}}
+                        <div class="col-12" id="div_cam" style="display:none;margin-top:17px;">
+                            <div class="d-flex justify-content-center bg-light">
+                                <video width="100%" height="100%" autoplay="true" id="videoElement"></video>
+                                <a class="align-self-end text-white btn-primary btn-circle" style="position: absolute; margin-bottom:10px" onclick="capture();">
+                                    <i class="fas fa-camera"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <input class="d-none" type="text" name="text_img" id="text_img" value="">
+
+                        <div style="margin-top:15px;" id="show_img" class="">
+                            <canvas class="d-none"  id="canvas" width="266" height="400" ></canvas>
+                            <img class="d-none" src="" width="266" height="400"  id="photo2">
+
+                            <div id="btn_check_time" class="row d-none" style="margin-top:15px;">
+                                <div class="col-12">
+                                    <p class="btn btn-sm btn-danger" onclick="document.querySelector('#btn_check_time').classList.add('d-none'),capture_registration();">
+                                        <i class="fas fa-undo"></i> ถ่ายใหม่
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-none form-group {{ $errors->has('photo_sos') ? 'has-error' : ''}}">
+                        <input class="form-control" name="photo_sos" type="text" id="photo_sos" value="{{ isset($ask_for_help->photo) ? $ask_for_help->photo : '' }}" >
+                        {!! $errors->first('photo_sos', '<p class="help-block">:message</p>') !!}
+                    </div>
+                </div>
+            </div>
+
             <div id="modal-footer" class="modal-footer">
                 <div class="row d-flex justify-content-between">
 
@@ -767,10 +833,10 @@ function select_province() {
         let user_id = "{{ Auth::user()->id }}";
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
-
+        let photo_sos = document.querySelector('#photo2').value;
 
         let url = "{{ url('/api/sos_btn') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
-        "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id + "&partner_id=" + partner_id;
+        "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id + "&partner_id=" + partner_id + "&photo_sos=" + photo_sos;
 
         fetch(url)
             .then(response => response.json())
@@ -793,24 +859,6 @@ function select_province() {
         document.querySelector('#div_amphoe').classList.add('d-none');
         document.querySelector('#div_tambon').classList.add('d-none');
         document.querySelector('#div_address_detail').classList.add('d-none');
-
-        // document.querySelector('#from_select_position').classList.remove('d-none');
-        // let html;
-        // let show_btn_address = document.querySelector('#btn_select_map');
-        //     show_btn_address.innerHTML = "";
-
-        // html =  '<div class="col-6 col-md-4 p-1 ">' +
-        //             '<a class="btn btn-primary btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" >' +
-        //                 '<i class="fa-solid fa-house-user">' + '</i>' + 'เลือกจากแผนที'่ +
-        //             '</a>' +
-        //         '</div>' +
-        //         '<div class="col-6 col-md-4 p-1 ">' +
-        //             '<a  class="btn btn-success btn-md float-end kanit btn-block text-white" width="100%" style="width:100%;border-radius: 20px;" ' +
-        //                ' <i class="fa-solid fa-location-dot">' + '</i>' + 'ตำแหน่งปัจจุบัน' +
-        //             '</a>' +
-        //         '</div>' ;
-
-        //         show_btn_address.innerHTML = html;
 
     }
 
@@ -855,6 +903,84 @@ function select_province() {
 
         getLocation_select();
     }
+</script>
+
+
+<script>
+      function capture() {
+
+        var video = document.querySelector("#videoElement");
+        var text_img = document.querySelector("#text_img");
+
+        var photo2 = document.querySelector("#photo2");
+        var canvas = document.querySelector("#canvas");
+
+        var div_cam = document.querySelector("#div_cam");
+            div_cam.classList.add('d-none');
+
+        photo2.classList.remove('d-none');
+
+        let context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0,266,400);
+
+            photo2.setAttribute('src',canvas.toDataURL('image/png'));
+            text_img.value = canvas.toDataURL('image/png');
+
+        document.querySelector('#btn_check_time').classList.remove('d-none');
+        document.querySelector('#btn_help_area').disabled = false;
+    }
+
+    function capture_registration(){
+
+        var video = document.querySelector("#videoElement");
+        var photo2 = document.querySelector("#photo2");
+        var canvas = document.querySelector("#canvas");
+        var text_img = document.querySelector("#text_img");
+        var context = canvas.getContext('2d');
+        var div_cam = document.querySelector("#div_cam");
+        div_cam.classList.remove('d-none');
+
+        photo2.classList.add('d-none');
+
+        if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
+        // { video: true }
+        // { video: { facingMode: { exact: "environment" } } }
+        .then(function (stream) {
+            if (typeof video.srcObject == "object") {
+                video.srcObject = stream;
+            } else {
+                video.src = URL.createObjectURL(stream);
+            }
+        })
+        .catch(function (err0r) {
+            console.log("Something went wrong!");
+        });
+        }
+
+        document.querySelector('#btn_help_area').disabled = true;
+
+    }
+
+    function stop(e) {
+        var video = document.querySelector("#videoElement");
+        var photo2 = document.querySelector("#photo2");
+        var canvas = document.querySelector("#canvas");
+        var text_img = document.querySelector("#text_img");
+        var context = canvas.getContext('2d');
+
+          var stream = video.srcObject;
+          var tracks = stream.getTracks();
+
+          for (var i = 0; i < tracks.length; i++) {
+            var track = tracks[i];
+            track.stop();
+          }
+
+          video.srcObject = null;
+    }
+
+
 </script>
 
 

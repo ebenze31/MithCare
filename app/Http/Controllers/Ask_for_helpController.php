@@ -28,30 +28,6 @@ class Ask_for_helpController extends Controller
 
         if (!empty($keyword)) {
             $ask_for_help = Ask_for_help::where('name_user', 'LIKE', "%$keyword%")
-                ->orWhere('lat', 'LIKE', "%$keyword%")
-                ->orWhere('lng', 'LIKE', "%$keyword%")
-                ->orWhere('province', 'LIKE', "%$keyword%")
-                ->orWhere('district', 'LIKE', "%$keyword%")
-                ->orWhere('sub_district', 'LIKE', "%$keyword%")
-                ->orWhere('address', 'LIKE', "%$keyword%")
-                ->orWhere('content', 'LIKE', "%$keyword%")
-                ->orWhere('photo_sos', 'LIKE', "%$keyword%")
-                ->orWhere('organization_helper', 'LIKE', "%$keyword%")
-                ->orWhere('name_helper', 'LIKE', "%$keyword%")
-                ->orWhere('help_complete', 'LIKE', "%$keyword%")
-                ->orWhere('help_complete_time', 'LIKE', "%$keyword%")
-                ->orWhere('score_impression', 'LIKE', "%$keyword%")
-                ->orWhere('score_period', 'LIKE', "%$keyword%")
-                ->orWhere('score total', 'LIKE', "%$keyword%")
-                ->orWhere('commemt_help', 'LIKE', "%$keyword%")
-                ->orWhere('notify', 'LIKE', "%$keyword%")
-                ->orWhere('photo_succeed', 'LIKE', "%$keyword%")
-                ->orWhere('photo_succeed_by', 'LIKE', "%$keyword%")
-                ->orWhere('remark_helper', 'LIKE', "%$keyword%")
-                ->orWhere('time_go_to_help', 'LIKE', "%$keyword%")
-                ->orWhere('helper_id', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('partner_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $ask_for_help = Ask_for_help::latest()->paginate($perPage);

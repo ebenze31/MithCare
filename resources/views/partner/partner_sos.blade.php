@@ -20,9 +20,8 @@
                     <input class="d-none" type="text" id="center_lng" name="" value="100.4930264">
                     <input class="d-none" type="text" id="name_area" name="" value="{{ $name_area }}">
                     <input class="d-none" type="text" id="type_partner" name="" value="{{ $type_partner }}">
-                    @foreach($data_partner as $data_partner)
-                        <input class="d-none" type="text" id="name_partner" name="" value="ชื่อ พาร์ทเนอร์">
-                    @endforeach
+                    <input class="d-none" type="text" id="name_partner" name="" value="{{ $data_partner->name }}">
+
                     <div style="padding-right:15px ;">
                         <div class="card">
                             <div id="map"></div>
@@ -234,14 +233,14 @@
                             <div class="col-1">
                                 <div style="margin-top: -10px;">
 
-                                    @if( $item->content == "help_area" )
-                                        <a id="tag_a_view_marker" class="link text-danger" href="#map" onclick="view_marker('{{ $item->lat }}' , '{{ $item->lng }}', '{{ $item->id }}', '{{ $item->name_area }}');">
+                                    @if( $item->content == "help_by_partner" )
+                                        <a id="tag_a_view_marker" class="link text-danger" href="#map" onclick="view_marker('{{ $item->lat }}' , '{{ $item->lng }}', '{{ $item->id }}');">
                                             <i class="fas fa-map-marker-alt"></i>
                                             <br>
                                             ดูหมุด
                                         </a>
                                     @else
-                                        <a class="link text-danger" href="#map" onclick="view_marker_volunteer('{{ $item->lat }}' , '{{ $item->lng }}', '{{ $item->id }}', '{{ $item->name_user }}');">
+                                        <a class="link text-danger" href="#map" onclick="view_marker('{{ $item->lat }}' , '{{ $item->lng }}', '{{ $item->id }}', '{{ $item->name_user }}');">
                                             <i class="fas fa-map-marker-alt"></i>
                                             <br>
                                             ดูหมุด
@@ -538,26 +537,35 @@
 
     });
 
+    var test = 1;
     var draw_area ;
     var map ;
     var marker ;
-    var all_lat_lng = '$view_maps_all';
+    var all_lat_lng = [];
+
+
 
     function initMap() {
-        // 13.7248936,100.4930264 lat lng ประเทศไทย
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: 13.7248936, lng: 100.4930264 },
-            zoom: 14,
-        });
+        var bounds = new google.maps.LatLngBounds();
 
-        let bounds = new google.maps.LatLngBounds();
-
-        @foreach($view_maps_all as $view_map)
-            bounds.extend($view_map->lat,);
+        @foreach($view_maps_all as $latlng)
+            @if(!empty($latlng->lat && $latlng->lng))
+                // all_lat_lng.push(JSON.parse('{"lat": {{$latlng->lat}},"lng": {{$latlng->lng}} }'));
+                bounds.extend(JSON.parse('{"lat": {{$latlng->lat}},"lng": {{$latlng->lng}} }'));
+                // console.log(JSON.parse('{"lat": {{$latlng->lat}},"lng": {{$latlng->lng}} }'));
+            @endif
         @endforeach
 
-        //ปักหมุด
-        let image = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
+
+        // 13.7248936,100.4930264 lat lng ประเทศไทย
+        map = new google.maps.Map(document.getElementById("map"), {
+            // center: {lat: 13.7248936, lng: 100.4930264 },
+            // zoom: 14,
+        });
+
+        map.fitBounds(bounds);
+
+        let image = "{{url('/img/logo_mithcare/marker/Marker_mithcare50.png')}}";
         @foreach($view_maps_all as $view_map)
             @if(!empty($view_map->lat))
                 marker = new google.maps.Marker({
@@ -568,16 +576,16 @@
                 });
             @endif
         @endforeach
+    // console.log(all_lat_lng);
 
-        map.fitBounds(bounds);
-        // if (marker) {
-        //     marker.setMap(null);
-        // }
-        // marker = new google.maps.Marker({
-        //     position: {lat: lat , lng: lng },
-        //     map: map,
-        //     icon: image,
-        // });
+
+          //extend the bounds to include each marker's position
+        // bounds.extend(marker.position);
+
+
+
+        //ปักหมุด
+
 
     }
 
@@ -665,131 +673,32 @@
     // }
 
 
-    // function view_marker(lat , lng , sos_id , name_area){
+    function view_marker(lat , lng , sos_id ){
 
-    //     let name_partner = document.querySelector('#name_partner').value;
-    //     // let name_area = 'คอนโด' ;
+        let name_partner = document.querySelector('#name_partner').value;
 
-    //     fetch("{{ url('/') }}/api/area_current/"+name_partner  + '/' + name_area)
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             // console.log(result);
+        fetch("{{ url('/') }}/api/marker_current"+ "/" + name_partner)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
 
-    //             var bounds = new google.maps.LatLngBounds();
 
-    //             for (let ix = 0; ix < result.length; ix++) {
-    //                 bounds.extend(result[ix]);
-    //             }
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 16,
+                center: { lat: parseFloat(lat), lng: parseFloat(lng) },
+            });
 
-    //         map = new google.maps.Map(document.getElementById("map"), {
-    //             zoom: 18,
-    //             center: { lat: parseFloat(lat), lng: parseFloat(lng) },
-    //         });
 
-    //         // Construct the polygon.
-    //         draw_area = new google.maps.Polygon({
-    //             paths: result,
-    //             strokeColor: "#008450",
-    //             strokeOpacity: 0.8,
-    //             strokeWeight: 1,
-    //             fillColor: "#008450",
-    //             fillOpacity: 0.25,
-    //         });
-    //         draw_area.setMap(map);
+            let image = "{{url('/img/logo_mithcare/marker/Marker_mithcare50.png')}}";
+            marker = new google.maps.Marker({
+                position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
+                map: map,
+                icon: image,
+            });
 
-    //         let image = "https://www.viicheck.com/img/icon/flag_2.png";
-    //         let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
-    //         marker = new google.maps.Marker({
-    //             position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
-    //             map: map,
-    //             icon: image,
-    //         });
+        });
 
-    //         @foreach($view_maps as $view_map)
-    //             if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
-    //                 marker = new google.maps.Marker({
-    //                     position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-    //                     map: map,
-    //                     icon: image2,
-    //                 });
-    //             }
-    //         @endforeach
-
-    //         const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-
-    //         const contentString =
-    //             '<div id="content">' +
-    //             '<div id="siteNotice">' +
-    //             "</div>" +
-    //             '<h4 id="firstHeading" class="firstHeading">'+name_area +'</h4>' +
-    //             '<div id="bodyContent">' +
-    //             "<p>lat : "+ lat + "<br>" +
-    //             "lng : "+ lng + "</p>" +
-    //             "</div>" +
-    //             "</div>";
-
-    //         let infoWindow = new google.maps.InfoWindow({
-    //             // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
-    //             content: contentString,
-    //             position: myLatlng,
-    //         });
-
-    //         infoWindow.open(map);
-    //     });
-
-    // }
-
-    // function view_marker_volunteer(lat , lng , sos_id , name_user){
-
-    //     let lat_mail = '@' + lat ;
-
-    //     map = new google.maps.Map(document.getElementById("map"), {
-    //         zoom: 17,
-    //         center: { lat: parseFloat(lat), lng: parseFloat(lng) },
-    //     });
-
-    //     let image = "https://www.viicheck.com/img/icon/flag_2.png";
-    //     let image2 = "https://www.viicheck.com/img/icon/flag_3.png";
-
-    //     marker = new google.maps.Marker({
-    //         position: {lat: parseFloat(lat) , lng: parseFloat(lng) },
-    //         map: map,
-    //         icon: image,
-    //     });
-
-    //     @foreach($view_maps_all as $view_map)
-    //         if ( {{ $view_map->id }} !== parseFloat(sos_id) ) {
-    //             marker = new google.maps.Marker({
-    //                 position: {lat: {{ $view_map->lat }} , lng: {{ $view_map->lng }} },
-    //                 map: map,
-    //                 icon: image2,
-    //             });
-    //         }
-    //     @endforeach
-
-    //     const myLatlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-
-    //     const contentString =
-    //         '<div id="content">' +
-    //         '<div id="siteNotice">' +
-    //         "</div>" +
-    //         '<h4 id="firstHeading" class="firstHeading"> คุณ: '+ name_user +'</h4>' +
-    //         '<div id="bodyContent">' +
-    //         "<p>lat : "+ lat + "<br>" +
-    //         "lng : "+ lng + "</p>" +
-    //         "</div>" +
-    //         '<a href="https://www.google.co.th/maps/search/'+lat+','+lng+'/'+lat_mail+','+lng+',16z" target="bank" type="button" class="btn btn-sm btn-info text-white" style="width:100%;"><i class="fas fa-location-arrow"></i> นำทาง</a>' +
-    //         "</div>";
-
-    //     let infoWindow = new google.maps.InfoWindow({
-    //         // content: "<p>ชื่อพื้นที่ : <b>" + name_area  + "</b></p>" + "Lat :" + lat + "<br>" + "Lat :" + lng,
-    //         content: contentString,
-    //         position: myLatlng,
-    //     });
-
-    //     infoWindow.open(map);
-
-    // }
+    }
 
 </script>
 

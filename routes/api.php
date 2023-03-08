@@ -52,7 +52,7 @@ Route::get('/check_password_of_room', 'RoomController@password_of_room');
 // sos by phone
 Route::get('/sos_phone', 'API\API_Ask_for_helpController@get_sos_by_phone');
 // sos by btn
-Route::get('/sos_btn', 'API\API_Ask_for_helpController@get_sos_by_btn');
+Route::post('/sos_btn', 'API\API_Ask_for_helpController@get_sos_by_btn');
 
 // ดึงข้อมูล user มาใช้
 Route::get('/ask_user_info/{user_id}','ProfileController@location_map_user');

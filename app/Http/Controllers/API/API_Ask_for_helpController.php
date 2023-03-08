@@ -37,18 +37,16 @@ class API_Ask_for_helpController extends Controller
     {
         $requestData = $request->all();
 
-        // echo"<pre>";
-        // print_r($requestData);
-        // echo"</pre>";
-        // exit();
-
         $data_partner = Partner::where('id',$requestData['partner_id'])->first();
         $user_id = $request->get('user_id');
         $name_user = User::where('id',$user_id)->first();
 
         if ($request->hasFile('photo_sos')) {
-            $requestData['photo_sos'] = $request->file('photo_sos')->store('uploads', 'public');
+            $image = $request->file('photo_sos');
+            $path = $image->store('uploads', 'public');
+            $requestData['photo_sos'] = $path ;
         }
+
         $requestData['name_user'] = $name_user->name;
         $requestData['user_id'] = $user_id;
         $requestData['content'] = "help_by_partner";
@@ -69,7 +67,6 @@ class API_Ask_for_helpController extends Controller
                  $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
                  break;
          }
-
 
         return $ask_for_help;
         //  break;

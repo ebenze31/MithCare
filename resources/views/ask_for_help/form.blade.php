@@ -810,22 +810,51 @@ function select_province() {
         }
 
         let address = document.querySelector('#input_address').value;
-        let phone = document.querySelector('#input_phone').value;
+        // let phone = document.querySelector('#input_phone').value;
         let user_id = "{{ Auth::user()->id }}";
         let lat = document.querySelector('#lat').value;
         let lng = document.querySelector('#lng').value;
-        let photo_sos = document.querySelector('#photo_sos_by_officers').value;
-        console.log(photo_sos);
-        let url = "{{ url('/api/sos_btn') }}?province=" + province + "&district=" + district + "&sub_district=" + sub_district +
-        "&address=" + address +  "&lat=" + lat + "&lng=" + lng + "&phone=" + phone + "&user_id=" + user_id + "&partner_id=" + partner_id + "&photo_sos=" + photo_sos;
 
-        fetch(url)
-            .then(response => response.json())
-            .then(result => {
-                alert('บันทึกข้อมูล ขอความช่วยเหลือเรียบร้อย');
-                // html = '<div> ได้รับข้อมูลขอความช่วยเหลือแล้ว </div>'
-                // document.querySelector('#message_sos').innerHTML = html;
-            });
+
+
+          // API UPLOAD IMG //
+        let formData = new FormData();
+        let imageFile = document.getElementById('photo_sos_by_officers').files[0];
+            formData.append('photo_sos', imageFile);
+        console.log(formData);
+
+        let data_sos = {
+                    "user_id" : user_id,
+                    "lat" : lat,
+                    "lng" : lng,
+                    "province" : province,
+                    "district" : district,
+                    "sub_district" : sub_district,
+                    "address" : address,
+                }
+                // console.log(data_sos);
+
+        formData.append('user_id', data_sos.user_id);
+        formData.append('lat', data_sos.lat);
+        formData.append('lng', data_sos.lng);
+        formData.append('province', data_sos.province);
+        formData.append('district', data_sos.district);
+        formData.append('sub_district', data_sos.sub_district);
+        formData.append('address', data_sos.address);
+
+
+        fetch("{{ url('/api/sos_btn') }}?user_id=" + user_id + "&partner_id=" + partner_id,{
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(result => {
+            alert('บันทึกข้อมูล ขอความช่วยเหลือเรียบร้อย');
+            // html = '<div> ได้รับข้อมูลขอความช่วยเหลือแล้ว </div>'
+            // document.querySelector('#message_sos').innerHTML = html;
+        }).catch(function(error){
+            // console.error(error);
+        });
+
     }
 </script>
 

@@ -66,7 +66,7 @@ class API_Ask_for_helpController extends Controller
          switch ($requestData['content']) {
              case 'help_by_partner':
                  // ตรวจสอบ area แล้วส่งข้อมูลผ่านไลน์
-                //  $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
+                 $this->send_Line_To_Group_SOS($requestData , $id_sos_map, $data_partner);
                  break;
          }
 

@@ -33,6 +33,7 @@ class TestController extends Controller
         $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
         $date_now = Carbon::now()->format('Y-m-d');
 
+
         // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
         $ap_pill = Appoint::where('status','=',null)
         ->orWhere('status','=','sent')
@@ -124,8 +125,8 @@ class TestController extends Controller
         $user_id = Auth::id();
         $check = "" ;
 
-        $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
-        $date_now = Carbon::now()->format('Y-m-d');
+        $tomorrow = date("Y-m-d", time() + 86400);
+        // $date_now = Carbon::now()->format('Y-m-d');
 
         // ===================
         // TEST APPOINT Doc
@@ -136,9 +137,11 @@ class TestController extends Controller
         ->orWhere('status','=','sent')
         ->where('room_id','=',$room_id)
         ->where('type','=','doc')
-        ->where('date','<=',$date_now)
+        ->where('date','<=',$tomorrow)
         ->get();
 
+        echo 'วันที่ : '.$tomorrow;
+        echo "<br>";
         echo 'จำนวนนัดหมาย : '.count($ap_doc);
         echo "<br>=============================================================================================================<br>";
 

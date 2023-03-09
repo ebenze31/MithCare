@@ -66,13 +66,15 @@
 						<div class="menu-title">ขอความช่วยเหลือ</div>
 					</a>
 				</li>
-                <li>
-					<a href="{{ url('/partner') }}">
-						<div class="parent-icon"><i class="fa-solid fa-handshake"></i>
-						</div>
-						<div class="menu-title">Partner</div>
-					</a>
-				</li>
+                @if (Auth::user()->role == 'isAdmin')
+                    <li>
+                        <a href="{{ url('/partner') }}">
+                            <div class="parent-icon"><i class="fa-solid fa-handshake"></i>
+                            </div>
+                            <div class="menu-title">Partner</div>
+                        </a>
+                    </li>
+                @endif
 				<li>
 					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class='bx bx-cart-alt' ></i>

@@ -52,16 +52,17 @@ Route::get('test_doc', 'TestController@test_doc');
 
 Route::middleware(['auth', 'role:isAdmin'])->group(function () {
 
-    Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
+    Route::resource('partner', 'PartnerController');
 
 });
 
 //========================
-//  END ADMIN MithCare
+//   ADMIN PARTNER
 //========================
-Route::middleware(['auth', 'role:isAdmin'])->group(function () {
+Route::middleware(['auth', 'role:isAdmin,partner'])->group(function () {
 
     Route::get('/sos_partner', 'PartnerController@view_sos');
+    Route::get('room_admin', 'RoomController@room_admin_index')->name('room_admin');
 
 });
 
@@ -152,5 +153,5 @@ Route::get('/Calendar_test', function () {
 
 
 
-Route::resource('partner', 'PartnerController');
+
 Route::resource('group_line', 'Group_lineController');

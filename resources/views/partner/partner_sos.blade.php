@@ -12,7 +12,7 @@
                     <br><br>
                 </div>
                 <div class="col-6">
-                    <h4 style="float: right;color: #007bff;"><b>ชื่อพื้นที่</b></h4>
+                    {{-- <h4 style="float: right;color: #007bff;"><b>ชื่อพื้นที่</b></h4> --}}
                 </div>
                 <div class="col-12">
                     <input class="d-none" type="text" id="va_zoom" name="" value="6">

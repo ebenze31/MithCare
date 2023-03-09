@@ -19,103 +19,111 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $data_appoints = Appoint::get();
+
+        foreach($data_appoints as $data_appoint){
+
+            $room_id = $data_appoint->room_id;
+
+            // $room_id = $request->get('room_id');
+            // $type = $request->get('type');
+            // $user_id = Auth::id();
+            // $check = "" ;
 
 
-        $room_id = $request->get('room_id');
-        $type = $request->get('type');
-        $user_id = Auth::id();
-        $check = "" ;
+            // ===================
+            // TEST APPOINT Pill
+            // ===================
+
+            $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
+            $date_now = Carbon::now()->format('Y-m-d');
 
 
-        // ===================
-        // TEST APPOINT Pill
-        // ===================
-
-        $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
-        $date_now = Carbon::now()->format('Y-m-d');
-
-
-        // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
-        $ap_pill = Appoint::where('status','=',null)
-        ->orWhere('status','=','sent')
-        ->where('room_id','=',$room_id)
-        ->where('type','=','pill')
-        ->where('date','<=',$date_now)
-        ->where('date_time','<=',$time_10)
-        ->get();
+            // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
+            $ap_pill = Appoint::where('status','=',null)
+            ->orWhere('status','=','sent')
+            ->where('room_id','=',$room_id)
+            ->where('type','=','pill')
+            ->where('date','<=',$date_now)
+            ->where('date_time','<=',$time_10)
+            ->get();
 
 
 
-        echo 'จำนวนนัดหมาย : '.count($ap_pill);
-        echo "<br>=============================================================================================================<br>";
-        for($i = 0; $i < count($ap_pill); $i++){
+            echo 'จำนวนนัดหมาย : '.count($ap_pill);
+            echo "<br>=============================================================================================================<br>";
+            for($i = 0; $i < count($ap_pill); $i++){
 
-           echo 'ID ผู้ป่วย : '.$ap_pill[$i]['patient_id'];
-           echo "<br>";
-            // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
-            $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$room_id)->first();
-
-
-            if($data_members->lv_of_caretaker == 2){
-                // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
-
-                DB::table('appoints')
-                ->where('id', $ap_pill[$i]['id'])
-                ->update([
-                    'status' => 'sent_success',
-                    'sent_round' => 1,
-                ]);
+            echo 'ID ผู้ป่วย : '.$ap_pill[$i]['patient_id'];
+            echo "<br>";
+                // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
+                $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$room_id)->first();
 
 
-                $this->sentLineToPatient($ap_pill[$i],"tomember");
-
-            }else{
-                  // LV_1 OR NULL
-                echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
-                echo "<br>";
-                    // ถ้าจำนวนการส่งเกิน 2 ครั้ง
-                if($ap_pill[$i]['sent_round'] >= 2){
-                    echo 'การส่งแจ้งเตือนมากกว่าหรือเท่ากับ 2 ครั้งแล้ว';
-                    echo "<br>";
-
-                    $this->sentLineToPatient($ap_pill[$i],"tomember");
+                if($data_members->lv_of_caretaker == 2){
+                    // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
                     DB::table('appoints')
                     ->where('id', $ap_pill[$i]['id'])
                     ->update([
                         'status' => 'sent_success',
-                        'sent_round' => DB::raw('sent_round+1'),
+                        'sent_round' => 1,
                     ]);
 
+
+                    $this->sentLineToPatient($ap_pill[$i],"tomember");
+
                 }else{
-                    // ถ้าจำนวนการส่งยังไม่เกิน 2 ครั้ง
-                    echo 'การส่งแจ้งเตือนยังไม่ 2 ครั้ง ' ;
+                    // LV_1 OR NULL
+                    echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
                     echo "<br>";
-                    $this->sentLineToPatient($ap_pill[$i],"topatient");
+                        // ถ้าจำนวนการส่งเกิน 2 ครั้ง
+                    if($ap_pill[$i]['sent_round'] >= 2){
+                        echo 'การส่งแจ้งเตือนมากกว่าหรือเท่ากับ 2 ครั้งแล้ว';
+                        echo "<br>";
 
+                        $this->sentLineToPatient($ap_pill[$i],"tomember");
 
-                    if(!empty($ap_pill[$i]['sent_round'])){
-                        // ถ้า send_round ไม่เป็นค่าว่าง
                         DB::table('appoints')
                         ->where('id', $ap_pill[$i]['id'])
                         ->update([
-                            'status' => 'sent',
+                            'status' => 'sent_success',
                             'sent_round' => DB::raw('sent_round+1'),
                         ]);
+
                     }else{
-                        //ถ้า send_round เป็นค่าว่าง
-                        DB::table('appoints')
-                        ->where('id', $ap_pill[$i]['id'])
-                        ->update([
-                            'sent_round' => 1,
-                        ]);
+                        // ถ้าจำนวนการส่งยังไม่เกิน 2 ครั้ง
+                        echo 'การส่งแจ้งเตือนยังไม่ 2 ครั้ง ' ;
+                        echo "<br>";
+                        $this->sentLineToPatient($ap_pill[$i],"topatient");
+
+
+                        if(!empty($ap_pill[$i]['sent_round'])){
+                            // ถ้า send_round ไม่เป็นค่าว่าง
+                            DB::table('appoints')
+                            ->where('id', $ap_pill[$i]['id'])
+                            ->update([
+                                'status' => 'sent',
+                                'sent_round' => DB::raw('sent_round+1'),
+                            ]);
+                        }else{
+                            //ถ้า send_round เป็นค่าว่าง
+                            DB::table('appoints')
+                            ->where('id', $ap_pill[$i]['id'])
+                            ->update([
+                                'sent_round' => 1,
+                            ]);
+                        }
+
+
                     }
-
-
                 }
+
             }
 
         }
+
+
 
     }
 

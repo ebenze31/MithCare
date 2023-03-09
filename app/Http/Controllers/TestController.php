@@ -164,7 +164,7 @@ class TestController extends Controller
                 $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$room_id)->first();
 
 
-                if($data_members->lv_of_caretaker == 2){
+                if(!empty($data_members->lv_of_caretaker) && $data_members->lv_of_caretaker == 2){
                     // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
                     $this->sentLineToPatient($ap_doc[$i],"tomember");

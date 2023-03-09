@@ -20,6 +20,7 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
+
         $room_id = $request->get('room_id');
         $type = $request->get('type');
         $user_id = Auth::id();
@@ -120,67 +121,44 @@ class TestController extends Controller
 
     public function test_doc(Request $request)
     {
-        $room_id = $request->get('room_id');
-        $type = $request->get('type');
-        $user_id = Auth::id();
-        $check = "" ;
+        $data_appoints = Appoint::get();
 
-        $tomorrow = date("Y-m-d", time() + 86400);
-        // $date_now = Carbon::now()->format('Y-m-d');
+        foreach($data_appoints as $data_appoint){
 
-        // ===================
-        // TEST APPOINT Doc
-        // ===================
+            $room_id = $data_appoint->room_id;
 
-        // ค้นหา type=doc ,status_appoint ว่าเป็น null หรือ sent และวันที่ต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน 1 วัน
-        $ap_doc = Appoint::where('status','=',null)
-        ->orWhere('status','=','sent')
-        ->where('room_id','=',$room_id)
-        ->where('type','=','doc')
-        ->where('date','<=',$tomorrow)
-        ->get();
+            $tomorrow = date("Y-m-d", time() + 86400);
+            // $date_now = Carbon::now()->format('Y-m-d');
 
-        echo 'วันที่ : '.$tomorrow;
-        echo "<br>";
-        echo 'จำนวนนัดหมาย : '.count($ap_doc);
-        echo "<br>=============================================================================================================<br>";
+            // ===================
+            // TEST APPOINT Doc
+            // ===================
 
-        for($i = 0; $i < count($ap_doc); $i++){
+            // ค้นหา type=doc ,status_appoint ว่าเป็น null หรือ sent และวันที่ต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน 1 วัน
+            $ap_doc = Appoint::where('status','=',null)
+            ->orWhere('status','=','sent')
+            ->where('room_id','=',$room_id)
+            ->where('type','=','doc')
+            ->where('date','<=',$tomorrow)
+            ->get();
 
-            echo 'ID ผู้ป่วย : '.$ap_doc[$i]['patient_id'];
+            echo 'วันที่ : '.$tomorrow;
             echo "<br>";
+            echo 'จำนวนนัดหมาย : '.count($ap_doc);
+            echo "<br>=============================================================================================================<br>";
 
-              // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
-              $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$room_id)->first();
+            for($i = 0; $i < count($ap_doc); $i++){
 
-
-            if($data_members->lv_of_caretaker == 2){
-                // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
-
-                $this->sentLineToPatient($ap_doc[$i],"tomember");
-
-                DB::table('appoints')
-                ->where('id', $ap_doc[$i]['id'])
-                ->update([
-                    'status' => 'success',
-                ]);
-
-            }else{
-                  // LV_1 OR NULL
-                echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
+                echo 'ID ผู้ป่วย : '.$ap_doc[$i]['patient_id'];
                 echo "<br>";
 
-                // if(!empty($data_members->caregiver)){//LV_1 OR NULL กรณีมีผู้ดูแล
-                //     $this->sentLineToPatient($ap_doc[$i],"tomember");
+                // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
+                $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$room_id)->first();
 
-                //     DB::table('appoints')
-                //     ->where('id', $ap_doc[$i]['id'])
-                //     ->update([
-                //         'status' => 'success',
-                //     ]);
 
-                // }else
-                // {//LV_1 OR NULL กรณีไม่มีผู้ดูแล
+                if($data_members->lv_of_caretaker == 2){
+                    // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
+
                     $this->sentLineToPatient($ap_doc[$i],"tomember");
 
                     DB::table('appoints')
@@ -188,11 +166,37 @@ class TestController extends Controller
                     ->update([
                         'status' => 'success',
                     ]);
-                // }
+
+                }else{
+                    // LV_1 OR NULL
+                    echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
+                    echo "<br>";
+
+                    // if(!empty($data_members->caregiver)){//LV_1 OR NULL กรณีมีผู้ดูแล
+                    //     $this->sentLineToPatient($ap_doc[$i],"tomember");
+
+                    //     DB::table('appoints')
+                    //     ->where('id', $ap_doc[$i]['id'])
+                    //     ->update([
+                    //         'status' => 'success',
+                    //     ]);
+
+                    // }else
+                    // {//LV_1 OR NULL กรณีไม่มีผู้ดูแล
+                        $this->sentLineToPatient($ap_doc[$i],"tomember");
+
+                        DB::table('appoints')
+                        ->where('id', $ap_doc[$i]['id'])
+                        ->update([
+                            'status' => 'success',
+                        ]);
+                    // }
 
 
+                }
             }
         }
+
     }
 
     public function sentLineToPatient($data_pill,$sendto){

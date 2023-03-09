@@ -35,19 +35,21 @@ class TestController extends Controller
             // TEST APPOINT Pill
             // ===================
 
+            $time = Carbon::now()->format('H:i:s');
             $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
             $date_now = Carbon::now()->format('Y-m-d');
-
+            $date_add_1 = date("Y-m-d", strtotime($date_now . ' +1 day'));
 
             // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
-            $ap_pill = Appoint::where('status','=',null)
-            ->orWhere('status','=','sent')
-            ->where('room_id','=',$room_id)
+            $ap_pill = Appoint::where('room_id','=',$room_id)
             ->where('type','=','pill')
-            ->where('date','<=',$date_now)
-            ->where('date_time','<=',$time_10)
+            ->whereDate('date', '>=' , $date_now )
+            ->whereDate('date', '<=' , $date_add_1 )
+            ->whereTime('date_time','>=',$time)
+            ->whereTime('date_time','<=',$time_10)
+            ->where('status','=',null)
+            ->orWhere('status','=','sent')
             ->get();
-
 
 
             echo 'จำนวนนัดหมาย : '.count($ap_pill);
@@ -135,25 +137,17 @@ class TestController extends Controller
 
             $room_id = $data_appoint->room_id;
 
-            $tomorrow = date("Y-m-d", time() + 86400);
-            // $date_now = Carbon::now()->format('Y-m-d');
-
-            // ===================
-            // TEST APPOINT Doc
-            // ===================
+            $date_now = date("Y-m-d");
+            $date_add_1 = date("Y-m-d", strtotime($date_now . ' +1 day'));
 
             // ค้นหา type=doc ,status_appoint ว่าเป็น null หรือ sent และวันที่ต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน 1 วัน
-            $ap_doc = Appoint::where('status','=',null)
-            ->orWhere('status','=','sent')
-            ->where('room_id','=',$room_id)
+            $ap_doc = Appoint::where('room_id','=',$room_id)
             ->where('type','=','doc')
-            ->where('date','<=',$tomorrow)
+            ->whereDate('date', '>=' , $date_now )
+            ->whereDate('date', '<=' , $date_add_1 )
+            ->where('status','=',null)
+            ->orWhere('status','=','sent')
             ->get();
-
-            echo 'วันที่ : '.$tomorrow;
-            echo "<br>";
-            echo 'จำนวนนัดหมาย : '.count($ap_doc);
-            echo "<br>=============================================================================================================<br>";
 
             for($i = 0; $i < count($ap_doc); $i++){
 

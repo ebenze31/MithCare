@@ -181,6 +181,14 @@ class LineMessagingAPI extends Model
 
     public function select_reply( $event, $postback_data, $data)
     {
+         //SAVE LOG
+        $data_savelog = [
+            "title" => "เข้า select_reply function",
+            "content" =>"เข้า select_reply function",
+        ];
+
+        Mylog::Create($data_savelog);
+
 
         switch($postback_data){
             case "accept_pill" :

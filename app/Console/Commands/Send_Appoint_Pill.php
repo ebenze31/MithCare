@@ -51,14 +51,12 @@ class Send_Appoint_Pill extends Command
     public function handle()
     {
 
-        $time = Carbon::now()->toTimeString();
         $time_10 = Carbon::now()->addMinutes(10)->toTimeString();
         $date_now = date("Y-m-d");
 
         // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
         $ap_pill = Appoint:: where('type','=','pill')
         ->whereDate('date', '<=' , $date_now )
-        // ->whereTime('date_time','>=',$time)
         ->whereTime('date_time','<=',$time_10)
         ->where('status','=',null)
         ->orWhere('status','=','sent')
@@ -141,7 +139,7 @@ class Send_Appoint_Pill extends Command
 
         if($sendto == "tomember"){
             //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
-        $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
+            $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
 
             if($data_check_patient->caregiver != null){
                 //กรณี user_id นี้มีคนดูแลอยู่
@@ -151,14 +149,14 @@ class Send_Appoint_Pill extends Command
 
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "ถึงเวลาทานยา/ใช้ยา กรุณาติดต่อคนไข้";
+                $message_of_patient = "แจ้งเตือนทานยา/ใช้ยา ของ";
             }else{
                 //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
 
                 $sendto = User::where('id','=',$data_check_patient->user_id)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "เลยเวลาแล้ว กรุณายืนยันการทานยา/ใช้ยา ชื่อผู้ใช้";
+                $message_of_patient = "แจ้งเตือนทานยา/ใช้ยา";
             }
         }else{
             // sendto Patient
@@ -203,12 +201,13 @@ class Send_Appoint_Pill extends Command
             $template_path = storage_path('../public/json/flex_line_appoint.json');
             $string_json = file_get_contents($template_path);
 
-            $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);
-            $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
+            $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา",$message_of_patient,$string_json);
+            $string_json = str_replace("User_name",$data_patient->name,$string_json);
 
-            $string_json = str_replace("USER_NAMEแทนตรงนี้",$message_of_patient.$data_patient->name,$string_json);
-            $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
-            $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
+            $string_json = str_replace("Title",$data_pill['title'],$string_json);
+            $string_json = str_replace("date",$data_pill['date'],$string_json);
+            $string_json = str_replace("time",$data_pill['date_time'],$string_json);
+            $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
         }else{
             $template_path = storage_path('../public/json/flex_appoint_doc.json');
             $string_json = file_get_contents($template_path);

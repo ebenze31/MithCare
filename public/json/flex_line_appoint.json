@@ -4,72 +4,191 @@
     "contents":
     {
         "type": "bubble",
-        "size": "kilo",
-        "header": {
+        "size": "giga",
+        "body": {
           "type": "box",
           "layout": "vertical",
           "contents": [
+            {
+              "type": "image",
+              "url": "https://i.ibb.co/nq2ZYfK/flex-pill.png",
+              "size": "full",
+              "aspectRatio": "2500:3500",
+              "aspectMode": "cover"
+            },
             {
               "type": "box",
               "layout": "vertical",
               "contents": [
                 {
                   "type": "text",
-                  "text": "USER_NAMEแทนตรงนี้",
-                  "color": "#ffffff",
-                  "size": "md",
-                  "flex": 4,
+                  "text": "แจ้งเตือนทานยา/ใช้ยา",
+                  "color": "#2F84B9",
                   "weight": "bold",
-                  "wrap": true
-                },
-                {
-                  "type": "text",
-                  "text": "หัวข้อ : TITLEแทนตรงนี้",
-                  "color": "#ffffff",
                   "size": "md",
-                  "flex": 4,
-                  "weight": "bold"
-                },
-                {
-                  "type": "text",
-                  "text": "วันที่ : DATEแทนตรงนี้ ",
-                  "color": "#ffffff",
-                  "size": "sm"
-                },
-                {
-                  "type": "text",
-                  "text": "เวลา : TIMEแทนตรงนี้",
-                  "color": "#ffffff",
-                  "size": "sm"
-                },
-                {
-                  "type": "box",
-                  "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "button",
-                      "action": {
-                        "type": "postback",
-                        "label": "ยืนยันการใช้ยา",
-                        "data": "accept_pill?id_pill"
-                      },
-                      "offsetBottom": "4px",
-                      "color": "#CDF3C2",
-                      "height": "sm"
-                    }
-                  ],
-                  "height": "35px",
-                  "backgroundColor": "#309214",
-                  "cornerRadius": "xxl",
-                  "offsetTop": "2px"
+                  "wrap": true
                 }
-              ]
+              ],
+              "position": "absolute",
+              "offsetTop": "18%",
+              "offsetStart": "12%",
+              "width": "80%",
+              "height": "7%",
+              "justifyContent": "flex-start",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "User_name",
+                  "color": "#2F84B9",
+                  "weight": "bold",
+                  "size": "md",
+                  "wrap": true
+                }
+              ],
+              "position": "absolute",
+              "offsetTop": "25%",
+              "offsetStart": "25%",
+              "width": "50%",
+              "height": "7%",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "หัวข้อ",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#000000"
+                }
+              ],
+              "width": "90%",
+              "position": "absolute",
+              "offsetStart": "5%",
+              "offsetTop": "42%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "Title",
+                  "color": "#000000",
+                  "weight": "bold",
+                  "size": "lg",
+                  "align": "center"
+                }
+              ],
+              "position": "absolute",
+              "offsetTop": "49%",
+              "offsetStart": "12%",
+              "width": "77%",
+              "height": "10%",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "เวลาทานยา/ใช้ยา",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#000000"
+                }
+              ],
+              "width": "90%",
+              "position": "absolute",
+              "offsetStart": "5%",
+              "offsetTop": "60%",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "date",
+                  "size": "lg",
+                  "wrap": false,
+                  "weight": "bold",
+                  "color": "#000000"
+                }
+              ],
+              "width": "35%",
+              "position": "absolute",
+              "offsetStart": "9.5%",
+              "offsetTop": "69.5%",
+              "alignItems": "center",
+              "height": "8%",
+              "justifyContent": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "time",
+                  "size": "lg",
+                  "color": "#000000",
+                  "weight": "bold",
+                  "wrap": false
+                }
+              ],
+              "width": "35%",
+              "height": "8%",
+              "offsetTop": "69.5%",
+              "offsetStart": "55%",
+              "position": "absolute",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ยืนยันทานยา/ใช้ยา",
+                  "size": "lg",
+                  "color": "#ffffff",
+                  "weight": "bold",
+                  "wrap": false
+                }
+              ],
+              "width": "50%",
+              "height": "10%",
+              "offsetTop": "83%",
+              "offsetStart": "23.5%",
+              "position": "absolute",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "cornerRadius": "xl",
+              "action": {
+                "type": "postback",
+                "label": "ยืนยันการใช้ยา",
+                "data": "accept_pill?id_pill"
+              }
             }
           ],
-          "paddingAll": "20px",
-          "backgroundColor": "#8BCB8F",
-          "spacing": "md",
-          "paddingTop": "22px"
+          "position": "relative",
+          "paddingAll": "0px"
         }
       }
 }

@@ -1,6 +1,6 @@
 {
     "type": "flex",
-    "altText": "แจ้งเตือนการใช้ยา",
+    "altText": "แจ้งเตือนการนัดหมอ",
     "contents":
     {
         "type": "bubble",

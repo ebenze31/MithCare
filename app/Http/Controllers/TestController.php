@@ -20,18 +20,7 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
-            // $room_id = $request->get('room_id');
-            // $type = $request->get('type');
-            // $user_id = Auth::id();
-            // $check = "" ;
 
-
-            // ===================
-            // TEST APPOINT Pill
-            // ===================
-
-            // $time = Carbon::now()->format('H:i:s') ;
-            // $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
             $time = Carbon::now()->toTimeString();
             $time_10 = Carbon::now()->addMinutes(10)->toTimeString();
             $date_now = date("Y-m-d");
@@ -39,17 +28,12 @@ class TestController extends Controller
             // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
             $ap_pill = Appoint:: where('type','=','pill')
             ->whereDate('date', '<=' , $date_now )
-            // ->whereTime('date_time','>=',$time)
             ->whereTime('date_time','<=',$time_10)
             ->where('status','=',null)
             ->orWhere('status','=','sent')
             ->get();
 
-            echo 'เวลา : '.($time);
-            echo "<br>";
-            echo 'เวลา+10นาที : '.($time_10);
-            echo "<br>";
-            echo 'วันที่ : '.($date_now);
+
             echo "<br>";
             echo 'จำนวนนัดหมาย : '.count($ap_pill);
             echo "<br>=============================================================================================================<br>";
@@ -203,12 +187,17 @@ class TestController extends Controller
 
     public function sentLineToPatient($data_pill,$sendto){
 
+    $time = Carbon::now()->toTimeString();
+
+    $count_pill = $this->count_range_time($time , $data_pill->date_time);
+    echo 'เลยเวลาใช้ยา/ทานยา : '.($count_pill);
+
         //กรณี appoint เป็น ใช้ยา
     if($data_pill->type == 'pill'){
 
         if($sendto == "tomember"){
             //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
-        $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
+            $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
 
             if($data_check_patient->caregiver != null){
                 //กรณี user_id นี้มีคนดูแลอยู่
@@ -218,20 +207,20 @@ class TestController extends Controller
 
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "ถึงเวลาทานยา/ใช้ยา กรุณาติดต่อคนไข้";
+
             }else{
                 //กรณี user_id นี้มีไม่มีคนดูแล
                 echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
 
                 $sendto = User::where('id','=',$data_check_patient->user_id)->first();
                 $provider_id = $sendto->provider_id;
-                $message_of_patient = "เลยเวลาแล้ว กรุณายืนยันการทานยา/ใช้ยา ชื่อผู้ใช้";
+
             }
         }else{
             // sendto Patient
             $sendto = User::where('id','=',$data_pill['patient_id'])->first();
             $provider_id = $sendto->provider_id;
-            $message_of_patient = "";
+
         }
 
     }else{ //กรณี appoint เป็น นัดหมอ
@@ -243,8 +232,6 @@ class TestController extends Controller
                 //กรณี user_id นี้มีคนดูแลอยู่
                 // sendto Member
                 $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
-
-
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
                 $provider_id = $sendto->provider_id;
 
@@ -265,17 +252,31 @@ class TestController extends Controller
         // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
         $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
 
-
         if($data_pill->type == "pill"){
             $template_path = storage_path('../public/json/flex_line_appoint.json');
             $string_json = file_get_contents($template_path);
+            //ถ้ามีผู้ดูแล
+            if(!empty($data_check_patient->caregiver)){
+                 //เลยเวลาใช้ยา
+                if($time > $data_pill['date_time']){
+                    $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา".$count_pill,$string_json);
+                    $string_json = str_replace("User_name","กรุณาติดต่อ".$data_patient->name,$string_json);
+                }else{//ยังไม่เลยเวลาใช้ยา
+                    $string_json = str_replace("User_name","กรุณาติดต่อ".$data_patient->name,$string_json);
+                }
+            }else{ //ถ้าไม่มีผู้ดูแล
+                if($data_pill['sent_round'] >= 2 || $time > $data_pill['date_time']){//เลยเวลาใช้ยา
+                    $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา".$count_pill,$string_json);
+                    $string_json = str_replace("User_name",$data_patient->name,$string_json);
+                }else{//ยังไม่เลยเวลาใช้ยา
+                    $string_json = str_replace("User_name",$data_patient->name,$string_json);
+                }
+            }
 
-            $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);
+            $string_json = str_replace("Title",$data_pill['title'],$string_json);
+            $string_json = str_replace("date",$data_pill['date'],$string_json);
+            $string_json = str_replace("time",$data_pill['date_time'],$string_json);
             $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
-
-            $string_json = str_replace("USER_NAMEแทนตรงนี้",$message_of_patient.$data_patient->name,$string_json);
-            $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
-            $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
         }else{
             $template_path = storage_path('../public/json/flex_appoint_doc.json');
             $string_json = file_get_contents($template_path);
@@ -313,5 +314,36 @@ class TestController extends Controller
         ];
 
         Mylog::Create($data);
+    }
+
+    public function count_range_time($time_start , $time_end)
+    {
+        // count time success
+        $time_s = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%s');
+        $time_i = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%i');
+        $time_h = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%h');
+        $time_d = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%d');
+        $time_m = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%m');
+        $time_y = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%y');
+
+        if ( $time_s != 0 ) {
+            $data = $time_s ." วินาที";
+        }
+        if( $time_i != 0){
+            $data = $time_i ." นาที " .$data;
+        }
+        if( $time_h != 0){
+            $data = $time_h ." ชั่วโมง " .$data;
+        }
+       if( $time_d != 0){
+            $data = $time_d ." วัน " .$data;
+        }
+        if( $time_m != 0){
+            $data = $time_m ." เดือน " .$data;
+        }
+        if( $time_y != 0){
+            $data = $time_y ." ปี " .$data;
+        }
+        return $data;
     }
 }

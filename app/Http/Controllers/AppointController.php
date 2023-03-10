@@ -177,17 +177,16 @@ class AppointController extends Controller
     {
 
         $requestData = $request->all();
+        $appoint = Appoint::findOrFail($requestData['appoint_id']);
 
-        // echo"<pre>";
-        // print_r( $requestData);
-        // echo"</pre>";
-        // exit();
+        if(empty($requestData['type'])){
+            $requestData['type'] = $appoint->type;
+        }
 
         if($requestData['type'] == 'doc'){
             $requestData['date_time'] = null;
         }
 
-        $appoint = Appoint::findOrFail($requestData['appoint_id']);
         $appoint->update($requestData);
 
         return back();

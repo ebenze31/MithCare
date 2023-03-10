@@ -490,9 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     option_2.text = "ใช้ยา";
                     option_2.value = "pill";
                     type_edit.add(option_2);
-                    console.log(option_select.value);
-                    // console.log(option_1.value);
-                    // console.log(option_2.value);
+
                 });
 
             $('#edit_Appoint').modal();

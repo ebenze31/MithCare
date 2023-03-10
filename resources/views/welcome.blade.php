@@ -119,7 +119,7 @@
         <!-- ========================
           ข่าวเกี่ยวกับสุขภาพ
       =========================== -->
-      <section id="Health_news" class="team-layout2 pb-80">
+      {{-- <section id="Health_news" class="team-layout2 pb-80">
           <div class="container">
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
@@ -200,7 +200,102 @@
               </div><!-- /.col-12 -->
             </div><!-- /.row -->
           </div><!-- /.container -->
-      </section><!-- /.Team -->
+      </section><!-- /.Team --> --}}
+
+
+           <!-- ========================
+          ข่าวเกี่ยวกับสุขภาพ 2
+      =========================== -->
+      <section id="Health_news" class="team-layout2 pb-80">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
+              <div class="heading text-center mb-40">
+                <h3 class="heading__title">ข่าวเกี่ยวกับสุขภาพ</h3>
+              </div><!-- /.heading -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+          <div class="row">
+            <div class="col-12">
+              <div class="slick-carousel"
+                data-slick='{"slidesToShow": 3,
+                "slidesToScroll": 1,
+                "autoplay": true,
+                "centerMode": true,
+                "variableWidth": true,
+                "arrows": false,
+                "dots": true,
+                "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                <!-- News #1 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/ประกันสังคม1.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/ประกันสังคม1.jpg')}}" alt="member img" width="100%"  height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #2 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/OP 4stages.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/OP 4stages.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #3 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/ประกันสังคม ม.40.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/ประกันสังคม ม.40.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #4 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/OP anywhere2022.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/OP anywhere2022.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #5 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/สพฉ2.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/สพฉ2.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #6 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/OPขั้นตอนใช้สิทธิปฐมภูมิทุกที่ในกทม.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/OPขั้นตอนใช้สิทธิปฐมภูมิทุกที่ในกทม.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #7 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/สพฉ1.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/สพฉ1.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+                <!-- News #8 -->
+                <div class="member">
+                    <a href="{{asset('/img/news/ประกันสังคม 2566.jpg')}}">
+                        <div class="member__img">
+                            <img src="{{asset('/img/news/ประกันสังคม 2566.jpg')}}" alt="member img" width="100%" height="500rem">
+                        </div><!-- /.member-img -->
+                    </a>
+                </div><!-- /.member -->
+
+              </div><!-- /.carousel -->
+            </div><!-- /.col-12 -->
+          </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.Team -->
 
       <!-- ======================
       MithCare_Dee_Yang_Rai

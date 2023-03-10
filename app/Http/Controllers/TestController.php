@@ -35,25 +35,31 @@ class TestController extends Controller
             // TEST APPOINT Pill
             // ===================
 
-            $time = Carbon::now()->format('H:i:s');
-            $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
-            $date_now = Carbon::now()->format('Y-m-d');
-            $date_add_1 = date("Y-m-d", strtotime($date_now . ' +1 day'));
+            // $time = Carbon::now()->format('H:i:s') ;
+            // $time_10 = Carbon::now()->addMinutes(10)->format('H:i:s');
+            $time = Carbon::now()->toTimeString();
+            $time_10 = Carbon::now()->addMinutes(10)->toTimeString();
+            $date_now = date("Y-m-d");
 
             // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
             $ap_pill = Appoint::where('room_id','=',$room_id)
             ->where('type','=','pill')
-            ->whereDate('date', '>=' , $date_now )
-            ->whereDate('date', '<=' , $date_add_1 )
+            ->whereDate('date', '=' , $date_now )
             ->whereTime('date_time','>=',$time)
             ->whereTime('date_time','<=',$time_10)
             ->where('status','=',null)
             ->orWhere('status','=','sent')
             ->get();
 
-
+            echo 'เวลา : '.($time);
+            echo "<br>";
+            echo 'เวลา+10นาที : '.($time_10);
+            echo "<br>";
+            echo 'วันที่ : '.($date_now);
+            echo "<br>";
             echo 'จำนวนนัดหมาย : '.count($ap_pill);
             echo "<br>=============================================================================================================<br>";
+
             for($i = 0; $i < count($ap_pill); $i++){
 
             echo 'ID ผู้ป่วย : '.$ap_pill[$i]['patient_id'];
@@ -97,6 +103,7 @@ class TestController extends Controller
                         // ถ้าจำนวนการส่งยังไม่เกิน 2 ครั้ง
                         echo 'การส่งแจ้งเตือนยังไม่ 2 ครั้ง ' ;
                         echo "<br>";
+
                         $this->sentLineToPatient($ap_pill[$i],"topatient");
 
 
@@ -146,7 +153,6 @@ class TestController extends Controller
             ->whereDate('date', '>=' , $date_now )
             ->whereDate('date', '<=' , $date_add_1 )
             ->where('status','=',null)
-            ->orWhere('status','=','sent')
             ->get();
 
             for($i = 0; $i < count($ap_doc); $i++){

@@ -65,7 +65,6 @@ class Send_Appoint_Doc extends Command
             ->whereDate('date', '>=' , $date_now )
             ->whereDate('date', '<=' , $date_add_1 )
             ->where('status','=',null)
-            ->orWhere('status','=','sent')
             ->get();
 
             for($i = 0; $i < count($ap_doc); $i++){

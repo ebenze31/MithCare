@@ -50,18 +50,12 @@ class Send_Appoint_Doc extends Command
      */
     public function handle()
     {
-        $data_appoints = Appoint::get();
-
-        foreach($data_appoints as $data_appoint){
-
-            $room_id = $data_appoint->room_id;
 
             $date_now = date("Y-m-d");
             $date_add_1 = date("Y-m-d", strtotime($date_now . ' +1 day'));
 
             // ค้นหา type=doc ,status_appoint ว่าเป็น null หรือ sent และวันที่ต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน 1 วัน
-            $ap_doc = Appoint::where('room_id','=',$room_id)
-            ->where('type','=','doc')
+            $ap_doc = Appoint:: where('type','=','doc')
             ->whereDate('date', '>=' , $date_now )
             ->whereDate('date', '<=' , $date_add_1 )
             ->where('status','=',null)
@@ -73,7 +67,7 @@ class Send_Appoint_Doc extends Command
                 echo "<br>";
 
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
-                $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$room_id)->first();
+                $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$ap_doc[$i]['room_id'])->first();
 
 
                 if(!empty($data_members->lv_of_caretaker) && $data_members->lv_of_caretaker == 2){
@@ -92,17 +86,7 @@ class Send_Appoint_Doc extends Command
                     echo 'เป็นผู้ป่วย LV1 ดูแลตัวเองได้';
                     echo "<br>";
 
-                    // if(!empty($data_members->caregiver)){//LV_1 OR NULL กรณีมีผู้ดูแล
-                    //     $this->sentLineToPatient($ap_doc[$i],"tomember");
-
-                    //     DB::table('appoints')
-                    //     ->where('id', $ap_doc[$i]['id'])
-                    //     ->update([
-                    //         'status' => 'success',
-                    //     ]);
-
-                    // }else
-                    // {//LV_1 OR NULL กรณีไม่มีผู้ดูแล
+                    // LV_1 OR NULL กรณีไม่มีผู้ดูแล
                         $this->sentLineToPatient($ap_doc[$i],"tomember");
 
                         DB::table('appoints')
@@ -115,7 +99,7 @@ class Send_Appoint_Doc extends Command
 
                 }
             }
-        }
+
     }
 
     public function sentLineToPatient($data_pill,$sendto){

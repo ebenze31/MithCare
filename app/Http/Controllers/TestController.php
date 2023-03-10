@@ -19,11 +19,6 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $data_appoints = Appoint::get();
-
-        foreach($data_appoints as $data_appoint){
-
-            $room_id = $data_appoint->room_id;
 
             // $room_id = $request->get('room_id');
             // $type = $request->get('type');
@@ -42,10 +37,9 @@ class TestController extends Controller
             $date_now = date("Y-m-d");
 
             // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
-            $ap_pill = Appoint::where('room_id','=',$room_id)
-            ->where('type','=','pill')
-            ->whereDate('date', '=' , $date_now )
-            ->whereTime('date_time','>=',$time)
+            $ap_pill = Appoint:: where('type','=','pill')
+            ->whereDate('date', '<=' , $date_now )
+            // ->whereTime('date_time','>=',$time)
             ->whereTime('date_time','<=',$time_10)
             ->where('status','=',null)
             ->orWhere('status','=','sent')
@@ -65,7 +59,7 @@ class TestController extends Controller
             echo 'ID ผู้ป่วย : '.$ap_pill[$i]['patient_id'];
             echo "<br>";
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
-                $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$room_id)->first();
+                $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$ap_pill[$i]['room_id'])->first();
 
 
                 if($data_members->lv_of_caretaker == 2){
@@ -130,7 +124,7 @@ class TestController extends Controller
 
             }
 
-        }
+
 
 
 

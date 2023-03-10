@@ -176,11 +176,10 @@ class AppointController extends Controller
     public function update(Request $request)
     {
 
-
         $requestData = $request->all();
 
         // echo"<pre>";
-        // print_r($requestData);
+        // print_r( $requestData);
         // echo"</pre>";
         // exit();
 

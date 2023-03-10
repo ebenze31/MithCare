@@ -2,11 +2,13 @@
 
     <div class="form-group {{ $errors->has('type') ? 'has-error' : ''}} col-md-12 col-12">
         <label for="type" class="control-label" style="font-size: 25px;">{{ 'ประเภท' }}</label>
-        <select name="type" class="form-control type_edit" id="type_edit" onChange="edit_type();" required>
+        <select name="type" class="form-control type_edit" id="type" onChange="edit_type();" required>
         <option selected disabled>กรุณาเลือกประเภท</option>
             @foreach (json_decode('{"doc":"นัดหมอ","pill":"ใช้ยา"}', true) as $optionKey => $optionvalue)
                 <option value="{{ $optionKey }}" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}}>{{ $optionvalue }}</option>
             @endforeach
+            {{-- <option value="doc">นัดหมอ</option>
+            <option value="pill">ใช้ยา</option> --}}
         </select>
         {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
     </div>

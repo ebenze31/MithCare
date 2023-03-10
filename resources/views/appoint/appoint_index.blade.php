@@ -465,14 +465,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     document.querySelector('.title_edit').value = result.title;
                     let type_edit = document.querySelector('.type_edit');
+                    // console.log(type_edit);
                     type_edit.innerHTML = "";
-
 
                     let option_select = document.createElement("option");
                     if(result.type == 'doc'){
                         option_select.text = 'นัดหมอ';
+                        // option_select.value = 'doc';
                     }else{
                         option_select.text = 'ใช้ยา';
+                        // option_select.value = 'pill';
                     }
                     option_select.value = result.type;
                     option_select.selected = true;
@@ -488,7 +490,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     option_2.text = "ใช้ยา";
                     option_2.value = "pill";
                     type_edit.add(option_2);
-
+                    console.log(option_select.value);
+                    // console.log(option_1.value);
+                    // console.log(option_2.value);
                 });
 
             $('#edit_Appoint').modal();
@@ -506,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 
     function edit_type() {
-      let type = document.querySelector('#type_edit').value;
+      let type = document.querySelector('.type_edit').value;
 
       if (type === 'doc') {
             let div_date = document.querySelector('#div_date_edit').classList ;

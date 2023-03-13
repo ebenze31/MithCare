@@ -1,36 +1,4 @@
 {
-    "type": "flex",
-    "altText": "แจ้งเตือนการใช้ยา",
-    "contents":
-    {
-        "type": "bubble",
-        "size": "kilo",
-        "header": {
-          "type": "box",
-          "layout": "vertical",
-          "contents": [
-            {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "ยืนยันเรียบร้อยแล้ว",
-                  "align": "center"
-                }
-              ],
-              "cornerRadius": "md",
-              "backgroundColor": "#ffffff",
-              "offsetTop": "80%"
-            }
-          ],
-          "paddingAll": "20px",
-          "backgroundColor": "#8BCB8F",
-          "spacing": "md",
-          "height": "150px",
-          "paddingTop": "22px"
-        }
-      }
-}
-
-
+    "type": "text",
+    "text": "ยืนยันทานยาเรียบร้อยแล้วค่ะ ขอบคุณค่ะ"
+ }

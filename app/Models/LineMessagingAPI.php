@@ -197,9 +197,8 @@ class LineMessagingAPI extends Model
                 $appoint = Appoint::where('id',$id_appoint)->first();
                 if($appoint->status == 'success'){
                     $text_sendto_user = "ขออภัยค่ะ รายการนี้ดำเนินการเรียบร้อยแล้ว";
-
                 }else{
-                    $text_sendto_user = "เย้ ยืนยันการทานยาเรียบร้อยแล้ว";
+                    $text_sendto_user = "ยืนยันทานยา/ใช้ยาเรียบร้อยแล้วค่ะ ขอบคุณค่ะ";
 
                     DB::table('appoints')
                     ->where('id', $id_appoint)

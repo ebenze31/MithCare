@@ -209,7 +209,7 @@ class LineMessagingAPI extends Model
                 }
                 $template_path = storage_path('../public/json/flex_accept_reply.json');
                 $string_json = file_get_contents($template_path);
-                $string_json = str_replace("ยืนยันเรียบร้อยแล้ว" , $text_sendto_user ,$string_json);
+                $string_json = str_replace("ยีนยันทานยาเรียบร้อย" , $text_sendto_user ,$string_json);
 
                 break;
         }

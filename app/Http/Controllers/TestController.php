@@ -193,8 +193,6 @@ class TestController extends Controller
     echo 'เลยเวลาใช้ยา/ทานยา : '.($count_pill);
 
         //กรณี appoint เป็น ใช้ยา
-    if($data_pill->type == 'pill'){
-
         if($sendto == "tomember"){
             //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
             $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
@@ -223,69 +221,34 @@ class TestController extends Controller
 
         }
 
-    }else{ //กรณี appoint เป็น นัดหมอ
-        if($sendto == "tomember"){
-            //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
-        $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
-
-            if($data_check_patient->caregiver != null){
-                //กรณี user_id นี้มีคนดูแลอยู่
-                // sendto Member
-                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
-                $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
-                $provider_id = $sendto->provider_id;
-
-            }else{
-                //กรณี user_id นี้มีไม่มีคนดูแล
-                echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
-
-                $sendto = User::where('id','=',$data_check_patient->user_id)->first();
-                $provider_id = $sendto->provider_id;
-            }
-        }else{
-            // sendto Patient
-            $sendto = User::where('id','=',$data_pill['patient_id'])->first();
-            $provider_id = $sendto->provider_id;
-        }
-    }
-
         // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
         $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
 
-        if($data_pill->type == "pill"){
-            $template_path = storage_path('../public/json/flex_line_appoint.json');
-            $string_json = file_get_contents($template_path);
-            //ถ้ามีผู้ดูแล
-            if(!empty($data_check_patient->caregiver)){
-                 //เลยเวลาใช้ยา
-                if($time > $data_pill['date_time']){
-                    $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา".$count_pill,$string_json);
-                    $string_json = str_replace("User_name","กรุณาติดต่อ".$data_patient->name,$string_json);
-                }else{//ยังไม่เลยเวลาใช้ยา
-                    $string_json = str_replace("User_name","กรุณาติดต่อ".$data_patient->name,$string_json);
-                }
-            }else{ //ถ้าไม่มีผู้ดูแล
-                if($data_pill['sent_round'] >= 2 || $time > $data_pill['date_time']){//เลยเวลาใช้ยา
-                    $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา".$count_pill,$string_json);
-                    $string_json = str_replace("User_name",$data_patient->name,$string_json);
-                }else{//ยังไม่เลยเวลาใช้ยา
-                    $string_json = str_replace("User_name",$data_patient->name,$string_json);
-                }
+        $template_path = storage_path('../public/json/flex_line_appoint.json');
+        $string_json = file_get_contents($template_path);
+        //ถ้ามีผู้ดูแล
+        if(!empty($data_check_patient->caregiver)){
+                //เลยเวลาใช้ยา
+            if($time > $data_pill['date_time']){
+                $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา ".$count_pill,$string_json);
+                $string_json = str_replace("User_name","กรุณาติดต่อ : ".$data_patient->name,$string_json);
+            }else{//ยังไม่เลยเวลาใช้ยา
+                $string_json = str_replace("User_name","กรุณาติดต่อ : ".$data_patient->name,$string_json);
             }
-
-            $string_json = str_replace("Title",$data_pill['title'],$string_json);
-            $string_json = str_replace("date",$data_pill['date'],$string_json);
-            $string_json = str_replace("time",$data_pill['date_time'],$string_json);
-            $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
-        }else{
-            $template_path = storage_path('../public/json/flex_appoint_doc.json');
-            $string_json = file_get_contents($template_path);
-
-            $string_json = str_replace("User_name",$data_patient->name,$string_json);
-            $string_json = str_replace("Title",$data_pill['title'],$string_json);
-            $string_json = str_replace("date",$data_pill['date'],$string_json);
-
+        }else{ //ถ้าไม่มีผู้ดูแล
+            if($data_pill['sent_round'] >= 2 && $time > $data_pill['date_time']){//เลยเวลาใช้ยา
+                $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา".$count_pill,$string_json);
+                $string_json = str_replace("User_name",$data_patient->name,$string_json);
+            }else{//ยังไม่เลยเวลาใช้ยา
+                $string_json = str_replace("User_name",$data_patient->name,$string_json);
+            }
         }
+
+        $string_json = str_replace("Title",$data_pill['title'],$string_json);
+        $string_json = str_replace("date",$data_pill['date'],$string_json);
+        $string_json = str_replace("time",$data_pill['date_time'],$string_json);
+        $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
+
 
 
         $messages = [ json_decode($string_json, true) ];
@@ -396,11 +359,11 @@ class TestController extends Controller
         $time_m = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%m');
         $time_y = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%y');
 
-        if ( $time_s != 0 ) {
-            $data = $time_s ." วินาที";
-        }
+        // if ( $time_s != 0 ) {
+        //     $data = $time_s ." วินาที";
+        // }
         if( $time_i != 0){
-            $data = $time_i ." นาที " .$data;
+            $data = $time_i ." นาที ";
         }
         if( $time_h != 0){
             $data = $time_h ." ชั่วโมง " .$data;

@@ -25,16 +25,16 @@
                   "text": "แจ้งเตือนทานยา/ใช้ยา",
                   "color": "#2F84B9",
                   "weight": "bold",
-                  "size": "md",
+                  "size": "lg",
                   "wrap": true
                 }
               ],
               "position": "absolute",
-              "offsetTop": "18%",
-              "offsetStart": "12%",
+              "offsetTop": "17%",
+              "offsetStart": "10.5%",
               "width": "80%",
               "height": "7%",
-              "justifyContent": "flex-start",
+              "justifyContent": "center",
               "alignItems": "center"
             },
             {
@@ -46,12 +46,12 @@
                   "text": "User_name",
                   "color": "#2F84B9",
                   "weight": "bold",
-                  "size": "md",
+                  "size": "lg",
                   "wrap": true
                 }
               ],
               "position": "absolute",
-              "offsetTop": "25%",
+              "offsetTop": "24%",
               "offsetStart": "25%",
               "width": "50%",
               "height": "7%",

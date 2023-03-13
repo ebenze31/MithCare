@@ -177,6 +177,7 @@ class AppointController extends Controller
     {
 
         $requestData = $request->all();
+        $patient_id_edit = $request->get('patient_id_edit');
         $appoint = Appoint::findOrFail($requestData['appoint_id']);
 
         if(empty($requestData['type'])){
@@ -185,6 +186,10 @@ class AppointController extends Controller
 
         if($requestData['type'] == 'doc'){
             $requestData['date_time'] = null;
+        }
+
+        if(!empty($patient_id_edit)){
+            $requestData['patient_id'] = $patient_id_edit;
         }
 
         $appoint->update($requestData);

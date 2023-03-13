@@ -15,61 +15,69 @@
     label{
         width: 100%
     }
+
     .card-input-element+.card {
-    height: calc(36px + 2*1rem);
-    color: #0d6efd;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: 2px solid transparent;
-    border-radius: 10px;
+        height: calc(36px + 2*1rem);
+        color: #0d6efd;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 2px solid transparent;
+        border-radius: 10px;
     }
 
     .card-input-element+.card:hover {
-    cursor: pointer;
+        cursor: pointer;
     }
 
     .card-input-element:checked+.card {
-    border: 2px solid #0d6efd;
-    color: #4170A2 !important;
-    background-color: #ffffff !important;
-    -webkit-transition: border .3s;
-    -o-transition: border .3s;
-    transition: border .3s;
+        border: 2px solid #0d6efd;
+        color: #4170A2 !important;
+        background-color: #ffffff !important;
+        -webkit-transition: border .3s;
+        -o-transition: border .3s;
+        transition: border .3s;
     }
 
     .card-input-element:checked+.card::after {
-    content: '\e5ca';
-    color: #AFB8EA;
-    font-family: 'Material Icons';
-    font-size: 24px;
-    -webkit-animation-name: fadeInCheckbox;
-    animation-name: fadeInCheckbox;
-    -webkit-animation-duration: .5s;
-    animation-duration: .5s;
-    -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        content: '\e5ca';
+        color: #AFB8EA;
+        font-family: 'Material Icons';
+        font-size: 24px;
+        -webkit-animation-name: fadeInCheckbox;
+        animation-name: fadeInCheckbox;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+        -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     @-webkit-keyframes fadeInCheckbox {
-    from {
-    opacity: 0;
-    -webkit-transform: rotateZ(-20deg);
-    }
-    to {
-    opacity: 1;
-    -webkit-transform: rotateZ(0deg);
-    }
+        from {
+        opacity: 0;
+        -webkit-transform: rotateZ(-20deg);
+        }
+        to {
+        opacity: 1;
+        -webkit-transform: rotateZ(0deg);
+        }
     }
 
     @keyframes fadeInCheckbox {
-    from {
-    opacity: 0;
-    transform: rotateZ(-20deg);
+        from {
+        opacity: 0;
+        transform: rotateZ(-20deg);
+        }
+        to {
+        opacity: 1;
+        transform: rotateZ(0deg);
+        }
     }
-    to {
-    opacity: 1;
-    transform: rotateZ(0deg);
-    }
+
+    .text_topright {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        font-size: 12px;
     }
 </style>
 
@@ -142,14 +150,14 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="contact-panel col-md-12 mb-2">
-
+                                            {{-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> --}}
                                             <button class="close " style="border-radius: 80%; " data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
 
                                             <div class="container">
-                                                <h3><i class="fa-solid fa-home"></i> เพิ่มตารางนัด</h3>
+                                                <h3 class="heading__title"><i class="fa-solid fa-home "></i> เพิ่มตารางนัด</h3>
                                                 <br />
                                                 <br />
                                                 @if ($errors->any())
@@ -160,8 +168,6 @@
                                                 </ul>
                                                 @endif
 
-
-
                                                 <form method="POST"
                                                     action="{{ url('/appoint/'. $room->id . '/create') }}"
                                                     accept-charset="UTF-8" class="form-horizontal h5"
@@ -169,14 +175,16 @@
                                                     {{ csrf_field() }}
 
                                                    <!--///  สถานะ ไม่ใช่ผู้ป่วย /// -->
+                                                   <label for="title" class="control-label">{{ 'เลือกนัดหมายให้' }}</label>
                                                     @if ($check_status_member->status != 'patient')
                                                         <div class="home-demo">
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
                                                                         {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" onchange="check_input_appoint_create();">
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                            <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
                                                                                 {{Auth::user()->name}}
                                                                             </span>
@@ -189,8 +197,9 @@
 
                                                                         <div class="col-12 p-0">
                                                                             <label>
-                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}">
+                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" onchange="check_input_appoint_create();">
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+
                                                                                     <span style="font-size:16px;">
                                                                                         {{$item->user->full_name}}
                                                                                     </span>
@@ -207,8 +216,9 @@
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" onchange="check_input_appoint_create();">
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                            <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
                                                                                 {{Auth::user()->name}}
                                                                             </span>
@@ -219,16 +229,10 @@
                                                         </div>
                                                     @endif
 
-
-
-
-
-
                                                     @include ('appoint.appoint_form_create')
                                                 </form>
 
                                                 <script>
-
                                                     $(function() {
                                                     // Owl Carousel
                                                     var owl = $(".aasdaa");
@@ -239,9 +243,7 @@
                                                         nav: false,
                                                     });
                                                     });
-                                            </script>
-
-
+                                                </script>
 
                                             </div>
                                         </div>
@@ -257,6 +259,7 @@
                             <div class="modal-content">
                                 <!-- แก้ไขตารางนัด -->
                                 <div class="container">
+
                                     <div class="row">
                                         <div class="contact-panel col-md-12 mb-2">
 
@@ -280,10 +283,66 @@
                                                     </ul>
                                                     @endif
 
+
                                                     <form method="POST" action="{{ url('/appoint/edit') }}"
                                                         accept-charset="UTF-8" class="form-horizontal h5"
                                                         enctype="multipart/form-data">
                                                         {{ csrf_field() }}
+
+                                                         <!--///  สถานะ ไม่ใช่ผู้ป่วย /// -->
+                                                        <label for="title" class="control-label">{{ 'เลือกนัดหมายให้' }}</label>
+                                                        @if ($check_status_member->status != 'patient')
+                                                            <div class="home-demo">
+                                                                <div class="owl-carousel aasdaa owl-theme">
+                                                                    <div class="col-12 p-0">
+                                                                        <label>
+                                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                        <input class="card-input-element d-none" id="radio_owner_edit" name="patient_id_edit" type="radio" value="{{Auth::user()->id}}">
+                                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
+                                                                                <span style="font-size:16px;">
+                                                                                    {{Auth::user()->name}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                    @foreach($patient_with_caregiver as $item)
+                                                                        <div class="item">
+                                                                            <!--///  เลือกผู้ป่วย /// -->
+
+                                                                            <div class="col-12 p-0">
+                                                                                <label>
+                                                                                <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id_edit" type="radio" value="{{$item->user_id}}">
+                                                                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+
+                                                                                        <span style="font-size:16px;">
+                                                                                            {{$item->user->full_name}}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="home-demo">
+                                                                <div class="owl-carousel aasdaa owl-theme">
+                                                                    <div class="col-12 p-0">
+                                                                        <label>
+                                                                        <input class="card-input-element d-none" id="radio_owner_edit" name="patient_id_edit" type="radio" value="{{Auth::user()->id}}">
+                                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
+                                                                                <span style="font-size:16px;">
+                                                                                    {{Auth::user()->name}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
 
                                                         <input type="hidden" name="appoint_id" id="appoint_id" value="" />
                                                         @include ('appoint.appoint_form_edit')
@@ -434,10 +493,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#appoint_delete').action = '{{ url("/appoint" ) }}' + '/' + appoint_id;
 
             fetch("{{ url('/') }}/api/get_data_appoint/" + appoint_id)
+                //AppointController
                 .then(response => response.json())
                 .then(result => {
                     // console.log(result.type);
-                    // console.log(result);
 
                     if (result.type === 'doc') {
                         document.querySelector('.date_edit').value = result.date;
@@ -490,6 +549,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     option_2.text = "ใช้ยา";
                     option_2.value = "pill";
                     type_edit.add(option_2);
+
+                    //checked radio form patient_id
+                    let patient_edit = document.getElementsByName('patient_id_edit');
+
+                    for (let r = 0; r < patient_edit.length; r++) {
+                        console.log(patient_edit[r]);
+                        if(patient_edit[r].value === result.patient_id){
+                            patient_edit[r].checked = true;
+                        }
+                    }
+
 
                 });
 

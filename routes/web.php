@@ -152,6 +152,4 @@ Route::get('/Calendar_test', function () {
 ////////////////////////
 
 
-
-
 Route::resource('group_line', 'Group_lineController');

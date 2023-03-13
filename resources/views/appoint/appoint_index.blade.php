@@ -182,7 +182,7 @@
                                                                 <div class="col-12 p-0">
                                                                     <label>
                                                                         {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" onchange="check_input_appoint_create();">
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
@@ -197,7 +197,7 @@
 
                                                                         <div class="col-12 p-0">
                                                                             <label>
-                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" onchange="check_input_appoint_create();">
+                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
 
                                                                                     <span style="font-size:16px;">
@@ -216,7 +216,7 @@
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" onchange="check_input_appoint_create();">
+                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
@@ -344,6 +344,8 @@
                                                             </div>
                                                         @endif
 
+
+
                                                         <input type="hidden" name="appoint_id" id="appoint_id" value="" />
                                                         @include ('appoint.appoint_form_edit')
 
@@ -451,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         nowIndicator: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        editable: true,
+        editable: false,
         selectable: true,
         businessHours: true,
         dayMaxEvents: true, // allow "more" link when too many events
@@ -523,44 +525,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     document.querySelector('.title_edit').value = result.title;
-                    let type_edit = document.querySelector('.type_edit');
-                    // console.log(type_edit);
-                    type_edit.innerHTML = "";
 
-                    let option_select = document.createElement("option");
-                    if(result.type == 'doc'){
-                        option_select.text = 'นัดหมอ';
-                        // option_select.value = 'doc';
-                    }else{
-                        option_select.text = 'ใช้ยา';
-                        // option_select.value = 'pill';
-                    }
-                    option_select.value = result.type;
-                    option_select.selected = true;
-                    option_select.disabled = true;
-                    type_edit.add(option_select);
-
-                    let option_1 = document.createElement("option");
-                    option_1.text = "นัดหมอ";
-                    option_1.value = "doc";
-                    type_edit.add(option_1);
-
-                    let option_2 = document.createElement("option");
-                    option_2.text = "ใช้ยา";
-                    option_2.value = "pill";
-                    type_edit.add(option_2);
 
                     //checked radio form patient_id
                     let patient_edit = document.getElementsByName('patient_id_edit');
 
                     for (let r = 0; r < patient_edit.length; r++) {
-                        console.log(patient_edit[r]);
                         if(patient_edit[r].value === result.patient_id){
                             patient_edit[r].checked = true;
                         }
                     }
 
-
+                    // let type_appoint_edit = document.querySelector('.type_appoint_edit');
+                    console.log(result.type)
+                    if(result.type === 'doc'){
+                        document.querySelector('#type_doc_edit').checked = true;
+                        document.querySelector('#type_pill_edit').checked = false;
+                    }else{
+                        document.querySelector('#type_pill_edit').checked = true;
+                        document.querySelector('#type_doc_edit').checked = false;
+                    }
                 });
 
             $('#edit_Appoint').modal();
@@ -577,10 +561,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 
-    function edit_type() {
-      let type = document.querySelector('.type_edit').value;
-
-      if (type === 'doc') {
+    function edit_type(type_edit) {
+    //   let type = document.querySelector('.type_appoint_edit').value;
+    console.log(type_edit);
+      if (type_edit === 'doc') {
             let div_date = document.querySelector('#div_date_edit').classList ;
                 // console.log(div_date);
                 div_date.remove("col-md-6");

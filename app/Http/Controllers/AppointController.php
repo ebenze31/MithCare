@@ -180,14 +180,15 @@ class AppointController extends Controller
         $patient_id_edit = $request->get('patient_id_edit');
         $appoint = Appoint::findOrFail($requestData['appoint_id']);
 
+        //ถ้าค่าที่รับว่าง ให้ใช้ type ใน db
         if(empty($requestData['type'])){
             $requestData['type'] = $appoint->type;
         }
-
+        //ถ้า type เป็น doc -> date_time เป็นค่าว่าง
         if($requestData['type'] == 'doc'){
             $requestData['date_time'] = null;
         }
-
+        //รับid จาก radio แก้ไข appoint
         if(!empty($patient_id_edit)){
             $requestData['patient_id'] = $patient_id_edit;
         }

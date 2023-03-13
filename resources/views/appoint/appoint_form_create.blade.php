@@ -4,7 +4,7 @@
     <div class="col-6 p-2">
         <label>
         <input class="card-input-element d-none type_appoint_create" id="type_doc" name="type" type="radio"
-        value="doc" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); check_input_appoint_create();" required>
+        value="doc" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); " required>
             <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                 <span style="font-size:16px;">
                     นัดหมอ
@@ -15,7 +15,7 @@
     <div class="col-6 p-2">
         <label>
         <input class="card-input-element d-none type_appoint_create" id="type_pill" name="type" type="radio"
-        value="pill" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); check_input_appoint_create();" required>
+        value="pill" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); " required>
             <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                 <span style="font-size:16px;">
                    ใช้ยา

@@ -116,18 +116,12 @@ class TestController extends Controller
 
     public function test_doc(Request $request)
     {
-        $data_appoints = Appoint::get();
-
-        foreach($data_appoints as $data_appoint){
-
-            $room_id = $data_appoint->room_id;
 
             $date_now = date("Y-m-d");
             $date_add_1 = date("Y-m-d", strtotime($date_now . ' +1 day'));
 
             // ค้นหา type=doc ,status_appoint ว่าเป็น null หรือ sent และวันที่ต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน 1 วัน
-            $ap_doc = Appoint::where('room_id','=',$room_id)
-            ->where('type','=','doc')
+            $ap_doc = Appoint::where('type','=','doc')
             ->whereDate('date', '>=' , $date_now )
             ->whereDate('date', '<=' , $date_add_1 )
             ->where('status','=',null)
@@ -139,7 +133,7 @@ class TestController extends Controller
                 echo "<br>";
 
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
-                $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$room_id)->first();
+                $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$ap_doc[$i]['room_id'])->first();
 
 
                 if(!empty($data_members->lv_of_caretaker) && $data_members->lv_of_caretaker == 2){
@@ -181,8 +175,6 @@ class TestController extends Controller
 
                 }
             }
-        }
-
     }
 
     public function sentLineToPatient($data_pill,$sendto){

@@ -66,7 +66,6 @@ class Send_Appoint_Doc extends Command
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
                 $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$ap_doc[$i]['room_id'])->first();
 
-
                 if(!empty($data_members->lv_of_caretaker) && $data_members->lv_of_caretaker == 2){
                     // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
@@ -118,7 +117,6 @@ class Send_Appoint_Doc extends Command
 
             }else{
                 //กรณี user_id นี้มีไม่มีคนดูแล
-                echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
 
                 $sendto = User::where('id','=',$data_check_patient->user_id)->first();
                 $provider_id = $sendto->provider_id;

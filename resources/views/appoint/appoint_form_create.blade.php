@@ -1,6 +1,6 @@
 
 <div class="row d-flex justify-content-between">
-    <label for="title" class="control-label">{{ 'ประเภท' }}</label>
+    <label for="title p-2" class="control-label">{{ 'ประเภท' }}</label>
     <div class="col-6 p-2">
         <label>
         <input class="card-input-element d-none type_appoint_create" id="type_doc" name="type" type="radio"

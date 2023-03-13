@@ -67,8 +67,7 @@ class Send_Appoint_Pill extends Command
             echo "<br>=============================================================================================================<br>";
             for($i = 0; $i < count($ap_pill); $i++){
 
-            echo 'ID ผู้ป่วย : '.$ap_pill[$i]['patient_id'];
-            echo "<br>";
+
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
                 $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$ap_pill[$i]['room_id'])->first();
 

@@ -145,7 +145,7 @@ class TestController extends Controller
                 if(!empty($data_members->lv_of_caretaker) && $data_members->lv_of_caretaker == 2){
                     // ถ้าเป็นผู้ป่วยเลเวล 2 ไม่สามารถดูแลตัวเองได้
 
-                    $this->sentLineToPatient($ap_doc[$i],"tomember");
+                    $this->sentLineToPatient_Doc($ap_doc[$i],"tomember");
 
                     DB::table('appoints')
                     ->where('id', $ap_doc[$i]['id'])
@@ -169,7 +169,7 @@ class TestController extends Controller
 
                     // }else
                     // {//LV_1 OR NULL กรณีไม่มีผู้ดูแล
-                        $this->sentLineToPatient($ap_doc[$i],"tomember");
+                        $this->sentLineToPatient_Doc($ap_doc[$i],"tomember");
 
                         DB::table('appoints')
                         ->where('id', $ap_doc[$i]['id'])
@@ -315,6 +315,76 @@ class TestController extends Controller
 
         Mylog::Create($data);
     }
+
+    public function sentLineToPatient_Doc($data_doc,$sendto){
+
+        //กรณี appoint เป็น นัดหมอ
+            if($sendto == "tomember"){
+                //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
+            $data_check_patient = Member_of_room::where('user_id','=',$data_doc['patient_id'])->first();
+
+                if($data_check_patient->caregiver != null){
+                    //กรณี user_id นี้มีคนดูแลอยู่
+                    // sendto Member
+                    $data_member_of_room = Member_of_room::where('user_id','=',$data_doc['patient_id'])->where('room_id',$data_doc['room_id'])->where('caregiver','!=',null)->first();
+
+
+                    $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
+                    $provider_id = $sendto->provider_id;
+
+                }else{
+                    //กรณี user_id นี้มีไม่มีคนดูแล
+                    echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
+
+                    $sendto = User::where('id','=',$data_check_patient->user_id)->first();
+                    $provider_id = $sendto->provider_id;
+                }
+            }else{
+                // sendto Patient
+                $sendto = User::where('id','=',$data_doc['patient_id'])->first();
+                $provider_id = $sendto->provider_id;
+            }
+
+            // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
+            $data_patient = User::where('id','=',$data_doc['patient_id'])->first();
+
+
+            $template_path = storage_path('../public/json/flex_appoint_doc.json');
+            $string_json = file_get_contents($template_path);
+
+            $string_json = str_replace("User_name",$data_patient->name,$string_json);
+            $string_json = str_replace("Title",$data_doc['title'],$string_json);
+            $string_json = str_replace("date",$data_doc['date'],$string_json);
+
+
+
+            $messages = [ json_decode($string_json, true) ];
+            $body = [
+                "to" => $provider_id,
+                "messages" => $messages,
+            ];
+            $opts = [
+                'http' =>[
+                    'method'  => 'POST',
+                    'header'  => "Content-Type: application/json \r\n".
+                                'Authorization: Bearer '.env('CHANNEL_ACCESS_TOKEN'),
+                    'content' => json_encode($body, JSON_UNESCAPED_UNICODE),
+                    //'timeout' => 60
+                ]
+            ];
+
+            $context  = stream_context_create($opts);
+            $url = "https://api.line.me/v2/bot/message/push";
+            $result = file_get_contents($url, false, $context);
+
+            //SAVE LOG
+            $data = [
+                "title" => "ส่งไลน์",
+                "content" => json_encode($result, JSON_UNESCAPED_UNICODE),
+            ];
+
+            Mylog::Create($data);
+        }
 
     public function count_range_time($time_start , $time_end)
     {

@@ -63,9 +63,6 @@ class Send_Appoint_Doc extends Command
 
             for($i = 0; $i < count($ap_doc); $i++){
 
-                echo 'ID ผู้ป่วย : '.$ap_doc[$i]['patient_id'];
-                echo "<br>";
-
                 // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
                 $data_members = Member_of_room::where('user_id',$ap_doc[$i]['patient_id'])->where('room_id',$ap_doc[$i]['room_id'])->first();
 
@@ -102,48 +99,18 @@ class Send_Appoint_Doc extends Command
 
     }
 
-    public function sentLineToPatient($data_pill,$sendto){
+    public function sentLineToPatient($data_doc,$sendto){
 
-        //กรณี appoint เป็น ใช้ยา
-    if($data_pill->type == 'pill'){
+    //กรณี appoint เป็น นัดหมอ
 
         if($sendto == "tomember"){
             //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
-        $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
+        $data_check_patient = Member_of_room::where('user_id','=',$data_doc['patient_id'])->first();
 
             if($data_check_patient->caregiver != null){
                 //กรณี user_id นี้มีคนดูแลอยู่
                 // sendto Member
-                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
-
-
-                $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
-                $provider_id = $sendto->provider_id;
-                $message_of_patient = "ถึงเวลาทานยา/ใช้ยา กรุณาติดต่อคนไข้";
-            }else{
-                //กรณี user_id นี้มีไม่มีคนดูแล
-                echo 'คนนี้คือ คนที่ไม่มีผู้ดูแล';
-
-                $sendto = User::where('id','=',$data_check_patient->user_id)->first();
-                $provider_id = $sendto->provider_id;
-                $message_of_patient = "เลยเวลาแล้ว กรุณายืนยันการทานยา/ใช้ยา ชื่อผู้ใช้";
-            }
-        }else{
-            // sendto Patient
-            $sendto = User::where('id','=',$data_pill['patient_id'])->first();
-            $provider_id = $sendto->provider_id;
-            $message_of_patient = "";
-        }
-
-    }else{ //กรณี appoint เป็น นัดหมอ
-        if($sendto == "tomember"){
-            //เช็ค user_id จาก patient_id เพื่อหาข้อมูลผู้ใช้ ใน Member_Of_Room
-        $data_check_patient = Member_of_room::where('user_id','=',$data_pill['patient_id'])->first();
-
-            if($data_check_patient->caregiver != null){
-                //กรณี user_id นี้มีคนดูแลอยู่
-                // sendto Member
-                $data_member_of_room = Member_of_room::where('user_id','=',$data_pill['patient_id'])->where('room_id',$data_pill['room_id'])->where('caregiver','!=',null)->first();
+                $data_member_of_room = Member_of_room::where('user_id','=',$data_doc['patient_id'])->where('room_id',$data_doc['room_id'])->where('caregiver','!=',null)->first();
 
 
                 $sendto = User::where('id','=',$data_member_of_room->caregiver)->first();
@@ -158,34 +125,21 @@ class Send_Appoint_Doc extends Command
             }
         }else{
             // sendto Patient
-            $sendto = User::where('id','=',$data_pill['patient_id'])->first();
+            $sendto = User::where('id','=',$data_doc['patient_id'])->first();
             $provider_id = $sendto->provider_id;
         }
-    }
 
         // echo 'ส่งแจ้งเตือนไปยัง ID : '.$sendto->id;
-        $data_patient = User::where('id','=',$data_pill['patient_id'])->first();
+        $data_patient = User::where('id','=',$data_doc['patient_id'])->first();
 
 
-        if($data_pill->type == "pill"){
-            $template_path = storage_path('../public/json/flex_line_appoint.json');
-            $string_json = file_get_contents($template_path);
+        $template_path = storage_path('../public/json/flex_appoint_doc.json');
+        $string_json = file_get_contents($template_path);
 
-            $string_json = str_replace("TIMEแทนตรงนี้",$data_pill['date_time'],$string_json);
-            $string_json = str_replace("id_pill",$data_pill['id'],$string_json);
+        $string_json = str_replace("User_name",$data_patient->name,$string_json);
+        $string_json = str_replace("Title",$data_doc['title'],$string_json);
+        $string_json = str_replace("date",$data_doc['date'],$string_json);
 
-            $string_json = str_replace("USER_NAMEแทนตรงนี้",$message_of_patient.$data_patient->name,$string_json);
-            $string_json = str_replace("TITLEแทนตรงนี้",$data_pill['title'],$string_json);
-            $string_json = str_replace("DATEแทนตรงนี้",$data_pill['date'],$string_json);
-        }else{
-            $template_path = storage_path('../public/json/flex_appoint_doc.json');
-            $string_json = file_get_contents($template_path);
-
-            $string_json = str_replace("User_name",$data_patient->name,$string_json);
-            $string_json = str_replace("Title",$data_pill['title'],$string_json);
-            $string_json = str_replace("date",$data_pill['date'],$string_json);
-
-        }
 
 
         $messages = [ json_decode($string_json, true) ];

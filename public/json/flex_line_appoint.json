@@ -11,7 +11,7 @@
           "contents": [
             {
               "type": "image",
-              "url": "https://i.ibb.co/nq2ZYfK/flex-pill.png",
+              "url": "https://i.ibb.co/87XVqTN/flex-pill.png",
               "size": "full",
               "aspectRatio": "2500:3500",
               "aspectMode": "cover"
@@ -46,7 +46,7 @@
                   "text": "User_name",
                   "color": "#2F84B9",
                   "weight": "bold",
-                  "size": "lg",
+                  "size": "xl",
                   "wrap": true
                 }
               ],

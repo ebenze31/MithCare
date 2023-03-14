@@ -27,11 +27,11 @@ class TestController extends Controller
 
             // ค้นหา type=pill ,status_appoint ว่าเป็น null หรือ sent และวันที่กับเวลาต้องน้อยกว่าหรือเท่ากับ ปัจจุบัน+10นาที
             $ap_pill = Appoint:: where('type','=','pill')
-            ->whereDate('date', '<=' , $date_now )
-            ->whereTime('date_time','<=',$time_10)
-            ->where('status','=',null)
-            ->orWhere('status','=','sent')
-            ->get();
+                ->whereDate('date', '<=' , $date_now )
+                ->whereTime('date_time','<=',$time_10)
+                ->where('status','=',null)
+                ->orWhere('status','=','sent')
+                ->get();
 
 
             echo "<br>";

@@ -39,7 +39,7 @@
 
     <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}} col-md-12 col-12">
         <label for="title" class="control-label">{{ 'เรื่อง' }}</label>
-        <input class="form-control title_appoint_create" name="title" type="text" id="title" value="{{ isset($appoint->title) ? $appoint->title : ''}}" onchange="check_input_appoint_create();" required>
+        <input class="form-control title_appoint_create" name="title" type="text" id="title" value="{{ isset($appoint->title) ? $appoint->title : ''}}"  required>
         {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
     </div>
 
@@ -173,21 +173,21 @@
             });
     }
 
-    function check_input_appoint_create(){
-        // let type_appoint = document.getElementsByName('type').checked;
-        let type_appoint_create = document.querySelector('.type_appoint_create');
-        let patient_id = document.getElementsByName('patient_id');
-        console.log(type_appoint_create);
-        console.log(patient_id.checked);
+    // function check_input_appoint_create(){
+    //     // let type_appoint = document.getElementsByName('type').checked;
+    //     let type_appoint_create = document.querySelector('.type_appoint_create');
+    //     let patient_id = document.getElementsByName('patient_id');
+    //     console.log(type_appoint_create);
+    //     console.log(patient_id.checked);
 
-        if(document.querySelector('.type_appoint_create').checked){
-            document.querySelector('#btn_create_appoint').disable = false;
-            // document.querySelector('#btn_create_appoint').submit();
-        }else{
-            document.querySelector('#btn_create_appoint').disable = true;
-            document.querySelector('#btn_create_appoint').onclick = function() { alert("กรุณากรอกข้อมูลให้ครบก่อน"); };
-        }
+    //     if(document.querySelector('.type_appoint_create').checked){
+    //         document.querySelector('#btn_create_appoint').disable = false;
+    //         // document.querySelector('#btn_create_appoint').submit();
+    //     }else{
+    //         document.querySelector('#btn_create_appoint').disable = true;
+    //         document.querySelector('#btn_create_appoint').onclick = function() { alert("กรุณากรอกข้อมูลให้ครบก่อน"); };
+    //     }
 
-    }
+    // }
 </script>
 

@@ -223,4 +223,35 @@ class Send_Appoint_Pill extends Command
 
         Mylog::Create($data);
     }
+
+    public function count_range_time($time_start , $time_end)
+    {
+        // count time success
+        $time_s = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%s');
+        $time_i = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%i');
+        $time_h = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%h');
+        $time_d = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%d');
+        $time_m = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%m');
+        $time_y = \Carbon\Carbon::parse($time_end)->diff(\Carbon\Carbon::parse($time_start))->format('%y');
+
+        // if ( $time_s != 0 ) {
+        //     $data = $time_s ." วินาที";
+        // }
+        if( $time_i != 0){
+            $data = $time_i ." นาที ";
+        }
+        if( $time_h != 0){
+            $data = $time_h ." ชั่วโมง " .$data;
+        }
+       if( $time_d != 0){
+            $data = $time_d ." วัน " .$data;
+        }
+        if( $time_m != 0){
+            $data = $time_m ." เดือน " .$data;
+        }
+        if( $time_y != 0){
+            $data = $time_y ." ปี " .$data;
+        }
+        return $data;
+    }
 }

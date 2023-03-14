@@ -65,11 +65,6 @@ class Send_Appoint_Pill extends Command
 
         for($i = 0; $i < count($ap_pill); $i++){
 
-            DB::table('appoints')
-                ->where('id', $ap_pill[$i]['id'])
-                ->update([
-                    'status' => 'อิอิซ่า',
-                ]);
 
             // ค้นหา user_id สมาชิกในห้อง โดยหาจาก patient_id ที่ได้มา
             $data_members = Member_of_room::where('user_id',$ap_pill[$i]['patient_id'])->where('room_id',$ap_pill[$i]['room_id'])->first();

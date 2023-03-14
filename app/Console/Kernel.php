@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Send_Appoint_Doc::class,
         Commands\Send_Appoint_Pill::class,
-        Commands\Test_delete::class,
     ];
 
     /**

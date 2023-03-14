@@ -61,11 +61,11 @@
             "type": "integer"
         },
         {
-            "name": "score total",
+            "name": "score_total",
             "type": "float"
         },
         {
-            "name": "commemt_help",
+            "name": "comment_help",
             "type": "string"
         },
         {
@@ -100,6 +100,6 @@
             "name": "partner_id",
             "type": "string"
         }
-        
+
     ]
 }

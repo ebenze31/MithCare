@@ -1,10 +1,10 @@
 
 <div class="row d-flex justify-content-between">
-    <label for="title p-2" class="control-label">{{ 'ประเภท' }}</label>
+    <label for="title" class="control-label ml-3">{{ 'ประเภท' }}</label>
     <div class="col-6 p-2">
         <label>
-        <input class="card-input-element d-none type_appoint_create" id="type_doc" name="type" type="radio"
-        value="doc" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); " required>
+        <input class="card-input-element d-none type_appoint_create" id="type_doc" name="type" type="radio" value="doc"
+         onchange="show_input(); " required>
             <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                 <span style="font-size:16px;">
                     นัดหมอ
@@ -14,8 +14,8 @@
     </div>
     <div class="col-6 p-2">
         <label>
-        <input class="card-input-element d-none type_appoint_create" id="type_pill" name="type" type="radio"
-        value="pill" {{ (isset($appoint->type) && $appoint->type == $optionKey) ? 'selected' : ''}} onchange="show_input(); " required>
+        <input class="card-input-element d-none type_appoint_create" id="type_pill" name="type" type="radio" value="pill"
+         onchange="show_input(); " required>
             <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                 <span style="font-size:16px;">
                    ใช้ยา
@@ -46,31 +46,22 @@
     {{-- //ส่ง room_id  --}}
     <input class="d-none" id="input_room_id" name="input_room_id" value="{{ isset($room_id) ? $room_id : ''}}">
 
-
-
-
-
-
-
     <div id="div_date" class="form-group col-md-6 col-12">
         <label id="label_date" for="date" class="control-label">{{ 'วันที่' }}</label>
-        <input class="form-control " name="date" type="date" id="date" value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" required>
+        <input class="form-control date_appoint_create" name="date" type="date" id="date" value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" required>
     </div>
 
     <div id="div_datetime" class="form-group col-md-6 col-12 ">
         <label id="label_datetime" for="date_time" class="control-label">{{ 'เวลา' }}</label>
-        <input class="form-control " name="date_time" type="time" id="date_time" value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" >
+        <input class="form-control time_appoint_create" name="date_time" type="time" id="date_time" value="{{ isset($appoint->date_time) ? $appoint->date_time : ''}}" >
     </div>
-
-
-
 
 </div>
 
 <center>
-    <div class="form-group col-12 col-md-6 ">
-        <button class="btn btn-primary form-control" id="btn_create_appoint"
-        style="background-color: #3490dc; font-size: 20px; color: white;"  type="submit" >สร้าง</button>
+    <div class="form-group col-12 col-md-6">
+        <span class="btn btn-primary form-control" id="btn_create_appoint" onclick="check_input_appoint_create();"
+        style="background-color: #3490dc; font-size: 20px; color: white;" >สร้าง</span>
     </div>
 </center>
 
@@ -173,21 +164,6 @@
             });
     }
 
-    // function check_input_appoint_create(){
-    //     // let type_appoint = document.getElementsByName('type').checked;
-    //     let type_appoint_create = document.querySelector('.type_appoint_create');
-    //     let patient_id = document.getElementsByName('patient_id');
-    //     console.log(type_appoint_create);
-    //     console.log(patient_id.checked);
 
-    //     if(document.querySelector('.type_appoint_create').checked){
-    //         document.querySelector('#btn_create_appoint').disable = false;
-    //         // document.querySelector('#btn_create_appoint').submit();
-    //     }else{
-    //         document.querySelector('#btn_create_appoint').disable = true;
-    //         document.querySelector('#btn_create_appoint').onclick = function() { alert("กรุณากรอกข้อมูลให้ครบก่อน"); };
-    //     }
-
-    // }
 </script>
 

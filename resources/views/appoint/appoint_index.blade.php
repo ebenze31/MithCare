@@ -79,10 +79,79 @@
         right: 12px;
         font-size: 12px;
     }
+
+    .div_alert{
+    position: fixed;
+    top: -500px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Kanit', sans-serif;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+}
+.div_alert i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    max-width: 70px;
+    height: 50px;
+    background-color: #ffddde;
+    border-radius: 50%;
+    color: #ff5757;
+    font-size: 1.5rem;
+    margin-left: 1.5rem;
+
+}
+
+.up-down {
+  animation-name: slideDownAndUp;
+  animation-duration: 2s;
+}
+
+@keyframes slideDownAndUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  10% {
+    transform: translateY(520px);
+  }
+
+  90% {
+    transform: translateY(520px);
+  }
+
+ 100% {
+    transform: translateY(0);
+ }
+}
+.alert-child{
+    background-color: #db2d2e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    height: 5rem;
+    width: 90%;
+    padding:20px 10px;
+}.text-alert{
+    color: #fff;
+    float: left;
+}
 </style>
 
-
-
+<div id="alert_phone" class=" div_alert " role="alert">
+    <div class="alert-child">
+        <div >
+            <span class="d-block  text-alert font-weight-bold">มีข้อผิดพลาด</span>
+            <span class="d-block  text-alert">โปรดตรวจสอบเบอร์โทรให้ถูกต้อง</span>
+        </div>
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+</div>
 
 <section class="page-title page-title-layout5">
     <div class="bg-img"><img src="{{asset('/img/พื้นหลัง/พื้นหลัง-05.png')}}" width="90%" alt="background"></div>
@@ -168,7 +237,7 @@
                                                 </ul>
                                                 @endif
 
-                                                <form method="POST"
+                                                <form method="POST" name="appoint_create_form" id="appoint_create_form"
                                                     action="{{ url('/appoint/'. $room->id . '/create') }}"
                                                     accept-charset="UTF-8" class="form-horizontal h5"
                                                     enctype="multipart/form-data">
@@ -630,6 +699,72 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("input_patient_this_room").value = "";
     }
 }
+
+    function check_input_appoint_create(){
+
+            // let patient_id = document.getElementsByName('patient_id');
+            // let type_appoint_create = document.querySelector('.type_appoint_create');
+            // let type_appoint_create = document.querySelectorAll('input[class="type_appoint_create"]');
+            let title_appoint_create = document.querySelector('.title_appoint_create').value;
+            let date_appoint_create = document.querySelector('.date_appoint_create').value;
+            let time_appoint_create = document.querySelector('.time_appoint_create').value;
+
+            // let type_appoint_value = "" ;
+            // type_appoint_create.forEach(type_appoint_create => {
+            //     if(type_appoint_create.checked){
+            //         type_appoint_value = type_appoint_create.value;
+
+            //     }
+            // })
+            // let type_appoint_create = document.querySelector('.type_appoint_create');
+            // console.log(type_appoint_create);
+
+
+            // for (var i = 0, length = type_appoint_create.length; i < length; i++) {
+            //     if (type_appoint_create[i].checked) {
+            //         type_appoint_value = type_appoint_create[i].value;
+            //     }
+            // }
+
+            var clist = document.getElementsByName('patient_id');
+
+            for (var i = 0, length = clist.length; i < length; i++) {
+                if (clist[i].checked) {
+                    patient_id_value = clist[i].value;
+                }
+            }
+
+            var type_appoint_create = document.querySelector(".type_appoint_create:checked");
+            var type_appoint_value = type_appoint_create.value;
+            console.log(patient_id_value);
+            console.log(type_appoint_value);
+            console.log(title_appoint_create);
+            console.log(date_appoint_create);
+            console.log(time_appoint_create);
+
+            if(patient_id_value !== "" && type_appoint_value !== "" && title_appoint_create !== "" && time_appoint_create !== "" && date_appoint_create !== ""){
+                console.log("เข้า");
+                if(type_appoint_create == 'pill' && time_appoint_create !== ""){
+                    document.querySelector('#appoint_create_form').submit();
+                }else{
+                    document.querySelector('#alert_phone').classList.add('up-down');
+
+                    const animated = document.querySelector('.up-down');
+                    animated.onanimationend = () => {
+                        document.querySelector('#alert_phone').classList.remove('up-down');
+                    };
+                }
+            }else{
+                document.querySelector('#alert_phone').classList.add('up-down');
+
+                const animated = document.querySelector('.up-down');
+                animated.onanimationend = () => {
+                    document.querySelector('#alert_phone').classList.remove('up-down');
+                };
+            }
+
+
+    }
 
 
 </script>

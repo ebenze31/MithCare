@@ -25,10 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // everyMinute
+        // everyTenMinutes
         // $schedule->command('inspire')->hourly();
             // $schedule->command('cron:appoint')->everyTenMinutes()->withoutOverlapping(5);
 
-            $schedule->command('cron:appoint_pill')->everyTenMinutes()->withoutOverlapping(5);
+            $schedule->command('cron:appoint_pill')->everyMinute()->withoutOverlapping(5);
             $schedule->command('cron:appoint_doc')->dailyAt('08:00')->withoutOverlapping(10);
     }
 

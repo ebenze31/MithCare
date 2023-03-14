@@ -53,7 +53,7 @@ class Test_delete extends Command
         $data_Appoint = Appoint::where('id' , "!=" , null)->get();
 
         foreach ($data_Appoint as $item) {
-            Appoint::where('id' , $item->id)->delete();
+            // Appoint::where('id' , $item->id)->delete();
 
             $data_user  = User::where('id' , $item->patient_id)->first();
             $provider_id = $data_user->provider_id ;
@@ -61,7 +61,7 @@ class Test_delete extends Command
             $template_path = storage_path('../public/json/text.json');
             $string_json = file_get_contents($template_path);
 
-            $string_json = str_replace("hello","ผมได้ตรวจสอบแล้ว พบว่าคุณมันรั่วผมเลยลบข้อมูลนัดหมายของคุณ",$string_json);
+            $string_json = str_replace("hello","ผมได้ตรวจสอบแล้ว",$string_json);
 
             $messages = [ json_decode($string_json, true) ];
             $body = [

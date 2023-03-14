@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Send_Appoint_Doc::class,
         Commands\Send_Appoint_Pill::class,
+        Commands\Test_delete::class,
     ];
 
     /**
@@ -27,7 +28,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
             // $schedule->command('cron:appoint')->everyTenMinutes()->withoutOverlapping(5);
-            $schedule->command('cron:appoint_pill')->everyMinute()->withoutOverlapping(5);
+            $schedule->command('cron:test_delete')->everyMinute()->withoutOverlapping(5);
+
+            $schedule->command('cron:appoint_pill')->everyTenMinutes()->withoutOverlapping(5);
             $schedule->command('cron:appoint_doc')->dailyAt('08:00')->withoutOverlapping(10);
     }
 

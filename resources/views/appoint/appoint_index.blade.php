@@ -11,13 +11,16 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+
 <style>
+
+
     label{
         width: 100%
     }
 
     .card-input-element+.card {
-        height: calc(36px + 2*1rem);
+        height: calc(40px + 2*1rem);
         color: #0d6efd;
         -webkit-box-shadow: none;
         box-shadow: none;
@@ -141,6 +144,17 @@
     color: #fff;
     float: left;
 }
+
+.hover-end{
+    padding:0;
+    margin:0;
+    font-size:75%;
+    text-align:center;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    opacity:.8
+}
 </style>
 
 <div id="alert_phone" class=" div_alert " role="alert">
@@ -206,10 +220,6 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>เพิ่มตารางนัดหมอ/ใช้ยา
                     </a>
 
-
-
-
-
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -245,7 +255,7 @@
 
                                                    <!--///  สถานะ ไม่ใช่ผู้ป่วย /// -->
                                                    <label for="title" class="control-label">{{ 'เลือกนัดหมายให้' }}</label>
-                                                    @if ($check_status_member->status != 'patient')
+                                                    @if ($check_status_member->status == 'member' || $check_status_member->lv_of_caretaker == '1')
                                                         <div class="home-demo">
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
@@ -268,7 +278,69 @@
                                                                             <label>
                                                                             <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                    @switch($item->status)
+                                                                                    @case('patient')
+                                                                                        @if($item->lv_of_caretaker == '1')
+                                                                                            <a class="text_topright" style="color:#383535">(ผู้ป่วย lv1)</a>
+                                                                                        @else
+                                                                                            <a class="text_topright" style="color:#383535">(ผู้ป่วย lv2)</a>
+                                                                                        @endif
+                                                                                        @break
+                                                                                    @case('member')
+                                                                                        <a class="text_topright" style="color:#383535">(สมาชิก)</a>
+                                                                                        @break
+                                                                                    @default
 
+                                                                                @endswitch
+                                                                                    <span style="font-size:16px;">
+                                                                                        {{$item->user->full_name}}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+
+                                                            </div>
+                                                        </div>
+                                                    @elseif ($check_status_member->status == 'owner')
+                                                        <div class="home-demo">
+                                                            <div class="owl-carousel aasdaa owl-theme">
+                                                                <div class="col-12 p-0">
+                                                                    <label>
+                                                                        {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                    <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
+                                                                        <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                            <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
+                                                                            <span style="font-size:16px;">
+                                                                                {{Auth::user()->name}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                                @foreach($all_member_of_room as $item)
+                                                                    <div class="item">
+                                                                        <!--///  เลือกผู้ป่วย /// -->
+
+                                                                        <div class="col-12 p-0">
+                                                                            <label>
+                                                                            <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
+                                                                                <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                    @switch($item->status)
+                                                                                        @case('patient')
+                                                                                            @if($item->lv_of_caretaker == '1')
+                                                                                                <a class="text_topright" style="color:#383535">(ผู้ป่วย lv1)</a>
+                                                                                            @else
+                                                                                                <a class="text_topright" style="color:#383535">(ผู้ป่วย lv2)</a>
+                                                                                            @endif
+                                                                                            @break
+                                                                                        @case('member')
+                                                                                            <a class="text_topright" style="color:#383535">(สมาชิก)</a>
+                                                                                            @break
+                                                                                        @default
+
+                                                                                    @endswitch
+                                                                                    {{-- <a class="text_topright" style="color:#383535">({{$item->status}})</a> --}}
                                                                                     <span style="font-size:16px;">
                                                                                         {{$item->user->full_name}}
                                                                                     </span>
@@ -383,7 +455,69 @@
                                                                                 <label>
                                                                                 <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id_edit" type="radio" value="{{$item->user_id}}">
                                                                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                    @switch($item->status)
+                                                                                        @case('patient')
+                                                                                            @if($item->lv_of_caretaker == '1')
+                                                                                                <a class="text_topright" style="color:#383535">(ผู้ป่วย lv1)</a>
+                                                                                            @else
+                                                                                                <a class="text_topright" style="color:#383535">(ผู้ป่วย lv2)</a>
+                                                                                            @endif
+                                                                                            @break
+                                                                                        @case('member')
+                                                                                            <a class="text_topright" style="color:#383535">(สมาชิก)</a>
+                                                                                            @break
+                                                                                        @default
 
+                                                                                    @endswitch
+                                                                                        <span style="font-size:16px;">
+                                                                                            {{$item->user->full_name}}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($check_status_member->status == 'owner')
+                                                            <div class="home-demo">
+                                                                <div class="owl-carousel aasdaa owl-theme">
+                                                                    <div class="col-12 p-0">
+                                                                        <label>
+                                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                                                                        <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
+                                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
+                                                                                <span style="font-size:16px;">
+                                                                                    {{Auth::user()->name}}
+                                                                                </span>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
+                                                                    @foreach($all_member_of_room as $item)
+                                                                        <div class="item">
+                                                                            <!--///  เลือกผู้ป่วย /// -->
+
+                                                                            <div class="col-12 p-0">
+                                                                                <label>
+                                                                                <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
+                                                                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                                                        @switch($item->status)
+                                                                                            @case('patient')
+                                                                                                @if($item->lv_of_caretaker == '1')
+                                                                                                    <a class="text_topright" style="color:#383535">(ผู้ป่วย lv1)</a>
+                                                                                                @else
+                                                                                                    <a class="text_topright" style="color:#383535">(ผู้ป่วย lv2)</a>
+                                                                                                @endif
+                                                                                                @break
+                                                                                            @case('member')
+                                                                                                <a class="text_topright" style="color:#383535">(สมาชิก)</a>
+                                                                                                @break
+                                                                                            @default
+
+                                                                                        @endswitch
+                                                                                        {{-- <a class="text_topright" style="color:#383535">({{$item->status}})</a> --}}
                                                                                         <span style="font-size:16px;">
                                                                                             {{$item->user->full_name}}
                                                                                         </span>
@@ -412,8 +546,6 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-
-
 
                                                         <input type="hidden" name="appoint_id" id="appoint_id" value="" />
                                                         @include ('appoint.appoint_form_edit')
@@ -495,8 +627,8 @@
                 //////////////// Calendar //////////////////////
                 //////////////////////////////////////////////// -->
 
-                <div class="mt-3" id='calendar'></div>
-
+                <div class="mt-3" id='calendar' style="width: 100%;"></div>
+                <div class="mt-3" id='event_mouseover'></div>
             </div>
         </div>
     </div>
@@ -507,27 +639,54 @@
 <script>
 const date_now_Y_m = Date.now('Y-m');
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
+    //mobile check
+    window.mobilecheck = function() {
+    var check = false;
+    (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+        return check;
+    };
+
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
 
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
         },
-        initialView: 'dayGridMonth',
+        // footerToolbar: {
+        //     center:
+        // },
+        buttonText: {
+            today:    'วันนี้',
+            month:    'เดือน',
+            week:     'สัปดาห์',
+            day:      'วัน',
+            list:     'รายการ'
+        },
+        initialView: window.mobilecheck() ? 'timeGridDay' : 'dayGridMonth',
         initialDate: date_now_Y_m,
+        // defaultView: window.mobilecheck() ? 'timeGridDay' : 'dayGridWeek',
+        // height: 'auto',
+        contentHeight: 'auto', //ความสูงอัติโนมัติ
+        // resourceAreaWidth: '60%',
+        // aspectRatio: 1.8,
+        // expandRows: true,
+        handleWindowResize: true,
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         nowIndicator: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        editable: false,
+        editable: false, //ลากเพื่อเปลี่ยนตารางนัด
         selectable: true,
         businessHours: true,
         dayMaxEvents: true, // allow "more" link when too many events
         timeZone: 'Asia/Bangkok',
         locale: 'th',
+        eventDisplay: 'block',
         eventTimeFormat: { // like '14:30:00'
             hour: '2-digit',
             minute: '2-digit',
@@ -554,6 +713,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         ],
 
+        // eventMouseover: function(event, jsEvent, view) {
+        //     $('#event_mouseover', this).append('<div id="'+event.id+'">' + 'deer' + '</div>');
+        // },
+
+        // eventMouseout: function(event, jsEvent, view) {
+        //     $('#'+event.id).remove();
+        // },
 
         eventClick: function(calEvent, jsEvent, view) {
 
@@ -655,28 +821,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-
-    // function select_takecare_lv2() {
-    //   let button_switch = document.querySelector('#select_takecare_patient_2').value;
-
-    //   if (type === 'doc') {
-    //         let div_date = document.querySelector('#div_date_edit').classList ;
-    //             // console.log(div_date);
-    //             div_date.remove("col-md-6");
-    //             div_date.remove('d-none');
-    //             div_date.add('col-md-12');
-    //         document.querySelector('#div_datetime_edit').classList.add('d-none');
-    //         document.querySelector('#date_time_edit').required = false ;
-    //     }else {
-    //         let div_date = document.querySelector('#div_date_edit').classList;
-    //             // console.log(div_date);
-    //             div_date.remove("col-md-12");
-    //             div_date.remove('d-none');
-    //             div_date.add('col-md-6');
-    //         document.querySelector('#div_datetime_edit').classList.remove('d-none');
-    //         document.querySelector('#date_time_edit').required = true
-    //     }
-    // }
 
     function select_takecare_lv2(id){
     switch(id){

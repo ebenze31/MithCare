@@ -10,8 +10,7 @@
     <title>MithCare</title>
 
     <!-- calendar -->
-    <link href="assets/plugins/fullcalendar/css/main.min.css" rel="stylesheet" />
-    <link href="{{ asset('mithcare/js/fullcalendar/css/main.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('mithcare/js/fullcalendar/css/main.css') }}" rel="stylesheet">
 
     <!-- icon -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">

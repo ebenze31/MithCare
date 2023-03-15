@@ -59,7 +59,7 @@
 </div>
 
 <center>
-    <div class="form-group col-12 col-md-6">
+    <div class="col-12 col-md-12 p-0">
         <span class="btn btn-primary form-control" id="btn_create_appoint" onclick="check_input_appoint_create();"
         style="background-color: #3490dc; font-size: 20px; color: white;" >สร้าง</span>
     </div>

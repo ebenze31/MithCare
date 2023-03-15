@@ -147,7 +147,7 @@
     <div class="alert-child">
         <div >
             <span class="d-block  text-alert font-weight-bold">มีข้อผิดพลาด</span>
-            <span class="d-block  text-alert">โปรดตรวจสอบเบอร์โทรให้ถูกต้อง</span>
+            <span class="d-block  text-alert">โปรดกรอกข้อมูลให้ครบถ้วน</span>
         </div>
         <i class="fa-solid fa-xmark"></i>
     </div>
@@ -251,7 +251,7 @@
                                                                 <div class="col-12 p-0">
                                                                     <label>
                                                                         {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
+                                                                    <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
@@ -266,7 +266,7 @@
 
                                                                         <div class="col-12 p-0">
                                                                             <label>
-                                                                            <input class="card-input-element d-none" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
+                                                                            <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
 
                                                                                     <span style="font-size:16px;">
@@ -285,7 +285,7 @@
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
+                                                                    <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
@@ -702,49 +702,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function check_input_appoint_create(){
 
-            // let patient_id = document.getElementsByName('patient_id');
-            // let type_appoint_create = document.querySelector('.type_appoint_create');
-            // let type_appoint_create = document.querySelectorAll('input[class="type_appoint_create"]');
             let title_appoint_create = document.querySelector('.title_appoint_create').value;
             let date_appoint_create = document.querySelector('.date_appoint_create').value;
             let time_appoint_create = document.querySelector('.time_appoint_create').value;
 
-            // let type_appoint_value = "" ;
-            // type_appoint_create.forEach(type_appoint_create => {
-            //     if(type_appoint_create.checked){
-            //         type_appoint_value = type_appoint_create.value;
-
-            //     }
-            // })
-            // let type_appoint_create = document.querySelector('.type_appoint_create');
-            // console.log(type_appoint_create);
-
-
-            // for (var i = 0, length = type_appoint_create.length; i < length; i++) {
-            //     if (type_appoint_create[i].checked) {
-            //         type_appoint_value = type_appoint_create[i].value;
-            //     }
-            // }
-
-            var clist = document.getElementsByName('patient_id');
-
-            for (var i = 0, length = clist.length; i < length; i++) {
-                if (clist[i].checked) {
-                    patient_id_value = clist[i].value;
-                }
+            let patient_id = document.querySelector(".patient_id_create:checked");
+            let patient_id_value;
+            if(patient_id){
+                patient_id_value = patient_id.value;
+            }else{
+                patient_id_value = "";
             }
 
-            var type_appoint_create = document.querySelector(".type_appoint_create:checked");
-            var type_appoint_value = type_appoint_create.value;
-            console.log(patient_id_value);
-            console.log(type_appoint_value);
-            console.log(title_appoint_create);
-            console.log(date_appoint_create);
-            console.log(time_appoint_create);
+            let type_appoint_create = document.querySelector(".type_appoint_create:checked");
+            let type_appoint_value;
+            if(type_appoint_create){
+                type_appoint_value = type_appoint_create.value;
+            }else{
+                type_appoint_value = "";
+            }
 
-            if(patient_id_value !== "" && type_appoint_value !== "" && title_appoint_create !== "" && time_appoint_create !== "" && date_appoint_create !== ""){
-                console.log("เข้า");
-                if(type_appoint_create == 'pill' && time_appoint_create !== ""){
+            if(patient_id_value !== "" && type_appoint_value !== "" && title_appoint_create !== "" && date_appoint_create !== ""){
+                if(type_appoint_value == 'pill' && time_appoint_create !== ""){
+                    document.querySelector('#appoint_create_form').submit();
+                }else if(type_appoint_value == 'doc'){
                     document.querySelector('#appoint_create_form').submit();
                 }else{
                     document.querySelector('#alert_phone').classList.add('up-down');
@@ -755,6 +736,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     };
                 }
             }else{
+
                 document.querySelector('#alert_phone').classList.add('up-down');
 
                 const animated = document.querySelector('.up-down');

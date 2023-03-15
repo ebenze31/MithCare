@@ -667,14 +667,10 @@ document.addEventListener('DOMContentLoaded', function() {
             day:      'วัน',
             list:     'รายการ'
         },
-        initialView: window.mobilecheck() ? 'timeGridDay' : 'dayGridMonth',
+        initialView: window.mobilecheck() ? 'listWeek' : 'dayGridMonth',
         initialDate: date_now_Y_m,
-        // defaultView: window.mobilecheck() ? 'timeGridDay' : 'dayGridWeek',
         // height: 'auto',
         contentHeight: 'auto', //ความสูงอัติโนมัติ
-        // resourceAreaWidth: '60%',
-        // aspectRatio: 1.8,
-        // expandRows: true,
         handleWindowResize: true,
         navLinks: true, // can click day/week names to navigate views
         selectable: true,

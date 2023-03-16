@@ -226,7 +226,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <!-- หน้าสร้างตารางนัด -->
-                                <div class="container">
+                                <div class="container " style="font-weight :bold;">
                                     <div class="row">
                                         <div class="contact-panel col-md-12 mb-2">
                                             {{-- <div class="lds-ring"><div></div><div></div><div></div><div></div></div> --}}

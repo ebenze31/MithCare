@@ -7,6 +7,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
+    .slick-arrow{
+        background-color: #4170A2;
+        color: #000000;
+    }
     .btn-circle{
         font-size: 20px;
         font-weight: 700;
@@ -183,7 +187,7 @@
  <!-- =================================================================================================
               คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม คอม
     ================================================================================================== -->
-<section class="team-layout2 pb-80 d-none d-lg-block">
+<section class="team-layout2 pb-80 ">
     <div class="container">
 
         <div id="member_show_of_room" class="row">
@@ -194,86 +198,75 @@
                             <a class="btn-old btn-primary " href="{{ url('member_of_room_edit')}}?room_id={{$room->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
                         @endif
 
-                        <!--====================
-                        Modal แก้ไขสถานะของสมาชิก
-                        ======================-->
 
-                        {{-- <div class="modal fade" id="edit_member_of_room" tabindex="-1" role="dialog" aria-labelledby="edit_member_of_roomTitle" aria-hidden="true">
-                            <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <!-- Modal แก้ไขสถานะของสมาชิก -->
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="contact-panel col-md-12 mb-2">
-
-                                                <button  class="close " style="border-radius: 80%; " data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-
-                                                <div class="container">
-                                                <h3 ><i class="fa-solid fa-pen-to-square "></i> จัดการสมาชิก</h3>
-                                                    <br />
-                                                    <br />
-                                                    @if ($errors->any())
-                                                    <ul class="alert alert-danger">
-                                                        @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                    @endif
-
-                                                    <form method="POST" action="{{ url('/room') }}" accept-charset="UTF-8" class="form-horizontal h5" enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
-
-                                                        @include ('room.form_create')
-
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        <!--========================
-                        End Modal แก้ไขสถานะของสมาชิก
-                        ============================-->
 
                     </h3>
                 </div><!-- /.heading -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
+        @foreach ($member as $item)
+          <!--====================
+            Modal แก้ไขสถานะของสมาชิก
+            ======================-->
 
+            <!-- Modal -->
+            <div class="modal fade modal-slick_edit_member" id="edit_memberModal{{ $item->id }}" tabindex="-50" role="dialog"
+                aria-labelledby="edit_memberModal{{ $item->id}}Title" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal_sos_btn_userTitle">แก้ไขสถานะ {{ $item->user->name }}</h5>
+                                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span style="background-color: #4170A2; border-radius:10px" aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!-- แก้ไขสถานะของสมาชิก -->
+                            <div class="modal-body">
+                                <div class="container " style="font-weight :bold;">
+                                    @include ('room.edit_member')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div><!-- modal -->
+            <!--========================
+            End Modal แก้ไขสถานะของสมาชิก
+            ============================-->
+        @endforeach
         <div class="row ">
             <div class="col-12">
-                <div class="slick-carousel"
-                    data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                <div class="slick-carousel" id="slick_edit_member"
+                    data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": true, "arrows": true, "dots": false,
+                    "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}},
+                     {"breakpoint": 767, "settings": {"slidesToShow": 1}},
+                     {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
                     <!-- Member #1 -->
                     @foreach ($member as $item)
                     <div class="member">
                         <div class="member__img">
                             @if(!empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" height="300px" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(!empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" height="300px" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
+                                    <img src="{{asset('/img/สติกเกอร์ Mithcare/18.png')}}" alt="member img" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
                         </div><!-- /.member-img -->
                         <div class="member__info">
                             <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
+                            <a class="btn-old btn-primary" onclick="edit_member(event);" data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
+
                             @if ($item->status == 'owner')
                                 <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
                             @elseif($item->status == 'member')
@@ -288,12 +281,19 @@
                                 @endif
                             @endif
 
+
+
                         </div><!-- /.member-info -->
                     </div><!-- /.member -->
                     @endforeach
                 </div><!-- /.carousel -->
             </div><!-- /.col-12 -->
         </div><!-- /.row -->
+
+        <!-- ======================
+            TEST CARD EDIT V.2
+        ========================= -->
+
 
         <!-- ======================
             TEST CARD EDIT V.1
@@ -305,23 +305,23 @@
                     <!-- Member #1 -->
                     @foreach ($member as $item)
                     <div  class="member">
-                        <input id="div_member_of_room_card" class="d-none" value="{{$item->user_id}}" disabled>
+                        <input id="div_member_of_room_card" class="d-none" value="{{$item->user_id}}">
                         <div class="member__img">
                             @if(!empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" height="300px" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img"  width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(!empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" height="300px" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img"  width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="https://www.viicheck.com/Medilab/img/icon.png" alt="member img" height="300px" width="100%">
+                                    <img src="{{asset('/img/สติกเกอร์ Mithcare/18.png')}}" alt="member img"  width="100%">
                                 </div><!-- /.member-img -->
                             @endif
                         </div><!-- /.member-img -->
@@ -506,6 +506,24 @@ function show_input_fr(user_id){
 }
 
 </script>
+
+<script>
+    function edit_member(event) {
+      // Prevent the default behavior of the click event
+      event.preventDefault();
+
+      // Stop the autoplay of the carousel
+      $('#slick_edit_member').slick('slickPause');
+
+      // Open the modal or perform any other actions related to editing the member
+      // ...
+
+      // Once the editing is done, resume the autoplay of the carousel
+    //   $('#slick_edit_member').slick('slickPlay');
+    }
+  </script>
+
+
 
 <script>
 function click_Select_Takecare(user_id){

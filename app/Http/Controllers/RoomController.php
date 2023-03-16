@@ -127,6 +127,21 @@ class RoomController extends Controller
         return view('room.edit', compact('room'));
     }
 
+    public function edit_member($id)
+    {
+        $room = Room::findOrFail($id);
+
+        if (!empty($keyword)) {
+            $my_room = Member_of_room::where('user_id',$id)
+                ->where('gen_id', 'LIKE', "%$keyword%")
+                ->orWhere('pass', 'LIKE', "%$keyword%")
+                ->get();
+        }
+
+
+        return view('room.edit', compact('room'));
+    }
+
 
     public function update(Request $request, $id)
     {

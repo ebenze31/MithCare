@@ -329,14 +329,23 @@
                             "variableWidth": true,
                             "arrows": false,
                             "dots": false,
-                            "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+                            "responsive": [
+                                {"breakpoint": 992, "settings": {"slidesToShow": 2}},
+                                {"breakpoint": 767, "settings": {"slidesToShow": 1}},
+                                {"breakpoint": 480, "settings": {"slidesToShow": 1}}
+                            ]}'>
 
                                 @php
                                     $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
                                 @endphp
+
                                 @foreach($partner as $item)
                                     <div class="item">
-                                        <img src="{{ url('storage/'.$item->logo )}}" width="100px" alt="gallery img">
+                                        <!-- /.computer -->
+                                        <img class="d-none d-lg-block" src="{{ url('storage/'.$item->logo )}}" width="95px" alt="gallery img">
+                                        <!-- /.mobile -->
+                                        <img class="d-block d-md-none" src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
+
                                     </div>
                                 @endforeach
                             </div><!-- /.carousel -->

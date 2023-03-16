@@ -13,7 +13,11 @@
 
 
 <style>
+    .owl-nav{
+        display: flex;
+        justify-content: space-between;
 
+    }
 
     label{
         width: 100%
@@ -260,7 +264,6 @@
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
-                                                                        {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
                                                                     <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
@@ -291,7 +294,7 @@
                                                                                         @break
                                                                                     @default
 
-                                                                                @endswitch
+                                                                                    @endswitch
                                                                                     <span style="font-size:16px;">
                                                                                         {{$item->user->full_name}}
                                                                                     </span>
@@ -308,8 +311,7 @@
                                                             <div class="owl-carousel aasdaa owl-theme">
                                                                 <div class="col-12 p-0">
                                                                     <label>
-                                                                        {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                                    <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
+                                                                        <input class="card-input-element d-none patient_id_create" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}" >
                                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                             <a class="text_topright" style="color:#383535">(ตัวเอง)</a>
                                                                             <span style="font-size:16px;">
@@ -321,10 +323,9 @@
                                                                 @foreach($all_member_of_room as $item)
                                                                     <div class="item">
                                                                         <!--///  เลือกผู้ป่วย /// -->
-
                                                                         <div class="col-12 p-0">
                                                                             <label>
-                                                                            <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
+                                                                                <input class="card-input-element d-none patient_id_create" id="radio_patient{{$item->id}}" name="patient_id" type="radio" value="{{$item->user_id}}" >
                                                                                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                                                     @switch($item->status)
                                                                                         @case('patient')
@@ -381,7 +382,7 @@
                                                         items: 2,
                                                         margin: 10,
                                                         loop: false,
-                                                        nav: false,
+                                                        nav: true,
                                                     });
                                                     });
                                                 </script>
@@ -617,18 +618,19 @@
                         <a id="doc" style="border: #38c172 solid 1px;" class="btn-old {{$color_doc}} mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=doc#head_content">นัดหมอ</a>
                         <a id="pill" style="border: #21cdc0 solid 1px;" class="btn-old {{$color_pill}} mr-1" href="{{ url('/appoint')}}?room_id={{$room_id}}&type=pill#head_content">ใช้ยา</a>
                     </div>
-                    <div class="col-6 col-md-2 column mt-2">
-                      <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #38c172;"></i> นัดหมอ</a><br>
-                       <a style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ใช้ยา</a>
+
+                    <div class="col-12 col-md-2 mt-2 row">
+                       <a class="ml-3" style="color: black; font-weight: bold;"><i class="fa-solid fa-circle " style="color: #38c172;"></i> นัดหมอ</a><br>
+                       <a class="ml-3" style="color: black; font-weight: bold;"><i class="fa-solid fa-circle" style="color: #21cdc0;"></i> ใช้ยา</a>
                     </div>
                 </div>
 
                 <!-- ///////////////////////////////////////////
                 //////////////// Calendar //////////////////////
                 //////////////////////////////////////////////// -->
-
+                <hr>
                 <div class="mt-3" id='calendar' style="width: 100%;"></div>
-                <div class="mt-3" id='event_mouseover'></div>
+                <!-- <div class="mt-3" id='event_mouseover'></div> -->
             </div>
         </div>
     </div>
@@ -768,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     // let type_appoint_edit = document.querySelector('.type_appoint_edit');
-                    console.log(result.type)
+                    // console.log(result.type)
                     if(result.type === 'doc'){
                         document.querySelector('#type_doc_edit').checked = true;
                         document.querySelector('#type_pill_edit').checked = false;

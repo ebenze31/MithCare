@@ -175,7 +175,7 @@ class Send_Appoint_Pill extends Command
         if(!empty($data_check_patient->caregiver)){
                 //เลยเวลาใช้ยา
             if($time > $data_pill['date_time']){
-                $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา ".$count_pill,$string_json);
+                $string_json = str_replace("แจ้งเตือนทานยา/ใช้ยา","เลยเวลาทานยา/ใช้ยามา"." ".$count_pill,$string_json);
                 $string_json = str_replace("User_name","กรุณาติดต่อ : ".$data_patient->name,$string_json);
             }else{//ยังไม่เลยเวลาใช้ยา
                 $string_json = str_replace("User_name","กรุณาติดต่อ : ".$data_patient->name,$string_json);

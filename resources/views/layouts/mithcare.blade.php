@@ -317,72 +317,34 @@
         <hr width="90%">
         <div class="footer-secondary">
             <div class="container">
-                <div class="row ">
+                <div class="row mb-40">
 
-                    <section class="gallery pt-0 pb-90">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                                {{-- คอม --}}
-                                    <div class="home-demo d-none d-lg-block">
-                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
-                                            {{-- <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px" alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px" alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/2begreen.png')}}" width="50px" alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px" alt="gallery img">
-                                            </div> --}}
-                                            @php
-                                                $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
-                                            @endphp
-                                            @foreach($partner as $item)
-                                                <div class="item">
-                                                    <img src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
-                                                </div>
-                                            @endforeach
-                                        </div>
+                        <div class="col-12 ">
+                            <div class="slick-carousel"
+                            data-slick='{"slidesToShow": 3,
+                            {{-- "infinite": true, --}}
+                            "slidesToScroll": 1,
+                            "autoplay": true,
+                            "centerMode": true,
+                            "variableWidth": true,
+                            "arrows": false,
+                            "dots": false,
+                            "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
+
+                                @php
+                                    $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
+                                @endphp
+                                @foreach($partner as $item)
+                                    <div class="item">
+                                        <img src="{{ url('storage/'.$item->logo )}}" width="100px" alt="gallery img">
                                     </div>
-
-                                                {{-- มือถือ --}}
-                                    <div class="home-demo d-block d-md-none">
-                                        <div class="owl-carousel owl-carousel-mithcare owl-theme">
-                                            {{-- <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo-ph.png')}}" width="50px"  alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/logo_x-icon.png')}}" width="50px"  alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/2begreen.png')}}" width="50px"   alt="gallery img">
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{asset('/img/logo_partner/chalie-2.2.png')}}" width="50px"   alt="gallery img">
-                                            </div> --}}
-                                            @php
-                                                $partner = \App\Models\Partner::where(['show_homepage' => 'show'])->get()
-                                            @endphp
-                                            @foreach($partner as $item)
-                                                <div class="item">
-                                                    <img src="{{ url('storage/'.$item->logo )}}" alt="gallery img">
-                                                </div>
-                                            @endforeach
-                                        </div>
-
-                                    </div>
-                                </div><!-- /.col-12 -->
-                            </div><!-- /.row -->
-                        </div><!-- /.container -->
-                    </section><!-- /.gallery 2 -->
+                                @endforeach
+                            </div><!-- /.carousel -->
+                        </div><!-- /.col-12 -->
 
                 </div><!-- /.row -->
                 <center>
-                <div class="copyright text-center h6" style="margin-top:-15px;">
+                <div class="copyright text-center h6" style="margin-top:-5px;">
                     <span>•</span> WWW.MithCare.COM
                     <span>•</span>
                     <a href="{{url('privacy_policy')}}">

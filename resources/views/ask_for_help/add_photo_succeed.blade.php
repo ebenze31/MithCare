@@ -73,7 +73,7 @@
                     <br>
                     การช่วยเหลือ : {{ $data_sos_map->name_helper }}
                     <br>
-                </div>
+                </div>s
                 <input class="d-none" type="text" name="id_officer" id="id_officer" value="{{ $user->id }}">
             </div>
             <br>

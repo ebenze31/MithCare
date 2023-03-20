@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('room_find', 'RoomController@room_find_index')->name('room_find');
     Route::post('room_join', 'RoomController@room_join')->name('room_join');
-    Route::get('member_of_room_edit', 'RoomController@member_of_room_edit')->name('member_of_room_edit');
+    Route::patch('member_of_room_edit/{id}', 'RoomController@member_of_room_edit')->name('member_of_room_edit');
     // Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
     //========================
     //     MEMBER_OF_ROOM

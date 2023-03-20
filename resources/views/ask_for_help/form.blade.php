@@ -1,4 +1,4 @@
-
+<link href="{{ asset('mithcare/css/form_for_sos.css') }}" rel="stylesheet">
 <style>
     #map_google_ask_for_help {
         height: calc(40vh);
@@ -18,11 +18,92 @@
     #map_select_location_from_address {
         height: calc(40vh);
 
-        background-color: #c632eb;
+        /* background-color: #c632eb; */
+    }
+
+/* แจ้งเตือนแบบเท่ */
+    .div_alert{
+        position: fixed;
+        top: -500px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-family: 'Kanit', sans-serif;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+    }
+    .div_alert i{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        max-width: 70px;
+        height: 50px;
+        background-color: #ffddde;
+        border-radius: 50%;
+        color: #ff5757;
+        font-size: 1.5rem;
+        margin-left: 1.5rem;
+
+    }
+    .up-down {
+        animation-name: slideDownAndUp;
+        animation-duration: 2s;
+    }
+
+    @keyframes slideDownAndUp {
+        0% {
+            transform: translateY(0);
+        }
+
+        10% {
+            transform: translateY(520px);
+        }
+
+        90% {
+            transform: translateY(520px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+    .alert-child{
+        background-color: #db2d2e;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 15px;
+        height: 5rem;
+        width: 90%;
+        padding:20px 10px;
+    }
+    .text-alert{
+        color: #fff;
+        float: left;
+    }
+    .hover-end{
+        padding:0;
+        margin:0;
+        font-size:75%;
+        text-align:center;
+        position:absolute;
+        bottom:0;
+        width:100%;
+        opacity:.8
     }
 </style>
 
-
+<div id="alert_phone" class=" div_alert " role="alert">
+    <div class="alert-child">
+        <div >
+            <span class="d-block  text-alert font-weight-bold">มีข้อผิดพลาด</span>
+            <span class="d-block  text-alert">โปรดกรอกข้อมูลให้ครบถ้วน</span>
+        </div>
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+</div>
 
 
 
@@ -32,7 +113,8 @@
     <div class="card-body">
         <div class="d-flex justify-content-center">
             <div class="col-12 p-0">
-                <div class="d-" id="map_google_ask_for_help"></div>
+                <div class="d-none" id="map_google_ask_for_help"></div>
+                <img class="rounded border border-secondary" src="{{ asset('img/สติกเกอร์ Mithcare/20.png')}}" width="100%" alt="background">
                 <div id="message_sos"></div>
 
             </div>
@@ -63,7 +145,7 @@
                 <input id="partner_id" class="d-none">
 
                 <!-- onclick="SOS_by_Phone()" -->
-                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " onclick="SOS_by_Phone()" >
+                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius "onclick="SOS_by_Phone()" >
                     <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
                 </span>
             </div>
@@ -102,55 +184,55 @@
                 <!-- บ้านของฉัน mode -->
                 <div class="row d-flex justify-content-around">
                     <!-- province -->
-                        <div id="div_province" class=" form-group col-lg-4 col-12 p-1 m-0">
+                        <div id="div_province" class=" dear_form-group col-lg-4 col-6 p-1 m-0">
                             <label for="address" class="control-label">{{ 'จังหวัด' }}</label>
-                            <select name="select_province" id="select_province" class="input-provice form-control kanit d-none" onchange="select_A(); check_input_value_address();" required>
+                            <select name="select_province" id="select_province" class="input-provice dear_form-control kanit d-none" onchange="select_A(); check_input_value_address(); show_location_latlng_province();" required>
                                 <option value="" selected>- เลือกจังหวัด -</option>
                             </select>
-                            <input type="text" name="input_province" id="input_province" class=" input-provice form-control d-none" readonly>
+                            <input type="text" name="input_province" id="input_province" class=" input-provice dear_form-control d-none" readonly>
                         </div>
                         <!-- amphoe -->
-                        <div id="div_amphoe" class=" form-group col-lg-4 col-12 p-1 m-0">
+                        <div id="div_amphoe" class=" dear_form-group col-lg-4 col-6 p-1 m-0">
                             <label for="address" class="control-label">{{ 'อำเภอ' }}</label>
-                            <select name="select_amphoe" id="select_amphoe" class="form-control kanit input-provice d-none" onchange="select_T(); check_input_value_address();" required>
+                            <select name="select_amphoe" id="select_amphoe" class="dear_form-control kanit input-provice d-none" onchange="select_T(); check_input_value_address(); show_location_latlng_amphoe();" required>
                                 <option value="" selected>- เลือกอำเภอ -</option>
                             </select>
-                            <input type="text" name="input_amphoe" id="input_amphoe" class="input-provice form-control d-none" readonly>
+                            <input type="text" name="input_amphoe" id="input_amphoe" class="input-provice dear_form-control d-none" readonly>
                         </div>
                         <!-- tambon -->
-                        <div id="div_tambon" class=" form-group col-lg-4 col-12 p-1 m-0">
+                        <div id="div_tambon" class=" dear_form-group col-lg-4 col-6 p-1 m-0">
                             <label for="address" class="control-label">{{ 'ตำบล' }}</label>
-                            <select name="select_tambon" id="select_tambon" class="form-control kanit input-provice d-none" onchange="select_lat_lng(); check_input_value_address();" required required>
+                            <select name="select_tambon" id="select_tambon" class="dear_form-control kanit input-provice d-none" onchange="select_lat_lng(); check_input_value_address();" required required>
                                 <option value="" selected>- เลือกตำบล -</option>
                             </select>
-                            <input type="text" name="input_tambon" id="input_tambon" class="input-provice form-control d-none" readonly >
+                            <input type="text" name="input_tambon" id="input_tambon" class="input-provice dear_form-control d-none" readonly >
                         </div>
                           <!-- address detail -->
-                        <div id="div_address_detail" class="d-none form-group col-12 col-md-4">
+                        <div id="div_address_detail" class="d-none dear_form-group col-6 col-md-4 p-1 m-0 ">
                             <label for="address" class="control-label">{{ 'รายละเอียดที่อยู่' }}</label>
-                            <input class="form-control" name="input_address" type="text" id="input_address" value="" onchange="check_input_value_address();" readonly required>
+                            <input class="dear_form-control" name="input_address" type="text" id="input_address" value="" onchange="check_input_value_address();" readonly required>
                             {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- phone -->
-                        <div id="div_phone" class="d-none form-group col-12 col-md-4">
+                        <div id="div_phone" class="d-none dear_form-group col-6 col-md-4 p-1 m-0">
                             <label for="phone" class="control-label">{{ 'เบอร์โทรศัพท์' }}</label>
-                            <input class="form-control" name="input_phone" type="text" id="input_phone" value="" onchange="check_input_value_address();" readonly required>
+                            <input class="dear_form-control" name="input_phone" type="text" id="input_phone" value="" onchange="check_input_value_address();" readonly required>
                             {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- lat,lng -->
-                        <div id="div_latlng" class=" form-group col-12 col-md-4">
+                        <div id="div_latlng" class=" dear_form-group col-12 col-md-4 p-1 m-0">
                             <label for="lng" class="control-label">{{ 'lat,lng' }}</label>
-                            <input class="form-control" name="latlng" type="text" id="latlng" value="" readonly>
+                            <input class="dear_form-control" name="latlng" type="text" id="latlng" value="" readonly>
                             {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- lat -->
-                        <input class="form-control d-none" name="lat" type="text" id="lat" value="" readonly>
+                        <input class="dear_form-control d-none" name="lat" type="text" id="lat" value="" readonly>
                         <!-- lng -->
-                        <input class="form-control d-none" name="lng" type="text" id="lng" value="" readonly>
+                        <input class="dear_form-control d-none" name="lng" type="text" id="lng" value="" readonly>
 
                         <input class="d-none" type="text" id="center_lat_map_show" name="" value="13.7248936">
                         <input class="d-none" type="text" id="center_lng_map_show" name="" value="100.4930264">
-
+                        <input class="d-none" type="text" id="va_zoom" name="" value="6">
                         {{-- <div class="col-12 d-none" id="div_lat_lng">
                             <div id="div_form_{{ $count_position }}" class="form-group">
                                 <label class="control-label">จุดที่ {{ $count_position }}</label>
@@ -159,13 +241,13 @@
                         </div> --}}
 
                 </div><!--/.row -->
-                <div class="col-12 p-0">
-                    <div class="" id="map_select_location"></div>
-                    <div class="d-none" id="map_select_location_from_address"></div>
+                <div class="col-12 p-0 mt-2">
+                    <div class="main-radius main-shadow" id="map_select_location"></div>
+                    <div class="d-none main-radius main-shadow" id="map_select_location_from_address"></div>
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12" id="div_image_sos">
                 <label class="col-12" style="padding:0px;" for="photo_sos_by_officers" >
                     <div class="fill parent" style="border:dotted #db2d2e;border-radius:25px;padding:0px;object-fit: cover;">
                         @if(empty($data_sos->photo_sos_by_officers))
@@ -173,7 +255,7 @@
                                 <input class="form-control d-none" name="photo_sos_by_officers" style="margin:20px 0px 10px 0px;" type="file" id="photo_sos_by_officers" value="{{ isset($data_sos->photo_sos_by_officers) ? $data_sos->photo_sos_by_officers : ''}}" accept="image/*" onchange="document.getElementById('show_photo_sos_by_officers').src = window.URL.createObjectURL(this.files[0]);check_add_img() ">
                                 <div  class="text-center">
                                     <center>
-                                        <img style=" object-fit: cover; border-radius:15px;max-width: 50%;" src="{{ asset('/img/logo_mithcare/sticker/document.png') }}" class="card-img-top center" style="padding: 10px;">
+                                        <img style=" object-fit: cover; border-radius:15px;max-width: 50%;" src="{{ asset('/img/สติกเกอร์ Mithcare/ขอเอกสาร14.png') }}" class="card-img-top center" style="padding: 10px;">
                                     </center>
                                     <br>
                                     <h3 class="text-center m-0">
@@ -215,7 +297,7 @@
                 <div class="row d-flex justify-content-between">
 
                     <span id="btn_confirm_sos" href="#heading" class="col-5 m-2 mt-0 btn btn__secondary btn-md  kanit btn-block text-white" width="100%"
-                        style="width:100%;border-radius: 20px;" onclick="SOS_by_Btn();"> ยืนยันขอความช่วยเหลือ
+                        style="width:100%;border-radius: 20px;" onclick="SOS_by_Btn();"> ยืนยัน
                     </span>
                     <span id="btn_change_address" class="col-5 m-2 mt-0 btn btn-info btn-md  kanit btn-block text-white" width="100%"
                         style="width:100%;border-radius: 20px;" onclick="edit_add_to_user();"> เปลี่ยนที่อยู่
@@ -286,11 +368,22 @@
   <script>
     var marker_select_location_from_address;
     var map_select_location_from_address;
-    var marker_icon_mithcare = "{{url('/img/logo_mithcare/marker/Marker_mithcare.png')}}";
+    var marker_icon_mithcare = "{{url('/img/logo_mithcare/marker/Marker_mithcare50.png')}}";
 
     function Open_map_select_location_from_address(lat_from_select,lng_from_select)
     {
+        let text_zoom = document.getElementById("va_zoom").value;
+        let num_zoom = parseFloat(text_zoom);
+
+        // let text_center_lat = document.getElementById("center_lat").value;
+        // let num_center_lat = parseFloat(text_center_lat);
+
+        // let text_center_lng = document.getElementById("center_lng").value;
+        // let num_center_lng = parseFloat(text_center_lng);
+
         // 13.7248936,100.4930264 lat lng ประเทศไทย
+        // const myLatlng = { lat: num_center_lat, lng: num_center_lng };
+
         let lat_text = document.querySelector("#lat");
         let lng_text = document.querySelector("#lng");
         let latlng = document.querySelector("#latlng");
@@ -303,7 +396,7 @@
 
         map_select_location_from_address = new google.maps.Map(document.getElementById("map_select_location_from_address"), {
             center: {lat: lat, lng: lng },
-            zoom: 14,
+            zoom: num_zoom,
         });
 
         if (marker_select_location_from_address) {
@@ -400,6 +493,10 @@
         document.getElementById("map_select_location_from_address").innerHTML = "";
         document.getElementById("map_select_location").innerHTML = "";
 
+        // document.getElementById("photo_sos_by_officers").innerHTML = "";
+        // document.getElementById("show_photo_sos_by_officers").innerHTML = "";
+        document.getElementById('photo_sos_by_officers').value = '';
+        document.getElementById("show_photo_sos_by_officers").value = '';
         //add
         document.querySelector('#map_select_location').classList.add('d-none');
         document.querySelector('#input_province').classList.add('d-none');
@@ -407,6 +504,7 @@
         document.querySelector('#input_tambon').classList.add('d-none');
         document.querySelector('#btn_change_address').classList.add('d-none');
         document.querySelector('#btn_confirm_sos').classList.add('d-none');
+        document.querySelector('#div_image_sos').classList.add('d-none');
         // remove
         document.querySelector('#map_select_location_from_address').classList.remove('d-none');
         document.querySelector('#select_province').classList.remove('d-none');
@@ -454,17 +552,20 @@
         let input_tambon = document.querySelector('#select_tambon').value;
         let input_address = document.querySelector('#input_address').value;
         let input_phone = document.querySelector('#input_phone').value;
-        // console.log(input_province);
-        // console.log(input_amphoe);
-        // console.log(input_tambon);
-        // console.log(input_address);
-        // console.log(input_phone);
+
         if(input_province != "" && input_amphoe != "" && input_tambon != "" && input_address != "" && input_phone != ""){
             document.querySelector('#btn_confirm_address').disable = false;
             document.querySelector('#btn_confirm_address').onclick = function() { update_add_to_user(); };
         }else{
             document.querySelector('#btn_confirm_address').disable = true;
-            document.querySelector('#btn_confirm_address').onclick = function() { alert("กรุณากรอกข้อมูลให้ครบก่อน"); };
+            document.querySelector('#btn_confirm_address').onclick = function() {
+                document.querySelector('#alert_phone').classList.add('up-down');
+
+                const animated = document.querySelector('.up-down');
+                animated.onanimationend = () => {
+                    document.querySelector('#alert_phone').classList.remove('up-down');
+                };
+            };
         }
 
     }
@@ -494,6 +595,7 @@
         document.querySelector('#div_tambon').classList.remove('d-none');
         document.querySelector('#div_address_detail').classList.remove('d-none');
         document.querySelector('#div_phone').classList.remove('d-none');
+        document.querySelector('#div_image_sos').classList.remove('d-none');
 
         document.querySelector('#btn_change_address').classList.remove('d-none');
         document.querySelector('#btn_confirm_sos').classList.remove('d-none');
@@ -562,14 +664,6 @@
             getLocation_select();
         }
 
-        // console.log(input_province.value);
-        // console.log(input_province.value);
-        // console.log(input_province.value);
-        // console.log(input_province.value);
-        // console.log(input_province.value);
-
-        // select_lat_lng();
-
     }
 
     function getLocation_select() {
@@ -629,7 +723,9 @@ function select_province() {
                     option.value = item.changwat_th;
                     select_province.add(option);
                 }
+
             });
+            // show_location_latlng_province();
         }
         catch(err) {
             select_province();
@@ -639,13 +735,13 @@ function select_province() {
     }
 
     function select_A() {
+
         let select_province = document.querySelector('#select_province');
         let select_amphoe = document.querySelector('#select_amphoe');
-
         fetch("{{ url('/') }}/api/select_amphoe" + "/" + select_province.value)
             .then(response => response.json())
             .then(result => {
-                // console.log(result);
+                console.log(result);
 
                 select_amphoe.innerHTML = "";
 
@@ -660,7 +756,10 @@ function select_province() {
                     option.value = item.amphoe_th;
                     select_amphoe.add(option);
                 }
-            });
+
+
+        });
+        show_location_latlng_amphoe();
     }
 
     function select_T() {
@@ -688,9 +787,105 @@ function select_province() {
                 }
             });
 
-
-
             select_lat_lng();
+    }
+
+    function show_location_latlng_province(){
+        let select_province = document.querySelector('#select_province');
+
+        if (select_province.value) {
+                // console.log(select_province.value);
+
+            fetch("{{ url('/') }}/api/select_lat_lng_province" + "/" + select_province.value)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result);
+
+                    let lat = document.querySelector('#lat');
+                    lat.value = result['lat'];
+
+                    let lng = document.querySelector('#lng');
+                    lng.value = result['lng'];
+
+                    let zoom = document.getElementById("va_zoom").value = "8";
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
+                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
+
+                });
+        } else {
+            let input_province = document.querySelector('#input_province');
+
+            fetch("{{ url('/') }}/api/select_lat_lng_province" + "/" + input_province.value)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result + "else");
+
+                    let lat = document.querySelector('#lat');
+                    lat.value = result['lat'];
+
+                    let lng = document.querySelector('#lng');
+                    lng.value = result['lng'];
+
+                    let zoom = document.getElementById("va_zoom").value = "8";
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
+                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
+
+                });
+        }
+    }
+
+    function show_location_latlng_amphoe(){
+
+        let select_province = document.querySelector('#select_province');
+
+        if (select_province.value) {
+            let select_amphoe = document.querySelector('#select_amphoe');
+
+            fetch("{{ url('/') }}/api/select_lat_lng_amphoe" + "/" + select_province.value + "/" + select_amphoe.value)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result + "if");
+
+                    let lat = document.querySelector('#lat');
+                    lat.value = result['lat'];
+
+                    let lng = document.querySelector('#lng');
+                    lng.value = result['lng'];
+
+                    let zoom = document.getElementById("va_zoom").value = "10";
+
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
+
+                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
+
+                });
+        } else {
+            let input_province = document.querySelector('#input_province');
+            let input_amphoe = document.querySelector('#input_amphoe');
+
+            fetch("{{ url('/') }}/api/select_lat_lng_amphoe" + "/" + input_province.value + "/" + input_amphoe.value)
+                .then(response => response.json())
+                .then(result => {
+                    // console.log(result + "else");
+
+                    let lat = document.querySelector('#lat');
+                    lat.value = result['lat'];
+
+                    let lng = document.querySelector('#lng');
+                    lng.value = result['lng'];
+
+                    let zoom = document.getElementById("va_zoom").value = "10";
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
+                    // document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
+
+
+                });
+        }
+
     }
 
     function select_lat_lng() {
@@ -701,9 +896,9 @@ function select_province() {
             let select_amphoe = document.querySelector('#select_amphoe');
             let select_tambon = document.querySelector('#select_tambon');
 
-                     console.log(select_province.value);
-                     console.log(select_amphoe.value);
-                     console.log(select_tambon.value);
+                    //  console.log(select_province.value);
+                    //  console.log(select_amphoe.value);
+                    //  console.log(select_tambon.value);
 
             fetch("{{ url('/') }}/api/select_lat_lng" + "/" + select_province.value + "/" + select_amphoe.value + "/" + select_tambon.value)
                 .then(response => response.json())
@@ -716,14 +911,10 @@ function select_province() {
                     let lng = document.querySelector('#lng');
                     lng.value = result[0]['lng'];
 
-                    console.log("if");
-                    console.log(lat.value);
-                    console.log(lng.value);
-
-                    document.querySelector('#map_select_location_from_address').classList.remove('d-none');
-                    Open_map_select_location_from_address(lat.value,lng.value);
-
-
+                    let zoom = document.getElementById("va_zoom").value = "11";
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
+                    // document.querySelector('#map_select_location_from_address').classList.remove('d-none');
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
 
                 });
         } else {
@@ -742,12 +933,10 @@ function select_province() {
                     let lng = document.querySelector('#lng');
                     lng.value = result[0]['lng'];
 
-                    console.log("else");
-                    console.log(lat.value);
-                    console.log(lng.value);
-
+                    let zoom = document.getElementById("va_zoom").value = "11";
+                    document.getElementById("latlng").value = lat.value + ',' + lng.value;
                     document.querySelector('#map_select_location_from_address').classList.remove('d-none');
-                    Open_map_select_location_from_address(lat.value,lng.value);
+                    Open_map_select_location_from_address(lat.value,lng.value,zoom);
 
 
                 });

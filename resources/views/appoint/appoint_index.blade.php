@@ -87,7 +87,8 @@
         font-size: 12px;
     }
 
-    .div_alert{
+    /* แจ้งเตือนแบบเท่ */
+.div_alert{
     position: fixed;
     top: -500px;
     left: 0;
@@ -815,7 +816,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#date_time_edit').required = true
         }
     }
-
 </script>
 
 <script>

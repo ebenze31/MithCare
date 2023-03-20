@@ -7,9 +7,25 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
+    .close {
+        float: right;
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        opacity: 1;
+    }
     .slick-arrow{
-        background-color: #4170A2;
-        color: #000000;
+        /* background-color: #4170A2; */
+        color: #4170A2;
+        line-height: 40px;
+
+    }
+    /* ลูกศร */
+    .slick-arrow.slick-next:before, .slick-arrow.slick-prev:before {
+        font-family: 'icomoon';
+        font-size: 40px;
+        font-weight: bold;
     }
     .btn-circle{
         font-size: 20px;
@@ -193,14 +209,7 @@
         <div id="member_show_of_room" class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
                 <div class="heading text-center mb-40">
-                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน
-                        @if (Auth::id() == $room->owner_id)
-                            <a class="btn-old btn-primary " href="{{ url('member_of_room_edit')}}?room_id={{$room->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
-                        @endif
-
-
-
-                    </h3>
+                    <h3 class="heading__title">สมาชิกในบ้าน {{$amount_member}} คน  </h3>
                 </div><!-- /.heading -->
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -210,6 +219,7 @@
             ======================-->
 
             <!-- Modal -->
+
             <div class="modal fade modal-slick_edit_member" id="edit_memberModal{{ $item->id }}" tabindex="-50" role="dialog"
                 aria-labelledby="edit_memberModal{{ $item->id}}Title" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-hidden="true">
@@ -217,14 +227,20 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modal_sos_btn_userTitle">แก้ไขสถานะ {{ $item->user->name }}</h5>
-                                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span style="background-color: #4170A2; border-radius:10px" aria-hidden="true">&times;</span>
-                                </button>
+                                <span  type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_edit_member(event);">
+                                    <i class="fa-solid fa-circle-xmark p-0 m-0 " style="color: #4170A2;"></i>
+                                </span>
                             </div>
                             <!-- แก้ไขสถานะของสมาชิก -->
                             <div class="modal-body">
                                 <div class="container " style="font-weight :bold;">
-                                    @include ('room.edit_member')
+                                    <form method="POST" action="{{ url('/member_of_room_edit'.'/'.$item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ method_field('PATCH') }}
+                                        {{ csrf_field() }}
+
+                                        @include ('room.edit_member')
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -264,20 +280,31 @@
                             @endif
                         </div><!-- /.member-img -->
                         <div class="member__info">
-                            <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
-                            <a class="btn-old btn-primary" onclick="edit_member(event);" data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}"><i class="fa-solid fa-pen-to-square text-white"></i></a>
+                            <div class="row d-flex justify-content-between align-item-center m-1">
+                                <h4 class="member__name">{{$item->user->name}}</h4>
+
+                                <!-- Auth:id == ไอดีเจ้าของห้อง-->
+                                @if (Auth::user()->id == $find_owner->user_id)
+                                    <!-- ไอเท็มที่มีสถานะ ไอดีเจ้าของห้อง ไม่ต้องแสดงปุ่มแก้ไข-->
+                                    @if ($item->status != 'owner')
+                                        <a class="btn-old btn-primary" onclick="edit_member(event);" data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}">
+                                            <i class="fa-solid fa-pen-to-square text-white"></i>
+                                        </a>
+                                    @endif
+                                @endif
+                            </div>
 
                             @if ($item->status == 'owner')
-                                <p class="member__job ">สถานะ : เจ้าของบ้าน</p>
+                                <p class="member__job h5">สถานะ : เจ้าของบ้าน</p>
                             @elseif($item->status == 'member')
-                                <p class="member__job ">สถานะ : สมาชิก</p>
-                                <p class="member__job ">ดูแลผู้ป่วย : </p>
+                                <p class="member__job h5">สถานะ : สมาชิก</p>
+                                <p class="member__desc h5">ดูแลผู้ป่วย : </p>
                             @else
-                                <p class="member__job ">สถานะ : ผู้ป่วย</p>
+                                <p class="member__job h5">สถานะ : ผู้ป่วย</p>
                                 @if ($item->lv_of_caretaker == 1)
-                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
+                                    <p class="member__desc h5">เลเวล : {{$item->lv_of_caretaker}} (กดยืนยันใช้ยาเองได้)</p>
                                 @else
-                                    <p class="member__desc">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
+                                    <p class="member__desc h5">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
                                 @endif
                             @endif
 
@@ -370,7 +397,7 @@
                                                     <div class="col-6">
                                                         <label>
                                                             {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare{{$item->user_id}}" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="member_takecare" {{ (isset($item) && 'member_takecare' == $item->member_takecare) ? 'checked' : '' }} value="{{$item->user_id}}">
+                                                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare{{$item->user_id}}" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item->user_id}}" {{ (isset($item) && 'member_takecare' == $item->member_takecare) ? 'checked' : '' }} >
                                                             <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center"
                                                                 <span>
                                                                     {{$item->user->name}}
@@ -468,67 +495,76 @@
 
 });
 
-function show_input_fr(user_id){
-    let select_takecare = document.getElementsByName("select_takecare"+ user_id);
-    //  console.log(show_input_fr(user_id));
-    if (document.getElementById("status_member_of_room"+ user_id).checked) {
-        let takecare_fr = document.querySelector('#takecare_fr'+user_id).classList ;
-            // console.log(div_date);
-            takecare_fr.remove('d-none');
-            // takecare_fr.add('col-12');
-        document.querySelector('#lv_caretaker_fr'+user_id).classList.add('d-none');
-        document.querySelector('#lv_caretaker_fr'+user_id).required = false ;
+// function show_input_fr(user_id){
+//     let select_takecare = document.getElementsByName("select_takecare"+ user_id);
+//     //  console.log(show_input_fr(user_id));
+//     if (document.getElementById("status_member_of_room"+ user_id).checked) {
+//         let takecare_fr = document.querySelector('#takecare_fr'+user_id).classList ;
+//             // console.log(div_date);
+//             takecare_fr.remove('d-none');
+//             // takecare_fr.add('col-12');
+//         document.querySelector('#lv_caretaker_fr'+user_id).classList.add('d-none');
+//         document.querySelector('#lv_caretaker_fr'+user_id).required = false ;
 
 
-        let radio_lv_takecare = document.getElementsByName('lv_of_caretaker'+user_id);
-            // document.querySelector('#select_takecare').value = "";
+//         let radio_lv_takecare = document.getElementsByName('lv_of_caretaker'+user_id);
+//             // document.querySelector('#select_takecare').value = "";
 
-        for (let i = 0; i < radio_lv_takecare.length; i++) {
-            radio_lv_takecare[i].checked = false ;
-            }
+//         for (let i = 0; i < radio_lv_takecare.length; i++) {
+//             radio_lv_takecare[i].checked = false ;
+//             }
+//     }else {
+//          let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr'+user_id).classList;
+//             // console.log(div_date);
+//             lv_caretaker_fr.remove('d-none');
+//             // lv_caretaker_fr.add('col-12');
+//             document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
+//             document.querySelector('#takecare_fr'+user_id).required = false ;
+//             document.querySelector('.lv_of_caretaker'+user_id).required = true ;
 
-    }else {
-         let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr'+user_id).classList;
-            // console.log(div_date);
-            lv_caretaker_fr.remove('d-none');
-            // lv_caretaker_fr.add('col-12');
-            document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
-            document.querySelector('#takecare_fr'+user_id).required = false ;
-            document.querySelector('.lv_of_caretaker'+user_id).required = true ;
+//             let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
+//             document.querySelector('#select_takecare'+user_id).value = "";
+//             console.log(checkbox_select_takecare);
+//             console.log(document.querySelector('#select_takecare'+user_id).value );
 
-            let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
-            document.querySelector('#select_takecare'+user_id).value = "";
-
-            for (let i = 0; i < checkbox_select_takecare.length; i++) {
-                checkbox_select_takecare[i].checked = false ;
-            }
-    }
-}
+//             for (let i = 0; i < checkbox_select_takecare.length; i++) {
+//                 checkbox_select_takecare[i].checked = false ;
+//             }
+//     }
+// }
 
 </script>
 
 <script>
     function edit_member(event) {
+        console.log("slick Pause")
       // Prevent the default behavior of the click event
       event.preventDefault();
 
       // Stop the autoplay of the carousel
-      $('#slick_edit_member').slick('slickPause');
-
+    //   $('#slick_edit_member').slick('slickPause');
+      $('#slick_edit_member').slick('slickSetOption', 'autoplay', false).slick('slickPause');
       // Open the modal or perform any other actions related to editing the member
       // ...
 
       // Once the editing is done, resume the autoplay of the carousel
     //   $('#slick_edit_member').slick('slickPlay');
     }
+
+    function close_edit_member(event) {
+
+        console.log("slick Play")
+        event.preventDefault();
+        $('#slick_edit_member').slick('slickSetOption', 'autoplay', true).slick('slickPlay');
+    }
   </script>
 
 
 
-<script>
+{{-- <script>
 function click_Select_Takecare(user_id){
-    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+ user_id);
-    let select_takecare = document.querySelector('#select_takecare'+ user_id);
+    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
+    let select_takecare = document.querySelector('#select_takecare'+user_id);
     // console.log(checkbox_select_takecare);
     select_takecare.value = "" ;
     for (let i = 0; i < checkbox_select_takecare.length; i++) {
@@ -541,4 +577,4 @@ function click_Select_Takecare(user_id){
         }
     }
 }
-</script>
+</script> --}}

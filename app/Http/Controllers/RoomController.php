@@ -87,28 +87,50 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($id);
 
+        //ดึงข้อมูล สมาชิกทั้งหมด จาก id ห้องที่ได้มา
         $member = Member_of_room::where('room_id',$id)->get();
 
+        //นับจำนวนสมาชิกในห้อง
         $amount_member = Member_of_room::where('room_id',$id)->count('id');
 
-        $room_test = Room::get();
-
+        //ดึงข้อมูล สมาชิกที่มีสถานะ(ผู้ป่วย)ทั้งหมด จาก id ห้องที่ได้มา
         $this_room = Member_of_room::where('room_id',$id)->where('status', 'patient')->get();
 
-        return view('room.show', compact('room','member','amount_member','room_test','this_room'));
+        //หา เจ้าของห้อง
+        $find_owner = Member_of_room::where('room_id',$id)->where('status', 'owner')->first();
+
+        return view('room.show', compact('room','member','amount_member','this_room','find_owner'));
     }
 
-    public function member_of_room_edit(Request $request)
+    public function member_of_room_edit(Request $request,$id)
     {
-        $room_id = $request->get('room_id');
+        $requestData = $request->all();
+        $status =  $requestData['status_of_room'];
 
-        $member = Member_of_room::where('room_id',$room_id)->where('status','member')->get();
+        // echo"<pre>";
+        // print_r($requestData);
+        // echo"</pre>";
+        // exit();
 
-        $patient = Member_of_room::where('room_id',$room_id)->where('status','patient')->get();
+        if($status == "member"){
+            $member_takecare = $requestData['member_takecare'];
+            $member_takecare_ep = explode(",",$member_takecare);
+            $count_ep = count($member_takecare_ep);
 
-        $amount_member = Member_of_room::where('room_id',$room_id)->count('id');
 
-        return view('room.room_member_edit', compact('member','patient','amount_member'));
+            for ($i=0; $i < $count_ep; $i++) {
+                DB::table('member_of_rooms')
+                ->where('user_id', $member_takecare_ep[$i])
+                ->update([
+                    'caregiver' => $requestData['user_id'],
+                ]);
+            }
+        }
+
+        $member_of_room = Member_of_room::findOrFail($id);
+        $member_of_room->update($requestData);
+
+        return back();
     }
 
 
@@ -169,11 +191,6 @@ class RoomController extends Controller
            Member_of_room::where('id','=',$items->id)->delete();
         }
 
-
-        // echo"<pre>";
-        // print_r( $find_member_of_room);
-        // echo"</pre>";
-        // exit();
 
 
         return redirect('room')->with('flash_message', 'Room deleted!');
@@ -268,33 +285,7 @@ class RoomController extends Controller
 
         $room = $room->makeHidden(['pass']);
 
-        // foreach($room as $key){
-        //     if($key['user_id'] == $user_id){
-        //         $key['check_user'] = 'joined';
-
-        //         return $room;
-        //     }else{
-        //         $room['check_user'] = 'bor_joined';
-        //         return $room;
-        //     }
-        // }
-
         return $room;
-
-        // if($room->id == $user_id){
-        //     $check = 'no';
-        // }else{
-        //     $check = 'yes';
-        // }
-
-        // echo"<pre>";
-        // print_r($deer);
-        // echo"</pre>";
-        // exit();
-
-        // $member = Member_of_room::where('room_id',$room->id)->get();
-
-
 
     }
 

@@ -34,22 +34,25 @@
         <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกผู้ที่ต้องการดูแล' }}</label>
        <div class="row">
             @foreach($this_room as $item_room)
-            <div class="col-12 col-md-4 col-lg-4">
-                <label>
-                    {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                <input class="card-input-element d-none" id="checkbox_select_takecare{{$item_room->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare();" value="{{$item_room->user_id}}">
-                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                        <span>
-                            {{$item_room->user->full_name}}
-                        </span>
+                <!-- กันให้ไม่สามารถเลือกดูแลตัวเองได้-->
+                @if($item_room->user_id != $item->user_id)
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <label>
+                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
+                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
+                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                <span>
+                                    {{$item_room->user->full_name}}
+                                </span>
+                            </div>
+                        </label>
                     </div>
-                </label>
-            </div>
+                @endif
             @endforeach
        </div>
        {{-- <input class="form-control d-none" type="text" name="caregiver" id="caregiver" value="{{Auth::user()->id}}">
      <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{Auth::user()->id}}"> --}}
-        <input class="form-control d-none" type="text" name="select_takecare" id="select_takecare{{$item->user_id}}">
+        <input class="form-control " type="text" name="select_takecare" id="select_takecare{{$item->user_id}}">
 
     </div> <!--///  เลือกผู้ดูแล /// -->
 
@@ -106,22 +109,21 @@
 });
 
 function show_input_fr(user_id){
-    console.log(user_id);
+
     // let select_takecare = document.getElementsByName("select_takecare"+user_id);
     //เลือกเป็น สมาชิก
     if (document.getElementById("status_member_of_room"+user_id).checked) {
-        console.log('if');
-        console.log(user_id);
+
+
         let takecare_fr = document.querySelector('#takecare_fr'+user_id).classList;
-            console.log(takecare_fr);
             takecare_fr.remove('d-none');
             takecare_fr.add('col-12');
         document.querySelector('#lv_caretaker_fr'+user_id).classList.add('d-none');
-        // document.getElementsByName('lv_of_caretaker').required = false ;
+        document.getElementsByName('lv_of_caretaker'+user_id).required = false ;
 
         let radio_lv_takecare =  document.querySelector('.lv_of_caretaker'+user_id);
-            // document.querySelector('#select_takecare').value = "";
-
+            document.querySelector('#select_takecare'+user_id).value = "";
+            console.log(radio_lv_takecare);
         for (let i = 0; i < radio_lv_takecare.length; i++) {
             radio_lv_takecare[i].checked = false ;
             radio_lv_takecare[i].required = false ;
@@ -129,40 +131,48 @@ function show_input_fr(user_id){
 
     }else {
         //เลือกเป็น ผู้ป่วย
-        // console.log('เข้า else');
+        console.log('เข้า else');
          let lv_caretaker_fr = document.querySelector('#lv_caretaker_fr'+user_id).classList;
-            console.log(lv_caretaker_fr);
+
             lv_caretaker_fr.remove('d-none');
             lv_caretaker_fr.add('col-12');
             document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
             document.querySelector('#takecare_fr'+user_id).required = false ;
             document.querySelector('.lv_of_caretaker'+user_id).required = true ;
 
-            let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
             document.querySelector('#select_takecare'+user_id).value = "";
+            let checkbox_select_takecare;
+            @foreach ($this_room as $item_room)
+                checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+{{$item_room->user_id}});
+                checkbox_select_takecare.checked = false ;
+            @endforeach
 
-            for (let i = 0; i < checkbox_select_takecare.length; i++) {
-                checkbox_select_takecare[i].checked = false ;
-            }
+            // for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            //     checkbox_select_takecare[i].checked = false ;
+            //     console.log(checkbox_select_takecare.value);
+            // }
     }
 }
 
 </script>
 
 <script>
-function click_Select_Takecare(){
-    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
+function click_Select_Takecare(user_id){
+
+    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
     let select_takecare = document.querySelector('#select_takecare'+user_id);
 
     select_takecare.value = "" ;
-    for (let i = 0; i < checkbox_select_takecare.length; i++) {
-        if (checkbox_select_takecare[i].checked) {
-            if (select_takecare.value === "") {
-                select_takecare.value = checkbox_select_takecare[i].value ;
-            }else{
-                select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
+        for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            if (checkbox_select_takecare[i].checked) {
+                if (select_takecare.value === "") {
+                    select_takecare.value = checkbox_select_takecare[i].value ;
+                }else{
+                    select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
+                }
             }
-        }
+    // console.log("select_takecare"+select_takecare.value);
+    // console.log("checkbox_select_takecare"+checkbox_select_takecare.checked);
     }
 }
 </script>

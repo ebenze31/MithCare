@@ -13,9 +13,27 @@
 
 
 <style>
+
+
     .owl-nav{
         display: flex;
         justify-content: space-between;
+
+        /* position: relative; */
+    }
+    .owl-prev,.owl-next {
+        position: absolute;
+        top: 30%;
+        transform: translateY(-50%);
+        font-size: 40px !important;
+    }
+
+    .owl-prev {
+        left: -1rem;
+
+    }
+    .owl-next {
+        right: -1rem;
 
     }
 

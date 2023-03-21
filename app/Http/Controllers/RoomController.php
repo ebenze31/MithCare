@@ -106,17 +106,15 @@ class RoomController extends Controller
     {
         $requestData = $request->all();
         $status =  $requestData['status_of_room'];
-
-        // echo"<pre>";
-        // print_r($requestData);
-        // echo"</pre>";
-        // exit();
-
+        $requestData['member_takecare'] = $requestData['select_takecare'];
+        echo"<pre>";
+        print_r($requestData);
+        echo"</pre>";
+        exit();
         if($status == "member"){
             $member_takecare = $requestData['member_takecare'];
             $member_takecare_ep = explode(",",$member_takecare);
             $count_ep = count($member_takecare_ep);
-
 
             for ($i=0; $i < $count_ep; $i++) {
                 DB::table('member_of_rooms')
@@ -126,6 +124,8 @@ class RoomController extends Controller
                 ]);
             }
         }
+
+
 
         $member_of_room = Member_of_room::findOrFail($id);
         $member_of_room->update($requestData);

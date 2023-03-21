@@ -85,25 +85,33 @@
     }
 
     @-webkit-keyframes fadeInCheckbox {
-    from {
-    opacity: 0;
-    -webkit-transform: rotateZ(-20deg);
-    }
-    to {
-    opacity: 1;
-    -webkit-transform: rotateZ(0deg);
-    }
+        from {
+            opacity: 0;
+            -webkit-transform: rotateZ(-20deg);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: rotateZ(0deg);
+        }
     }
 
     @keyframes fadeInCheckbox {
-    from {
-    opacity: 0;
-    transform: rotateZ(-20deg);
+        from {
+            opacity: 0;
+            transform: rotateZ(-20deg);
+        }
+        to {
+            opacity: 1;
+            transform: rotateZ(0deg);
+        }
     }
-    to {
-    opacity: 1;
-    transform: rotateZ(0deg);
-    }
+
+    .text_topright {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        font-size: 14px;
+        color: #058d39;
     }
 </style>
 

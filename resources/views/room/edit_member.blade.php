@@ -26,8 +26,6 @@
         </div>
     </div>
 
-
-
     <div id="takecare_fr{{$item->user_id}}" class="form-group ">
         <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกผู้ที่ต้องการดูแล' }}</label>
                         <div class="row">
@@ -67,15 +65,42 @@
                                 @endforeach
                         </div>
 
-
         {{-- <input class="form-control d-none" type="text" name="caregiver" id="caregiver" value="{{Auth::user()->id}}"> --}}
             <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{$item->user_id}}">
             <input class="form-control " type="text" name="select_takecare" id="select_takecare{{$item->user_id}}">
 
-
-
     </div> <!--///  เลือกผู้ดูแล /// -->
-    <script>
+
+        <!--====================
+        Modal ยืนยันแก้ไขสถานะ
+        ======================-->
+
+            <!-- Modal -->
+            <div class="modal fade modal-slick_edit_member" id="confirm_edit_memberModal{{ $item->user_id }}" tabindex="-50" role="dialog"
+                aria-labelledby="confirm_edit_memberModal{{ $item->user_id}}Title" data-backdrop="static" data-keyboard="false" tabindex="-2"
+                aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal_sos_btn_userTitle">ผู้ป่วยมีผู้ดูแลอยู่แล้ว</h5>
+                                <span  type="button" class="close" onclick="close_this_modal({{ $item->user_id }});">
+                                    <i class="fa-solid fa-circle-xmark p-0 m-0 " style="color: #4170A2;"></i>
+                                </span>
+                            </div>
+                            <!-- รายชื่อผู้ดูแล -->
+                            <div class="modal-body">
+                                <div class="container " style="font-weight :bold;">
+                                    {{ $item->user->full_name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div><!-- modal -->
+        <!--========================
+        End Modal ยืนยันแก้ไขสถานะ
+        ============================-->
+
+    {{-- <script>
         $(function() {
         // Owl Carousel
         var owl = $(".patient_wait_for_takecare");
@@ -86,7 +111,7 @@
             nav: true,
             });
         });
-    </script>
+    </script> --}}
     <div id="lv_caretaker_fr{{$item->user_id}}" class="row p-0">
         <div class="col-12 col-md-12 col-lg-12 ">
             <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
@@ -117,12 +142,13 @@
     </div><!--.row -->
 
     <div class="form-group">
-        <span class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" onclick="Check_before_submit({{$item->user_id}})" >
+        <span class="btn btn-primary form-control" style="background-color: #3490dc; font-size: 25px; color: white;" onclick="Check_before_submit({{$item->user_id}},{{$item->room_id}})" >
             บันทึก
         </span>
     </div>
 
-
+<!--เรียกใช้ axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -198,23 +224,83 @@ function click_Select_Takecare(user_id){
 </script>
 
 <script>
-    function Check_before_submit(user_id){
+    function Check_before_submit(user_id,room_id){
         let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
-        let select_takecare = document.querySelector('#select_takecare'+user_id);
-        let data_member_room = [];
-        console.log(select_takecare);
-        for (let i = 0; i < select_takecare.length; i++) {
-            console.log(select_takecare[i]);
-            if (select_takecare[i].checked) {
+            // if(){
 
-                data_member_room.push(select_takecare[i])
-                // if (select_takecare.value === "") {
-                //     select_takecare.value = checkbox_select_takecare[i].value ;
-                // }else{
-                //     select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
-                // }
+            // }
+        let select_takecare = document.querySelector('#select_takecare'+user_id);
+        // let user_id = document.querySelector('#user_id'+user_id);
+        let data_member_room = [];
+        // console.log(checkbox_select_takecare);
+        console.log(select_takecare.value);
+
+        for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            if (checkbox_select_takecare[i].checked) {
+                if (select_takecare.value === "") {
+                    data_member_room.push({
+                        "member_takecare" : checkbox_select_takecare[i].value,
+                        "user_id" :  user_id,
+                        "caregiver" : user_id,
+                    });
+
+                }else{
+                    // data_member_room.push({
+                    //     "member_takecare" : checkbox_select_takecare[i].value + "," + checkbox_select_takecare[i].value;
+                    //     "user_id" :  user_id,
+                    //     "caregiver" : user_id,
+                    // });
+                    // data_member_room = data_member_room[0].member_takecare + "," + checkbox_select_takecare[i].value;
+                }
             }
         }
+
+
+
+        const url = "{{ url('/') }}/api/member_for_edit_status" + "/" + room_id;
+
+        axios.get(url).then((response) => {
+
+            // console.log(response['data']);
+            // for (let i = 0; i < response['data'].length; i++) {
+            //     if(response['data'][i]['caregiver'] != null){
+            //         // console.log(response['data'][i]['caregiver']);
+            //         $('#confirm_edit_memberModal'+user_id).modal();
+            //     }else{
+            //         console.log("ไม่มีคนที่มีผู้ดูแล");
+            //     }
+            // }
+
+            for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            if (checkbox_select_takecare[i].checked) {
+                if (select_takecare.value === response['data'][i]['user_id'] && response['data'][i]['caregiver'] != null) {
+
+
+
+                }else{
+                    // data_member_room.push({
+                    //     "member_takecare" : checkbox_select_takecare[i].value + "," + checkbox_select_takecare[i].value;
+                    //     "user_id" :  user_id,
+                    //     "caregiver" : user_id,
+                    // });
+                    // data_member_room = data_member_room[0].member_takecare + "," + checkbox_select_takecare[i].value;
+                }
+                console.log(response['data']);
+            }
+        }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+        $('#confirm_edit_memberModal'+user_id).modal();
+        console.log(JSON.stringify(data_member_room));
+    }
+</script>
+
+<script>
+    function close_this_modal(user_id){
+      $('#confirm_edit_memberModal'+user_id).modal('hide');
     }
 </script>
 

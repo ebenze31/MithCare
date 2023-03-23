@@ -141,31 +141,18 @@ class API_Ask_for_helpController extends Controller
         Mylog::Create($data);
     }
 
-    public function submit_add_photo()
+    public function submit_add_photo(Request $request)
     {
-        $json = file_get_contents("php://input");
-        $data = json_decode($json, true);
 
-        $sos_map_id = $data['sos_map_id'];
-        $text_img = $data['text_img'];
-        $id_officer = $data['id_officer'];
-        $remark = $data['remark'];
+        $requestData = $request->all();
+        $sos_map_id = $requestData['sos_map_id'];
+        $id_officer = $requestData['id_officer'];
+        $remark = $requestData['remark'];
 
-        if (!empty($text_img)) {
-
-            $name_file_img = uniqid('photo_sos_succeed-', true);
-            $output_file_img = "./storage/uploads/".$name_file_img.".png";
-
-            $data_64_img = explode( ',', $text_img );
-
-            $fp_img = fopen($output_file_img, "w+");
-
-            fwrite($fp_img, base64_decode( $data_64_img[ 1 ] ) );
-
-            fclose($fp_img);
-
-            $url_img_sos = str_replace("./storage/","",$output_file_img);
-            $img_photo_succeed = $url_img_sos ;
+        if ($request->hasFile('photo_sos')) {
+            $image = $request->file('photo_sos');
+            $path = $image->store('uploads', 'public');
+            $requestData['photo_sos'] = $path ;
         }
 
         $data_sos_map = Ask_for_help::findOrFail($sos_map_id);
@@ -178,7 +165,7 @@ class API_Ask_for_helpController extends Controller
             DB::table('ask_for_helps')
                 ->where('id', $sos_map_id)
                 ->update([
-                    'photo_succeed' => $img_photo_succeed,
+                    'photo_succeed' => $path,
                     'photo_succeed_by' => $id_officer,
                     'remark_helper' => $remark,
             ]);

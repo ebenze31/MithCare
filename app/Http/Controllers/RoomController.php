@@ -268,6 +268,14 @@ class RoomController extends Controller
         // return view('room.join' , compact('find_room','this_room'));
     }
 
+    public function get_data_member_of_this_room($room_id)
+    {
+        // ดึงข้อมูลสมาชิก จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า room.edit_member.blade
+        $member_this_room = Member_of_room::where('room_id',$room_id)->get();
+
+        return $member_this_room;
+    }
+
 
     public function search_find_room(Request $request)
     {

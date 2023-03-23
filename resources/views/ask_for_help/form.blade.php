@@ -124,33 +124,33 @@
 
     </div>
 
-    <div class="justify-content-center">
-        <div class="column">
-            <div class="col-12 mb-2">
-                <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
-                style="background-color: #3490dc; font-size: 20px; color: white;" >
-                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
-                </span>
-                <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
-                    style="background-color: #3490dc; font-size: 20px; color: white;" >
-                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Viicheck
-                </span>
-                <span id="sos_by_peddyhub"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '2';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
-                style="background-color: #3490dc; font-size: 20px; color: white;" >
-                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Peddyhub
-                </span> -->
-            </div>
-            <div class="col-12 mb-2">
-                <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
-                <input id="partner_id" class="d-none">
 
-                <!-- onclick="SOS_by_Phone()" -->
-                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-primary main-shadow main-radius "onclick="SOS_by_Phone()" >
-                    <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
-                </span>
-            </div>
+        <div class="row p-2">
+                <div class="col-6 mb-2 ">
+                    <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary btn-block main-shadow main-radius p-0" data-toggle="modal" data-target="#modal_sos_btn_user"
+                    style="background-color: #3490dc;color: white;" >
+                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
+                    </span>
+                    <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                        style="background-color: #3490dc; font-size: 20px; color: white;" >
+                            <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Viicheck
+                    </span>
+                    <span id="sos_by_peddyhub"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '2';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                    style="background-color: #3490dc; font-size: 20px; color: white;" >
+                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Peddyhub
+                    </span> -->
+                </div>
+                <div class="col-6 mb-2 ">
+                    <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
+                    <input id="partner_id" class="d-none">
+
+                    <!-- onclick="SOS_by_Phone()" -->
+                    <span id="sos_by_phone" name="sos_by_phone" class="btn btn-danger btn-block main-shadow main-radius p-0" >
+                        <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
+                    </span>
+                </div>
         </div>
-    </div>
+
 
     <!--===============
             Modal

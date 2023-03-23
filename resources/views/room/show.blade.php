@@ -227,7 +227,6 @@
             ======================-->
 
             <!-- Modal -->
-
             <div class="modal fade modal-slick_edit_member" id="edit_memberModal{{ $item->id }}" tabindex="-50" role="dialog"
                 aria-labelledby="edit_memberModal{{ $item->id}}Title" data-backdrop="static" data-keyboard="false" tabindex="-1"
                 aria-hidden="true">
@@ -545,7 +544,7 @@
 
 <script>
     function edit_member(event) {
-        console.log("slick Pause")
+        // console.log("slick Pause")
       // Prevent the default behavior of the click event
       event.preventDefault();
 
@@ -561,7 +560,7 @@
 
     function close_edit_member(event) {
 
-        console.log("slick Play")
+        // console.log("slick Play")
         event.preventDefault();
         $('#slick_edit_member').slick('slickSetOption', 'autoplay', true).slick('slickPlay');
     }

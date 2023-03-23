@@ -67,13 +67,13 @@
         <div class="col-md-12">
             <div class="card" style="border-radius: 25px;padding: 8px;background-image: linear-gradient(to left top, #48cae4, #009ace, #006ab3, #003b8e, #03045e);">
                 <div class="card-body" style="color: white;" >
-                    <h4>สวัสดีคุณ : <b>{{ $user->name }}</b> </h4>
+                    <h4>สวัสดีคุณ : <b>{{ $user->name }}</b></h4>
                     <hr >
                     <b>คุณกำลังเพิ่มภาพถ่าย</b>
                     <br>
                     การช่วยเหลือ : {{ $data_sos_map->name_helper }}
                     <br>
-                </div>s
+                </div>
                 <input class="d-none" type="text" name="id_officer" id="id_officer" value="{{ $user->id }}">
             </div>
             <br>
@@ -99,7 +99,7 @@
         <div id="content_add_photo" class="col-md-12 d-none">
             <div class="card">
                 <div class="card-body">
-                    <div id="btn_open_camera" class="d-none">
+                    {{-- <div id="btn_open_camera" class="d-none">
                         <center>
                             <br>
                             <a class="btn btn-sm text-white btn-primary" onclick="document.querySelector('#btn_close_camera').classList.remove('d-none'),document.querySelector('#div_cam').classList.remove('d-none'),document.querySelector('#btn_open_camera').classList.add('d-none');">
@@ -109,15 +109,13 @@
                             </a>
                         </center>
                     </div>
-                    <div id="btn_close_camera">
+                    <div id="btn_close_camera"> --}}
                         <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="stop();">
                             <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
                         </button> -->
-                    </div>
+                    {{-- </div> --}}
 
-                    <br>
-
-                    <div class="col-12" id="div_cam" style="margin-top:17px;">
+                    {{-- <div class="col-12" id="div_cam" style="margin-top:17px;">
                         <div class="d-flex justify-content-center bg-light">
 
                             <video width="100%" height="100%" autoplay="true" id="videoElement"></video>
@@ -143,6 +141,48 @@
                                 </center>
                             </div>
                         </div>
+                    </div> --}}
+
+                    <div class="col-12" id="div_image_sos">
+                        <label class="col-12" style="padding:0px;" for="photo_sos_by_officers" >
+                            <div class="fill parent" style="border:dotted #db2d2e;border-radius:25px;padding:0px;object-fit: cover;">
+                                @if(empty($data_sos->photo_sos_by_officers))
+                                    <div class="form-group p-3"id="add_select_img">
+                                        <input class="form-control d-none" name="photo_sos_by_officers" style="margin:20px 0px 10px 0px;" type="file" id="photo_sos_by_officers" value="{{ isset($data_sos->photo_sos_by_officers) ? $data_sos->photo_sos_by_officers : ''}}" accept="image/*" onchange="document.getElementById('show_photo_sos_by_officers').src = window.URL.createObjectURL(this.files[0]);check_add_img() ">
+                                        <div  class="text-center">
+                                            <center>
+                                                <img style=" object-fit: cover; border-radius:15px;max-width: 50%;" src="{{ asset('/img/สติกเกอร์ Mithcare/ขอเอกสาร14.png') }}" class="card-img-top center" style="padding: 10px;">
+                                            </center>
+                                            <br>
+                                            <h3 class="text-center m-0">
+                                                <b>กรุณาเลือกรูป "คลิก"</b>
+                                            </h3>
+                                        </div>
+
+                                    </div>
+                                    <img class="full_img d-none" style="padding:0px ;" width="100%" alt="your image" id="show_photo_sos_by_officers" />
+                                @else
+                                    <div class="form-group p-3 d-none " id="add_select_img">
+                                        <input class="form-control d-none" name="photo_sos_by_officers" style="margin:20px 0px 10px 0px;" type="file" id="photo_sos_by_officers" value="{{ isset($data_sos->photo_sos_by_officers) ? $data_sos->photo_sos_by_officers : ''}}" accept="image/*" onchange="document.getElementById('show_photo_sos_by_officers').src = window.URL.createObjectURL(this.files[0]);check_add_img() ">
+                                        <div  class="text-center">
+                                            <center>
+                                                <img style=" object-fit: cover; border-radius:15px;max-width: 50%;" src="{{ asset('/img/stickerline/PNG/37.2.png') }}" class="card-img-top center" style="padding: 10px;">
+                                            </center>
+                                            <br>
+                                            <h3 class="text-center m-0">
+                                                <b>กรุณาเลือกรูป "คลิก"</b>
+                                            </h3>
+                                        </div>
+
+                                    </div>
+                                    <img class="full_img" style="padding:0px ;" width="100%" alt="your image" src="{{ url('storage')}}/{{ $data_sos->photo_sos_by_officers }}" id="show_photo_sos_by_officers" />
+
+                                @endif
+                                {{-- <div class="child text-center mb-2">
+                                    <span class="h4 font-weight-bold">เลือกรูป</span>
+                                </div> --}}
+                            </div>
+                        </label>
                     </div>
 
                     <hr>
@@ -151,7 +191,6 @@
                         <label>หมายเหตุ</label>
                         <input type="text" class="form-control" name="remark" id="remark" value="" placeholder="ระบุหมายเหตุเพิ่มเติม">
                     </div>
-
                     <br>
 
                     <div id="div_btn_submit_add_photo" class="col-12 d-none">
@@ -159,11 +198,13 @@
                             ส่งข้อมูล
                         </button>
                     </div>
-
                 </div>
             </div>
+
+
         </div>
         <!-- Modal send_finish -->
+
         <!-- Button trigger modal -->
         <button id="btn_modal_send_finish" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#madal_send_finish">
         </button>
@@ -206,92 +247,93 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector('#content_add_photo').classList.remove('d-none');
     }
 
-    capture_registration();
+    // capture_registration();
 
 });
 
-function capture() {
+// function capture() {
 
-    var video = document.querySelector("#videoElement");
-    var text_img = document.querySelector("#text_img");
+//     var video = document.querySelector("#videoElement");
+//     var text_img = document.querySelector("#text_img");
 
-    var photo2 = document.querySelector("#photo2");
-    var canvas = document.querySelector("#canvas");
+//     var photo2 = document.querySelector("#photo2");
+//     var canvas = document.querySelector("#canvas");
 
-    var div_cam = document.querySelector("#div_cam");
-        div_cam.classList.add('d-none');
+//     var div_cam = document.querySelector("#div_cam");
+//         div_cam.classList.add('d-none');
 
-        photo2.classList.remove('d-none');
+//         photo2.classList.remove('d-none');
 
-        let context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0,266,400);
+//         let context = canvas.getContext('2d');
+//             context.drawImage(video, 0, 0,266,400);
 
-        photo2.setAttribute('src',canvas.toDataURL('image/png'));
-        text_img.value = canvas.toDataURL('image/png');
+//         photo2.setAttribute('src',canvas.toDataURL('image/png'));
+//         text_img.value = canvas.toDataURL('image/png');
 
-    document.querySelector('#btn_check_time').classList.remove('d-none');
-    document.querySelector('#div_btn_submit_add_photo').classList.remove('d-none');
+//     document.querySelector('#btn_check_time').classList.remove('d-none');
+//     document.querySelector('#div_btn_submit_add_photo').classList.remove('d-none');
 
-}
+// }
 
-function stop(e) {
+// function stop(e) {
 
-    document.querySelector("#div_cam").classList.add('d-none');
-    document.querySelector("#btn_close_camera").classList.add('d-none');
-    document.querySelector("#btn_open_camera").classList.remove('d-none');
+//     document.querySelector("#div_cam").classList.add('d-none');
+//     document.querySelector("#btn_close_camera").classList.add('d-none');
+//     document.querySelector("#btn_open_camera").classList.remove('d-none');
 
-    var video = document.querySelector("#videoElement");
-    var photo2 = document.querySelector("#photo2");
-    var canvas = document.querySelector("#canvas");
-    var text_img = document.querySelector("#text_img");
-    var context = canvas.getContext('2d');
+//     var video = document.querySelector("#videoElement");
+//     var photo2 = document.querySelector("#photo2");
+//     var canvas = document.querySelector("#canvas");
+//     var text_img = document.querySelector("#text_img");
+//     var context = canvas.getContext('2d');
 
-      var stream = video.srcObject;
-      var tracks = stream.getTracks();
+//       var stream = video.srcObject;
+//       var tracks = stream.getTracks();
 
-      for (var i = 0; i < tracks.length; i++) {
-        var track = tracks[i];
-        track.stop();
-      }
+//       for (var i = 0; i < tracks.length; i++) {
+//         var track = tracks[i];
+//         track.stop();
+//       }
 
-      video.srcObject = null;
-}
+//       video.srcObject = null;
+// }
 
-function capture_registration(){
-    document.querySelector('#div_btn_submit_add_photo').classList.add('d-none');
+// function capture_registration(){
+//     document.querySelector('#div_btn_submit_add_photo').classList.add('d-none');
 
-    var video = document.querySelector("#videoElement");
-    var photo2 = document.querySelector("#photo2");
-    var canvas = document.querySelector("#canvas");
-    var text_img = document.querySelector("#text_img");
-    var context = canvas.getContext('2d');
-    var div_cam = document.querySelector("#div_cam");
-        div_cam.classList.remove('d-none');
+//     var video = document.querySelector("#videoElement");
+//     var photo2 = document.querySelector("#photo2");
+//     var canvas = document.querySelector("#canvas");
+//     var text_img = document.querySelector("#text_img");
+//     var context = canvas.getContext('2d');
+//     var div_cam = document.querySelector("#div_cam");
+//         div_cam.classList.remove('d-none');
 
-        photo2.classList.add('d-none');
+//         photo2.classList.add('d-none');
 
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
-      // { video: true }
-      // { video: { facingMode: { exact: "environment" } } }
-        .then(function (stream) {
-          if (typeof video.srcObject == "object") {
-              video.srcObject = stream;
-            } else {
-              video.src = URL.createObjectURL(stream);
-            }
-        })
-        .catch(function (err0r) {
-          console.log("Something went wrong!");
-        });
-    }
+//     if (navigator.mediaDevices.getUserMedia) {
+//       navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
+//       // { video: true }
+//       // { video: { facingMode: { exact: "environment" } } }
+//         .then(function (stream) {
+//           if (typeof video.srcObject == "object") {
+//               video.srcObject = stream;
+//             } else {
+//               video.src = URL.createObjectURL(stream);
+//             }
+//         })
+//         .catch(function (err0r) {
+//           console.log("Something went wrong!");
+//         });
+//     }
 
-}
+// }
 
 function submit_add_photo(sos_map_id){
-    let text_img = document.querySelector('#text_img').value ;
     let id_officer = document.querySelector('#id_officer').value ;
     let remark = document.querySelector('#remark').value ;
+
+
 
     if (remark) {
         remark = remark ;
@@ -300,20 +342,24 @@ function submit_add_photo(sos_map_id){
     }
 
     // fetch("{{ url('/') }}/api/submit_add_photo/" + sos_map_id + '/' + text_img  + '/' + id_officer + '/' + remark );
+    let formData = new FormData();
+    let imageFile = document.getElementById('photo_sos_by_officers').files[0];
+        formData.append('photo_sos', imageFile);
 
     let data = {
         'sos_map_id' : sos_map_id,
-        'text_img' : text_img,
         'id_officer' : id_officer,
         'remark' : remark,
     };
 
+    formData.append('sos_map_id', data.sos_map_id);
+    formData.append('id_officer', data.id_officer);
+    formData.append('remark', data.remark);
+
     fetch("{{ url('/') }}/api/submit_add_photo", {
         method: 'post',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: formData
+
     }).then(function (response){
         return response.text();
     }).then(function(text){
@@ -333,4 +379,14 @@ function submit_add_photo(sos_map_id){
 
 </script>
 
+<script>
+	function check_add_img(){
+		document.getElementById('add_select_img').classList.add('d-none')
+		document.getElementById('photo_sos_by_officers').classList.add('d-none');
+		document.getElementById('show_photo_sos_by_officers').classList.remove('d-none');
+
+        document.querySelector('#div_btn_submit_add_photo').classList.remove('d-none');
+
+	}
+</script>
 @endsection

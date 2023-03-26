@@ -87,7 +87,7 @@
                                                 @if (!empty($item_room->caregiver))
                                                    <!-- มีผู้ดูแลแล้ว-->
                                                     <label>
-                                                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
+                                                        <input class="card-input-element check_checkbox_select_takecare d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                             <i class="fa-duotone fa-user-nurse text_topright"></i>
                                                             <span>
@@ -98,7 +98,7 @@
                                                 @else
                                                     <!-- ยังไม่มีผู้ดูแล-->
                                                 <label>
-                                                    <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
+                                                    <input class="card-input-element check_checkbox_select_takecare d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
                                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                                                         <span>
                                                             {{$item_room->user->full_name}}  id {{$item_room->user_id}}
@@ -260,15 +260,16 @@ function click_Select_Takecare(user_id){
     let select_takecare = document.querySelector('#select_takecare'+user_id);
 
     select_takecare.value = "" ;
-        for (let i = 0; i < checkbox_select_takecare.length; i++) {
-            if (checkbox_select_takecare[i].checked) {
-                if (select_takecare.value === "") {
-                    select_takecare.value = checkbox_select_takecare[i].value ;
-                }else{
-                    select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
-                }
+
+    for (let i = 0; i < checkbox_select_takecare.length; i++) {
+        if (checkbox_select_takecare[i].checked) {
+            if (select_takecare.value === "") {
+                select_takecare.value = checkbox_select_takecare[i].value ;
+            }else{
+                select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
             }
         }
+    }
 }
 </script>
 
@@ -345,18 +346,29 @@ function click_Select_Takecare(user_id){
         console.log("เข้าcancel_caregiver");
 
 
-        let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
+        // let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
 
-        checkbox_select_takecare.forEach(checkbox_select_takecare => {
+        // checkbox_select_takecare.forEach(checkbox_select_takecare => {
+
+        //     if(checkbox_select_takecare.value == item_id){
+
+        //         console.log("click_Select_Takecare");
+        //         checkbox_select_takecare.checked = false;
+        //         click_Select_Takecare(item_id);
+
+        //     }
+        // })
+
+        let checkbox_select_takecare = document.getElementsByClassName('check_checkbox_select_takecare');
+
+        for (let i = 0; i < checkbox_select_takecare.length; i++) {
 
             if(checkbox_select_takecare.value == item_id){
-
                 console.log("click_Select_Takecare");
                 checkbox_select_takecare.checked = false;
                 click_Select_Takecare(item_id);
-
             }
-        })
+        }
     }
 
 </script>

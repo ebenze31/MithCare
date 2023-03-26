@@ -338,24 +338,38 @@ function click_Select_Takecare(user_id){
 
 <script>
     function cancel_caregiver(item_id,user_id){
-        console.log(item_id);
-        console.log(user_id);
-        console.log("เข้าcancel_caregiver");
         document.querySelector('#item_data_member_form_db'+item_id).innerHTML = "";
+
+        console.log("item_id >> " + item_id);
+        console.log("user_id >> " + user_id);
+        console.log("เข้าcancel_caregiver");
 
         // let checkbox_select_takecare = document.querySelector('[deerza="checkbox_select_takecare'+item_id+'"]');
         // let checkbox_select_takecare = document.getElementById('checkbox_select_takecare'+user_id);
-        let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
+        // let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
         // console.log(checkbox_select_takecare);
 
-        for (let i = 0; i < checkbox_select_takecare.length; i++){
-            console.log(checkbox_select_takecare.value);
-            if (checkbox_select_takecare.value === item_id) {
+        // for (let i = 0; i < checkbox_select_takecare.length; i++){
+
+        //     console.log(checkbox_select_takecare.value);
+
+        //     if (checkbox_select_takecare.value === item_id) {
+        //         console.log("click_Select_Takecare");
+        //         checkbox_select_takecare.checked = false;
+        //         click_Select_Takecare(item_id);
+        //     }
+
+        // }
+
+        let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
+
+        checkbox_select_takecare.forEach(checkbox_select_takecare => {
+            if(checkbox_select_takecare.value){
                 console.log("click_Select_Takecare");
                 checkbox_select_takecare.checked = false;
                 click_Select_Takecare(item_id);
             }
-        }
+        })
     }
 
 </script>

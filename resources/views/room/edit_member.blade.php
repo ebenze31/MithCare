@@ -346,29 +346,19 @@ function click_Select_Takecare(user_id){
         console.log("เข้าcancel_caregiver");
 
 
-        // let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
+        let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
 
-        // checkbox_select_takecare.forEach(checkbox_select_takecare => {
-
-        //     if(checkbox_select_takecare.value == item_id){
-
-        //         console.log("click_Select_Takecare");
-        //         checkbox_select_takecare.checked = false;
-        //         click_Select_Takecare(item_id);
-
-        //     }
-        // })
-
-        let checkbox_select_takecare = document.getElementsByClassName('check_checkbox_select_takecare');
-
-        for (let i = 0; i < checkbox_select_takecare.length; i++) {
+        checkbox_select_takecare.forEach(checkbox_select_takecare => {
 
             if(checkbox_select_takecare.value == item_id){
+
                 console.log("click_Select_Takecare");
                 checkbox_select_takecare.checked = false;
-                click_Select_Takecare(item_id);
+                click_Select_Takecare(user_id);
+
             }
-        }
+        })
+
     }
 
 </script>

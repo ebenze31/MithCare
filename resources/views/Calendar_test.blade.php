@@ -13,53 +13,101 @@
 
 
     <style>
-   /* preloader */
-.lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+   .header_edit_member {
+  background-color: #ffffff;
+  padding: 5px;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #4170A2;
+
 }
 
+.header-line_edit_member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header-name1_edit_member {
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+.header-name2_edit_member, .header-name3_edit_member {
+  font-size: 16px;
+  margin: 0 10px;
+  font-weight: bold;
+  padding-left: 3px;
+}
+
+.header-close_edit_member {
+  background-color: transparent;
+  /* position: absolute;
+  top: 0;
+  right: 5px; */
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #4170A2;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+}
+
+.header-close_edit_member:hover {
+  color: red;
+}
+   /* preloader */
+   /* .edit_member-form {
+	border:#4170A2;
+    border-style: solid;
+    border-radius: 25px;
+    height: 40px;
+    padding: 1.5rem;
+    font-size: 100%;
+    font-weight: bold;
+   }
+   .border {
+        border: 2px blue dashed;
+    }
+
+    .mr-0 {
+    margin-right: 0;
+    }
+    .ml-auto {
+    margin-left:auto;
+    }
+    .d-block {
+    display:block;
+    } */
     </style>
 
 </head>
 
 <body>
-
-
-        <div class="preloader">
-            <div class="loading"><span></span><span></span><span></span><span></span></div>
+    <div class="header_edit_member">
+        <div class="header-line_edit_member">
+            <div class="col-9">
+                <span class="header-name1_edit_member">ชื่อผู้ป่วย</span>
+                <br>
+                <span class="header-name1_edit_member">Name 2</span>
+            </div>
+            <div class="col-3">
+                <button class="header-close_edit_member">ยกเลิก</button>
+            </div>
         </div>
+        <hr class="m-1 p-1">
+        <div class="header-line_edit_member">
+            <span class="header-name2_edit_member">Name 2</span>
+            <span class="header-name2_edit_member">=></span>
+            <span class="header-name3_edit_member">Name 3</span>
+
+        </div>
+    </div>
+
+    {{-- <div class="edit_member-form">patient <hr style=""> member1 => member 2<span class="d-block mr-0 ml-auto">ยกเลิก</span></div> --}}
 </body>
 
 </html>

@@ -120,37 +120,33 @@
             </div>
         </div>
     </div>
-    <div id="location_users">
-
-    </div>
-
 
         <div class="row p-2">
-                <div class="col-6 mb-2 ">
-                    <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary btn-block main-shadow main-radius p-0" data-toggle="modal" data-target="#modal_sos_btn_user"
-                    style="background-color: #3490dc;color: white;" >
-                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ
-                    </span>
-                    <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
-                        style="background-color: #3490dc; font-size: 20px; color: white;" >
-                            <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Viicheck
-                    </span>
-                    <span id="sos_by_peddyhub"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '2';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+            <div class="col-6 mb-2 ">
+                <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
+                <input id="partner_id" class="d-none">
+
+                <!-- onclick="SOS_by_Phone()" -->
+                <span id="sos_by_phone" name="sos_by_phone" class="btn btn-danger btn-block main-shadow main-radius p-0" >
+                    <i class="fa-solid fa-phone"><br> 1669 (โทร)</i>
+                </span>
+            </div>
+
+            <div class="col-6 mb-2 ">
+                <span id="sos_by_btn"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '1';" name="sos_by_phone" class="btn btn-primary btn-block main-shadow main-radius p-0" data-toggle="modal" data-target="#modal_sos_btn_user"
+                style="background-color: #3490dc;color: white;" >
+                    <i class="fa-solid fa-truck-medical"> <br> ขอความช่วยเหลือ</i>
+                </span>
+                <!-- <span id="sos_by_viicheck"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '3';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
                     style="background-color: #3490dc; font-size: 20px; color: white;" >
-                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Peddyhub
-                    </span> -->
-                </div>
-                <div class="col-6 mb-2 ">
-                    <input id="input_user_id" value="{{Auth::user()->id}}" class="d-none">
-                    <input id="partner_id" class="d-none">
-
-                    <!-- onclick="SOS_by_Phone()" -->
-                    <span id="sos_by_phone" name="sos_by_phone" class="btn btn-danger btn-block main-shadow main-radius p-0" >
-                        <i class="fa-solid fa-phone"></i> โทรฉุกเฉิน
-                    </span>
-                </div>
+                        <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Viicheck
+                </span>
+                <span id="sos_by_peddyhub"  onclick="locations_myhome(null);document.querySelector('#partner_id').value = '2';" name="sos_by_phone" class="btn btn-primary main-shadow main-radius " data-toggle="modal" data-target="#modal_sos_btn_user"
+                style="background-color: #3490dc; font-size: 20px; color: white;" >
+                    <i class="fa-solid fa-truck-medical"></i> ขอความช่วยเหลือ Peddyhub
+                </span> -->
+            </div>
         </div>
-
 
     <!--===============
             Modal
@@ -220,7 +216,7 @@
                             {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
                         </div>
                         <!-- lat,lng -->
-                        <div id="div_latlng" class=" dear_form-group col-12 col-md-4 p-1 m-0">
+                        <div id="div_latlng" class="d-none dear_form-group col-12 col-md-4 p-1 m-0">
                             <label for="lng" class="control-label">{{ 'lat,lng' }}</label>
                             <input class="dear_form-control" name="latlng" type="text" id="latlng" value="" readonly>
                             {!! $errors->first('lng', '<p class="help-block">:message</p>') !!}
@@ -264,7 +260,7 @@
                                 </div>
 
                             </div>
-                            <img class="full_img d-none" style="padding:0px ;" width="100%" alt="your image" id="show_photo_sos_by_officers" />
+                            <img class="full_img d-none" style="padding:0px ; border-radius:20px;" width="100%" alt="your image" id="show_photo_sos_by_officers" />
                         @else
                             <div class="form-group p-3 d-none" id="add_select_img">
                                 <input class="form-control d-none" name="photo_sos_by_officers" style="margin:20px 0px 10px 0px;" type="file" id="photo_sos_by_officers" value="{{ isset($data_sos->photo_sos_by_officers) ? $data_sos->photo_sos_by_officers : ''}}" accept="image/*" onchange="document.getElementById('show_photo_sos_by_officers').src = window.URL.createObjectURL(this.files[0]);check_add_img() ">
@@ -279,12 +275,12 @@
                                 </div>
 
                             </div>
-                            <img class="full_img" style="padding:0px ;" width="100%" alt="your image" src="{{ url('storage')}}/{{ $data_sos->photo_sos_by_officers }}" id="show_photo_sos_by_officers" />
+                            <img class="full_img" style="padding:0px ; border-radius:20px;" width="100%" alt="your image" src="{{ url('storage')}}/{{ $data_sos->photo_sos_by_officers }}" id="show_photo_sos_by_officers" />
 
                         @endif
-                        <div class="child">
+                        {{-- <div class="child">
                             <span>เลือกรูป</span>
-                        </div>
+                        </div> --}}
                     </div>
                 </label>
             </div>
@@ -688,12 +684,7 @@
         let lng = parseFloat(lng_text.value) ;
 
         Open_map_select_location();
-        // console.log(lat);
-        // console.log(lng);
 
-        //   let location_users = document.querySelector("#location_user");
-        //       location_users.innerHTML = '<a class=" shadow-box text-white btn btn-primary shadow" style="position:absolute;margin-top:-100px;margin-left:10px;border-radius:10px" id="submit"><i class="fas fa-search-location"></i></a>';
-        //   check_area(lat,lng);
     }
 
 </script>

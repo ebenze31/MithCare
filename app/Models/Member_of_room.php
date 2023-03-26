@@ -19,6 +19,10 @@ class Member_of_room extends Model
         return $this->belongsTo('App\User','user_id','id');
     }
 
+    public function user_caregiver(){
+        return $this->belongsTo('App\User','caregiver','id');
+    }
+
     public function room(){
         return $this->belongsTo('App\Models\Room','room_id','id');
     }

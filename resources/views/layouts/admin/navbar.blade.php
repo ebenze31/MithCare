@@ -52,6 +52,7 @@
 				</li> --}}
 
 				<li class="menu-label">Menu</li>
+                @if (Auth::user()->role == 'isAdmin')
 				<li>
 					<a href="{{ url('/room_admin') }}">
 						<div class="parent-icon"><i class="fa-regular fa-house"></i>
@@ -66,7 +67,7 @@
 						<div class="menu-title">ขอความช่วยเหลือ</div>
 					</a>
 				</li>
-                @if (Auth::user()->role == 'isAdmin')
+
                     <li>
                         <a href="{{ url('/partner') }}">
                             <div class="parent-icon"><i class="fa-solid fa-handshake"></i>
@@ -75,6 +76,9 @@
                         </a>
                     </li>
                 @endif
+
+                <hr>
+
 				<li>
 					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class='bx bx-cart-alt' ></i>

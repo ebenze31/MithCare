@@ -99,49 +99,6 @@
         <div id="content_add_photo" class="col-md-12 d-none">
             <div class="card">
                 <div class="card-body">
-                    {{-- <div id="btn_open_camera" class="d-none">
-                        <center>
-                            <br>
-                            <a class="btn btn-sm text-white btn-primary" onclick="document.querySelector('#btn_close_camera').classList.remove('d-none'),document.querySelector('#div_cam').classList.remove('d-none'),document.querySelector('#btn_open_camera').classList.add('d-none');">
-                                เพิ่มภาพถ่าย
-                                <i id="i_down" class="fas fa-camera"></i>
-                                <i id="i_up" class="fas fa-chevron-up d-none"></i>
-                            </a>
-                        </center>
-                    </div>
-                    <div id="btn_close_camera"> --}}
-                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="stop();">
-                            <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                        </button> -->
-                    {{-- </div> --}}
-
-                    {{-- <div class="col-12" id="div_cam" style="margin-top:17px;">
-                        <div class="d-flex justify-content-center bg-light">
-
-                            <video width="100%" height="100%" autoplay="true" id="videoElement"></video>
-                            <a class="align-self-end text-white btn-primary btn-circle" style="position: absolute; margin-bottom:10px" onclick="capture();">
-                                <i class="fas fa-camera"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <input class="d-none" type="text" name="text_img" id="text_img" value="">
-
-                    <div style="margin-top:15px;" id="show_img" class="">
-
-                        <canvas class="d-none"  id="canvas" width="266" height="400" ></canvas>
-                        <img class="d-none" src="" width="266" height="400"  id="photo2">
-
-                        <div id="btn_check_time" class="row d-none" style="margin-top:15px;">
-                            <div class="col-12">
-                                <center>
-                                    <p class="btn btn-sm btn-danger" onclick="document.querySelector('#btn_check_time').classList.add('d-none'),capture_registration();">
-                                        <i class="fas fa-undo"></i> ถ่ายใหม่
-                                    </p>
-                                </center>
-                            </div>
-                        </div>
-                    </div> --}}
 
                     <div class="col-12" id="div_image_sos">
                         <label class="col-12" style="padding:0px;" for="photo_sos_by_officers" >
@@ -160,7 +117,7 @@
                                         </div>
 
                                     </div>
-                                    <img class="full_img d-none" style="padding:0px ;" width="100%" alt="your image" id="show_photo_sos_by_officers" />
+                                    <img class="full_img d-none" style="padding:0px; border-radius:20px;" width="100%" alt="your image" id="show_photo_sos_by_officers" />
                                 @else
                                     <div class="form-group p-3 d-none " id="add_select_img">
                                         <input class="form-control d-none" name="photo_sos_by_officers" style="margin:20px 0px 10px 0px;" type="file" id="photo_sos_by_officers" value="{{ isset($data_sos->photo_sos_by_officers) ? $data_sos->photo_sos_by_officers : ''}}" accept="image/*" onchange="document.getElementById('show_photo_sos_by_officers').src = window.URL.createObjectURL(this.files[0]);check_add_img() ">
@@ -175,7 +132,7 @@
                                         </div>
 
                                     </div>
-                                    <img class="full_img" style="padding:0px ;" width="100%" alt="your image" src="{{ url('storage')}}/{{ $data_sos->photo_sos_by_officers }}" id="show_photo_sos_by_officers" />
+                                    <img class="full_img" style="padding:0px; border-radius:20px;" width="100%" alt="your image" src="{{ url('storage')}}/{{ $data_sos->photo_sos_by_officers }}" id="show_photo_sos_by_officers" />
 
                                 @endif
                                 {{-- <div class="child text-center mb-2">

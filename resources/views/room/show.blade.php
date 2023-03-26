@@ -113,6 +113,58 @@
         font-size: 14px;
         color: #058d39;
     }
+
+    .header_edit_member {
+  background-color: transparent;
+  padding: 7px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 25px;
+  border-color: #4170A2;
+
+}
+
+.header-line_edit_member {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.header-name1_edit_member {
+  font-size: 18px;
+  font-weight: bold;
+
+}
+
+.header-name2_edit_member, .header-name3_edit_member {
+  font-size: 18px;
+  margin: 0 10px;
+  font-weight: bold;
+  /* padding-left: 3px; */
+}
+
+.header-close_edit_member {
+  background-color: #eb6e82 !important;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #8f0c0c !important;
+  padding: 3px;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+}
+
+.header-close_edit_member:hover {
+  color: red;
+}
+.vhr{
+
+  border:         none;
+  border-left:    1px solid hsla(200, 10%, 50%,100);
+  height:         3rem;
+  width:          1px;
+}
 </style>
 
 <section class="page-title page-title-layout5">
@@ -199,6 +251,25 @@
                             </div>
                         </div>
 
+                        {{-- <div class="header_edit_member">
+                            <div class="header-line_edit_member">
+                                <div class="col-9 text-center">
+                                    <span class="header-name1_edit_member">(ชื่อผู้ป่วย)</span>
+                                    <br>
+                                    <span class="header-name1_edit_member">Name 2</span>
+                                </div>
+                                <div class="col-3">
+                                    <button class="header-close_edit_member">ยกเลิก</button>
+                                </div>
+                            </div>
+                            <hr class="m-1 p-1" style="border-color:#4170A2">
+                            <div class="header-line_edit_member text-center">
+                                <span class="header-name2_edit_member text-center">(ชื่อผู้ดูแลเก่า) <br> Name 2</span>
+                                <div class="vhr" style="border-color:#4170A2"></div>
+                                <span class="header-name3_edit_member text-center">(ชื่อผู้ดูแลใหม่)  <br> Name 3</span>
+                            </div>
+                        </div> --}}
+
                     </div><!-- /.feature__content -->
 
                 </div><!-- /.feature-item -->
@@ -229,12 +300,13 @@
             <!-- Modal -->
             <div class="modal fade modal-slick_edit_member" id="edit_memberModal{{ $item->id }}" tabindex="-50" role="dialog"
                 aria-labelledby="edit_memberModal{{ $item->id}}Title" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                aria-hidden="true">
+                aria-hidden="true" >
+
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modal_sos_btn_userTitle">แก้ไขสถานะ {{ $item->user->name }}</h5>
-                                <span  type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_edit_member(event);">
+                                <span  type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="close_edit_member(event); clear_value_member_edit({{$item->user_id}});">
                                     <i class="fa-solid fa-circle-xmark p-0 m-0 " style="color: #4170A2;"></i>
                                 </span>
                             </div>
@@ -294,7 +366,7 @@
                                 @if (Auth::user()->id == $find_owner->user_id)
                                     <!-- ไอเท็มที่มีสถานะ ไอดีเจ้าของห้อง ไม่ต้องแสดงปุ่มแก้ไข-->
                                     @if ($item->status != 'owner')
-                                        <a class="btn-old btn-primary" onclick="edit_member(event);" data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}">
+                                        <a class="btn-old btn-primary" onclick="edit_member(event); " data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </a>
                                     @endif
@@ -332,144 +404,7 @@
         <!-- ======================
             TEST CARD EDIT V.1
         ========================= -->
-        <div id="member_edit_of_room" class="row d-none">
-            <div class="col-12">
-                <div class="slick-carousel"
-                    data-slick='{"slidesToShow": 3, "slidesToScroll": 1, "autoplay": false, "arrows": false, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-                    <!-- Member #1 -->
-                    @foreach ($member as $item)
-                    <div  class="member">
-                        <input id="div_member_of_room_card" class="d-none" value="{{$item->user_id}}">
-                        <div class="member__img">
-                            @if(!empty($item->user->avatar) and empty($item->user->photo))
-                                <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img"  width="100%">
-                                </div><!-- /.member-img -->
-                            @endif
 
-                            @if(!empty($item->user->photo))
-                                <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img"  width="100%">
-                                </div><!-- /.member-img -->
-                            @endif
-
-                            @if(empty($item->user->avatar) and empty($item->user->photo))
-                                <div class="member__img ">
-                                    <img src="{{asset('/img/สติกเกอร์ Mithcare/18.png')}}" alt="member img"  width="100%">
-                                </div><!-- /.member-img -->
-                            @endif
-                        </div><!-- /.member-img -->
-                        <div class="member__info">
-                            <h5 class="member__name"><a href="">{{$item->user->name}}</a></h5>
-                                {{-- สถานะ --}}
-                                <div class="row ">
-                                    <div class="col-12 col-md-12 col-lg-12 from-group">
-                                        <label for="status" class="control-label" style="font-size: 20px;">{{ 'สถานะ' }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-6 from-group">
-                                        <label>
-                                            <input class="card-input-element d-none" id="status_member_of_room{{$item->user_id}}" name="status_of_room{{$item->user_id}}" type="radio" onclick="show_input_fr({{$item->user_id}});" value="member" {{ (isset($item) && 'member' == $item->status) ? 'checked' : '' }} required>
-                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                <span>
-                                                    สมาชิก : {{$item->user_id}}
-                                                </span>
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 from-group">
-                                        <label>
-                                            <input class="card-input-element d-none" id="status_patient_of_room{{$item->user_id}}" name="status_of_room{{$item->user_id}}" type="radio" onclick="show_input_fr({{$item->user_id}});" value="patient" {{ (isset($item) && 'patient' == $item->status) ? 'checked' : '' }} required>
-                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                <span>
-                                                    ผู้ป่วย : {{$item->user_id}}
-                                                </span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-
-                                <div id="takecare_fr{{$item->user_id}}" class="row ">
-                                    <label for="status" class="control-label" style="font-size: 20px;">{{ 'เลือกผู้ที่ต้องการดูแล' }}</label>
-                                    <div class="col-12">
-                                        <div class="slick-carousel"
-                                            data-slick='{"slidesToShow": 1, "slidesToScroll": 1, "autoplay": false, "arrows": true, "dots": false, "responsive": [ {"breakpoint": 992, "settings": {"slidesToShow": 2}}, {"breakpoint": 767, "settings": {"slidesToShow": 1}}, {"breakpoint": 480, "settings": {"slidesToShow": 1}}]}'>
-                                            <!--///  เลือกผู้ดูแล /// -->
-                                            <div id="" class="form-group">
-                                                <div class="row">
-                                                    @foreach($this_room as $item)
-                                                    <div class="col-6">
-                                                        <label>
-                                                            {{-- <input type="checkbox"  name="be_notified" value="วิธีอื่นๆ" class="card-input-element d-none" > --}}
-                                                        <input class="card-input-element d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare{{$item->user_id}}" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item->user_id}}" {{ (isset($item) && 'member_takecare' == $item->member_takecare) ? 'checked' : '' }} >
-                                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center"
-                                                                <span>
-                                                                    {{$item->user->name}}
-                                                                </span>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                    @endforeach
-                                                </div>
-
-                                                <input class="form-control d-none" type="text" name="select_takecare{{$item->user_id}}" id="select_takecare{{$item->user_id}}">
-                                            </div>
-                                        </div><!-- /.slick-carousel -->
-                                        <div class="home-demo">
-                                                            <div class="owl-carousel aasdaa owl-theme">
-                                                                <div class="col-12 p-0">
-                                                                    <label>
-                                                                    <input class="card-input-element d-none" id="radio_owner" name="patient_id" type="radio" value="{{Auth::user()->id}}">
-                                                                        <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                                            <span style="font-size:16px;">
-                                                                                {{Auth::user()->name}}
-                                                                            </span>
-                                                                        </div>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                    </div> <!-- /.col-12 -->
-                                </div><!-- /.row -->
-
-                                <div id="lv_caretaker_fr{{$item->user_id}}" class="row ">
-                                    <div class="col-12 col-md-12 col-lg-12 from-group">
-                                        <label for="status" class="control-label" style="font-size: 20px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 from-group">
-                                        <label>
-                                            <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_1_of_caretaker{{$item->user_id}}"  name="lv_of_caretaker{{$item->user_id}}" type="radio" value="1" {{ (isset($item) && '1' == $item->lv_of_caretaker) ? 'checked' : '' }}>
-                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                <span>
-                                                    ระดับ 1
-                                                </span>
-                                            </div>
-                                        </label>
-                                    </div>
-
-
-                                    <div class="col-12 col-md-6 col-lg-6 from-group">
-                                        <label>
-                                            <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_2_of_caretaker{{$item->user_id}}" name="lv_of_caretaker{{$item->user_id}}" type="radio" value="2" {{ (isset($item) && '2' == $item->lv_of_caretaker) ? 'checked' : '' }}>
-                                            <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                                <span>
-                                                    ระดับ 2
-                                                </span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                        </div><!-- /.member-info -->
-                    </div><!-- /.member -->
-                    @endforeach
-                </div><!-- /.carousel -->
-            </div><!-- /.col-12 -->
-        </div><!-- /.row -->
 
     </div><!-- /.container -->
 </section><!-- /.Team -->
@@ -568,20 +503,4 @@
 
 
 
-{{-- <script>
-function click_Select_Takecare(user_id){
-    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare'+user_id);
-    let select_takecare = document.querySelector('#select_takecare'+user_id);
-    // console.log(checkbox_select_takecare);
-    select_takecare.value = "" ;
-    for (let i = 0; i < checkbox_select_takecare.length; i++) {
-        if (checkbox_select_takecare[i].checked) {
-            if (select_takecare.value === "") {
-                select_takecare.value = checkbox_select_takecare[i].value ;
-            }else{
-                select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
-            }
-        }
-    }
-}
-</script> --}}
+

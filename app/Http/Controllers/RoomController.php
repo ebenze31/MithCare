@@ -268,12 +268,35 @@ class RoomController extends Controller
         // return view('room.join' , compact('find_room','this_room'));
     }
 
-    public function get_data_member_of_this_room($room_id)
+    public function get_data_member_of_this_room(Request $request,$room_id)
     {
-        // ดึงข้อมูลสมาชิก จาก room_id ที่ได้รับ ส่งคืนไปยังหน้า room.edit_member.blade
-        $member_this_room = Member_of_room::where('room_id',$room_id)->get();
+        $requestData = $request->all();
 
-        return $member_this_room;
+        //ค้นหา caregiver คนใหม่ เพื่อนำชื่อมาใช้
+
+        $user_id_of_new_caregiver = Member_of_room::where('room_id',$room_id)->where('user_id',$requestData['user_id'])->first();
+
+        $select_takecare = $requestData['select_takecare'];
+        $data_have_caregive = array();
+        $arr = array();
+        $data_member_explode = explode(",",$select_takecare);
+        for ($i=0; $i < count($data_member_explode); $i++) {
+              // ดึงข้อมูลสมาชิก จาก user_id ที่ได้รับ เพื่อนำมาตรวจสอบว่ามีผู้ดูแลอยู่แล้วรึป่าว -> ส่งคืนไปยังหน้า room.edit_member.blade
+            $member_this_room = Member_of_room::where('room_id',$room_id)->where('user_id',$data_member_explode[$i])->first();
+
+            if(!empty($member_this_room->caregiver)){
+                $arr['name_patient'] = $member_this_room->user->name;
+                $arr['patient_id'] = $member_this_room->user_id;
+                $arr['caregiver_id'] = $member_this_room->caregiver;
+                $arr['caregiver_name'] = $member_this_room->user_caregiver->name;
+                $arr['caregiver_new'] = $user_id_of_new_caregiver->user->name;
+                array_push($data_have_caregive,$arr);
+            }
+
+
+        }
+
+        return $data_have_caregive;
     }
 
 

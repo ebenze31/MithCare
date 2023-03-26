@@ -36,6 +36,9 @@ class User extends Authenticatable
     public function member_of_rooms(){
         return $this->hasMany('App\Models\Member_of_room','user_id','id');
     }
+    public function member_of_room_caregivers(){
+        return $this->hasMany('App\Models\Member_of_room','caregiver','id');
+    }
     public function ask_for_helps(){
         return $this->hasMany('App\Models\Ask_for_help','user_id','id');
     }

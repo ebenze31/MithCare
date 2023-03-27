@@ -114,57 +114,6 @@
         color: #058d39;
     }
 
-    .header_edit_member {
-  background-color: transparent;
-  padding: 7px;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 25px;
-  border-color: #4170A2;
-
-}
-
-.header-line_edit_member {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.header-name1_edit_member {
-  font-size: 18px;
-  font-weight: bold;
-
-}
-
-.header-name2_edit_member, .header-name3_edit_member {
-  font-size: 18px;
-  margin: 0 10px;
-  font-weight: bold;
-  /* padding-left: 3px; */
-}
-
-.header-close_edit_member {
-  background-color: #eb6e82 !important;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 15px;
-  border-color: #8f0c0c !important;
-  padding: 3px;
-  font-size: 16px;
-  cursor: pointer;
-  float: left;
-}
-
-.header-close_edit_member:hover {
-  color: red;
-}
-.vhr{
-
-  border:         none;
-  border-left:    1px solid hsla(200, 10%, 50%,100);
-  height:         3rem;
-  width:          1px;
-}
 </style>
 
 <section class="page-title page-title-layout5">
@@ -429,11 +378,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        let x = document.querySelector('#div_member_of_room_card');
-        for(i = 0; i<x.length; i++){
-            document.getElementById('takecare_fr'+x).classList.add('d-none');
-            document.getElementById('lv_caretaker_fr'+x).classList.add('d-none');
-        }
+        // let x = document.querySelector('#div_member_of_room_card');
+        // for(i = 0; i<x.length; i++){
+        //     document.getElementById('takecare_fr'+x).classList.add('d-none');
+        //     document.getElementById('lv_caretaker_fr'+x).classList.add('d-none');
+        // }
 
 });
 

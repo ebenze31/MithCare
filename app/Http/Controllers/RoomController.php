@@ -105,13 +105,12 @@ class RoomController extends Controller
     public function member_of_room_edit(Request $request,$id)
     {
         $requestData = $request->all();
+        $data_member_of_room = Member_of_room::where('id',$id)->first();
         $status =  $requestData['status_of_room'];
         $requestData['member_takecare'] = $requestData['select_takecare'];
-        echo"<pre>";
-        print_r($requestData);
-        echo"</pre>";
-        exit();
+
         if($status == "member"){
+            $requestData['lv_of_caretaker'] = null;
             $member_takecare = $requestData['member_takecare'];
             $member_takecare_ep = explode(",",$member_takecare);
             $count_ep = count($member_takecare_ep);
@@ -122,11 +121,66 @@ class RoomController extends Controller
                 ->update([
                     'caregiver' => $requestData['user_id'],
                 ]);
+
+               $deer = DB::table('member_of_rooms')
+                ->where('room_id', $data_member_of_room->room_id)
+                ->where('member_takecare','!=',null)
+                // ->where('user_id','!=',$requestData['user_id'])
+                ->get();
+
+                foreach ($deer as $key) {
+                    $deer_member = $key->member_takecare;
+                    echo $deer_member;
+                    echo"<////////////////////////>";
+                    echo"<br>";
+
+                    $deer_member_exp = explode(",",$deer_member);
+
+                    foreach ($deer_member_exp as $key2 => $value2) {
+                        echo $key2." - ".$value2;
+                        echo"<br>";
+
+                        if($member_takecare_ep[$i] == $value2){
+                            echo"<ลบ index ตัวนี้>".$deer_member_exp[$key2];
+                            unset($deer_member_exp[$key2]);
+                        }
+                    }
+                    $variant = null;
+
+                    foreach ($deer_member_exp as $key3 => $value3) {
+                        if($variant == null){
+                            $variant = $deer_member_exp[$key3];
+                        }else{
+                            $variant = $variant .",". $deer_member_exp[$key3];
+                        }
+                    }
+                    DB::table('member_of_rooms')
+                    ->where('room_id', $key->room_id)
+                    ->where('user_id', $key->user_id)
+                    ->update([
+                        'member_takecare' => $variant,
+                    ]);
+
+                    echo"<pre>";
+                    echo "variant ".$variant;
+                    // print_r($deer_member_exp);
+                    echo"</pre>";
+
+                }
+
+                echo"<=========================================================>";
+                echo"<br>";
+
             }
+            echo"<pre>";
+            print_r($deer_member_exp);
+            echo"</pre>";
+            exit();
+
         }
 
 
-
+        $requestData['status'] = $status;
         $member_of_room = Member_of_room::findOrFail($id);
         $member_of_room->update($requestData);
 

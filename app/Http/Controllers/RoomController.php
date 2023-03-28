@@ -109,80 +109,131 @@ class RoomController extends Controller
         $status =  $requestData['status_of_room'];
         $requestData['member_takecare'] = $requestData['select_takecare'];
 
+        // เปลี่ยนเป็นสมาชิก
         if($status == "member"){
+
             $requestData['lv_of_caretaker'] = null;
             $member_takecare = $requestData['member_takecare'];
             $member_takecare_ep = explode(",",$member_takecare);
             $count_ep = count($member_takecare_ep);
 
             for ($i=0; $i < $count_ep; $i++) {
+
                 DB::table('member_of_rooms')
                 ->where('user_id', $member_takecare_ep[$i])
                 ->update([
                     'caregiver' => $requestData['user_id'],
                 ]);
 
-               $deer = DB::table('member_of_rooms')
+                DB::table('member_of_rooms')
+                ->where('user_id', $requestData['user_id'])
+                ->update([
+                    'caregiver' => null,
+                ]);
+
+                // ตรวจว่า สมาชิก เคย เคยเป็นผู้ป่วยของใครมาก่อน แล้วลบออก
+                $deer = DB::table('member_of_rooms')
                 ->where('room_id', $data_member_of_room->room_id)
                 ->where('member_takecare','!=',null)
                 // ->where('user_id','!=',$requestData['user_id'])
                 ->get();
 
-                foreach ($deer as $key) {
-                    $deer_member = $key->member_takecare;
-                    echo $deer_member;
-                    echo"<////////////////////////>";
-                    echo"<br>";
+                echo"<=========== " . "FOR OF >> " . $member_takecare_ep[$i] . " ===========>";
+                echo"<br>";
+                echo"<br>";
 
-                    $deer_member_exp = explode(",",$deer_member);
+                // echo"<pre>";
+                // print_r($deer);
+                // echo"</pre>";
 
-                    foreach ($deer_member_exp as $key2 => $value2) {
-                        echo $key2." - ".$value2;
-                        echo"<br>";
+                foreach($deer as $key => $value){
 
-                        if($member_takecare_ep[$i] == $value2){
-                            echo"<ลบ index ตัวนี้>".$deer_member_exp[$key2];
-                            unset($deer_member_exp[$key2]);
-                        }
-                    }
-                    $variant = null;
+                    echo "เจอที่ User ID >> " . $value->user_id ;
+                    echo "<br>" ;
 
-                    foreach ($deer_member_exp as $key3 => $value3) {
-                        if($variant == null){
-                            $variant = $deer_member_exp[$key3];
-                        }else{
-                            $variant = $variant .",". $deer_member_exp[$key3];
-                        }
-                    }
-                    DB::table('member_of_rooms')
-                    ->where('room_id', $key->room_id)
-                    ->where('user_id', $key->user_id)
-                    ->update([
-                        'member_takecare' => $variant,
-                    ]);
+                    echo "member_takecare >>  " . $value->member_takecare ;
+                    echo "<br>" ;
+                    echo "<br>" ;
 
+                    echo "ต้องการลบ  >>  " . $member_takecare_ep[$i] ;
+                    echo "<br>" ;
+                    echo "<br>" ;
+
+                    $exp_of_member_takecare = explode(",",$value->member_takecare);
+                    // $count_exp_of_member_takecare = count($exp_of_member_takecare);
+
+                    echo"Array ก่อนลบ";
                     echo"<pre>";
-                    echo "variant ".$variant;
-                    // print_r($deer_member_exp);
+                    print_r($exp_of_member_takecare);
                     echo"</pre>";
+
+                    foreach ($exp_of_member_takecare as $exp => $exp_value){
+
+                        if($exp_value == $member_takecare_ep[$i]){
+                            echo $exp . " // " . $exp_value ;
+                            echo "<br>" ;
+                            unset($exp_of_member_takecare[$exp]);
+                        }
+
+                        if($exp_value == $requestData['user_id'] ){
+                            unset($exp_of_member_takecare[$exp]);
+                        }
+
+                    }
+
+                    echo"Array หลังลบ";
+                    echo"<pre>";
+                    print_r($exp_of_member_takecare);
+                    echo"</pre>";
+
+                    $new_member_takecare = null;
+
+                    if($exp_of_member_takecare){
+                        foreach ($exp_of_member_takecare as $exp_update => $exp_value_update){
+                            if($new_member_takecare == null){
+                                $new_member_takecare = $exp_value_update ;
+                            }else{
+                                $new_member_takecare = $new_member_takecare . "," . $exp_value_update ;
+                            }
+                        }
+                    }
+
+                    DB::table('member_of_rooms')
+                        ->where('user_id', $value->user_id)
+                        ->where('room_id', $data_member_of_room->room_id)
+                        ->update([
+                            'member_takecare' => $new_member_takecare,
+                        ]);
+
+                    echo "<br>" ;
+                    echo "<br>" ;
 
                 }
 
-                echo"<=========================================================>";
                 echo"<br>";
+                echo"<========= " . "END FOR OF >> " . $member_takecare_ep[$i] . " =========>";
+                echo"<br>";echo"<br>";echo"<br>";
 
             }
-            echo"<pre>";
-            print_r($deer_member_exp);
-            echo"</pre>";
-            exit();
+
+
+            
+        }
+
+        
+        if($status == "patient"){
 
         }
+
+        // exit();
+
 
 
         $requestData['status'] = $status;
         $member_of_room = Member_of_room::findOrFail($id);
         $member_of_room->update($requestData);
+
+        exit();
 
         return back();
     }

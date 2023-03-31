@@ -49,13 +49,15 @@
         width:          1px;
     }
 </style>
+
+
     <div class="row ">
         <div class="col-12 col-md-12 col-lg-12 from-group">
             <label for="status" class="control-label" style="font-size: 25px;">{{ 'เลือกสถานะ' }}</label>
         </div>
         <div class="col-6 col-md-6 col-lg-6 from-group">
             <label>
-                <input class="card-input-element d-none" id="status_member_of_room{{$item->user_id}}" name="status_of_room" type="radio" onclick="show_input_fr({{$item->user_id}});" value="member" required>
+                <input class="card-input-element d-none status_of_room{{$item->user_id}}" id="status_member_of_room{{$item->user_id}}" name="status_of_room" type="radio" onclick="show_input_fr({{$item->user_id}});" value="member" {{ (isset($item->status) && 'member' == $item->status) ? 'checked' : '' }} required>
                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                     <span>
                         สมาชิก
@@ -66,7 +68,7 @@
 
         <div class="col-6 col-md-6 col-lg-6 from-group">
             <label>
-                <input class="card-input-element d-none" id="status_patient_of_room{{$item->user_id}}" name="status_of_room" type="radio" onclick="show_input_fr({{$item->user_id}});" value="patient" required>
+                <input class="card-input-element d-none status_of_room{{$item->user_id}}"  id="status_patient_of_room{{$item->user_id}}" name="status_of_room" type="radio" onclick="show_input_fr({{$item->user_id}});" value="patient" {{ (isset($item->status) && 'patient' == $item->status) ? 'checked' : '' }} required>
                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                     <span>
                         ผู้ป่วย
@@ -77,16 +79,16 @@
     </div>
 
     <div id="takecare_fr{{$item->user_id}}" class="form-group ">
-        <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกผู้ที่ต้องการดูแล' }}</label>
-                        <div class="row">
-                                @foreach($this_room as $item_room)
-                                    <!-- กันให้ไม่สามารถเลือกดูแลตัวเองได้-->
-                                    @if($item_room->user_id != $item->user_id)
-                                    {{-- <div class="home-demo">
-                                        <div class="owl-carousel patient_wait_for_takecare owl-theme"> --}}
-                                            <div class="col-12 col-md-6 col-lg-6">
+        <hr>
+        <label for="status" class="control-label" style="font-size: 25px;">{{ 'ผู้ที่ต้องการดูแล' }}</label>
+                        {{-- <div class="row"> --}}
+                            <div class="home-demo">
+                                <div class="owl-carousel patient_wait_for_takecare{{$item->user_id}} owl-theme">
+                                    @foreach($this_room as $item_room)
+                                        <!-- กันให้ไม่สามารถเลือกดูแลตัวเองได้-->
+                                        @if($item_room->user_id != $item->user_id)
                                                 @if (!empty($item_room->caregiver))
-                                                   <!-- มีผู้ดูแลแล้ว-->
+                                                <!-- มีผู้ดูแลแล้ว-->
                                                     <label>
                                                         <input class="card-input-element check_checkbox_select_takecare d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
                                                         <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
@@ -97,7 +99,7 @@
                                                         </div>
                                                     </label>
                                                 @else
-                                                    <!-- ยังไม่มีผู้ดูแล-->
+                                                <!-- ยังไม่มีผู้ดูแล-->
                                                 <label>
                                                     <input class="card-input-element check_checkbox_select_takecare d-none" id="checkbox_select_takecare{{$item->user_id}}" name="checkbox_select_takecare" type="checkbox" onclick="click_Select_Takecare({{$item->user_id}});" value="{{$item_room->user_id}}">
                                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
@@ -107,20 +109,81 @@
                                                     </div>
                                                 </label>
                                                 @endif
+                                        @endif
+                                    @endforeach
+                                </div><!-- owl-carousel-->
+                            </div><!-- home-demo-->
 
-                                            </div>
-                                        {{-- </div><!-- owl-carousel-->
-                                    </div><!-- home-demo--> --}}
-                                    @endif
-                                @endforeach
-                        </div>
+
+                            <script>
+                                $(function() {
+                                // Owl Carousel
+                                let owl_takecare = $(".patient_wait_for_takecare"+{{$item->user_id}});
+                                owl_takecare.owlCarousel({
+                                    items: 2,
+                                    margin: 10,
+                                    loop: false,
+                                    nav: true,
+                                    autoplay:false,
+                                    });
+                                });
+
+                            </script>
+                        {{-- </div> --}}
 
         {{-- <input class="form-control d-none" type="text" name="caregiver" id="caregiver" value="{{Auth::user()->id}}"> --}}
             <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{$item->user_id}}">
-            <input class="form-control " type="text" name="select_takecare" id="select_takecare{{$item->user_id}}">
+            <input class="form-control " type="text" name="select_takecare" id="select_takecare{{$item->user_id}}" >
+            <div id="alert_message_member_edit{{$item->user_id}}"></div>
+
+    </div> <!--///  เลือกผู้ที่ถูกดูแล /// -->
+
+
+    <div id="member_takecare_fr{{$item->user_id}}" class="form-group ">
+        <hr>
+        <label for="status" class="control-label" style="font-size: 25px;">{{ 'ผู้ช่วยผู้ดูแล' }}</label>
+                            <div class="home-demo">
+                                <div class="owl-carousel patient_wait_for_member_takecare{{$item->user_id}} owl-theme">
+                                    @foreach($member_room as $item_member_room)
+                                        <!-- กันให้ไม่สามารถเลือกดูแลตัวเองได้-->
+                                        @if($item_member_room->user_id != $item->user_id)
+                                                <label>
+                                                    <input class="card-input-element check_checkbox_select_member_takecare d-none" id="checkbox_select_member_takecare{{$item->user_id}}" name="checkbox_select_member_takecare" type="checkbox" onclick="click_Select_Member_Takecare({{$item->user_id}});" value="{{$item_member_room->user_id}}">
+                                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                                        <span>
+                                                            {{$item_member_room->user->full_name}}
+                                                        </span>
+                                                    </div>
+                                                </label>
+
+                                        @endif
+                                    @endforeach
+                                </div><!-- owl-carousel-->
+                            </div><!-- home-demo-->
+
+                            <script>
+                                $(function() {
+                                // Owl Carousel
+                                let owl_member_takecare = $(".patient_wait_for_member_takecare"+{{$item->user_id}});
+                                owl_member_takecare.owlCarousel({
+                                    items: 2,
+                                    margin: 10,
+                                    loop: false,
+                                    nav: true,
+                                    autoplay:false,
+                                    });
+                                });
+
+                            </script>
+
+
+            {{-- <input class="form-control d-none" type="text" name="user_id" id="user_id" value="{{$item->user_id}}"> --}}
+            <input class="form-control " type="text" name="select_member_takecare" id="select_member_takecare{{$item->user_id}}" >
             <div id="alert_message_member_edit{{$item->user_id}}"></div>
 
     </div> <!--///  เลือกผู้ดูแล /// -->
+
+
 
         <!--====================
         Modal ยืนยันแก้ไขสถานะ
@@ -151,26 +214,14 @@
         End Modal ยืนยันแก้ไขสถานะ
         ============================-->
 
-    {{-- <script>
-        $(function() {
-        // Owl Carousel
-        var owl = $(".patient_wait_for_takecare");
-        owl.owlCarousel({
-            items: 2,
-            margin: 10,
-            loop: false,
-            nav: true,
-            });
-        });
-    </script> --}}
-    <div id="lv_caretaker_fr{{$item->user_id}}" class="row p-0">
+    <div id="lv_caretaker_fr{{$item->user_id}}" class="row p-0 ">
         <div class="col-12 col-md-12 col-lg-12 ">
-            <label for="status" class="control-label" style="font-size: 25px;">{{ 'กรุณาเลือกระดับผู้ป่วย' }}</label>
+            <label for="status" class="control-label" style="font-size: 25px;">{{ 'ระดับผู้ป่วย' }}</label>
         </div>
 
         <div class="col-12 col-md-6 col-lg-6 ">
             <label>
-                <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_1_of_caretaker"  name="lv_of_caretaker" type="radio" value="1" >
+                <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_1_of_caretaker"  name="lv_of_caretaker" type="radio" value="1"  {{ (isset($item->lv_of_caretaker) && '1' == $item->lv_of_caretaker) ? 'checked' : '' }}>
                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                     <span>
                         ระดับ 1 (สามารถดูแลตัวเองได้)
@@ -181,7 +232,7 @@
 
         <div class="col-12 col-md-6 col-lg-6 ">
             <label>
-                <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_2_of_caretaker"  name="lv_of_caretaker" type="radio" value="2" >
+                <input class="card-input-element d-none lv_of_caretaker{{$item->user_id}}" id="lv_2_of_caretaker"  name="lv_of_caretaker" type="radio" value="2" {{ (isset($item->lv_of_caretaker) && '2' == $item->lv_of_caretaker) ? 'checked' : '' }}>
                 <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
                     <span>
                         ระดับ 2 (ไม่สามารถดูแลตัวเองได้)
@@ -204,6 +255,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('takecare_fr{{$item->user_id}}').classList.add('d-none');
+    document.getElementById('member_takecare_fr{{$item->user_id}}').classList.add('d-none');
     document.getElementById('lv_caretaker_fr{{$item->user_id}}').classList.add('d-none');
 });
 
@@ -216,6 +268,10 @@ function show_input_fr(user_id){
         let takecare_fr = document.querySelector('#takecare_fr'+user_id).classList;
             takecare_fr.remove('d-none');
             takecare_fr.add('col-12');
+
+        let member_takecare_fr = document.querySelector('#member_takecare_fr'+user_id).classList;
+            member_takecare_fr.remove('d-none');
+            member_takecare_fr.add('col-12');
 
         document.querySelector('#lv_caretaker_fr'+user_id).classList.add('d-none');
 
@@ -237,60 +293,148 @@ function show_input_fr(user_id){
 
         document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
         document.querySelector('#takecare_fr'+user_id).required = false ;
+
+        document.querySelector('#member_takecare_fr'+user_id).classList.add('d-none');
+        document.querySelector('#member_takecare_fr'+user_id).required = false ;
+
         document.querySelector('.lv_of_caretaker'+user_id).required = true ;
 
-        document.querySelector('#select_takecare'+user_id).value = "";
 
+        document.querySelector('#select_takecare'+user_id).value = "";
         let checkbox_select_takecare = document.querySelectorAll('input[name="checkbox_select_takecare"]');
         for (let i = 0; i < checkbox_select_takecare.length; i++) {
             checkbox_select_takecare[i].checked = false;
         }
+
+        document.querySelector('#select_member_takecare'+user_id).value = "";
+        let checkbox_select_member_takecare = document.querySelectorAll('input[name="checkbox_select_member_takecare"]');
+        for (let i = 0; i < checkbox_select_member_takecare.length; i++) {
+            checkbox_select_member_takecare[i].checked = false;
+        }
     }
 }
 
 </script>
 
 <script>
-function click_Select_Takecare(user_id){
+    function click_for_load_data(room_id,user_id,status,lv_of_caretaker,member_takecare){
+        console.log("room_id :"+room_id);
+        const url = "{{ url('/') }}/api/member_for_checkbox" + "/" + room_id;
+        axios.get(url).then((response) => {
 
-    let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
-    let select_takecare = document.querySelector('#select_takecare'+user_id);
+            let result = JSON.stringify(response['data']);
+            console.log("user_id :"+user_id);
+            console.log("status :"+status);
+            console.log("lv_of_caretaker :"+lv_of_caretaker);
+            console.log("member_takecare :"+member_takecare);
+            console.log(JSON.stringify(member_takecare));
+            console.log(result);
+            const arr = member_takecare.split(",");
 
-    select_takecare.value = "" ;
+            if(status == 'member'){
+                // console.log(result);
+                document.getElementById('status_member_of_room'+user_id).click();
 
-    for (let i = 0; i < checkbox_select_takecare.length; i++) {
-        if (checkbox_select_takecare[i].checked) {
-            if (select_takecare.value === "") {
-                select_takecare.value = checkbox_select_takecare[i].value ;
+                // for (let index = 0; index < arr.length; index++) {
+                //     // console.log(arr[index]);
+                //     // console.log(result['user_id']);
+
+                //     if(arr[index] === result['user_id']){
+
+                //         document.getElementById('checkbox_select_member_takecare'+user_id).click();
+                //     }
+
+
+                // }
+
+                // for (let i = 0; i < response['user_id'].length; i++) {
+
+                //             console.log("deer");
+
+
+
+                // }
+
+
+
             }else{
-                select_takecare.value = select_takecare.value + "," +  checkbox_select_takecare[i].value ;
+                console.log("else");
+
+                document.getElementById('status_patient_of_room'+user_id).click();
+            }
+
+        }).catch((error) => {
+            console.log(error);
+        });
+
+
+    }
+</script>
+
+<script>
+    function click_Select_Member_Takecare(user_id){
+
+        let checkbox_select_member_takecare = document.getElementsByName('checkbox_select_member_takecare');
+        let select_member_takecare = document.querySelector('#select_member_takecare'+user_id);
+
+        select_member_takecare.value = "";
+
+        for (let i = 0; i < checkbox_select_member_takecare.length; i++) {
+            if (checkbox_select_member_takecare[i].checked) {
+                if (select_member_takecare.value === "") {
+                    select_member_takecare.value = checkbox_select_member_takecare[i].value ;
+                }else{
+                    select_member_takecare.value = select_member_takecare.value + "," + checkbox_select_member_takecare[i].value ;
+                }
+            }
+        }
+        // select_member_takecare.value = user_id + "," + select_member_takecare.value;
+    }
+
+    function click_Select_Takecare(user_id){
+
+        let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
+        let select_takecare = document.querySelector('#select_takecare'+user_id);
+
+        select_takecare.value = "" ;
+
+        for (let i = 0; i < checkbox_select_takecare.length; i++) {
+            if (checkbox_select_takecare[i].checked) {
+                if (select_takecare.value === "") {
+                    select_takecare.value = checkbox_select_takecare[i].value ;
+                }else{
+                    select_takecare.value = select_takecare.value + "," + checkbox_select_takecare[i].value ;
+                }
             }
         }
     }
-}
 </script>
 
 <script>
     function Check_before_submit(user_id,room_id,id){
-        let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
+        // let checkbox_select_takecare = document.getElementsByName('checkbox_select_takecare');
+        // let checkbox_select_member_takecare = document.getElementsByName('checkbox_select_member_takecare');
+        let select_member_takecare = document.querySelector('#select_member_takecare'+user_id);
         let select_takecare = document.querySelector('#select_takecare'+user_id);
         let data_member_room = [];
         document.querySelector('#data_member_form_db'+user_id).innerHTML = "";
         document.querySelector('#select_takecare'+user_id).innerHTML = "";
-        const url = "{{ url('/') }}/api/member_for_edit_status" + "/" + room_id + "?select_takecare=" + select_takecare.value + "&user_id=" + user_id;
+        const url = "{{ url('/') }}/api/member_for_edit_status" + "/" + room_id + "?select_takecare=" + select_takecare.value + "&user_id=" + user_id + "&select_member_takecare=" + select_member_takecare;
 
         axios.get(url).then((response) => {
             console.log(response);
         if(response['data'] && response['data'].length > 0){
             for (let i = 0; i < response['data'].length; i++) {
-                console.log(response['data'].length);
+                // console.log(response['data'].length);
 
+                console.log(response['data']);
                     let patient_id = response['data'][i]['patient_id'];
                     let name_patient = response['data'][i]['name_patient'];
                     let caregiver_id = response['data'][i]['caregiver_id'];
                     let caregiver_name = response['data'][i]['caregiver_name'];
                     let caregiver_new = response['data'][i]['caregiver_new'];
-
+                    // let assistant_name = JSON.stringify(response['data'][i]['assistant_name']);
+                    // console.log(assistant_name);
                     html =  '<div id="item_data_member_form_db'+patient_id+'">' +
                                 '<div class="header_edit_member mt-2">' +
                                     '<div class="header-line_edit_member">' +
@@ -384,6 +528,7 @@ function click_Select_Takecare(user_id){
 
         document.querySelector('#data_member_form_db'+user_id).innerHTML = "";
         document.querySelector('#select_takecare'+user_id).value = "";
+        document.querySelector('#select_member_takecare'+user_id).value = "";
 
         //clear radio เลือกสถานะ สมาชิกหรือผู้ป่วย
         let status_of_room = document.querySelectorAll('input[name="status_of_room"]');
@@ -399,6 +544,13 @@ function click_Select_Takecare(user_id){
         }
         document.querySelector('#takecare_fr'+user_id).classList.add('d-none');
 
+          //clear checkbox ของ เมมเบอร์ตอนเลือกดูแลผู้ป่วย
+          let checkbox_select_member_takecare = document.querySelectorAll('input[name="checkbox_select_member_takecare"]');
+        for (let i = 0; i < checkbox_select_member_takecare.length; i++) {
+            checkbox_select_member_takecare[i].checked = false;
+        }
+        document.querySelector('#member_takecare_fr'+user_id).classList.add('d-none');
+
         //clear radio ของ ผู้ป่วยตอนเลือกระดับผู้ป่วย
         let radio_lv_takecare = document.querySelectorAll('input[name="lv_of_caretaker"]');
 
@@ -408,5 +560,7 @@ function click_Select_Takecare(user_id){
 
     }
     </script>
+
+
 
 

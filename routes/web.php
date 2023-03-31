@@ -44,6 +44,19 @@ Route::get('test', 'TestController@test');
 Route::get('test_doc', 'TestController@test_doc');
 // Route::get('test_room', 'TestController@sentLineTest');
 
+//========================
+//     Video_Call Test
+//========================
+Route::get('video_call', 'TestController@video_call');
+// Route::get('/video_call', function () {
+//     return view('/test/video_call');
+// });
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/agora-chat', 'App\Http\Controllers\AgoraVideoController@index');
+    Route::post('/agora/token', 'App\Http\Controllers\AgoraVideoController@token');
+    Route::post('/agora/call-user', 'App\Http\Controllers\AgoraVideoController@callUser');
+});
 
 
 //========================

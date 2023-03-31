@@ -19,6 +19,7 @@
         "laravelcollective/html": "^6.3",
         "nesbot/carbon": "^2.65",
         "phattarachai/thaidate": "^12.1",
+        "pusher/pusher-php-server": "~4.0",
         "socialiteproviders/line": "^4.1"
     },
     "require-dev": {

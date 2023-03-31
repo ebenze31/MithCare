@@ -33,6 +33,8 @@ Route::get('/get_data_appoint/{appoint_id}', 'AppointController@get_data_appoint
 Route::get('/member_of_this_room/{room_id}', 'AppointController@get_data_member_of_this_room');
 // ดึงข้อมูลสมาชิกในบ้านทั้งหมดจาก DB: member_of_rooms -> room.edit_member.blade
 Route::get('/member_for_edit_status/{room_id}', 'RoomController@get_data_member_of_this_room');
+// ดึงข้อมูลสมาชิกในบ้านทั้งหมดจาก DB: member_of_rooms -> room.edit_member.blade ใช้สำหรับเลือก checkbox ตามข้อมูลในฐานข้อมูล
+Route::get('/member_for_checkbox/{room_id}/{user_id}/{status}', 'API\API_RoomController@get_data_member');
 // นับจำนวนคลิ๊ก หน้า Game
 Route::get('/game', 'API\GameController@update_Click');
 

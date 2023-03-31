@@ -6,7 +6,34 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 <style>
+    .owl-nav{
+        display: flex;
+        justify-content: space-between;
+
+        /* position: relative; */
+    }
+    .owl-prev,.owl-next {
+        position: absolute;
+        top: 30%;
+        transform: translateY(-50%);
+        font-size: 40px !important;
+    }
+
+    .owl-prev {
+        left: -1rem;
+
+    }
+    .owl-next {
+        right: -1rem;
+
+    }
     .close {
         float: right;
         font-size: 2rem;
@@ -291,19 +318,19 @@
                         <div class="member__img">
                             @if(!empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->avatar }}" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(!empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" width="100%">
+                                    <img src="{{ url('storage')}}/{{ $item->user->photo }}" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
 
                             @if(empty($item->user->avatar) and empty($item->user->photo))
                                 <div class="member__img ">
-                                    <img src="{{asset('/img/สติกเกอร์ Mithcare/18.png')}}" alt="member img" width="100%">
+                                    <img src="{{asset('/img/สติกเกอร์ Mithcare/18.png')}}" alt="member img" height="300px" width="100%">
                                 </div><!-- /.member-img -->
                             @endif
                         </div><!-- /.member-img -->
@@ -315,7 +342,9 @@
                                 @if (Auth::user()->id == $find_owner->user_id)
                                     <!-- ไอเท็มที่มีสถานะ ไอดีเจ้าของห้อง ไม่ต้องแสดงปุ่มแก้ไข-->
                                     @if ($item->status != 'owner')
-                                        <a class="btn-old btn-primary" onclick="edit_member(event); " data-toggle="modal" data-target="#edit_memberModal{{ $item->id}}">
+                                        <a class="btn-old btn-primary" onclick="edit_member(event,{{$item->user_id}},'{{$item->status}}','{{$item->room_id}}');"
+
+                                        data-toggle="modal" data-target="#edit_memberModal{{$item->id}}">
                                             <i class="fa-solid fa-pen-to-square text-white"></i>
                                         </a>
                                     @endif
@@ -335,7 +364,58 @@
                                     <p class="member__desc h5">เลเวล : {{$item->lv_of_caretaker}} (ไม่สามารถกดยืนยันใช้ยาเองได้)</p>
                                 @endif
                             @endif
+                                <br>
+                                <!-- แสดงเบอร์โทร ตามสถานะ-->
+                                @if ($member_from_login->user_id == Auth::user()->id)
+                                    @if ($member_from_login->status == 'owner')
+                                        <p class="member__desc h5">เบอร์โทร : {{$item->user->phone}}</p>
+                                    {{-- @elseif($member_from_login->status == 'member')
+                                        @php
+                                            $check_ouput = "";
+                                            if($item->caregiver){
+                                                if($item->sub_cargiver){
+                                                    $care_sub = explode(",",$item->sub_caregiver);
+                                                    for ($i=0; $i < count($care_sub); $i++) {
+                                                        if($care_sub[$i] == $item->user_id ){
+                                                            $check_ouput = "";
+                                                        }
+                                                    }
+                                                }else{
 
+                                                }
+                                            }elseif ($item->sub_caregiver) {
+                                                $care_sub = explode(",",$item->sub_caregiver);
+                                                for ($i=0; $i < count($care_sub); $i++) {
+                                                    if($care_sub[$i] == $item->user_id ){
+                                                        $check_ouput = "";
+                                                    }
+                                                }
+                                            }else{
+                                                $check_ouput = "d-none";
+                                            }
+                                        @endphp
+                                            @if($item->user_id == $member_from_login->user_id)
+                                                <p class="member__desc h5 ">เบอร์โทร : {{$item->user->phone}}</p>
+                                            @endif
+                                        <p class="member__desc h5 {{$check_ouput}}">เบอร์โทร : {{$item->user->phone}}</p>
+                                    @else
+                                        @php
+                                            $check_ouput2 = "";
+                                            if($item->caregiver){
+                                                $memtk2 = explode(",",$item->caregiver);
+                                                for ($i=0; $i < count($memtk2); $i++) {
+                                                        if($memtk2[$i] == $item->user_id ){
+                                                            $check_ouput2 = "";
+                                                        }
+                                                }
+                                            }else{
+                                                $check_ouput2 = "d-none";
+                                            }
+                                        @endphp --}}
+
+                                        <p class="member__desc h5 {{$check_ouput2}}">เบอร์โทร : {{$item->user->phone}}</p>
+                                    @endif
+                                @endif
 
 
                         </div><!-- /.member-info -->
@@ -427,8 +507,83 @@
 </script>
 
 <script>
-    function edit_member(event) {
-        // console.log("slick Pause")
+    function edit_member(event,user_id_member_of_room,status,room_id) {
+        console.log(user_id_member_of_room);
+        if(status == 'member'){
+            document.querySelector('#status_member_of_room'+user_id_member_of_room).click();
+        }else{
+            document.querySelector('#status_patient_of_room'+user_id_member_of_room).click();
+        }
+
+        const url = "{{ url('/') }}/api/member_for_checkbox" + "/" + room_id + "/" + user_id_member_of_room + "/" + status ;
+        axios.get(url).then((response) => {
+            console.log(response);
+            // let result = JSON.stringify(response['data']);
+            // console.log("user_id :"+user_id);
+            // console.log("status :"+status);
+            // console.log("lv_of_caretaker :"+lv_of_caretaker);
+            // console.log("member_takecare :"+member_takecare);
+            // console.log(JSON.stringify(member_takecare));
+            // console.log(result);
+            // const arr = member_takecare.split(",");
+
+            if(status == 'member'){
+                // console.log(result);
+                document.getElementById('status_member_of_room'+user_id).click();
+
+                // for (let index = 0; index < arr.length; index++) {
+                //     // console.log(arr[index]);
+                //     // console.log(result['user_id']);
+
+                //     if(arr[index] === result['user_id']){
+
+                //         document.getElementById('checkbox_select_member_takecare'+user_id).click();
+                //     }
+
+
+                // }
+
+                // for (let i = 0; i < response['user_id'].length; i++) {
+
+                //             console.log("deer");
+
+
+
+                // }
+
+
+
+            }else{
+                console.log("else");
+
+                document.getElementById('status_patient_of_room'+user_id).click();
+            }
+
+        }).catch((error) => {
+            console.log(error);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       // Prevent the default behavior of the click event
       event.preventDefault();
 

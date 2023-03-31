@@ -112,38 +112,7 @@
 
 </html>
 
-
+<script src="//sdk.twilio.com/js/video/releases/2.17.1/twilio-video.min.js"></script>
 <script>
-    // $("#profile-pic").click(function(e) {
-    //     $("#fileToUpload").click();
-    // });
-
-    // function fasterPreview(uploader) {
-    //     if (uploader.files && uploader.files[0]) {
-    //         $('#profile-pic').attr('src',
-    //             window.URL.createObjectURL(uploader.files[0]));
-    //     }
-    // }
-
-    // $("#fileToUpload").change(function() {
-    //     fasterPreview(this);
-    // });
-
-
-
-
-    $("#profileImage").click(function(e) {
-        $("#imageUpload").click();
-    });
-
-    function fasterPreview(uploader) {
-        if (uploader.files && uploader.files[0]) {
-            $('#profileImage').attr('src',
-                window.URL.createObjectURL(uploader.files[0]));
-        }
-    }
-
-    $("#imageUpload").change(function() {
-        fasterPreview(this);
-    });
+    const Video = Twilio.Video;
 </script>

@@ -9,6 +9,8 @@
     <link href="{{asset('/img/logo_mithcare/x-icon.png')}}" rel="icon">
     <title>MithCare</title>
 
+
+
     <!-- calendar -->
     <link href="{{ asset('mithcare/js/fullcalendar/css/main.css') }}" rel="stylesheet">
 
@@ -372,6 +374,8 @@
     </footer><!-- /.Footer -->
     <button id="scrollTopBtn"><i class="fas fa-long-arrow-alt-up"></i></button>
     </div><!-- /.wrapper -->
+
+
 
     <script src="{{ asset('mithcare/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('mithcare/js/plugins.js') }}"></script>

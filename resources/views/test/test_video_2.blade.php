@@ -30,9 +30,9 @@ let options =
     // Set the channel name.
     channel: 'MithCare',
     // Pass your temp token here.
-    token: '007eJxTYDjd+ETnYND/zSsDBRRcf8ardz1rXd1xwGzbpRt8JuuNm2sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NO4O1UhoCGRn2PVvIwsgAgSA+B4NvZkmGc2JRKgMDADI+Id4=',
+    token: '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=',
     // Set the user ID.
-    uid: '123456789',
+    uid: '',
 };
 
 let channelParameters =

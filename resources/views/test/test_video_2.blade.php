@@ -32,7 +32,7 @@ let options =
     // Pass your temp token here.
     token: '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=',
     // Set the user ID.
-    uid: '',
+    uid: "123456",
 };
 
 let channelParameters =

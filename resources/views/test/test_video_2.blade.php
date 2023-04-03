@@ -2,15 +2,15 @@
 
 @section('content')
 
-        <h2 class="left-align">Get started with video calling</h2>
+        <h3 class="text-center">Get started with video calling</h3>
         <div class="row d-flex justify-content-center">
             <div>
-                <button type="button" id="join">Join</button>
-                <button type="button" id="leave">Leave</button>
+                <button class="btn-old btn-primary" type="button" id="join">Join</button>
+                <button class="btn-old btn-danger" type="button" id="leave">Leave</button>
             </div>
         </div>
 
-        <div> </div>
+        <div id="data_video_call"></div>
 
 
 
@@ -20,7 +20,7 @@
 
 <script>
 // import AgoraRTC from "agora-rtc-sdk-ng"
-let show_data_video = document.querySelector('#show_data_room');
+let show_data_video = document.querySelector('#data_video_call');
 
 let options =
 {
@@ -31,7 +31,7 @@ let options =
     // Pass your temp token here.
     token: '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=',
     // Set the user ID.
-    uid: "{{Auth::user()->id}}",
+    uid: "{{Auth::user()->name}}",
 };
 
 let channelParameters =
@@ -51,11 +51,22 @@ async function startBasicCall()
 {
 // Create an instance of the Agora Engine
 
+// element is the element you want to wrap
+// var parent = element.parentNode;
+// var wrapper = document.createElement('div');
+
+// // set the wrapper as child (instead of the element)
+// parent.replaceChild(wrapper, element);
+// // set element as child of wrapper
+// wrapper.appendChild(element);
+
+
 const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 // Dynamically create a container in the form of a DIV element to play the remote video track.
 const remotePlayerContainer = document.createElement("div");
 // Dynamically create a container in the form of a DIV element to play the local video track.
 const localPlayerContainer = document.createElement('div');
+
 // Specify the ID of the DIV container. You can use the uid of the local user.
 localPlayerContainer.id = options.uid;
 // Set the textContent property of the local video container to the local user id.
@@ -91,6 +102,9 @@ if (mediaType == "video")
     document.body.append(remotePlayerContainer);
     // Play the remote video track.
     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+
+    show_data_video.appendChild(localPlayerContainer);
+    show_data_video.appendChild(remotePlayerContainer);
 }
 // Subscribe and play the remote audio track If the remote user publishes the audio track only.
 if (mediaType == "audio")

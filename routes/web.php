@@ -51,11 +51,14 @@ Route::get('video_call', 'TestController@video_call');
 // Route::get('/video_call', function () {
 //     return view('/test/video_call');
 // });
+Route::get('/test_video_2', function () {
+    return view('/test/test_video_2');
+});
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/agora-chat', 'App\Http\Controllers\AgoraVideoController@index');
-    Route::post('/agora/token', 'App\Http\Controllers\AgoraVideoController@token');
-    Route::post('/agora/call-user', 'App\Http\Controllers\AgoraVideoController@callUser');
+    Route::get('/agora-chat', 'AgoraVideoController@index');
+    Route::post('/agora/token', 'AgoraVideoController@token');
+    Route::post('/agora/call-user', 'AgoraVideoController@callUser');
 });
 
 

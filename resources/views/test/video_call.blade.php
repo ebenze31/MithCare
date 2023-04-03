@@ -1,7 +1,7 @@
 @extends('layouts.mithcare')
 
 @section('content')
-{{-- <main>
+<main>
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col">
           <div class="btn-group" role="group">
-            @foreach($user as $user)
+            @foreach($users as $user)
               <button
                 click="placeCall({{ $user->id }},{{ $user->name }})"
                 type="button"
@@ -69,12 +69,14 @@
         </button>
       </div>
     </section>
-  </main> --}}
+  </main>
 
+
+{{-- //////////////////////////////////////////////////////////////////////////////////////////////////////
   <h1>
     Video Call Demo<br><small style="font-size: 14pt">Powered by Agora.io</small>
 </h1>
-
+<input class="d-none" type="text" id="user_id_from_login" value="{{Auth::user()->id}}">
 <p>App id : <input type="text" id="app-id" value=""></p>
     <center>
         <button id="start" onclick="video_call_begin();">Start</button>
@@ -85,68 +87,67 @@
 <h4>Remote Feeds :</h4>
 <div id="remote-container">
 
-</div>
+</div> --}}
 
 <!-- Agora video call sdk-->
-<script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.3.1.js"></script>
+{{-- <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.3.1.js"></script> --}}
 
-<script src="scripts/script.js"></script>
 
 @endsection
 
 <script>
-// document.getElementById("start").onclick = function () {
-function video_call_begin(){
-// Client Setup
-// Defines a client for RTC
-    let client = AgoraRTC.createClient({
-        mode: 'live',
-        codec: "h264"
-    });
-    console.log(client);
-// Client Setup
-        let appid = document.getElementById("app-id").value;
-        let channelid = "any-channel";
-        let uid;
 
-// Defines a client for Real Time Communication
-    client.init("acb41870f41c48d4a42b7b0ef1532351",() => console.log("AgoraRTC client initialized") ,handleFail);
+// function video_call_begin(){
+// // Client Setup
+// // Defines a client for RTC
+//     let client = AgoraRTC.createClient({
+//         mode: 'live',
+//         codec: "h264"
+//     });
+//     console.log(client);
+// // Client Setup
+//         let appid = document.getElementById("app-id").value;
+//         let channelid = "any-channel";
+//         let uid = document.getElementById("user_id_from_login").value;
+//     console.log(uid);
+// // Defines a client for Real Time Communication
+//     client.init(appid,() => console.log("AgoraRTC client initialized") ,handleFail);
 
-// The client joins the channel
-    client.join(null,channelid,String(Date.now()).substr(7), (uid)=>{
+// // The client joins the channel
+//     client.join(null,channelid,String(Date.now()).substr(7), (uid)=>{
 
-        var localStream = AgoraRTC.createStream({
-            streamId: uid,
-            video: true,
-            audio: false,
-            screen: false,
-        });
-        localStream.init(function(){
+//         var localStream = AgoraRTC.createStream({
+//             streamId: uid,
+//             video: true,
+//             audio: false,
+//             screen: false,
+//         });
+//         localStream.init(function(){
 
-            //play the local video
-            localStream.play('me');
+//             //play the local video
+//             localStream.play('me');
 
-            client.publish(localStream, handleFail); // Publish it to the channel
-        });
-        // console.log(`App id : ${appid}\nChannel id : ${channelid}\nUser id : ${uid}`);
+//             client.publish(localStream, handleFail); // Publish it to the channel
+//         });
+//         // console.log(`App id : ${appid}\nChannel id : ${channelid}\nUser id : ${uid}`);
 
-    },handleFail);
+//     },handleFail);
 
-    //When a stream is added to a channel
-    client.on('stream-added', function (evt) {
-            client.subscribe(evt.stream, handleFail);
-        });
-    //When you subscribe to a stream
-        client.on('stream-subscribed', function (evt) {
-            let stream = evt.stream;
-            addVideoStream(stream.getId());
-            stream.play(stream.getId());
-        });
-    //When a person is removed from the stream
-        client.on('stream-removed',removeVideoStream);
-        client.on('peer-leave',removeVideoStream);
+//     //When a stream is added to a channel
+//     client.on('stream-added', function (evt) {
+//             client.subscribe(evt.stream, handleFail);
+//         });
+//     //When you subscribe to a stream
+//         client.on('stream-subscribed', function (evt) {
+//             let stream = evt.stream;
+//             addVideoStream(stream.getId());
+//             stream.play(stream.getId());
+//         });
+//     //When a person is removed from the stream
+//         client.on('stream-removed',removeVideoStream);
+//         client.on('peer-leave',removeVideoStream);
 
-};
+// };
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -156,42 +157,42 @@ function video_call_begin(){
 //  * @param err - error thrown by any function
 //  * @description Helper function to handle errors
 //  */
-let handleFail = function(err){
-    console.log("Error : ", err);
-};
+// let handleFail = function(err){
+//     console.log("Error : ", err);
+// };
 
-// Queries the container in which the remote feeds belong
-let remoteContainer= document.getElementById("remote-container");
+// // Queries the container in which the remote feeds belong
+// let remoteContainer= document.getElementById("remote-container");
 
-/**
- * @name addVideoStream
- * @param streamId
- * @description Helper function to add the video stream to "remote-container"
- */
-function addVideoStream(streamId){
-    let streamDiv=document.createElement("div"); // Create a new div for every stream
-    streamDiv.id=streamId;                       // Assigning id to div
-    streamDiv.style.transform="rotateY(180deg)"; // Takes care of lateral inversion (mirror image)
-    remoteContainer.appendChild(streamDiv);      // Add new div to container
-}
-/**
- * @name removeVideoStream
- * @param evt - Remove event
- * @description Helper function to remove the video stream from "remote-container"
- */
-function removeVideoStream (evt) {
-    let stream = evt.stream;
-    stream.stop();
-    let remDiv=document.getElementById(stream.getId());
-    remDiv.parentNode.removeChild(remDiv);
+// /**
+//  * @name addVideoStream
+//  * @param streamId
+//  * @description Helper function to add the video stream to "remote-container"
+//  */
+// function addVideoStream(streamId){
+//     let streamDiv=document.createElement("div"); // Create a new div for every stream
+//     streamDiv.id=streamId;                       // Assigning id to div
+//     streamDiv.style.transform="rotateY(180deg)"; // Takes care of lateral inversion (mirror image)
+//     remoteContainer.appendChild(streamDiv);      // Add new div to container
+// }
+// /**
+//  * @name removeVideoStream
+//  * @param evt - Remove event
+//  * @description Helper function to remove the video stream from "remote-container"
+//  */
+// function removeVideoStream (evt) {
+//     let stream = evt.stream;
+//     stream.stop();
+//     let remDiv=document.getElementById(stream.getId());
+//     remDiv.parentNode.removeChild(remDiv);
 
-    console.log("Remote stream is removed " + stream.getId());
-}
-</script>
+//     console.log("Remote stream is removed " + stream.getId());
+// }
+// </script>
 
-<script></script>
 
-  {{-- <script>
+
+<script>
   export default {
     name: "AgoraChat",
     props: ["authuser", "authuserid", "allusers", "agora_id"],
@@ -287,7 +288,8 @@ function removeVideoStream (evt) {
           console.log(error);
         }
       },
-      async acceptCall() {
+      async acceptCall(){
+        console.log("เข้า");
         this.initializeAgora();
         const tokenRes = await this.generateToken(this.agoraChannel);
         this.joinRoom(tokenRes.data, this.agoraChannel);
@@ -421,7 +423,7 @@ function removeVideoStream (evt) {
       },
     },
   };
-  </script> --}}
+  </script>
 
 
 
@@ -429,7 +431,7 @@ function removeVideoStream (evt) {
 
 
   <style scoped>
-  /* main {
+  main {
     margin-top: 50px;
   }
   #video-container {
@@ -479,10 +481,10 @@ function removeVideoStream (evt) {
   }
   #login-form {
     margin-top: 100px;
-  } */
+  }
 
 
-h1,h4,p{
+/* h1,h4,p{
     text-align: center;
 }
 button{
@@ -504,5 +506,5 @@ button{
 }
 #remote-container{
     display: flex;
-}
+} */
   </style>

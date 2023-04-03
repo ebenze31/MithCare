@@ -24,7 +24,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "agora-rtc-sdk-ng": "^4.17.0",
-        "fullcalendar": "^6.0.2"
+        "agora-rtc-sdk-ng": "^4.5.0",
+        "fullcalendar": "^6.0.2",
+        "laravel-echo": "^1.15.0",
+        "pusher-js": "^8.0.2"
     }
 }

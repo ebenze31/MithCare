@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Get started with video calling</title>
-    </head>
-    <body>
-        <script type="module" src="/main.js"></script>
+@extends('layouts.mithcare')
+
+@section('content')
+
         <h2 class="left-align">Get started with video calling</h2>
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div>
                 <button type="button" id="join">Join</button>
                 <button type="button" id="leave">Leave</button>
             </div>
         </div>
 
-<script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
+        <div> </div>
 
-{{-- <script src="https://cdn.agora.io/sdk/release/AgoraRTC_SDK_for_web-4.5.0.js"></script> --}}
 
+
+{{-- <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script> --}}
+
+<script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
 
 <script>
-
 // import AgoraRTC from "agora-rtc-sdk-ng"
+let show_data_video = document.querySelector('#show_data_room');
 
 let options =
 {
@@ -32,7 +31,7 @@ let options =
     // Pass your temp token here.
     token: '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=',
     // Set the user ID.
-    uid: "123456",
+    uid: "{{Auth::user()->id}}",
 };
 
 let channelParameters =
@@ -157,8 +156,7 @@ function removeVideoDiv(elementId)
 
 </script>
 
-    </body>
-</html>
+@endsection
 
 
 

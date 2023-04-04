@@ -2,15 +2,44 @@
 
 @section('content')
 
-        <h3 class="text-center">Get started with video calling</h3>
-        <div class="row d-flex justify-content-center">
-            <div>
-                <button class="btn-old btn-primary" type="button" id="join">Join</button>
-                <button class="btn-old btn-danger" type="button" id="leave">Leave</button>
-            </div>
-        </div>
+<style>
+      #data_video_call {
+        height: calc(40vh);
 
-        <div id="data_video_call"></div>
+        /* background-color: #3490dc; */
+        border-color: #3490dc;
+        border-style: solid;
+    }
+</style>
+        <center>
+            <div class="container ">
+
+                <h3 class="text-center">Get started with video calling</h3>
+                <div class="row d-flex justify-content-center ">
+                    <div>
+                        <button class="btn-old btn-primary" type="button" id="join">เข้าร่วม</button>
+                        <button class="btn-old btn-danger" type="button" id="leave">ออก</button>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-2">
+
+                    <div class="mt-2" id="data_video_call"></div>
+
+                    <button type="button" id="muteAudio" class="btn-old btn-primary mt-2"><i  class="fa-solid fa-microphone"></i></button>
+                    {{-- <button  id="toggle_video_btn" class="btn-old btn-success open"><i class="fa-solid fa-video"></i></button> --}}
+                    <button type="button" class="btn-old btn-success mt-2" id="muteVideo"><i class="fa-solid fa-video"></i></button>
+                </div>
+            </div>
+        </center>
+
+        {{-- <button type="button" id="inItScreen">Share Screen</button> --}}
+
+        {{-- <br><label> Local Audio Level :</label>
+        <input type="range" min="0" id= "localAudioVolume" max="100" step="1"><br>
+        <label> Remote Audio Level :</label>
+        <input type="range" min="0" id= "remoteAudioVolume" max="100" step="1"> --}}
+
 
 
 
@@ -22,6 +51,14 @@
 // import AgoraRTC from "agora-rtc-sdk-ng"
 let show_data_video = document.querySelector('#data_video_call');
 
+// ค้นหาปุ่มตาม id และเพิ่ม event listener
+// document.getElementById('mute-btn').addEventListener('click', toggleMute);
+// ค้นหาปุ่มตาม id และเพิ่ม event listener
+// document.getElementById('toggle_video_btn').addEventListener('click', toggleVideo);
+
+var isMuteVideo = false;
+var isMuteAudio = false;
+
 let options =
 {
     // Pass your App ID here.
@@ -29,12 +66,12 @@ let options =
     // Set the channel name.
     channel: 'MithCare',
     // Pass your temp token here.
-    token: '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=',
+    token: '007eJxTYPCZeuhRRtrJ1dqPEtfeer5g6kKmawfKtZ2E551K+iD+2MdOgSExOcnE0MLcIM3EMNnEIsUk0cQoyTzJIDXN0NTYyNjUUGK9dkpDICODhsUiJkYGCATxORh8M0synBOLUhkYAEQzIRs=',
     // Set the user ID.
     uid: "{{Auth::user()->name}}",
 };
 
-let channelParameters =
+var channelParameters =
 {
     // A variable to hold a local audio track.
     localAudioTrack: null,
@@ -64,9 +101,10 @@ async function startBasicCall()
 const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 // Dynamically create a container in the form of a DIV element to play the remote video track.
 const remotePlayerContainer = document.createElement("div");
+document.getElementById('data_video_call').appendChild(remotePlayerContainer);
 // Dynamically create a container in the form of a DIV element to play the local video track.
 const localPlayerContainer = document.createElement('div');
-
+document.getElementById('data_video_call').appendChild(localPlayerContainer);
 // Specify the ID of the DIV container. You can use the uid of the local user.
 localPlayerContainer.id = options.uid;
 // Set the textContent property of the local video container to the local user id.
@@ -103,8 +141,6 @@ if (mediaType == "video")
     // Play the remote video track.
     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
 
-    show_data_video.appendChild(localPlayerContainer);
-    show_data_video.appendChild(remotePlayerContainer);
 }
 // Subscribe and play the remote audio track If the remote user publishes the audio track only.
 if (mediaType == "audio")
@@ -157,6 +193,77 @@ window.onload = function ()
 }
 }
 startBasicCall();
+
+document.getElementById('muteVideo').onclick = async function () {
+    if(isMuteVideo == false) {
+        // Mute the local video.
+        channelParameters.localVideoTrack.setEnabled(false);
+        // Update the button text.
+        document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+        isMuteVideo = true;
+    } else {
+        // Unmute the local video.
+        channelParameters.localVideoTrack.setEnabled(true);
+        // Update the button text.
+        document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video"></i>';
+        isMuteVideo = false;
+    }
+}
+
+document.getElementById('muteAudio').onclick = async function () {
+    if(isMuteAudio == false) {
+        // Mute the local video.
+        channelParameters.localAudioTrack.setEnabled(false);
+        // Update the button text.
+        document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+        isMuteAudio = true;
+    } else {
+        // Unmute the local video.
+        channelParameters.localAudioTrack.setEnabled(true);
+        // Update the button text.
+        document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+        isMuteAudio = false;
+    }
+}
+
+function toggleMute() {
+  // เปลี่ยนแสดงสัญลักษณ์ปุ่ม
+  let muteBtn = document.getElementById('mute-btn');
+
+  // ค้นหาอินสแตนซ์ของ Agora Voice SDK
+  const agora = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+  // ถ้าไมค์เปิดให้ปิดและเปลี่ยนเป็นเสียงละครั้ง
+  if (channelParameters.localAudioTrack.setEnabled(true)) {
+    channelParameters.localAudioTrack.setEnabled(false);
+    muteBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+  } else { // ถ้าไมค์ปิดให้เปิดและเปลี่ยนเป็นเสียงละครั้ง
+    channelParameters.localAudioTrack.setEnabled(true);
+    muteBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+
+  }
+}
+
+// function toggleVideo() {
+//   // เปลี่ยนแสดงสัญลักษณ์ปุ่ม
+//   let muteBtn = document.getElementById('toggle_video_btn');
+
+//   // ค้นหาอินสแตนซ์ของ Agora Voice SDK
+//   const agora = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+//   // ถ้าวิดีโอเปิดให้ปิด
+//   if (channelParameters.localVideoTrack.EnableLocalVideo(true)) {
+
+//     channelParameters.localVideoTrack.setEnabled(false);
+//     muteBtn.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+
+//   } else { // ถ้าไมค์ปิดให้เปิด
+//     channelParameters.localVideoTrack.setEnabled(true);
+//     muteBtn.innerHTML = '<i class="fa-solid fa-video"></i>';
+
+//   }
+// }
+
+
+
 // Remove the video stream from the container.
 function removeVideoDiv(elementId)
 {

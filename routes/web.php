@@ -55,15 +55,12 @@ Route::get('/test_video_2', function () {
     return view('/test/test_video_2');
 });
 
-Route::get('/test_video_3', function () {
-    return view('/test/test_video_3');
-});
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/agora-chat', 'AgoraVideoController@index');
-    Route::post('/agora/token', 'AgoraVideoController@token');
-    Route::post('/agora/call-user', 'AgoraVideoController@callUser');
-});
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::get('/agora-chat', 'AgoraVideoController@index');
+//     Route::post('/agora/token', 'AgoraVideoController@token');
+//     Route::post('/agora/call-user', 'AgoraVideoController@callUser');
+// });
 
 
 //========================

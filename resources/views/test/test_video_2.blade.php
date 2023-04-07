@@ -11,6 +11,9 @@
         border-style: solid;
     }
 </style>
+<input class="d-none" type="text" id="textbox"/>
+
+<div id='app'></div>
         <center>
             <div class="container ">
 
@@ -42,19 +45,59 @@
 
 
 
-
-{{-- <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script> --}}
+<!--เรียกใช้ axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 
-<script>
+<script type="module">
 // import AgoraRTC from "agora-rtc-sdk-ng"
 let show_data_video = document.querySelector('#data_video_call');
 
-// ค้นหาปุ่มตาม id และเพิ่ม event listener
-// document.getElementById('mute-btn').addEventListener('click', toggleMute);
-// ค้นหาปุ่มตาม id และเพิ่ม event listener
-// document.getElementById('toggle_video_btn').addEventListener('click', toggleVideo);
+const url = "{{ url('/') }}/api/video_call";
+// fetch(url).then(response => response.json())
+//         .then(result => {
+//             console.log(result);
+//         });
+
+axios.post(url).then((response) => {
+            console.log(">>>>>>>>>>");
+            console.log(response['data']);
+            const newToken = response['data'];
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+// import { RtcTokenBuilder, RtmTokenBuilder, RtcRole, RtmRole } from "./agora-token";
+// import Agora from "./agora-access-token";
+// const RtcTokenBuilder = Agora.RtcTokenBuilder;
+// const RtmTokenBuilder = Agora.RtmTokenBuilder;
+// const RtcRole = Agora.RtcRole;
+// const RtmRole = Agora.RtmRole;
+
+// const generateRtcToken = () => {
+//   // Rtc Examples
+//   const appId = 'acb41870f41c48d4a42b7b0ef1532351';
+//   const appCertificate = '41aa313ac49f4e3d81f1a3056e122ca0';
+//   const channelName = 'MithCare';
+//   const role = RtcRole.PUBLISHER;
+
+//   const expirationTimeInSeconds = 3600
+
+//   const currentTimestamp = Math.floor(Date.now() / 1000)
+
+//   const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
+
+//   // IMPORTANT! Build token with either the uid or with the user account. Comment out the option you do not want to use below.
+
+//   // Build token with uid
+//   const tokenA = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, role, privilegeExpiredTs);
+//   console.log("Token With Integer Number Uid: " + tokenA);
+
+// }
+// generateRtcToken()
+
 
 var isMuteVideo = false;
 var isMuteAudio = false;
@@ -63,12 +106,24 @@ let options =
 {
     // Pass your App ID here.
     appId: 'acb41870f41c48d4a42b7b0ef1532351',
+
+    appCertificate: '41aa313ac49f4e3d81f1a3056e122ca0',
+
+    currentTimestamp: Math.floor(Date.now() / 1000),
+
+    expirationTimeInSeconds: 3600,
+
+    privilegeExpiredTs: Math.floor(Date.now() / 1000) + 3600,
     // Set the channel name.
     channel: 'MithCare',
     // Pass your temp token here.
-    token: '007eJxTYPCZeuhRRtrJ1dqPEtfeer5g6kKmawfKtZ2E551K+iD+2MdOgSExOcnE0MLcIM3EMNnEIsUk0cQoyTzJIDXN0NTYyNjUUGK9dkpDICODhsUiJkYGCATxORh8M0synBOLUhkYAEQzIRs=',
+    // token: '007eJxTYLh98vS2m9c/F7/wyaq/x7z0RfHOu2GT91gYGIq+rjA4V6yiwJCYnGRiaGFukGZimGxikWKSaGKUZJ5kkJpmaGpsZGxquPWLTkpDICODcnAaIyMDBIL4HAy+mSUZzolFqQwMAL+dIqs=',
+    // token: tokenA,
+    // role: RtcRole.PUBLISHER,
     // Set the user ID.
-    uid: "{{Auth::user()->name}}",
+    uid: '{{Auth::user()->name}}',
+
+    token: newToken,
 };
 
 var channelParameters =
@@ -84,6 +139,8 @@ var channelParameters =
     // A variable to hold the remote user id.s
     remoteUid: null,
 };
+
+
 async function startBasicCall()
 {
 // Create an instance of the Agora Engine

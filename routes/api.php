@@ -80,3 +80,7 @@ Route::get('/submit_show_homepage/{partner_id}/{input_show_homepage}', 'API\Part
 
 Route::get('/marker_current/{name_partner}', 'API\PartnersController@marker_current');
 
+
+// หาห้องจากการค้นหา หน้าขอเข้าร่วมห้อง
+Route::post('/video_call', 'AgoraVideoController@token');
+

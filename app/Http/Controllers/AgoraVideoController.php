@@ -2,12 +2,12 @@
 
 
 namespace App\Http\Controllers;
-
+use Willywes\AgoraSDK\RtcTokenBuilder;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Classes\AgoraDynamicKey\RtcTokenBuilder;
+// use App\Classes\AgoraDynamicKey\RtcTokenBuilder;
 // use Classes\AgoraDynamicKey\RtcTokenBuilder;
 use App\Events\MakeAgoraCall;
 
@@ -22,8 +22,7 @@ class AgoraVideoController extends Controller
 
     public function token(Request $request)
     {
-        // include("../MithCare/Classes/AgoraDynamicKey/RtcTokenBuilder.php");
-        // // include("../MithCare/Class/AgoraDynamicKey/RtcTokenBuilder.php");
+
         $appID = 'acb41870f41c48d4a42b7b0ef1532351';
         $appCertificate = '41aa313ac49f4e3d81f1a3056e122ca0';
         $channelName = 'MithCare';
@@ -35,6 +34,12 @@ class AgoraVideoController extends Controller
 
         // $token = [$appID,$appCertificate,$channelName,$user,$expireTimeInSeconds,$currentTimestamp,$privilegeExpiredTs,$role];
         $token = RtcTokenBuilder::buildTokenWithUid($appID, $appCertificate, $channelName, $user, $role, $privilegeExpiredTs);
+
+        if($token){
+            $token = $token;
+        }else{
+            $token = "ไม่มี TOKEN";
+        }
 
         return $token;
     }

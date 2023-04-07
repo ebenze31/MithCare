@@ -2,7 +2,7 @@
 
 namespace App\Classes\AgoraDynamicKey;
 use AccessToken;
-
+// require_once '../MithCare/app/Classes/AgoraDynamicKey/AccessToken.php';
 
 class RtcTokenBuilder
 {
@@ -43,18 +43,20 @@ class RtcTokenBuilder
     #                    Agora Service within 10 minutes after the token is
     #                    generated, set expireTimestamp as the current
     public static function buildTokenWithUserAccount($appID, $appCertificate, $channelName, $userAccount, $role, $privilegeExpireTs){
-        $token = AccessToken::init($appID, $appCertificate, $channelName, $userAccount);
-        $Privileges = AccessToken::Privileges;
-        $token->addPrivilege($Privileges["kJoinChannel"], $privilegeExpireTs);
-        if(($role == RtcTokenBuilder::RoleAttendee) ||
-            ($role == RtcTokenBuilder::RolePublisher) ||
-            ($role == RtcTokenBuilder::RoleAdmin))
-        {
-            $token->addPrivilege($Privileges["kPublishVideoStream"], $privilegeExpireTs);
-            $token->addPrivilege($Privileges["kPublishAudioStream"], $privilegeExpireTs);
-            $token->addPrivilege($Privileges["kPublishDataStream"], $privilegeExpireTs);
-        }
-        return $token->build();
+        // $token = AccessToken::init($appID, $appCertificate, $channelName, $userAccount);
+        // $Privileges = AccessToken::Privileges;
+        // // echo $Privileges;
+        // $token->addPrivilege($Privileges["kJoinChannel"], $privilegeExpireTs);
+        // if(($role == RtcTokenBuilder::RoleAttendee) ||
+        //     ($role == RtcTokenBuilder::RolePublisher) ||
+        //     ($role == RtcTokenBuilder::RoleAdmin))
+        // {
+        //     $token->addPrivilege($Privileges["kPublishVideoStream"], $privilegeExpireTs);
+        //     $token->addPrivilege($Privileges["kPublishAudioStream"], $privilegeExpireTs);
+        //     $token->addPrivilege($Privileges["kPublishDataStream"], $privilegeExpireTs);
+        // }
+        // return $token->build();
+        return "หวัดดีครับ";
     }
 }
 

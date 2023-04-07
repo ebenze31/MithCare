@@ -82,5 +82,5 @@ Route::get('/marker_current/{name_partner}', 'API\PartnersController@marker_curr
 
 
 // หาห้องจากการค้นหา หน้าขอเข้าร่วมห้อง
-Route::post('/video_call', 'AgoraVideoController@token');
+Route::get('/video_call', 'AgoraVideoController@token');
 

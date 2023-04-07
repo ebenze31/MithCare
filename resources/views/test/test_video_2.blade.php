@@ -51,22 +51,26 @@
 <script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 
-<script type="module">
+<script >
 // import AgoraRTC from "agora-rtc-sdk-ng"
 let show_data_video = document.querySelector('#data_video_call');
 
 const url = "{{ url('/') }}/api/video_call";
-// fetch(url).then(response => response.json())
+console.log("----------------------------------------------------");
+// fetch(url).then(response => response.text())
 //         .then(result => {
 //             console.log(result);
 //         });
 
-axios.post(url).then((response) => {
-            console.log(">>>>>>>>>>");
+axios.get(url).then((response) => {
+            console.log("------------------------------------");
             console.log(response['data']);
+            console.log(">>>>>>>>>>");
+
             const newToken = response['data'];
         })
         .catch((error) => {
+            console.log("ERROR HERE");
             console.log(error);
         });
 // import { RtcTokenBuilder, RtmTokenBuilder, RtcRole, RtmRole } from "./agora-token";
@@ -153,7 +157,8 @@ async function startBasicCall()
 // parent.replaceChild(wrapper, element);
 // // set element as child of wrapper
 // wrapper.appendChild(element);
-
+console.log("-------------------- startBasicCall ------------------");
+console.log(newToken);
 
 const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 // Dynamically create a container in the form of a DIV element to play the remote video track.

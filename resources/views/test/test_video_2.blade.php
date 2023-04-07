@@ -75,7 +75,7 @@
                     // token: tokenA,
                     // role: RtcRole.PUBLISHER,
                     // Set the user ID.
-                    uid: '{{ Auth::user()->name }}',
+                    uid: '{{ Auth::user()->id }}',
 
                     token: "",
                 };

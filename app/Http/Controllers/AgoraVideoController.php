@@ -22,11 +22,12 @@ class AgoraVideoController extends Controller
 
     public function token(Request $request)
     {
+        $login_id = Auth::id();
 
         $appID = 'acb41870f41c48d4a42b7b0ef1532351';
         $appCertificate = '41aa313ac49f4e3d81f1a3056e122ca0';
         $channelName = 'MithCare';
-        $user = "deer";
+        $user = $login_id;
         $role = RtcTokenBuilder::RoleAttendee;
         $expireTimeInSeconds = 3600;
         $currentTimestamp = now()->getTimestamp();

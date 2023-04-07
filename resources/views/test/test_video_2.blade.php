@@ -56,18 +56,18 @@
 let show_data_video = document.querySelector('#data_video_call');
 
 const url = "{{ url('/') }}/api/video_call";
-console.log("----------------------------------------------------");
+
 // fetch(url).then(response => response.text())
 //         .then(result => {
 //             console.log(result);
 //         });
-
+var newToken;
 axios.get(url).then((response) => {
             console.log("------------------------------------");
             console.log(response['data']);
             console.log(">>>>>>>>>>");
 
-            const newToken = response['data'];
+            newToken = response['data'];
         })
         .catch((error) => {
             console.log("ERROR HERE");

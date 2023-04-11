@@ -20,6 +20,8 @@
             max-height: 100%;
             overflow: hidden;
         }
+
+
     </style>
     <input class="d-none" type="text" id="textbox" />
 
@@ -32,17 +34,18 @@
                 <div >
                     <button class="btn-old btn-primary" type="button" id="join">เข้าร่วม</button>
                     <button class="btn-old btn-danger" type="button" id="leave">ออก</button>
-                    <button type="button" class="btn-old btn-primary mt-2" id="muteAudio_beforeJoin">
+                    {{-- <button type="button" class="btn-old btn-primary mt-2" id="muteAudio_beforeJoin">
                         <i class="fa-solid fa-microphone"></i>
                     </button>
                     <button type="button" class="btn-old btn-success mt-2" id="muteVideo_beforeJoin">
                         <i   class="fa-solid fa-video"></i>
-                    </button>
+                    </button> --}}
                 </div>
             </div>
 
             <div id="div_for_videoCall" class="row mt-2">
                 <div class="mt-2 col-12 col-md-6 col-lg-6" id="data_video_call"></div>
+                <div class="mt-2 col-12 col-md-6 col-lg-6" id="remote_video_call"></div>
             </div>
         </div>
     </center>
@@ -108,13 +111,13 @@
 
         var channelParameters = {
             // A variable to hold a local audio track.
-            localAudioTrack: false,
+            localAudioTrack: null,
             // A variable to hold a local video track.
-            localVideoTrack: false,
+            localVideoTrack: null,
             // A variable to hold a remote audio track.
-            remoteAudioTrack: false,
+            remoteAudioTrack: null,
             // A variable to hold a remote video track.
-            remoteVideoTrack: false,
+            remoteVideoTrack: null,
             // A variable to hold the remote user id.s
             remoteUid: null,
         };
@@ -227,30 +230,35 @@
             }
 
             localPlayerContainer.style.width = "100%";
-            localPlayerContainer.style.height = "calc(40vh)";
+            if (window.innerWidth <= 768) {
+                // If the screen height is less than or equal to 768px, set the height of remotePlayerContainer to 35% of the screen height.
+                localPlayerContainer.style.height = "35vh";
+            } else {
+                // If the screen height is greater than 1024px, set the height of remotePlayerContainer to 60% of the screen height.
+                localPlayerContainer.style.height = "60vh";
+            }
             localPlayerContainer.style.maxWidth = '100%';
             localPlayerContainer.style.maxHeight = '100%';
             // localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
             // Set the remote video container size.
             remotePlayerContainer.style.width = "100%";
-            remotePlayerContainer.style.height = "calc(40vh)";
+            // Check if the screen width is less than or equal to 768px.
+
+            // Check the height of the screen.
+            if (window.innerHeight <= 768) {
+                // If the screen height is less than or equal to 768px, set the height of remotePlayerContainer to 35% of the screen height.
+                remotePlayerContainer.style.height = "35vh";
+            } else {
+                // If the screen height is greater than 1024px, set the height of remotePlayerContainer to 60% of the screen height.
+                remotePlayerContainer.style.height = "60vh";
+            }
             remotePlayerContainer.style.maxWidth = '100%';
             remotePlayerContainer.style.maxHeight = '100%';
             // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
 
 
-            // window.addEventListener('resize', function() {
-            //     localPlayerContainer.style.width = window.innerWidth + 'px';
-            //     localPlayerContainer.style.height = window.innerWidth + 'px';
-            //     // localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
-            //     // Set the remote video container size.
-            //     remotePlayerContainer.style.width = window.innerWidth + 'px';
-            //     remotePlayerContainer.style.height = window.innerWidth + 'px';
-            //     // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
-
-            // });
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -269,7 +277,7 @@
                     channelParameters.remoteUid = user.uid.toString();
                     remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
                     // Append the remote container to the page body.
-                    data_video_call.append(remotePlayerContainer);
+                    remote_video_call.append(remotePlayerContainer);
                     // Play the remote video track.
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
@@ -299,9 +307,8 @@
                     // Append the local video container to the page body.
                     show_data_video.append(localPlayerContainer);
                     // Publish the local audio and video tracks in the channel.
-                    await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters
-                        .localVideoTrack
-                    ]);
+                    await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
+
                     // Play the local video track.
 
                     // document.getElementById('muteAudio_beforeJoin').classList.add('d-none');

@@ -1,64 +1,86 @@
-@extends('layouts.mithcare')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Basic Video Call -- Agora</title>
+  <link rel="stylesheet" href="./vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <div class="container-fluid banner">
+    <p class="banner-text">Basic Video Call</p>
+    <a style="color: rgb(255, 255, 255);fill: rgb(255, 255, 255);fill-rule: evenodd; position: absolute; right: 10px; top: 4px;"
+      class="Header-link " href="https://github.com/AgoraIO-Community/AgoraWebSDK-NG/tree/master/Demo">
+      <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+    </a>
+  </div>
 
-@section('content')
+  <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Congratulations!</strong><span> You can invite others join this channel by click </span><a href="" target="_blank">here</a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div id="success-alert-with-token" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Congratulations!</strong><span> Joined room successfully. </span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div id="success-alert-with-token" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Congratulations!</strong><span> Joined room successfully. </span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <h2 class="left-align">Get started with video calling</h2>
-    <div class="row justify-content-around">
-        <div>
-            <center>
-                <button class="btn btn-primary" type="button" id="join">Join</button>
-                <button class="btn btn-danger" type="button" id="leave">Leave</button>
-            </center>
-        </div>
+  <div class="container">
+    <form id="join-form">
+      <div class="row join-info-group">
+          <div class="col-sm">
+            <p class="join-info-text">AppID</p>
+            <input id="appid" type="text" placeholder="enter appid" required>
+            <p class="tips">If you don`t know what is your appid, checkout <a href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#a-nameappidaapp-id">this</a></p>
+          </div>
+          <div class="col-sm">
+            <p class="join-info-text">Token(optional)</p>
+            <input id="token" type="text" placeholder="enter token">
+            <p class="tips">If you don`t know what is your token, checkout <a href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#a-namekeyadynamic-key">this</a></p>
+          </div>
+          <div class="col-sm">
+            <p class="join-info-text">Channel</p>
+            <input id="channel" type="text" placeholder="enter channel name" required>
+            <p class="tips">If you don`t know what is your channel, checkout <a href="https://docs.agora.io/en/Agora%20Platform/terms?platform=All%20Platforms#channel">this</a></p>
+          </div>
+      </div>
+
+      <div class="button-group">
+        <button id="join" type="submit" class="btn btn-primary btn-sm">Join</button>
+        <button id="leave" type="button" class="btn btn-primary btn-sm" disabled>Leave</button>
+      </div>
+    </form>
+
+    <div class="row video-group">
+      <div class="col">
+        <p id="local-player-name" class="player-name"></p>
+        <div id="local-player" class="player"></div>
+      </div>
+      <div class="w-100"></div>
+      <div class="col">
+        <div id="remote-playerlist"></div>
+      </div>
     </div>
+  </div>
+  <script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
+  <script src="{{ asset('Agora_Web_SDK_FULL/index.js') }}"></script>
+  <script src="{{ asset('vendor/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ asset('vendor/bootstrap.bundle.min.js') }}"></script>
 
-    <h1>Agora RTC Demo</h1>
-    <div id="me"></div>
-
-<script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
-<!-- <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-4.4.0.js"></script> -->
-
-<!-- <script src="https://cdn.agora.io/sdk/release/AgoraRTC_SDK_for_web-4.5.0.js"></script> -->
-
-<script>
-    // Pass your App ID here.
-    var appId = 'acb41870f41c48d4a42b7b0ef1532351';
-    var channel = 'MithCare';
-
-    var token = '007eJxTYHg9Y+t0SzPLlqSA+gn8m8y7blgcdJnkvNzf9m7ygkWu81sUGBKTk0wMLcwN0kwMk00sUkwSTYySzJMMUtMMTY2NjE0NN4RrpTQEMjJ86vZiZmSAQBCfg8E3syTDObEolYEBAKWzIB8=';
-
-
-    // เปิด connection กับ Agora RTC ด้วย appId
-    const client = AgoraRTC.createClient({mode: 'live', codec: 'vp8'});
-    client.init(appId, function () {
-      console.log('AgoraRTC client initialized');
-    }, function (err) {
-      console.log('AgoraRTC client init failed', err);
-    });
-
-    // เข้าร่วมห้องแชท
-    client.join(null, channel, null, function(uid) {
-      console.log('User ' + uid + ' joined channel');
-    }, function(err) {
-      console.log('Join channel error', err);
-    });
-
-    // สร้างและแสดง video stream
-    const localStream = AgoraRTC.createStream({
-      video: true,
-      audio: false,
-    });
-    localStream.init(function() {
-      console.log('getUserMedia successfully');
-      localStream.play('me');
-    }, function(err) {
-      console.log('getUserMedia failed', err);
-    });
-
-</script>
-
-@endsection
-
-
-
-
+  {{-- <script src="./vendor/jquery-3.4.1.min.js"></script>
+  <script src="./vendor/bootstrap.bundle.min.js"></script>
+  <script src="./AgoraRTC_N-4.17.0.js"></script>
+  <script src="./index.js"></script> --}}
+</body>
+</html>

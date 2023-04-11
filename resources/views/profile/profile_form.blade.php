@@ -27,8 +27,7 @@
 
     <div class="form-group {{ $errors->has('birthday') ? 'has-error' : ''}} col-12 col-md-6">
         <label for="birthday" class="control-label" style="font-size: 25px;">{{ 'วันเกิด' }}</label><span class="text-danger">*</span>
-        <input class="form-control input" name="birthday" type="date" id="birthday" value="{{ isset($user->birthday) ? $user->birthday : ''}}" required>{!! $errors->first('name', '<p class="help-block">:รูปแบบอีเมลไม่ถูกต้อง</p>') !!}
-
+        <input class="form-control input" name="birthday" type="date" id="birthday" value="{{ isset($user->birthday) ? $user->birthday : ''}}" required>
     </div> <!--///  วันเกิด /// -->
 </div>
 
@@ -209,3 +208,35 @@
             });
     }
 </script>
+
+{{--
+<script>
+    // รูปแบบวันที่ที่ต้องการแสดงผล เช่น "dd/mm/yyyy"
+    const dateFormat = "dd/mm/yyyy";
+
+    // ฟังก์ชันเพื่อเปลี่ยนแปลงรูปแบบวันที่
+    function formatDate(date) {
+        // หากไม่ได้รับวันที่เข้ามาให้ใช้วันปัจจุบัน
+        // if (!date) {
+        //     date = new Date();
+        // }
+
+        // แยกวัน เดือน ปี ออกจากวันที่
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear();
+
+        // คืนค่าวันที่ในรูปแบบที่ต้องการ
+        return dateFormat.replace("dd", day).replace("mm", month).replace("yyyy", year);
+    }
+
+    // เมื่อ input มีการเปลี่ยนแปลงค่าให้เปลี่ยนรูปแบบวันที่และแสดงผลใหม่
+    document.getElementById("birthday").addEventListener("change", function () {
+        const date = new Date(this.value);
+        this.value = formatDate(date);
+    });
+
+    // ให้แสดงผลวันเกิดในรูปแบบที่ต้องการเมื่อโหลดหน้าเว็บ
+    const date = new Date(document.getElementById("birthday").value);
+    document.getElementById("birthday").value = formatDate(date);
+</script> --}}

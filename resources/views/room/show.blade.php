@@ -366,7 +366,7 @@
                             @endif
                                 <br>
                                 <!-- แสดงเบอร์โทร ตามสถานะ-->
-                                @if ($member_from_login->user_id == Auth::user()->id)
+                                {{-- @if ($member_from_login->user_id == Auth::user()->id)
                                     @if ($member_from_login->status == 'owner')
                                         <p class="member__desc h5">เบอร์โทร : {{$item->user->phone}}</p>
                                     {{-- @elseif($member_from_login->status == 'member')
@@ -411,11 +411,11 @@
                                             }else{
                                                 $check_ouput2 = "d-none";
                                             }
-                                        @endphp --}}
+                                        @endphp
 
                                         <p class="member__desc h5 {{$check_ouput2}}">เบอร์โทร : {{$item->user->phone}}</p>
                                     @endif
-                                @endif
+                                @endif --}}
 
 
                         </div><!-- /.member-info -->

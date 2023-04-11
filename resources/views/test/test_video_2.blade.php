@@ -32,11 +32,17 @@
                 <div >
                     <button class="btn-old btn-primary" type="button" id="join">เข้าร่วม</button>
                     <button class="btn-old btn-danger" type="button" id="leave">ออก</button>
+                    <button type="button" class="btn-old btn-primary mt-2" id="muteAudio_beforeJoin">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <button type="button" class="btn-old btn-success mt-2" id="muteVideo_beforeJoin">
+                        <i   class="fa-solid fa-video"></i>
+                    </button>
                 </div>
             </div>
 
-            <div class="col-12 mt-2">
-                    <div class="mt-2" id="data_video_call"></div>
+            <div id="div_for_videoCall" class="row mt-2">
+                <div class="mt-2 col-12 col-md-6 col-lg-6" id="data_video_call"></div>
             </div>
         </div>
     </center>
@@ -102,16 +108,28 @@
 
         var channelParameters = {
             // A variable to hold a local audio track.
-            localAudioTrack: null,
+            localAudioTrack: false,
             // A variable to hold a local video track.
-            localVideoTrack: null,
+            localVideoTrack: false,
             // A variable to hold a remote audio track.
-            remoteAudioTrack: null,
+            remoteAudioTrack: false,
             // A variable to hold a remote video track.
-            remoteVideoTrack: null,
+            remoteVideoTrack: false,
             // A variable to hold the remote user id.s
             remoteUid: null,
         };
+
+        // if(channelParameters.localAudioTrack || channelParameters.localVideoTrack != null){
+        //     let TextBeforeJoining = document.querySelector('#div_for_videoCall');
+        //     let html =
+        //                     '<div id="div_btn_join_laew_room" class="col-12 col-md-6 col-lg-4 d-none">' +
+        //                         '<span class="btn btn-success p-0 m-2" style="font-size: 20px; color: white;" >' +
+        //                             'เข้าร่วมแล้ว' +
+        //                         '</span>' +
+        //                     '</div>' ;
+
+        //         TextBeforeJoining.innerHTML = html;
+        // }
 
 
         async function startBasicCall() {
@@ -173,12 +191,16 @@
                         channelParameters.localVideoTrack.setEnabled(false);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                        muteVideoButton.classList.add('btn-danger');
+                        muteVideoButton.classList.remove('btn-success');
                         isMuteVideo = true;
                     } else {
                         // Unmute the local video.
                         channelParameters.localVideoTrack.setEnabled(true);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                        muteVideoButton.classList.add('btn-success');
+                        muteVideoButton.classList.remove('btn-danger');
                         isMuteVideo = false;
                     }
                 }
@@ -189,12 +211,16 @@
                         channelParameters.localAudioTrack.setEnabled(false);
                         // Update the button text.
                         document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        muteButton.classList.add('btn-danger');
+                        muteButton.classList.remove('btn-primary');
                         isMuteAudio = true;
                     } else {
                         // Unmute the local video.
                         channelParameters.localAudioTrack.setEnabled(true);
                         // Update the button text.
                         document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        muteButton.classList.add('btn-primary');
+                        muteButton.classList.remove('btn-danger');
                         isMuteAudio = false;
                     }
                 }
@@ -214,17 +240,17 @@
             // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
 
 
-            window.addEventListener('resize', function() {
-                localPlayerContainer.style.width = window.innerWidth + 'px';
-                localPlayerContainer.style.height = window.innerWidth + 'px';
-                // localPlayerContainer.style.padding = "15px 5px 5px 5px";
+            // window.addEventListener('resize', function() {
+            //     localPlayerContainer.style.width = window.innerWidth + 'px';
+            //     localPlayerContainer.style.height = window.innerWidth + 'px';
+            //     // localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
-                // Set the remote video container size.
-                remotePlayerContainer.style.width = window.innerWidth + 'px';
-                remotePlayerContainer.style.height = window.innerWidth + 'px';
-                // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
+            //     // Set the remote video container size.
+            //     remotePlayerContainer.style.width = window.innerWidth + 'px';
+            //     remotePlayerContainer.style.height = window.innerWidth + 'px';
+            //     // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
 
-            });
+            // });
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -278,6 +304,9 @@
                     ]);
                     // Play the local video track.
 
+                    // document.getElementById('muteAudio_beforeJoin').classList.add('d-none');
+                    // document.getElementById('muteVideo_beforeJoin').classList.add('d-none');
+
                     channelParameters.localVideoTrack.play(localPlayerContainer);
                     console.log("publish success!");
                 }
@@ -289,6 +318,11 @@
                     // Remove the containers you created for the local video and remote video.
                     removeVideoDiv(remotePlayerContainer.id);
                     removeVideoDiv(localPlayerContainer.id);
+
+                    // Show Button Before Join
+                    // document.getElementById('muteAudio_beforeJoin').classList.remove('d-none');
+                    // document.getElementById('muteVideo_beforeJoin').classList.remove('d-none');
+
                     // Leave the channel
                     await agoraEngine.leave();
                     console.log("You left the channel");

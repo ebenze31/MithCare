@@ -154,8 +154,7 @@
 
             // สร้าง element รูปภาพ
             const imgUser = document.createElement('img');
-            imgUser.src = ('{{ (asset('storage/')) }}' + user.photo);
-            // imgUser.alt = user.name; // แทนที่ "name" ด้วยชื่อ field ของชื่อผู้ใช้งานในฐานข้อมูลของคุณ
+            imgUser.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
 
             const nameUser = document.createElement('div');
             nameUser.innerHTML = user.name;
@@ -165,7 +164,7 @@
             imgdiv.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
             imgdiv.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
             imgdiv.style.position = 'absolute';
-            imgdiv.style.left = '8';
+            imgdiv.style.left = '0';
             imgdiv.style.bottom = '0';
             imgdiv.style.zIndex = '1';
 
@@ -274,6 +273,8 @@
             }
             remotePlayerContainer.style.maxWidth = '100%';
 
+
+
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -297,6 +298,8 @@
                     // Play the remote video track.
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+
+
 
                 }
                 // Subscribe and play the remote audio track If the remote user publishes the audio track only.
@@ -400,6 +403,8 @@
                     timeButton.insertBefore(minutes,timeButton.firstChild);
                     timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
                     // timeButton.insertBefore(seconds,timeButton.firstChild);
+
+
                     // Append the local video container to the page body.
                     show_data_video.append(localPlayerContainer);
                     // Publish the local audio and video tracks in the channel.

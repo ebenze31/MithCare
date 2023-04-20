@@ -158,7 +158,11 @@
 
             // สร้าง element รูปภาพ
             const imgLocal = document.createElement('img');
-            imgLocal.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
+            if(user.avatar){
+                imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->avatar }}";
+            }else{
+                imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+            }
 
             const nameLocal = document.createElement('div');
             nameLocal.innerHTML = user.name;
@@ -183,7 +187,11 @@
 
             // สร้าง element รูปภาพ
             const imgRemote = document.createElement('img');
-            imgRemote.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
+            if(user.avatar){
+                imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->avatar }}";
+            }else{
+                imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+            }
 
             const nameRemote = document.createElement('div');
             nameRemote.innerHTML = user.name;

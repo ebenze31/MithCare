@@ -149,15 +149,19 @@
             remotePlayerContainer.style.position = 'relative'; // Set position to relative for the container
             localPlayerContainer.style.position = 'relative'; // Set position to relative for the container
 
+            //======================
+            //   Profile Local
+            //======================
+
             // ดึงข้อมูลผู้ใช้งานจาก auth
             const user = {!! json_encode(auth()->user()) !!};
 
             // สร้าง element รูปภาพ
-            const imgUser = document.createElement('img');
-            imgUser.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
+            const imgLocal = document.createElement('img');
+            imgLocal.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
 
-            const nameUser = document.createElement('div');
-            nameUser.innerHTML = user.name;
+            const nameLocal = document.createElement('div');
+            nameLocal.innerHTML = user.name;
             // สร้าง element div สำหรับรอบรูปภาพ
             const imgdivLocal = document.createElement('div');
             imgdivLocal.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
@@ -169,10 +173,21 @@
             imgdivLocal.style.zIndex = '1';
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
-            imgdivLocal.appendChild(imgUser);
-            imgdivLocal.appendChild(nameUser);
+            imgdivLocal.appendChild(imgLocal);
+            imgdivLocal.appendChild(nameLocal);
             localPlayerContainer.appendChild(imgdivLocal);
 
+            //======================
+            //   Profile Remote
+            //======================
+
+            // สร้าง element รูปภาพ
+            const imgRemote = document.createElement('img');
+            imgRemote.src = "{{ url('/storage') }}"+ "/" + "{{ Auth::user()->photo }}";
+
+            const nameRemote = document.createElement('div');
+            nameRemote.innerHTML = user.name;
+            // สร้าง element div สำหรับรอบรูปภาพ
             const imgdivRemote = document.createElement('div');
             imgdivRemote.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
             imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
@@ -183,8 +198,8 @@
             imgdivRemote.style.zIndex = '1';
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
-            imgdivRemote.appendChild(imgUser);
-            imgdivRemote.appendChild(nameUser);
+            imgdivRemote.appendChild(imgRemote);
+            imgdivRemote.appendChild(nameRemote);
             remotePlayerContainer.appendChild(imgdivRemote);
 
 

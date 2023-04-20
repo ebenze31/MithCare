@@ -159,20 +159,34 @@
             const nameUser = document.createElement('div');
             nameUser.innerHTML = user.name;
             // สร้าง element div สำหรับรอบรูปภาพ
-            const imgdiv = document.createElement('div');
-            imgdiv.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
-            imgdiv.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
-            imgdiv.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
-            imgdiv.style.position = 'absolute';
-            imgdiv.style.left = '0';
-            imgdiv.style.bottom = '0';
-            imgdiv.style.zIndex = '1';
+            const imgdivLocal = document.createElement('div');
+            imgdivLocal.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
+            imgdivLocal.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
+            imgdivLocal.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
+            imgdivLocal.style.position = 'absolute';
+            imgdivLocal.style.left = '0';
+            imgdivLocal.style.bottom = '0';
+            imgdivLocal.style.zIndex = '1';
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
-            imgdiv.appendChild(imgUser);
-            imgdiv.appendChild(nameUser);
-            localPlayerContainer.appendChild(imgdiv);
-            remotePlayerContainer.appendChild(imgdiv);
+            imgdivLocal.appendChild(imgUser);
+            imgdivLocal.appendChild(nameUser);
+            localPlayerContainer.appendChild(imgdivLocal);
+
+            const imgdivRemote = document.createElement('div');
+            imgdivRemote.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
+            imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
+            imgdivRemote.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
+            imgdivRemote.style.position = 'absolute';
+            imgdivRemote.style.right = '0';
+            imgdivRemote.style.bottom = '0';
+            imgdivRemote.style.zIndex = '1';
+
+            // เพิ่ม element รูปภาพเข้าไปยัง element div
+            imgdivRemote.appendChild(imgUser);
+            imgdivRemote.appendChild(nameUser);
+            remotePlayerContainer.appendChild(imgdivRemote);
+
 
             // Create a button element for muting audio
             if (localPlayerContainer.id === options.uid) {

@@ -107,7 +107,7 @@
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
                     <div id="remoteUserBackground"
-                        style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;" class="d-none">
+                        style="width: 100%; height: 100%; position: absolute; overflow: hidden; background-color: black;" class="d-none">
                     </div>
                 </div>
 
@@ -212,7 +212,7 @@
             // สร้าง element รูปภาพ
             const imgLocal = document.createElement('img');
             if(user.avatar){
-                imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->avatar }}";
+                imgLocal.src = "{{ Auth::user()->avatar }}";
             }else{
                 imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
             }
@@ -241,7 +241,7 @@
             // สร้าง element รูปภาพ
             const imgRemote = document.createElement('img');
             if(user.avatar){
-                imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->avatar }}";
+                imgRemote.src = "{{ Auth::user()->avatar }}";
             }else{
                 imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
             }
@@ -298,24 +298,24 @@
                 muteVideoButton.onclick = async function() {
                     if (isMuteVideo == false) {
                         // Mute the local video.
-                        channelParameters.remoteVideoTrack.setEnabled(false);
+                        channelParameters.localVideoTrack.setEnabled(false);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton.classList.add('btn-danger');
                         muteVideoButton.classList.remove('btn-success');
                         isMuteVideo = true;
 
-                        document.querySelector('#remoteUserBackground').classList.toggle('d-none');
+                        // document.querySelector('#remoteUserBackground').classList.toggle('d-none');
                     } else {
                         // Unmute the local video.
-                        channelParameters.remoteVideoTrack.setEnabled(true);
+                        channelParameters.localVideoTrack.setEnabled(true);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton.classList.add('btn-success');
                         muteVideoButton.classList.remove('btn-danger');
                         isMuteVideo = false;
 
-                        document.querySelector('#remoteUserBackground').classList.toggle('d-none');
+                        // document.querySelector('#remoteUserBackground').classList.toggle('d-none');
                     }
                 }
 

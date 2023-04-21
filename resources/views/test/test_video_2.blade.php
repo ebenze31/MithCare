@@ -362,14 +362,24 @@
 
                         // สร้าง element รูปภาพ
                         const imgRemote = document.createElement('img');
-                        if(user.avatar){
-                            imgRemote.src = "{{ Auth::user()->avatar }}";
+                        if(userRemote['avatar']){
+                            imgRemote.src = userRemote['avatar'];
                         }else{
-                            imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+                            imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
                         }
 
                         const nameRemote = document.createElement('div');
-                        nameRemote.innerHTML = userRemote.name;
+                        nameRemote.innerHTML = userRemote['name'];
+                        const statusRemote = document.createElement('div');
+                        if(userRemote['memberStatus'] === 'patient'){
+                            statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
+                        }else if(userRemote['memberStatus'] === 'owner'){
+                            statusRemote.innerHTML = "เจ้าของบ้าน";
+                        }else if(userRemote['memberStatus'] === 'member'){
+                            statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
+                        }else{
+                            statusRemote.innerHTML = "สมาชิก";
+                        }
                         // สร้าง element div สำหรับรอบรูปภาพ
                         const imgdivRemote = document.createElement('div');
                         imgdivRemote.classList.add('imgdivRemote');

@@ -60,6 +60,11 @@ class AgoraVideoController extends Controller
         $requestData = $request->all();
         $users = User::where('id', $requestData['userId'])->first();
 
+        $users = User::join('member_of_rooms', 'users.id', '=', 'member_of_rooms.user_id')
+                ->where('users.id', $requestData['userId'])
+                ->select('users.*','member_of_rooms.status as memberStatus','member_of_rooms.lv_of_caretaker as memberLv')
+                ->first();
+
         return $users;
     }
 

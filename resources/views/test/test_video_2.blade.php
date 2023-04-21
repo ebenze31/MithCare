@@ -352,8 +352,10 @@
                     //======================
                     //   Profile Remote
                     //======================
-                    const url = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
-                    axios.get(url).then((response) => {
+                    const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
+                    console.log(user.uid);
+                    console.log(urlRemoteUser);
+                    axios.get(urlRemoteUser).then((response) => {
                         console.log("===========================");
                         console.log(response['data']);
                         const userRemote = response['data'];

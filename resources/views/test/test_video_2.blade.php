@@ -199,7 +199,7 @@
             // Specify the ID of the DIV container. You can use the uid of the local user.
             localPlayerContainer.id = options.uid;
             // Set the textContent property of the local video container to the local user id.
-            // localPlayerContainer.textContent = "Local user " + options.uid;
+            localPlayerContainer.textContent = "Local user " + options.uid;
             // Set the local video container size.
 
             remotePlayerContainer.style.position = 'relative'; // Set position to relative for the container
@@ -348,7 +348,7 @@
             if(localPlayerContainer)
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
-            agoraEngine.on("user-published", async (user, mediaType) => {
+            agoraEngine.on("user-published", async (, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
@@ -364,7 +364,7 @@
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
                     remotePlayerContainer.id = user.uid.toString();
                     channelParameters.remoteUid = user.uid.toString();
-                    // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
+                    remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
                     // Append the remote container to the page body.
                     remote_video_call.append(remotePlayerContainer);
                     // Play the remote video track.

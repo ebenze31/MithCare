@@ -107,7 +107,10 @@
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
                     <div id="remoteUserBackground"
-                        style="width: 100%; height: 100%; position: absolute; overflow: hidden; background-color: black;" class="d-none">
+                    style="width: 100%; height: 100%; position: absolute; overflow: hidden; padding: 15px 5px 15px 5px;">
+                        <video class="agora_video_player" playsinline="" muted=""
+                        style="width: 95%; position: absolute; left: 0px;  object-fit: cover; background-color: black; ">
+                        </video>
                     </div>
                 </div>
 
@@ -196,7 +199,7 @@
             // Specify the ID of the DIV container. You can use the uid of the local user.
             localPlayerContainer.id = options.uid;
             // Set the textContent property of the local video container to the local user id.
-            localPlayerContainer.textContent = "Local user " + options.uid;
+            // localPlayerContainer.textContent = "Local user " + options.uid;
             // Set the local video container size.
 
             remotePlayerContainer.style.position = 'relative'; // Set position to relative for the container
@@ -251,13 +254,7 @@
             // สร้าง element div สำหรับรอบรูปภาพ
             const imgdivRemote = document.createElement('div');
             imgdivRemote.classList.add('imgdivRemote');
-            // imgdivRemote.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
-            // imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
-            // imgdivRemote.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
-            // imgdivRemote.style.position = 'absolute';
-            // imgdivRemote.style.left = '0';
-            // imgdivRemote.style.bottom = '0';
-            // imgdivRemote.style.zIndex = '1';
+
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
             imgdivRemote.appendChild(imgRemote);
@@ -367,7 +364,7 @@
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
                     remotePlayerContainer.id = user.uid.toString();
                     channelParameters.remoteUid = user.uid.toString();
-                    remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
+                    // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
                     // Append the remote container to the page body.
                     remote_video_call.append(remotePlayerContainer);
                     // Play the remote video track.

@@ -388,6 +388,7 @@
                         // เพิ่ม element รูปภาพเข้าไปยัง element div
                         imgdivRemote.appendChild(imgRemote);
                         imgdivRemote.appendChild(nameRemote);
+                        imgdivRemote.appendChild(statusRemote);
                         remotePlayerContainer.appendChild(imgdivRemote);
 
                     })

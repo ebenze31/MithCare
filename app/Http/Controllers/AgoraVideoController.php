@@ -45,14 +45,6 @@ class AgoraVideoController extends Controller
         return $token;
     }
 
-    // public function token(Request $request)
-    // {
-
-
-    //     $token = "deer";
-
-    //     return $token;
-    // }
 
     public function callUser(Request $request)
     {

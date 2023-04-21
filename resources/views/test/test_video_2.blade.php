@@ -201,7 +201,7 @@
             imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
             imgdivRemote.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
             imgdivRemote.style.position = 'absolute';
-            imgdivRemote.style.right = '0';
+            imgdivRemote.style.left = '0';
             imgdivRemote.style.bottom = '0';
             imgdivRemote.style.zIndex = '1';
 
@@ -212,7 +212,7 @@
 
 
             // Create a button element for muting audio
-            if (localPlayerContainer.id === options.uid) {
+            if (options.uid) {
 
                 //สร้างปุ่ม เปิด-ปิด เสียง
                 const muteButton = document.createElement('button');
@@ -310,8 +310,6 @@
             }
             remotePlayerContainer.style.maxWidth = '100%';
 
-
-
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -336,8 +334,6 @@
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
 
-
-
                 }
                 // Subscribe and play the remote audio track If the remote user publishes the audio track only.
                 if (mediaType == "audio") {
@@ -353,6 +349,7 @@
             });
             window.onload = function() {
                 // Listen to the Join button click event.
+
                 document.getElementById("join").onclick = async function() {
                     // Join a channel.
                     await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
@@ -361,7 +358,54 @@
                     // Create a local video track from the video captured by a camera.[]
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
+                    aboutTime()
 
+                    // Append the local video container to the page body.
+                    show_data_video.append(localPlayerContainer);
+                    // Publish the local audio and video tracks in the channel.
+                    await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
+
+                    // Play the local video track.
+                    channelParameters.localVideoTrack.play(localPlayerContainer);
+                    console.log("publish success!");
+
+
+                }
+                // Listen to the Leave button click event.
+                document.getElementById('leave').onclick = async function() {
+                    // Destroy the local audio and video tracks.
+                    channelParameters.localAudioTrack.close();
+                    channelParameters.localVideoTrack.close();
+                    // Remove the containers you created for the local video and remote video.
+                    removeVideoDiv(remotePlayerContainer.id);
+                    removeVideoDiv(localPlayerContainer.id);
+
+                    // Show Button Before Join
+                    // document.getElementById('muteAudio_beforeJoin').classList.remove('d-none');
+                    // document.getElementById('muteVideo_beforeJoin').classList.remove('d-none');
+
+                    // Leave the channel
+                    await agoraEngine.leave();
+                    console.log("You left the channel");
+                    // Refresh the page for reuse
+                    window.location.reload();
+                }
+            }
+
+        }
+
+        // Remove the video stream from the container.
+        function removeVideoDiv(elementId) {
+            // console.log("Removing " + elementId + "Div");
+            let Div = document.getElementById(elementId);
+            if (Div) {
+                Div.remove();
+            }
+        };
+    </script>
+
+    <script>
+        function aboutTime(){
                     //=========================
                     // เวลาปัจจุบันของประเทศไทย
                     //=========================
@@ -440,49 +484,6 @@
                     timeButton.insertBefore(minutes,timeButton.firstChild);
                     timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
                     // timeButton.insertBefore(seconds,timeButton.firstChild);
-
-
-                    // Append the local video container to the page body.
-                    show_data_video.append(localPlayerContainer);
-                    // Publish the local audio and video tracks in the channel.
-                    await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
-
-                    // Play the local video track.
-                    channelParameters.localVideoTrack.play(localPlayerContainer);
-                    console.log("publish success!");
-
-
-                }
-                // Listen to the Leave button click event.
-                document.getElementById('leave').onclick = async function() {
-                    // Destroy the local audio and video tracks.
-                    channelParameters.localAudioTrack.close();
-                    channelParameters.localVideoTrack.close();
-                    // Remove the containers you created for the local video and remote video.
-                    removeVideoDiv(remotePlayerContainer.id);
-                    removeVideoDiv(localPlayerContainer.id);
-
-                    // Show Button Before Join
-                    // document.getElementById('muteAudio_beforeJoin').classList.remove('d-none');
-                    // document.getElementById('muteVideo_beforeJoin').classList.remove('d-none');
-
-                    // Leave the channel
-                    await agoraEngine.leave();
-                    console.log("You left the channel");
-                    // Refresh the page for reuse
-                    window.location.reload();
-                }
-            }
-
         }
-
-        // Remove the video stream from the container.
-        function removeVideoDiv(elementId) {
-            // console.log("Removing " + elementId + "Div");
-            let Div = document.getElementById(elementId);
-            if (Div) {
-                Div.remove();
-            }
-        };
     </script>
 @endsection

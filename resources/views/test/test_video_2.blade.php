@@ -27,7 +27,58 @@
             height: 50px;
             border-radius: 50%;
         }
+        .videoHeight{
+            height: 25rem;
 
+        }
+            @media (max-width: 576px) {
+                .videoHeight{
+                    height: 15rem;
+                }
+            }
+        .imgdivLocal{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+            @media (max-width: 576px) {
+                .imgdivLocal{
+                    width: 50px;
+                    height: 50px;
+                    border: 1px solid black;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    z-index: 1;
+                }
+            }
+        .imgdivRemote{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+            @media (max-width: 576px) {
+                .imgdivRemote{
+                    width: 50px;
+                    height: 50px;
+                    border: 1px solid black;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    z-index: 1;
+                }
+            }
+        .agora_video_player{
+            background-color: black!important;
+        }
 
     </style>
     <input class="d-none" type="text" id="textbox" />
@@ -54,7 +105,12 @@
                 {{-- <label id="minutes">00</label>:<label id="seconds">00</label> --}}
                 <p id="time"></p>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
-                <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call"></div>
+                <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
+                    <div id="remoteUserBackground"
+                        style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;" class="d-none">
+                    </div>
+                </div>
+
             </div>
         </div>
     </center>
@@ -110,7 +166,6 @@
         var isMuteVideo = false;
         var isMuteAudio = false;
 
-
         var channelParameters = {
             // A variable to hold a local audio track.
             localAudioTrack: null,
@@ -123,8 +178,6 @@
             // A variable to hold the remote user id.s
             remoteUid: null,
         };
-
-
 
         async function startBasicCall() {
             // Create an instance of the Agora Engine
@@ -197,19 +250,19 @@
             nameRemote.innerHTML = user.name;
             // สร้าง element div สำหรับรอบรูปภาพ
             const imgdivRemote = document.createElement('div');
-            imgdivRemote.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
-            imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
-            imgdivRemote.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
-            imgdivRemote.style.position = 'absolute';
-            imgdivRemote.style.left = '0';
-            imgdivRemote.style.bottom = '0';
-            imgdivRemote.style.zIndex = '1';
+            imgdivRemote.classList.add('imgdivRemote');
+            // imgdivRemote.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
+            // imgdivRemote.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
+            // imgdivRemote.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
+            // imgdivRemote.style.position = 'absolute';
+            // imgdivRemote.style.left = '0';
+            // imgdivRemote.style.bottom = '0';
+            // imgdivRemote.style.zIndex = '1';
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
             imgdivRemote.appendChild(imgRemote);
             imgdivRemote.appendChild(nameRemote);
             remotePlayerContainer.appendChild(imgdivRemote);
-
 
             // Create a button element for muting audio
             if (options.uid) {
@@ -245,20 +298,24 @@
                 muteVideoButton.onclick = async function() {
                     if (isMuteVideo == false) {
                         // Mute the local video.
-                        channelParameters.localVideoTrack.setEnabled(false);
+                        channelParameters.remoteVideoTrack.setEnabled(false);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton.classList.add('btn-danger');
                         muteVideoButton.classList.remove('btn-success');
                         isMuteVideo = true;
+
+                        document.querySelector('#remoteUserBackground').classList.toggle('d-none');
                     } else {
                         // Unmute the local video.
-                        channelParameters.localVideoTrack.setEnabled(true);
+                        channelParameters.remoteVideoTrack.setEnabled(true);
                         // Update the button text.
                         document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton.classList.add('btn-success');
                         muteVideoButton.classList.remove('btn-danger');
                         isMuteVideo = false;
+
+                        document.querySelector('#remoteUserBackground').classList.toggle('d-none');
                     }
                 }
 
@@ -282,33 +339,16 @@
                     }
                 }
             }
-            localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6');
-            // localPlayerContainer.style.width = "100%";
-            if (window.innerWidth <= 768) {
-                // If the screen height is less than or equal to 768px, set the height of remotePlayerContainer to 35% of the screen height.
-                localPlayerContainer.style.height = "15rem";
-            } else {
-                // If the screen height is greater than 1024px, set the height of remotePlayerContainer to 50% of the screen height.
-                localPlayerContainer.style.height = "25rem";
-            }
+            localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
             localPlayerContainer.style.maxWidth = '100%';
-            // localPlayerContainer.style.maxHeight = '100%';
             localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
-            // Set the remote video container size.
-            remotePlayerContainer.classList.add('col-12','col-md-6','col-lg-6');
-            // remotePlayerContainer.style.width = "100%";
-            // Check if the screen width is less than or equal to 768px.
 
-            // Check the height of the screen.
-            if (window.innerHeight <= 768) {
-                // If the screen height is less than or equal to 768px, set the height of remotePlayerContainer to 35% of the screen height.
-                remotePlayerContainer.style.height = "35vh";
-            } else {
-                // If the screen height is greater than 1024px, set the height of remotePlayerContainer to 50% of the screen height.
-                remotePlayerContainer.style.height = "50vh";
-            }
+            remotePlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
             remotePlayerContainer.style.maxWidth = '100%';
+            remotePlayerContainer.style.padding = "15px 5px 5px 5px";
+
+            if(localPlayerContainer)
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
@@ -358,7 +398,6 @@
                     // Create a local video track from the video captured by a camera.[]
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
-                    aboutTime()
 
                     // Append the local video container to the page body.
                     show_data_video.append(localPlayerContainer);

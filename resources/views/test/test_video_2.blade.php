@@ -348,7 +348,7 @@
             if(localPlayerContainer)
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
-            agoraEngine.on("user-published", async (, mediaType) => {
+            agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");

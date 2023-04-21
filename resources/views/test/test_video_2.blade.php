@@ -140,7 +140,7 @@
 
                     uid: '{{ Auth::user()->id }}',
 
-                    uname: '{{ Auth::user()->name }}',
+                    // uname: '{{ Auth::user()->name }}',
 
                     token: "",
                 };
@@ -352,26 +352,39 @@
                     //======================
                     //   Profile Remote
                     //======================
+                    const url = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
+                    axios.get(url).then((response) => {
+                        console.log("===========================");
+                        console.log(response['data']);
+                        const userRemote = response['data'];
 
-                    // สร้าง element รูปภาพ
-                    const imgRemote = document.createElement('img');
-                    if(user.avatar){
-                        imgRemote.src = "{{ Auth::user()->avatar }}";
-                    }else{
-                        imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
-                    }
+                        // สร้าง element รูปภาพ
+                        const imgRemote = document.createElement('img');
+                        if(user.avatar){
+                            imgRemote.src = "{{ Auth::user()->avatar }}";
+                        }else{
+                            imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+                        }
 
-                    const nameRemote = document.createElement('div');
-                    nameRemote.innerHTML = user.name;
-                    // สร้าง element div สำหรับรอบรูปภาพ
-                    const imgdivRemote = document.createElement('div');
-                    imgdivRemote.classList.add('imgdivRemote');
+                        const nameRemote = document.createElement('div');
+                        nameRemote.innerHTML = userRemote.name;
+                        // สร้าง element div สำหรับรอบรูปภาพ
+                        const imgdivRemote = document.createElement('div');
+                        imgdivRemote.classList.add('imgdivRemote');
 
 
-                    // เพิ่ม element รูปภาพเข้าไปยัง element div
-                    imgdivRemote.appendChild(imgRemote);
-                    imgdivRemote.appendChild(nameRemote);
-                    remotePlayerContainer.appendChild(imgdivRemote);
+                        // เพิ่ม element รูปภาพเข้าไปยัง element div
+                        imgdivRemote.appendChild(imgRemote);
+                        imgdivRemote.appendChild(nameRemote);
+                        remotePlayerContainer.appendChild(imgdivRemote);
+
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
+                    });
+
+
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
 

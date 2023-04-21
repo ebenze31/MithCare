@@ -54,4 +54,13 @@ class AgoraVideoController extends Controller
 
         broadcast(new MakeAgoraCall($data))->toOthers();
     }
+
+    public function getUserRemote(Request $request)
+    {
+        $requestData = $request->all();
+        $users = User::where('id', $requestData['userId'])->first();
+
+        return $users;
+    }
+
 }

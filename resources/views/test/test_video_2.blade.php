@@ -140,6 +140,8 @@
 
                     uid: '{{ Auth::user()->id }}',
 
+                    uname: '{{ Auth::user()->name }}',
+
                     token: "",
                 };
 

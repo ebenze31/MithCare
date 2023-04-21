@@ -237,29 +237,6 @@
             imgdivLocal.appendChild(nameLocal);
             localPlayerContainer.appendChild(imgdivLocal);
 
-            //======================
-            //   Profile Remote
-            //======================
-
-            // สร้าง element รูปภาพ
-            const imgRemote = document.createElement('img');
-            if(user.avatar){
-                imgRemote.src = "{{ Auth::user()->avatar }}";
-            }else{
-                imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
-            }
-
-            const nameRemote = document.createElement('div');
-            nameRemote.innerHTML = user.name;
-            // สร้าง element div สำหรับรอบรูปภาพ
-            const imgdivRemote = document.createElement('div');
-            imgdivRemote.classList.add('imgdivRemote');
-
-
-            // เพิ่ม element รูปภาพเข้าไปยัง element div
-            imgdivRemote.appendChild(imgRemote);
-            imgdivRemote.appendChild(nameRemote);
-            remotePlayerContainer.appendChild(imgdivRemote);
 
             // Create a button element for muting audio
             if (options.uid) {
@@ -345,14 +322,15 @@
             remotePlayerContainer.style.maxWidth = '100%';
             remotePlayerContainer.style.padding = "15px 5px 5px 5px";
 
-            if(localPlayerContainer)
+
+
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
-
+                console.log(user);
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
                     // Retrieve the remote video track.
@@ -368,6 +346,30 @@
                     // Append the remote container to the page body.
                     remote_video_call.append(remotePlayerContainer);
                     // Play the remote video track.
+
+                    //======================
+                    //   Profile Remote
+                    //======================
+
+                    // สร้าง element รูปภาพ
+                    const imgRemote = document.createElement('img');
+                    if(user.avatar){
+                        imgRemote.src = "{{ Auth::user()->avatar }}";
+                    }else{
+                        imgRemote.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+                    }
+
+                    const nameRemote = document.createElement('div');
+                    nameRemote.innerHTML = user.name;
+                    // สร้าง element div สำหรับรอบรูปภาพ
+                    const imgdivRemote = document.createElement('div');
+                    imgdivRemote.classList.add('imgdivRemote');
+
+
+                    // เพิ่ม element รูปภาพเข้าไปยัง element div
+                    imgdivRemote.appendChild(imgRemote);
+                    imgdivRemote.appendChild(nameRemote);
+                    remotePlayerContainer.appendChild(imgdivRemote);
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
 

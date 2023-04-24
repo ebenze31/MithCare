@@ -59,6 +59,7 @@
         .imgdivRemote{
             width: 100px;
             height: 100px;
+            max-height: 100px;
             border: 1px solid black;
             position: absolute;
             left: 0;
@@ -76,9 +77,34 @@
                     z-index: 1;
                 }
             }
-        .agora_video_player{
-            background-color: black!important;
+        .imgLocalHeight{
+            height: 100%;
+            max-height: 100%;
+            width: 100%;
+            max-width: 100%;
         }
+        /* @media (max-width: 576px) {
+                .imgLocalHeight{
+                    width: 50px;
+                    height: 50px;
+                    max-width: 50px;
+                    max-height: 50px;
+                }
+            } */
+        .imgRemoteHeight{
+            height: 100%;
+            max-height: 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+        /* @media (max-width: 576px) {
+            .imgRemoteHeight{
+                width: 50px;
+                height: 50px;
+                max-width: 50px;
+                max-height: 50px;
+            }
+        } */
 
     </style>
     <input class="d-none" type="text" id="textbox" />
@@ -108,9 +134,7 @@
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
                     <div id="remoteUserBackground"
                     style="width: 100%; height: 100%; position: absolute; overflow: hidden; padding: 15px 5px 15px 5px;">
-                        <video class="agora_video_player" playsinline="" muted=""
-                        style="width: 95%; position: absolute; left: 0px;  object-fit: cover; background-color: black; ">
-                        </video>
+
                     </div>
                 </div>
 
@@ -201,9 +225,11 @@
             // Specify the ID of the DIV container. You can use the uid of the local user.
             localPlayerContainer.id = options.uid;
             // Set the textContent property of the local video container to the local user id.
-            localPlayerContainer.textContent = "Local user " + options.uid;
-            // Set the local video container size.
 
+             // ชื่อ LocalPlayer
+            // localPlayerContainer.textContent = "Local user " + options.uid;
+
+            // Set the local video container size.
             remotePlayerContainer.style.position = 'relative'; // Set position to relative for the container
             localPlayerContainer.style.position = 'relative'; // Set position to relative for the container
 
@@ -218,21 +244,18 @@
             const imgLocal = document.createElement('img');
             if(user.avatar){
                 imgLocal.src = "{{ Auth::user()->avatar }}";
+                imgLocal.classList.add('imgLocalHeight');
+
             }else{
                 imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+                imgLocal.classList.add('imgLocalHeight');
             }
 
             const nameLocal = document.createElement('div');
             nameLocal.innerHTML = user.name;
             // สร้าง element div สำหรับรอบรูปภาพ
             const imgdivLocal = document.createElement('div');
-            imgdivLocal.style.width = '100px'; // กำหนดความกว้างของกรอบรูปภาพ
-            imgdivLocal.style.height = '100px'; // กำหนดความสูงของกรอบรูปภาพ
-            imgdivLocal.style.border = '1px solid black'; // กำหนดเส้นขอบกรอบรูปภาพ
-            imgdivLocal.style.position = 'absolute';
-            imgdivLocal.style.left = '0';
-            imgdivLocal.style.bottom = '0';
-            imgdivLocal.style.zIndex = '1';
+                imgdivLocal.classList.add('imgdivLocal');
 
             // เพิ่ม element รูปภาพเข้าไปยัง element div
             imgdivLocal.appendChild(imgLocal);
@@ -344,10 +367,21 @@
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
                     remotePlayerContainer.id = user.uid.toString();
                     channelParameters.remoteUid = user.uid.toString();
-                    remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
+
+                    // ชื่อ RemotePlayer
+                    // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
+
                     // Append the remote container to the page body.
                     remote_video_call.append(remotePlayerContainer);
                     // Play the remote video track.
+
+                    // if(isMuteVideo == 'true'){
+                    //     remotePlayerContainer.style.background = "#000
+                    // }
+                    // isMuteVideo.on("mute-video", function(evt) {
+                    // console.log("กล้องถูกปิดไว้");
+                    // // remotePlayerContainer = document.getElementById("remote-video-" + remoteId);
+                    // remotePlayerContainer.style.background = "#000
 
                     //======================
                     //   Profile Remote
@@ -364,9 +398,14 @@
                         const imgRemote = document.createElement('img');
                         if(userRemote['avatar']){
                             imgRemote.src = userRemote['avatar'];
+                            imgRemote.classList.add('imgRemoteHeight');
+
                         }else{
                             imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
+                            imgRemote.classList.add('imgRemoteHeight');
                         }
+                         // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
+
 
                         const nameRemote = document.createElement('div');
                         nameRemote.innerHTML = userRemote['name'];
@@ -396,8 +435,6 @@
                         console.log("ERROR HERE");
                         console.log(error);
                     });
-
-
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);
 

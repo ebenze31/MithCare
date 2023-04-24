@@ -83,28 +83,18 @@
             width: 100%;
             max-width: 100%;
         }
-        /* @media (max-width: 576px) {
-                .imgLocalHeight{
-                    width: 50px;
-                    height: 50px;
-                    max-width: 50px;
-                    max-height: 50px;
-                }
-            } */
+
         .imgRemoteHeight{
             height: 100%;
             max-height: 100%;
             width: 100%;
             max-width: 100%;
         }
-        /* @media (max-width: 576px) {
-            .imgRemoteHeight{
-                width: 50px;
-                height: 50px;
-                max-width: 50px;
-                max-height: 50px;
-            }
-        } */
+        #remotePlayerContainer {
+            background-color: black;
+            visibility: hidden;
+        }
+
 
     </style>
     <input class="d-none" type="text" id="textbox" />
@@ -132,9 +122,10 @@
                 <p id="time"></p>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
-                    <div id="remoteUserBackground"
-                    style="width: 100%; height: 100%; position: absolute; overflow: hidden; padding: 15px 5px 15px 5px;">
-
+                    <div id="remoteUserBackground" class="d-none"
+                        style="width: 100%; height: 100%; position: absolute; overflow: hidden; padding: 15px 5px 15px 5px; margin-top: 15px;  margin-bottom: 15px; background-color:black" class="">
+                    {{-- <video id="videoRemoteUser" class="agora_video_player" playsinline="" muted=""
+                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; transform: rotateY(180deg); object-fit: cover; background-color:black"></video> --}}
                     </div>
                 </div>
 
@@ -345,13 +336,9 @@
             localPlayerContainer.style.maxWidth = '100%';
             localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
-
             remotePlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
             remotePlayerContainer.style.maxWidth = '100%';
             remotePlayerContainer.style.padding = "15px 5px 5px 5px";
-
-
-
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
@@ -387,8 +374,7 @@
                     // remotePlayerContainer.style.background = "#000
 
                      //สร้างปุ่ม เปิด-ปิด เสียง
-                    const muteButton2 = document.createElement('button');
-                    muteButton2.type = "button";
+                    const muteButton2 = document.createElement('div');
                     muteButton2.id = "muteAudio2";
                     muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
                     muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
@@ -401,8 +387,7 @@
                     remotePlayerContainer.appendChild(muteButton2);
 
                     //สร้างปุ่ม เปิด-ปิด วิดีโอ
-                    const muteVideoButton2 = document.createElement('button');
-                    muteVideoButton2.type = "button";
+                    const muteVideoButton2 = document.createElement('div');
                     muteVideoButton2.id = "muteVideo2";
                     muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
                     muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
@@ -414,13 +399,7 @@
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
 
-                    muteVideoButton2.addEventListener('click', () => {
-                        if (channelParameters.remoteVideoTrack) {
-                            channelParameters.remoteVideoTrack = false;
-                        } else {
-                            channelParameters.remoteVideoTrack = true;
-                        }
-
+                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
                         if (channelParameters.remoteVideoTrack == false) {
                             // Update the button text.
                             document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
@@ -432,30 +411,29 @@
                             document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                             muteVideoButton2.classList.add('btn-success');
                             muteVideoButton2.classList.remove('btn-danger');
-
                         }
                     });
 
-                    muteButton2.addEventListener('click', () => {
-                        if (channelParameters.remoteAudioTrack) {
-                            channelParameters.remoteAudioTrack = false;
-                        } else {
-                            channelParameters.remoteAudioTrack = true;
-                        }
-
+                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
                         if (channelParameters.remoteAudioTrack == false) {
                             // Update the button text.
                             document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                             muteButton2.classList.add('btn-danger');
                             muteButton2.classList.remove('btn-primary');
-
                         } else {
                             // Update the button text.
                             document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
                             muteButton2.classList.add('btn-primary');
                             muteButton2.classList.remove('btn-danger');
                         }
+                    });
 
+                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
+                        if (channelParameters.remoteVideoTrack == null || channelParameters.remoteVideoTrack === 'false') {
+                                document.getElementById('remoteUserBackground').classList.add('d-none');
+                        }else{
+                                document.getElementById('remoteUserBackground').classList.remove('d-none');
+                        }
                     });
 
 
@@ -539,6 +517,12 @@
                     // Create a local video track from the video captured by a camera.[]
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
+                    let isAboutTimeCalled = false;
+
+                    if (isAboutTimeCalled == false) {
+                        aboutTime();
+                        isAboutTimeCalled = true;
+                    }
 
                     // Append the local video container to the page body.
                     show_data_video.append(localPlayerContainer);

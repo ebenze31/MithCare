@@ -195,6 +195,9 @@
         var isMuteVideo = false;
         var isMuteAudio = false;
 
+        var isMuteVideo2 = false;
+        var isMuteAudio2 = false;
+
         var channelParameters = {
             // A variable to hold a local audio track.
             localAudioTrack: null,
@@ -264,7 +267,7 @@
 
 
             // Create a button element for muting audio
-            if (options.uid) {
+
 
                 //สร้างปุ่ม เปิด-ปิด เสียง
                 const muteButton = document.createElement('button');
@@ -337,7 +340,7 @@
                         isMuteAudio = false;
                     }
                 }
-            }
+
             localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
             localPlayerContainer.style.maxWidth = '100%';
             localPlayerContainer.style.padding = "15px 5px 5px 5px";
@@ -382,6 +385,63 @@
                     // console.log("กล้องถูกปิดไว้");
                     // // remotePlayerContainer = document.getElementById("remote-video-" + remoteId);
                     // remotePlayerContainer.style.background = "#000
+
+                     //สร้างปุ่ม เปิด-ปิด เสียง
+                    const muteButton2 = document.createElement('button');
+                    muteButton2.type = "button";
+                    muteButton2.id = "muteAudio2";
+                    muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
+                    muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+
+                    muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                    muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                    muteButton2.style.left = '50%'; // Set the distance from the left of the container
+                    muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+
+                    remotePlayerContainer.appendChild(muteButton2);
+
+                    //สร้างปุ่ม เปิด-ปิด วิดีโอ
+                    const muteVideoButton2 = document.createElement('button');
+                    muteVideoButton2.type = "button";
+                    muteVideoButton2.id = "muteVideo2";
+                    muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
+                    muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
+
+                    muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                    muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                    muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
+                    muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+
+                    remotePlayerContainer.appendChild(muteVideoButton2);
+
+                    if (remoteVideoTrack == false) {
+                        // Update the button text.
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                        muteVideoButton2.classList.add('btn-danger');
+                        muteVideoButton2.classList.remove('btn-success');
+
+                    } else {
+                        // Update the button text.
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                        muteVideoButton2.classList.add('btn-success');
+                        muteVideoButton2.classList.remove('btn-danger');
+
+                    }
+
+                    if (remoteAudioTrack == false) {
+                        // Update the button text.
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        muteButton2.classList.add('btn-danger');
+                        muteButton2.classList.remove('btn-primary');
+
+                    } else {
+                        // Update the button text.
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        muteButton2.classList.add('btn-primary');
+                        muteButton2.classList.remove('btn-danger');
+                    }
+
+
 
                     //======================
                     //   Profile Remote

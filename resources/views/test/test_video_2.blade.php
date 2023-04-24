@@ -414,7 +414,7 @@
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
 
-                    if (remoteVideoTrack == false) {
+                    if (channelParameters.remoteVideoTrack == false) {
                         // Update the button text.
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
@@ -428,7 +428,7 @@
 
                     }
 
-                    if (remoteAudioTrack == false) {
+                    if (channelParameters.remoteAudioTrack == false) {
                         // Update the button text.
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                         muteButton2.classList.add('btn-danger');

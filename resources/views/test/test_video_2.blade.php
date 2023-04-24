@@ -414,32 +414,49 @@
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
 
-                    if (channelParameters.remoteVideoTrack == false) {
-                        // Update the button text.
-                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                        muteVideoButton2.classList.add('btn-danger');
-                        muteVideoButton2.classList.remove('btn-success');
+                    muteVideoButton2.addEventListener('click', () => {
+                        if (channelParameters.remoteVideoTrack) {
+                            channelParameters.remoteVideoTrack = false;
+                        } else {
+                            channelParameters.remoteVideoTrack = true;
+                        }
 
-                    } else {
-                        // Update the button text.
-                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                        muteVideoButton2.classList.add('btn-success');
-                        muteVideoButton2.classList.remove('btn-danger');
+                        if (channelParameters.remoteVideoTrack == false) {
+                            // Update the button text.
+                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                            muteVideoButton2.classList.add('btn-danger');
+                            muteVideoButton2.classList.remove('btn-success');
 
-                    }
+                        } else {
+                            // Update the button text.
+                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                            muteVideoButton2.classList.add('btn-success');
+                            muteVideoButton2.classList.remove('btn-danger');
 
-                    if (channelParameters.remoteAudioTrack == false) {
-                        // Update the button text.
-                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                        muteButton2.classList.add('btn-danger');
-                        muteButton2.classList.remove('btn-primary');
+                        }
+                    });
 
-                    } else {
-                        // Update the button text.
-                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
-                        muteButton2.classList.add('btn-primary');
-                        muteButton2.classList.remove('btn-danger');
-                    }
+                    muteButton2.addEventListener('click', () => {
+                        if (channelParameters.remoteAudioTrack) {
+                            channelParameters.remoteAudioTrack = false;
+                        } else {
+                            channelParameters.remoteAudioTrack = true;
+                        }
+
+                        if (channelParameters.remoteAudioTrack == false) {
+                            // Update the button text.
+                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                            muteButton2.classList.add('btn-danger');
+                            muteButton2.classList.remove('btn-primary');
+
+                        } else {
+                            // Update the button text.
+                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                            muteButton2.classList.add('btn-primary');
+                            muteButton2.classList.remove('btn-danger');
+                        }
+
+                    });
 
 
 

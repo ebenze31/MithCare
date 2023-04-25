@@ -10,6 +10,19 @@
             border-color: #3490dc;
             border-style: solid;
         }
+        #remoteUserBackground{
+            border-color: #3490dc;
+            border-style: solid;
+
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+        }
         video{
             border-color: #3490dc;
             border-style: solid;
@@ -123,12 +136,11 @@
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
                     <div id="remoteUserBackground" class="d-none"
-                        style="width: 100%; height: 100%; position: absolute; overflow: hidden; padding: 15px 5px 15px 5px; margin-top: 15px;  margin-bottom: 15px; background-color:black" class="">
-                    {{-- <video id="videoRemoteUser" class="agora_video_player" playsinline="" muted=""
-                    style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; transform: rotateY(180deg); object-fit: cover; background-color:black"></video> --}}
+                        style=" background-color:black; " >
                     </div>
                 </div>
-
+                <video id="video_track-video-6-client-e9202_9ab6a" class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%;
+                position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>
             </div>
         </div>
     </center>
@@ -377,11 +389,15 @@
                     // remotePlayerContainer.style.background = "#000
 
                      //สร้างปุ่ม เปิด-ปิด เสียง
-                    const muteButton2 = document.createElement('div');
+                    var muteButton2 = document.createElement('div');
                     muteButton2.id = "muteAudio2";
-                    muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
-                    muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
-
+                    if(user.audioTrack){
+                        muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
+                        muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                    }else{
+                        muteButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
+                        muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                    }
                     muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
                     muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
                     muteButton2.style.left = '50%'; // Set the distance from the left of the container
@@ -390,76 +406,57 @@
                     remotePlayerContainer.appendChild(muteButton2);
 
                     //สร้างปุ่ม เปิด-ปิด วิดีโอ
-                    const muteVideoButton2 = document.createElement('div');
+                    var muteVideoButton2 = document.createElement('div');
                     muteVideoButton2.id = "muteVideo2";
-                    muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
-                    muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
-
+                    if(user.videoTrack){
+                        muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
+                        muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
+                    }else{
+                        muteVideoButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
+                        muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                    }
                     muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
                     muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
                     muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
                     muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
-                    
+
                     console.log("mediaType >> " + mediaType);
 
                     console.log('===================== VIDEO ========================')
                     console.log(user.videoTrack);
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                        muteVideoButton2.classList.add('btn-success');
+                        muteVideoButton2.classList.remove('btn-danger');
+                        document.getElementById('remoteUserBackground').classList.add('d-none');
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                        muteVideoButton2.classList.add('btn-danger');
+                        muteVideoButton2.classList.remove('btn-success');
+                        document.getElementById('remoteUserBackground').classList.remove('d-none');
                     }
 
                     console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        muteButton2.classList.add('btn-primary');
+                        muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        muteButton2.classList.add('btn-danger');
+                        muteButton2.classList.remove('btn-primary');
                     }
-
-                    // user.videoTrack.addEventListener('change', () => {
-                        if (channelParameters.localVideoTrack.setEnabled == true) {
-                            // Update the button text.
-                            console.log("IF VIDEO");
-                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                            muteVideoButton2.classList.add('btn-success');
-                            muteVideoButton2.classList.remove('btn-danger');
-                        } else {
-                                // Update the button text.
-                            console.log("ELSE VIDEO");
-                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                            muteVideoButton2.classList.add('btn-danger');
-                            muteVideoButton2.classList.remove('btn-success');
-                        }
-                    // });
-
-                    // user.audioTrack.addEventListener('change', () => {
-                        if (channelParameters.localAudioTrack.setEnabled == true) {
-                            // Update the button text.
-                            console.log("IF AUDIO");
-                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
-                            muteButton2.classList.add('btn-primary');
-                            muteButton2.classList.remove('btn-danger');
-
-                        } else {
-                            // Update the button text.
-                            console.log("ELSE AUDIO");
-                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                            muteButton2.classList.add('btn-danger');
-                            muteButton2.classList.remove('btn-primary');
-                        }
-                    // });
-
-                    // user.videoTrack.addEventListener('change', () => {
-                    //     if (channelParameters.remoteVideoTrack == null || channelParameters.remoteVideoTrack === 'false') {
-                    //             document.getElementById('remoteUserBackground').classList.add('d-none');
-                    //     }else{
-                    //             document.getElementById('remoteUserBackground').classList.remove('d-none');
-                    //     }
-                    // });
 
 
 
@@ -527,22 +524,38 @@
                     // Play the remote audio track. No need to pass any DOM element.
                     channelParameters.remoteAudioTrack.play();
 
-                    console.log("mediaType >> " + mediaType);
+                    // console.log("mediaType >> " + mediaType);
 
                     console.log('===================== VIDEO ========================')
                     console.log(user.videoTrack);
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                        muteVideoButton2.classList.add('btn-success');
+                        muteVideoButton2.classList.remove('btn-danger');
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                        muteVideoButton2.classList.add('btn-danger');
+                        muteVideoButton2.classList.remove('btn-success');
                     }
 
                     console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        muteButton2.classList.add('btn-primary');
+                        muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        muteButton2.classList.add('btn-danger');
+                        muteButton2.classList.remove('btn-primary');
                     }
                 }
 
@@ -556,16 +569,34 @@
                     console.log(user.videoTrack);
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                        muteVideoButton2.classList.add('btn-success');
+                        muteVideoButton2.classList.remove('btn-danger');
+                        document.getElementById('remoteUserBackground').classList.add('d-none');
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
+                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                        muteVideoButton2.classList.add('btn-danger');
+                        muteVideoButton2.classList.remove('btn-success');
+                        document.getElementById('remoteUserBackground').classList.remove('d-none');
                     }
 
                     console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        muteButton2.classList.add('btn-primary');
+                        muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
+                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        muteButton2.classList.add('btn-danger');
+                        muteButton2.classList.remove('btn-primary');
                     }
                 });
 
@@ -650,7 +681,7 @@
                     const timeButton = document.createElement('button');
                         timeButton.id = "timeButton";
                         timeButton.classList.add('btn',  'btn-success','order-first');
-
+                        timeButton.innerHTML = '<i class="fa-duotone fa-record-vinyl fa-fade" style="--fa-primary-color: #d70f0f; --fa-secondary-color: #181616; font-size: 20px; padding-left: 3px"></i>';
                     refreshTime()
 
                     function refreshTime() {
@@ -685,7 +716,7 @@
                         seconds.innerHTML = '00';
 
                     const minutesLabel = document.createElement('span');
-                        minutesLabel.innerHTML = ' นาที';
+                        minutesLabel.innerHTML = ':';
 
                     var totalSeconds = 0;
 
@@ -710,8 +741,8 @@
 
                     // timeDiv.appendChild(timeButton);
                     timeButton.insertBefore(minutes,timeButton.firstChild);
+                    timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
                     timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
-                    // timeButton.insertBefore(seconds,timeButton.firstChild);
         }
     </script>
 @endsection

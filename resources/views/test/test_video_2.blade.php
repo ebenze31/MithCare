@@ -349,7 +349,6 @@
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
 
-                console.log("MediaType " + mediaType);
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
                     // Retrieve the remote video track.
@@ -402,10 +401,25 @@
                     muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
+                    
+                    console.log("mediaType >> " + mediaType);
+
                     console.log('===================== VIDEO ========================')
                     console.log(user.videoTrack);
+                    if(user.videoTrack){
+                        console.log("กล้อง >> 'เปิด' อยู่");
+                    }else{
+                        console.log("กล้อง >> 'ปิด' อยู่");
+                    }
+
                     console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);
+                    if(user.audioTrack){
+                        console.log("ไมค์ >> 'เปิด' อยู่");
+                    }else{
+                        console.log("ไมค์ >> 'ปิด' อยู่");
+                    }
+
                     // user.videoTrack.addEventListener('change', () => {
                         if (channelParameters.localVideoTrack.setEnabled == true) {
                             // Update the button text.
@@ -512,11 +526,49 @@
                     channelParameters.remoteAudioTrack = user.audioTrack;
                     // Play the remote audio track. No need to pass any DOM element.
                     channelParameters.remoteAudioTrack.play();
+
+                    console.log("mediaType >> " + mediaType);
+
+                    console.log('===================== VIDEO ========================')
+                    console.log(user.videoTrack);
+                    if(user.videoTrack){
+                        console.log("กล้อง >> 'เปิด' อยู่");
+                    }else{
+                        console.log("กล้อง >> 'ปิด' อยู่");
+                    }
+
+                    console.log('===================== AUDIO ========================')
+                    console.log(user.audioTrack);
+                    if(user.audioTrack){
+                        console.log("ไมค์ >> 'เปิด' อยู่");
+                    }else{
+                        console.log("ไมค์ >> 'ปิด' อยู่");
+                    }
                 }
+
                 // Listen for the "user-unpublished" event.
                 agoraEngine.on("user-unpublished", user => {
                     console.log(user.uid + "has left the channel");
+
+                    console.log("mediaType >> " + mediaType);
+
+                    console.log('===================== VIDEO ========================')
+                    console.log(user.videoTrack);
+                    if(user.videoTrack){
+                        console.log("กล้อง >> 'เปิด' อยู่");
+                    }else{
+                        console.log("กล้อง >> 'ปิด' อยู่");
+                    }
+
+                    console.log('===================== AUDIO ========================')
+                    console.log(user.audioTrack);
+                    if(user.audioTrack){
+                        console.log("ไมค์ >> 'เปิด' อยู่");
+                    }else{
+                        console.log("ไมค์ >> 'ปิด' อยู่");
+                    }
                 });
+
             });
             window.onload = function() {
                 // Listen to the Join button click event.

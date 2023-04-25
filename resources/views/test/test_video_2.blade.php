@@ -349,6 +349,7 @@
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
 
+                console.log("MediaType " + mediaType);
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
                     // Retrieve the remote video track.
@@ -401,19 +402,20 @@
                     muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
+                    console.log('===================== VIDEO ========================')
                     console.log(user.videoTrack);
+                    console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);
                     // user.videoTrack.addEventListener('change', () => {
-                        if (channelParameters.localAudioTrack.setEnabled == true) {
-                                     // Update the button text.
-                                     console.log("IF VIDEO");
-                                     document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                                     muteVideoButton2.classList.add('btn-success');
-                                     muteVideoButton2.classList.remove('btn-danger');
-
-                                    } else {
-                                        // Update the button text.
-                                        console.log("ELSE VIDEO");
+                        if (channelParameters.localVideoTrack.setEnabled == true) {
+                            // Update the button text.
+                            console.log("IF VIDEO");
+                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                            muteVideoButton2.classList.add('btn-success');
+                            muteVideoButton2.classList.remove('btn-danger');
+                        } else {
+                                // Update the button text.
+                            console.log("ELSE VIDEO");
                             document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                             muteVideoButton2.classList.add('btn-danger');
                             muteVideoButton2.classList.remove('btn-success');
@@ -498,6 +500,7 @@
                     .catch((error) => {
                         console.log("ERROR HERE");
                         console.log(error);
+
                     });
 
                     channelParameters.remoteVideoTrack.play(remotePlayerContainer);

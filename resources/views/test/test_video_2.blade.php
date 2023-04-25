@@ -348,7 +348,7 @@
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
-                console.log(channelParameters);
+
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
                     // Retrieve the remote video track.
@@ -401,35 +401,41 @@
                     muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
+                    console.log(user.videoTrack);
+                    console.log(user.audioTrack);
+                    // user.videoTrack.addEventListener('change', () => {
+                        if (channelParameters.localAudioTrack.setEnabled == true) {
+                                     // Update the button text.
+                                     console.log("IF VIDEO");
+                                     document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                                     muteVideoButton2.classList.add('btn-success');
+                                     muteVideoButton2.classList.remove('btn-danger');
 
-                    user.videoTrack.addEventListener('change', () => {
-                        if (user.videoTrack == false) {
-                            // Update the button text.
+                                    } else {
+                                        // Update the button text.
+                                        console.log("ELSE VIDEO");
                             document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                             muteVideoButton2.classList.add('btn-danger');
                             muteVideoButton2.classList.remove('btn-success');
-
-                        } else {
-                            // Update the button text.
-                            document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                            muteVideoButton2.classList.add('btn-success');
-                            muteVideoButton2.classList.remove('btn-danger');
                         }
-                    });
+                    // });
 
-                    user.audioTrack.addEventListener('change', () => {
-                        if (user.audioTrack == false) {
+                    // user.audioTrack.addEventListener('change', () => {
+                        if (channelParameters.localAudioTrack.setEnabled == true) {
                             // Update the button text.
-                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                            muteButton2.classList.add('btn-danger');
-                            muteButton2.classList.remove('btn-primary');
-                        } else {
-                            // Update the button text.
+                            console.log("IF AUDIO");
                             document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
                             muteButton2.classList.add('btn-primary');
                             muteButton2.classList.remove('btn-danger');
+
+                        } else {
+                            // Update the button text.
+                            console.log("ELSE AUDIO");
+                            document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                            muteButton2.classList.add('btn-danger');
+                            muteButton2.classList.remove('btn-primary');
                         }
-                    });
+                    // });
 
                     // user.videoTrack.addEventListener('change', () => {
                     //     if (channelParameters.remoteVideoTrack == null || channelParameters.remoteVideoTrack === 'false') {
@@ -448,8 +454,8 @@
                     console.log(user.uid);
                     console.log(urlRemoteUser);
                     axios.get(urlRemoteUser).then((response) => {
-                        console.log("===========================");
-                        console.log(response['data']);
+                        // console.log("===========================");
+                        // console.log(response['data']);
                         const userRemote = response['data'];
 
                         // สร้าง element รูปภาพ

@@ -160,6 +160,9 @@
                     token: "",
                 };
 
+                console.log('----------------------------------------------------------');
+                console.log(channelParameters.localVideoTrack);
+
                 const url = "{{ url('/') }}/api/video_call";
                 axios.get(url).then((response) => {
                         // console.log(response['data']);
@@ -345,7 +348,7 @@
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("subscribe success");
-                console.log(user);
+                console.log(channelParameters);
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
                     // Retrieve the remote video track.
@@ -399,8 +402,8 @@
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
 
-                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
-                        if (channelParameters.remoteVideoTrack == false) {
+                    user.videoTrack.addEventListener('change', () => {
+                        if (user.videoTrack == false) {
                             // Update the button text.
                             document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                             muteVideoButton2.classList.add('btn-danger');
@@ -414,8 +417,8 @@
                         }
                     });
 
-                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
-                        if (channelParameters.remoteAudioTrack == false) {
+                    user.audioTrack.addEventListener('change', () => {
+                        if (user.audioTrack == false) {
                             // Update the button text.
                             document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                             muteButton2.classList.add('btn-danger');
@@ -428,13 +431,13 @@
                         }
                     });
 
-                    channelParameters['remoteVideoTrack'].addEventListener('change', () => {
-                        if (channelParameters.remoteVideoTrack == null || channelParameters.remoteVideoTrack === 'false') {
-                                document.getElementById('remoteUserBackground').classList.add('d-none');
-                        }else{
-                                document.getElementById('remoteUserBackground').classList.remove('d-none');
-                        }
-                    });
+                    // user.videoTrack.addEventListener('change', () => {
+                    //     if (channelParameters.remoteVideoTrack == null || channelParameters.remoteVideoTrack === 'false') {
+                    //             document.getElementById('remoteUserBackground').classList.add('d-none');
+                    //     }else{
+                    //             document.getElementById('remoteUserBackground').classList.remove('d-none');
+                    //     }
+                    // });
 
 
 

@@ -442,21 +442,21 @@
                         document.getElementById('remoteUserBackground').classList.remove('d-none');
                     }
 
-                    console.log('===================== AUDIO ========================')
-                    console.log(user.audioTrack);
-                    if(user.audioTrack){
-                        console.log("ไมค์ >> 'เปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
-                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
-                        muteButton2.classList.add('btn-primary');
-                        muteButton2.classList.remove('btn-danger');
-                    }else{
-                        console.log("ไมค์ >> 'ปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
-                        document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                        muteButton2.classList.add('btn-danger');
-                        muteButton2.classList.remove('btn-primary');
-                    }
+                    // console.log('===================== AUDIO ========================')
+                    // console.log(user.audioTrack);
+                    // if(user.audioTrack){
+                    //     console.log("ไมค์ >> 'เปิด' อยู่");
+                    //     document.getElementById(`muteAudio2`).innerHTML = "";
+                    //     document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                    //     muteButton2.classList.add('btn-primary');
+                    //     muteButton2.classList.remove('btn-danger');
+                    // }else{
+                    //     console.log("ไมค์ >> 'ปิด' อยู่");
+                    //     document.getElementById(`muteAudio2`).innerHTML = "";
+                    //     document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                    //     muteButton2.classList.add('btn-danger');
+                    //     muteButton2.classList.remove('btn-primary');
+                    // }
 
 
 
@@ -526,21 +526,21 @@
 
                     // console.log("mediaType >> " + mediaType);
 
-                    console.log('===================== VIDEO ========================')
-                    console.log(user.videoTrack);
-                    if(user.videoTrack){
-                        console.log("กล้อง >> 'เปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
-                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                        muteVideoButton2.classList.add('btn-success');
-                        muteVideoButton2.classList.remove('btn-danger');
-                    }else{
-                        console.log("กล้อง >> 'ปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
-                        document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                        muteVideoButton2.classList.add('btn-danger');
-                        muteVideoButton2.classList.remove('btn-success');
-                    }
+                    // console.log('===================== VIDEO ========================')
+                    // console.log(user.videoTrack);
+                    // if(user.videoTrack){
+                    //     console.log("กล้อง >> 'เปิด' อยู่");
+                    //     document.getElementById(`muteVideo2`).innerHTML = "";
+                    //     document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
+                    //     muteVideoButton2.classList.add('btn-success');
+                    //     muteVideoButton2.classList.remove('btn-danger');
+                    // }else{
+                    //     console.log("กล้อง >> 'ปิด' อยู่");
+                    //     document.getElementById(`muteVideo2`).innerHTML = "";
+                    //     document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                    //     muteVideoButton2.classList.add('btn-danger');
+                    //     muteVideoButton2.classList.remove('btn-success');
+                    // }
 
                     console.log('===================== AUDIO ========================')
                     console.log(user.audioTrack);

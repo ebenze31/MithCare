@@ -359,7 +359,10 @@
             agoraEngine.on("user-published", async (user, mediaType) => {
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
+                console.log("------------------- published ------------------");
                 console.log("subscribe success");
+
+
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
@@ -388,39 +391,50 @@
                     // // remotePlayerContainer = document.getElementById("remote-video-" + remoteId);
                     // remotePlayerContainer.style.background = "#000
 
-                     //สร้างปุ่ม เปิด-ปิด เสียง
-                    var muteButton2 = document.createElement('div');
-                    muteButton2.id = "muteAudio2";
-                    if(user.audioTrack){
-                        muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
-                        muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                        //สร้างปุ่ม เปิด-ปิด เสียง
+                    if(document.querySelector('#muteAudio2')){
+                        // console.log("มี muteVideo2 อยู่naja");
+
                     }else{
-                        muteButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
-                        muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                        var muteButton2 = document.createElement('div');
+                            muteButton2.id = "muteAudio2";
+                            if(user.audioTrack){
+                                muteButton2.classList.add('btn-old', 'btn-primary', 'mt-2');
+                                muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                            }else{
+                                muteButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
+                                muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
+                            }
+                            muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                            muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                            muteButton2.style.left = '50%'; // Set the distance from the left of the container
+                            muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+
+                            remotePlayerContainer.appendChild(muteButton2);
                     }
-                    muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    muteButton2.style.left = '50%'; // Set the distance from the left of the container
-                    muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
-                    remotePlayerContainer.appendChild(muteButton2);
+                    if(document.querySelector('#muteVideo2')){
+                        // console.log("มี muteVideo2 อยู่naja");
 
-                    //สร้างปุ่ม เปิด-ปิด วิดีโอ
-                    var muteVideoButton2 = document.createElement('div');
-                    muteVideoButton2.id = "muteVideo2";
-                    if(user.videoTrack){
-                        muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
-                        muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
                     }else{
-                        muteVideoButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
-                        muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                    }
-                    muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
-                    muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+                        //สร้างปุ่ม เปิด-ปิด วิดีโอ
+                        var muteVideoButton2 = document.createElement('div');
+                            muteVideoButton2.id = "muteVideo2";
+                            if(user.videoTrack){
+                                muteVideoButton2.classList.add('btn-old', 'btn-success', 'mt-2');
+                                muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
+                            }else{
+                                muteVideoButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
+                                muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
+                            }
+                            muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                            muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                            muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
+                            muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
-                    remotePlayerContainer.appendChild(muteVideoButton2);
+                            remotePlayerContainer.appendChild(muteVideoButton2);
+                    }
+
 
                     console.log("mediaType >> " + mediaType);
 
@@ -428,14 +442,14 @@
                     console.log(user.videoTrack);
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        // document.getElementById(`muteVideo2`).innerHTML = "";
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton2.classList.add('btn-success');
                         muteVideoButton2.classList.remove('btn-danger');
                         document.getElementById('remoteUserBackground').classList.add('d-none');
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        // document.getElementById(`muteVideo2`).innerHTML = "";
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
                         muteVideoButton2.classList.remove('btn-success');
@@ -546,13 +560,13 @@
                     console.log(user.audioTrack);
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        // document.getElementById(`muteAudio2`).innerHTML = "";
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
                         muteButton2.classList.add('btn-primary');
                         muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        // document.getElementById(`muteAudio2`).innerHTML = "";
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                         muteButton2.classList.add('btn-danger');
                         muteButton2.classList.remove('btn-primary');
@@ -562,21 +576,21 @@
                 // Listen for the "user-unpublished" event.
                 agoraEngine.on("user-unpublished", user => {
                     console.log(user.uid + "has left the channel");
-
+                    console.log("------------------- unpublished ------------------");
                     console.log("mediaType >> " + mediaType);
 
                     console.log('===================== VIDEO ========================')
                     console.log(user.videoTrack);
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        // document.getElementById(`muteVideo2`).innerHTML = "";
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton2.classList.add('btn-success');
                         muteVideoButton2.classList.remove('btn-danger');
                         document.getElementById('remoteUserBackground').classList.add('d-none');
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
-                        document.getElementById(`muteVideo2`).innerHTML = "";
+                        // document.getElementById(`muteVideo2`).innerHTML = "";
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
                         muteVideoButton2.classList.remove('btn-success');
@@ -587,13 +601,13 @@
                     console.log(user.audioTrack);
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        // document.getElementById(`muteAudio2`).innerHTML = "";
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
                         muteButton2.classList.add('btn-primary');
                         muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
-                        document.getElementById(`muteAudio2`).innerHTML = "";
+                        // document.getElementById(`muteAudio2`).innerHTML = "";
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                         muteButton2.classList.add('btn-danger');
                         muteButton2.classList.remove('btn-primary');

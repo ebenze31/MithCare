@@ -186,26 +186,6 @@
                 </div>
               </li> -->
 
-          <div class="widget widget-help bg-secondary mt-40 main-shadow">
-            <div class="bg-img"><img src="#" alt="background"></div>
-              <div class="row">
-                <h2 style="color: #ffffff;" class="col-10 ">ครอบครัวของฉัน</h2>
-
-                    <li class="nav__item has-dropdown col-6" >
-                        <ul class="dropdown-menu">
-
-                                <a href="{{ url('/room') }}" class="nav__item-link">บ้านของฉัน</a>
-
-                        </ul><!-- /.dropdown-menu -->
-                    </li><!-- /.nav-item -->
-              </div><!-- row -->
-
-              <ul class="widget-content">
-                <li class="widget__title">บ้านที่ 1</li>
-                <li class="widget__title">บ้านที่ 2</li>
-                <li class="widget__title">บ้านที่ 3</li>
-              </ul><!-- /.widget-content -->
-          </div><!-- /.widget-help -->
 
 
 

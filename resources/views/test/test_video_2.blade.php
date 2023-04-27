@@ -2,6 +2,9 @@
 
 @section('content')
     <style>
+        .bg-black{
+            background-color: black;
+        }
         .data_video_call {
 
             min-height: 30rem;
@@ -121,26 +124,16 @@
                 <div >
                     <button class="btn btn-primary" type="button" id="join">เข้าร่วม</button>
                     <button class="btn btn-danger" type="button" id="leave">ออก</button>
-                    {{-- <button type="button" class="btn-old btn-primary mt-2" id="muteAudio_beforeJoin">
-                        <i class="fa-solid fa-microphone"></i>
-                    </button>
-                    <button type="button" class="btn-old btn-success mt-2" id="muteVideo_beforeJoin">
-                        <i   class="fa-solid fa-video"></i>
-                    </button> --}}
+
                 </div>
             </div>
 
             <div id="div_for_videoCall" class="row mt-2 data_video_call p-3">
-                {{-- <label id="minutes">00</label>:<label id="seconds">00</label> --}}
                 <p id="time"></p>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
-                    <div id="remoteUserBackground" class="d-none"
-                        style=" background-color:black; " >
-                    </div>
+
                 </div>
-                <video id="video_track-video-6-client-e9202_9ab6a" class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%;
-                position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>
             </div>
         </div>
     </center>
@@ -197,6 +190,8 @@
             show_data_video.innerHTML = "";
 
         var div_for_videoCall = document.querySelector('#div_for_videoCall');
+
+        var isSharingEnabled = false;
 
         var isMuteVideo = false;
         var isMuteAudio = false;
@@ -279,7 +274,19 @@
             // END Profile Local
             //======================
 
-            // Create a button element for muting audio
+            //สร้างปุ่ม แชร์หน้าจอ
+            const shareScreenButton = document.createElement('button');
+            shareScreenButton.type = "button";
+            shareScreenButton.id = "shareScreen";
+            shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2');
+            shareScreenButton.innerHTML = '<i class="fa-solid fa-screencast"></i>';
+
+            shareScreenButton.style.position = 'absolute'; // Set position to absolute for the mute button
+            shareScreenButton.style.bottom = '10px'; // Set the distance from the bottom of the container
+            shareScreenButton.style.left = '40%'; // Set the distance from the left of the container
+            shareScreenButton.style.transform = 'translateX(-40%)'; // Center the button horizontally
+
+            localPlayerContainer.appendChild(shareScreenButton);
 
             //สร้างปุ่ม เปิด-ปิด เสียง
             const muteButton = document.createElement('button');
@@ -304,8 +311,8 @@
 
             muteVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
             muteVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-            muteVideoButton.style.right = '50%'; // Set the distance from the left of the container
-            muteVideoButton.style.transform = 'translateX(-50%)'; // Center the button horizontally
+            muteVideoButton.style.left = '60%'; // Set the distance from the left of the container
+            muteVideoButton.style.transform = 'translateX(-60%)'; // Center the button horizontally
 
             localPlayerContainer.appendChild(muteVideoButton);
 
@@ -379,7 +386,26 @@
                     channelParameters.localVideoTrack.play(localPlayerContainer);
                     console.log("publish success!");
 
-
+                    // ShareScreen
+                    document.getElementById('shareScreen').onclick = async function () {
+                        if(isSharingEnabled == false) {
+                            // Create a screen track for screen sharing.
+                            channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+                            // Replace the video track with the screen track.
+                            await channelParameters.localVideoTrack.replaceTrack(channelParameters.screenTrack, true);
+                            // Update the button text.
+                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                            // Update the screen sharing state.
+                            isSharingEnabled = true;
+                        } else {
+                            // Replace the screen track with the local video track.
+                            await channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
+                            // Update the button text.
+                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                            // Update the screen sharing state.
+                            isSharingEnabled = false;
+                        }
+                    }
                 }
                 // Listen to the Leave button click event.
                 document.getElementById('leave').onclick = async function() {
@@ -402,7 +428,7 @@
                 }
             }
 
-            localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
+            localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight','localVideoContainer');
             localPlayerContainer.style.maxWidth = '100%';
             localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
@@ -417,7 +443,7 @@
             // ****************************** remotePlayer ******************************* //
             // *************************************************************************** //
 
-            remotePlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight');
+            remotePlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight','remoteVideoContainer');
             remotePlayerContainer.style.maxWidth = '100%';
             remotePlayerContainer.style.padding = "15px 5px 5px 5px";
 
@@ -431,6 +457,8 @@
                 //======================
                 //   Profile Remote
                 //======================
+
+
                 const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
                 console.log(user.uid);
                 console.log(urlRemoteUser);
@@ -449,7 +477,7 @@
                         imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
                         imgRemote.classList.add('imgRemoteHeight');
                     }
-                     // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
+                    // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
 
 
                     const nameRemote = document.createElement('div');
@@ -482,9 +510,12 @@
 
                 });
 
+
+
                 //======================
                 // END Profile Remote
                 //======================
+
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
@@ -515,6 +546,15 @@
                     channelParameters.remoteAudioTrack.play();
 
                 }
+
+
+                // ---------------------- BackGround - วิดีโอ ---------------------- //
+
+                // if(user.videoTrack){
+                //     document.querySelector('#video_bg_remote').classList.add('d-none');
+                // }else{
+                //     document.querySelector('#video_bg_remote').classList.remove('d-none');
+                // }
 
                 // ---------------------- สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
 
@@ -584,18 +624,22 @@
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton2.classList.add('btn-success');
                         muteVideoButton2.classList.remove('btn-danger');
-                        document.getElementById('remoteUserBackground').classList.add('d-none');
+                        // document.querySelector('#video_bg_remote').classList.add('bg-black');
+
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
                         // document.getElementById(`muteVideo2`).innerHTML = "";
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
                         muteVideoButton2.classList.remove('btn-success');
-                        document.getElementById('remoteUserBackground').classList.remove('d-none');
+                        // document.querySelector('#video_bg_remote').classList.remove('d-none');
+                        // ปรับเปลี่ยนพื้นหลังของ RemotePlayer เป็นสีดำ
+                        // remotePlayerContainer.style.backgroundColor = "black";
+
                     }
 
                     console.log('===================== AUDIO ========================')
-                    
+
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
                         // document.getElementById(`muteAudio2`).innerHTML = "";

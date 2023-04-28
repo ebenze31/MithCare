@@ -130,14 +130,17 @@
 
             <div id="div_for_videoCall" class="row mt-2 data_video_call p-3">
                 <p id="time"></p>
+
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
-                <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
+
+                <!-- <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
                     {{-- <div class="col-12 col-md-6 col-lg-6 videoHeight" style="position: relative; max-width: 100%; padding: 15px 5px 5px;">
                         <div id="agora-video-player-track-video-6-client-a8909_4a7dc" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">
                             <video id="video_track-video-6-client-a8909_4a7dc" class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>
                         </div>
                     </div> --}}
-                </div>
+                </div> -->
+
             </div>
         </div>
     </center>
@@ -416,6 +419,7 @@
                         }
                     }
                 }
+
                 // Listen to the Leave button click event.
                 document.getElementById('leave').onclick = async function() {
                     // Destroy the local audio and video tracks.
@@ -431,11 +435,16 @@
 
                     // Leave the channel
                     await agoraEngine.leave();
+
                     console.log("You left the channel");
+                    document.querySelector('#timeDiv').remove();
                     // Refresh the page for reuse
-                    // window.location.reload();
+                    window.location.reload();
                 }
+
             }
+
+            
 
             localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight','localVideoContainer');
             localPlayerContainer.style.maxWidth = '100%';
@@ -461,16 +470,14 @@
                 // Subscribe to the remote user when the SDK triggers the "user-published" event.
                 await agoraEngine.subscribe(user, mediaType);
                 console.log("------------------- published ------------------");
-                console.log("subscribe success");
+                console.log("user_id >> " + user.uid);
+                console.log("subscribe >> " + mediaType + " << success");
 
                 //======================
                 //   Profile Remote
                 //======================
-
-
                 const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
-                console.log(user.uid);
-                console.log(urlRemoteUser);
+                // console.log(urlRemoteUser);
                 axios.get(urlRemoteUser).then((response) => {
                     // console.log("===========================");
                     // console.log(response['data']);
@@ -518,13 +525,9 @@
                     console.log(error);
 
                 });
-
-
-
                 //======================
                 // END Profile Remote
                 //======================
-
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
@@ -542,7 +545,18 @@
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
 
                     // Append the remote container to the page body.
-                    remote_video_call.append(remotePlayerContainer);
+                    // remote_video_call.append(remotePlayerContainer); // อันเก่าที่แทรกวิดีโอ
+
+                    // สร้าง element div new_remote_video_call
+                    let new_remote_video_call = document.createElement('div');
+                        new_remote_video_call.setAttribute('class' , 'my-4 col-12 col-md-6 col-lg-6');
+                        new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
+
+                    let div_for_videoCall = document.querySelector('#div_for_videoCall');
+                        div_for_videoCall.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
+
+                    document.querySelector('#remote_video_call_' + user.uid).append(remotePlayerContainer);
+
                     // Play the remote video track.
 
                 }
@@ -558,22 +572,16 @@
 
 
                 // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
-
                 if(document.querySelector('#video_trackRemoteDiv')){
                     document.querySelector('#video_trackRemoteDiv').remove();
                 }
-
                 // ---------------------- สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
-
                 if( document.querySelector('#muteAudio2') ){
                     document.querySelector('#muteAudio2').remove();
                 }
                 if( document.querySelector('#muteVideo2') ){
                     document.querySelector('#muteVideo2').remove();
                 }
-
-
-
                 // สร้างปุ่ม เปิด-ปิด เสียง
                 var muteButton2 = document.createElement('div');
                     muteButton2.id = "muteAudio2";
@@ -613,24 +621,37 @@
                     if (channelParameters.remoteVideoTrack !== null) { // ตรวจสอบว่าตัวแปร video ไม่เป็น null ก่อนเรียกใช้เมธอด play()
                         channelParameters.remoteVideoTrack.play(remotePlayerContainer);
                     }
-
                 // ---------------------- จบ สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
+                
 
+            });
 
-                // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
-                // ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ //
+            
 
-                // Listen for the "user-unpublished" event.
-                agoraEngine.on("user-unpublished", user => {
+            // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
+            // ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ //
 
-                    console.log(user.uid + "has left the channel");
-                    console.log("------------------- unpublished ------------------");
+            // ออกจากห้อง
+            agoraEngine.on("user-left", function (evt) {
+                // console.log(evt);
+                console.log(evt.uid + " ออกจากห้อง");
+                document.getElementById(evt.uid).remove();
+            });
+
+            // ปิด ไมค์ กล้อง
+            agoraEngine.on("user-unpublished", async (user, mediaType) => {
+
+                console.log("------------------- unpublished ------------------");
+                console.log("user_id >> " + user.uid);
+                console.log("unpublished >> " + mediaType);
+
+                if(mediaType == "video"){
 
                     console.log('===================== VIDEO ========================')
-
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
 
+                        let muteVideoButton2 = document.getElementById(`muteVideo2`);
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton2.classList.add('btn-success');
                         muteVideoButton2.classList.remove('btn-danger');
@@ -639,6 +660,7 @@
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
 
+                        let muteVideoButton2 = document.getElementById(`muteVideo2`);
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
                         muteVideoButton2.classList.remove('btn-success');
@@ -655,39 +677,32 @@
                         remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
                     }
 
+                }
+                
+                if(mediaType == "audio"){
+
                     console.log('===================== AUDIO ========================')
 
                     if(user.audioTrack){
                         console.log("ไมค์ >> 'เปิด' อยู่");
-                        // document.getElementById(`muteAudio2`).innerHTML = "";
+                        let muteButton2 = document.getElementById(`muteAudio2`);
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
                         muteButton2.classList.add('btn-primary');
                         muteButton2.classList.remove('btn-danger');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
-                        // document.getElementById(`muteAudio2`).innerHTML = "";
+                        let muteButton2 = document.getElementById(`muteAudio2`);
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                         muteButton2.classList.add('btn-danger');
                         muteButton2.classList.remove('btn-primary');
                     }
-
-                    // if(channelParameters.remoteVideoTrack.close == true && channelParameters.remoteAudioTrack.close == true){
-                    //     console.log("เข้า if remotePlayerContainer ยังอยู่");
-                    // }else{
-                    //     console.log("เข้า else ลบ remotePlayerContainer");
-                    //     // const removedPlayerContainer = remotePlayerContainer; // เก็บ reference ไว้ก่อน
-
-                    //     document.querySelector('#video_trackRemoteDiv').innerHTML = "";
-                    //     closeVideoHTML = "";
-                    //     removeVideoDiv(remotePlayerContainer.id);
-                    //     window.location.reload();
-                    // }
-                });
-                // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
-                // ⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆ //
+                }
 
 
             });
+
+            // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
+            // ⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆ //
 
             // *************************************************************************** //
             // **************************** END remotePlayer ***************************** //

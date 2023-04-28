@@ -459,6 +459,7 @@
                 //======================
 
 
+
                 const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
                 console.log(user.uid);
                 console.log(urlRemoteUser);

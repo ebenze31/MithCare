@@ -132,7 +132,11 @@
                 <p id="time"></p>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="data_video_call"></div>
                 <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
-
+                    {{-- <div class="col-12 col-md-6 col-lg-6 videoHeight" style="position: relative; max-width: 100%; padding: 15px 5px 5px;">
+                        <div id="agora-video-player-track-video-6-client-a8909_4a7dc" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">
+                            <video id="video_track-video-6-client-a8909_4a7dc" class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>
+                        </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -191,13 +195,18 @@
 
         var div_for_videoCall = document.querySelector('#div_for_videoCall');
 
+        // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด แชร์หน้าจอ
         var isSharingEnabled = false;
 
+        // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด วิดีโอและเสียง
         var isMuteVideo = false;
         var isMuteAudio = false;
 
-        var isMuteVideo2 = false;
-        var isMuteAudio2 = false;
+        // var isMuteVideo2 = false;
+        // var isMuteAudio2 = false;
+
+        // ใช้สำหรับ สร้าง bg สีดำให้วิดีโอ
+        var closeVideoHTML;
 
         var channelParameters = {
             // A variable to hold a local audio track.
@@ -424,7 +433,7 @@
                     await agoraEngine.leave();
                     console.log("You left the channel");
                     // Refresh the page for reuse
-                    window.location.reload();
+                    // window.location.reload();
                 }
             }
 
@@ -548,13 +557,11 @@
                 }
 
 
-                // ---------------------- BackGround - วิดีโอ ---------------------- //
+                // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
 
-                // if(user.videoTrack){
-                //     document.querySelector('#video_bg_remote').classList.add('d-none');
-                // }else{
-                //     document.querySelector('#video_bg_remote').classList.remove('d-none');
-                // }
+                if(document.querySelector('#video_trackRemoteDiv')){
+                    document.querySelector('#video_trackRemoteDiv').remove();
+                }
 
                 // ---------------------- สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
 
@@ -564,6 +571,8 @@
                 if( document.querySelector('#muteVideo2') ){
                     document.querySelector('#muteVideo2').remove();
                 }
+
+
 
                 // สร้างปุ่ม เปิด-ปิด เสียง
                 var muteButton2 = document.createElement('div');
@@ -601,8 +610,9 @@
 
                     remotePlayerContainer.appendChild(muteVideoButton2);
 
-
-                channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+                    if (channelParameters.remoteVideoTrack !== null) { // ตรวจสอบว่าตัวแปร video ไม่เป็น null ก่อนเรียกใช้เมธอด play()
+                        channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+                    }
 
                 // ---------------------- จบ สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
 
@@ -620,22 +630,29 @@
 
                     if(user.videoTrack){
                         console.log("กล้อง >> 'เปิด' อยู่");
-                        // document.getElementById(`muteVideo2`).innerHTML = "";
+
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
                         muteVideoButton2.classList.add('btn-success');
                         muteVideoButton2.classList.remove('btn-danger');
-                        // document.querySelector('#video_bg_remote').classList.add('bg-black');
+
 
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
-                        // document.getElementById(`muteVideo2`).innerHTML = "";
+
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                         muteVideoButton2.classList.add('btn-danger');
                         muteVideoButton2.classList.remove('btn-success');
-                        // document.querySelector('#video_bg_remote').classList.remove('d-none');
-                        // ปรับเปลี่ยนพื้นหลังของ RemotePlayer เป็นสีดำ
-                        // remotePlayerContainer.style.backgroundColor = "black";
 
+                        if(document.getElementById('video_trackRemoteDiv')){
+                            document.getElementById('video_trackRemoteDiv').remove();
+                        }
+                        //เพิ่มแท็กวิดีโอที่มีพื้นหลังแค่สีดำ
+                        let remote_video_call = document.getElementById(user.uid.toString());
+                            closeVideoHTML  =
+                                               ' <div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">' +
+                                                    '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
+                                                '</div>' ;
+                        remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
                     }
 
                     console.log('===================== AUDIO ========================')
@@ -653,9 +670,22 @@
                         muteButton2.classList.add('btn-danger');
                         muteButton2.classList.remove('btn-primary');
                     }
+
+                    // if(channelParameters.remoteVideoTrack.close == true && channelParameters.remoteAudioTrack.close == true){
+                    //     console.log("เข้า if remotePlayerContainer ยังอยู่");
+                    // }else{
+                    //     console.log("เข้า else ลบ remotePlayerContainer");
+                    //     // const removedPlayerContainer = remotePlayerContainer; // เก็บ reference ไว้ก่อน
+
+                    //     document.querySelector('#video_trackRemoteDiv').innerHTML = "";
+                    //     closeVideoHTML = "";
+                    //     removeVideoDiv(remotePlayerContainer.id);
+                    //     window.location.reload();
+                    // }
                 });
                 // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
                 // ⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆ //
+
 
             });
 

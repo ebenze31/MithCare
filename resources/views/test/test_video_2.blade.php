@@ -383,7 +383,6 @@
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
                     let isAboutTimeCalled = false;
-
                     if (isAboutTimeCalled == false) {
                         aboutTime();
                         isAboutTimeCalled = true;
@@ -429,22 +428,18 @@
                     removeVideoDiv(remotePlayerContainer.id);
                     removeVideoDiv(localPlayerContainer.id);
 
-                    // Show Button Before Join
-                    // document.getElementById('muteAudio_beforeJoin').classList.remove('d-none');
-                    // document.getElementById('muteVideo_beforeJoin').classList.remove('d-none');
+                    // document.getElementById('timeDiv').remove();
 
                     // Leave the channel
                     await agoraEngine.leave();
-
-                    console.log("You left the channel");
-                    document.querySelector('#timeDiv').remove();
+                    console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
                     window.location.reload();
                 }
 
             }
 
-            
+
 
             localPlayerContainer.classList.add('col-12','col-md-6','col-lg-6','videoHeight','localVideoContainer');
             localPlayerContainer.style.maxWidth = '100%';
@@ -622,11 +617,11 @@
                         channelParameters.remoteVideoTrack.play(remotePlayerContainer);
                     }
                 // ---------------------- จบ สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
-                
+
 
             });
 
-            
+
 
             // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
             // ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ //
@@ -678,7 +673,7 @@
                     }
 
                 }
-                
+
                 if(mediaType == "audio"){
 
                     console.log('===================== AUDIO ========================')
@@ -722,6 +717,8 @@
 
     <script>
         function aboutTime(){
+
+
                     //=========================
                     // เวลาปัจจุบันของประเทศไทย
                     //=========================
@@ -764,6 +761,16 @@
                     //================
                     //    ตัวจับเวลา
                     //================
+
+                    // ตรวจสอบว่าเวลาเก่าถูกเก็บไว้ใน localStorage หรือไม่
+                    let storedTime = localStorage.getItem("storedTime");
+
+                    // ถ้าเวลาเก่าไม่มีอยู่ใน localStorage ให้ใช้เวลาปัจจุบัน
+                    if (!storedTime) {
+                    storedTime = new Date().getTime();
+                    localStorage.setItem("storedTime", storedTime);
+                    }
+
                     const minutes = document.createElement('div');
                         minutes.id = "minutes";
                         minutes.innerHTML = '00';
@@ -801,5 +808,9 @@
                     timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
                     timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
         }
+
+
+
+
     </script>
 @endsection

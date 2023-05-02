@@ -543,6 +543,10 @@
                     // remote_video_call.append(remotePlayerContainer); // อันเก่าที่แทรกวิดีโอ
 
                     // สร้าง element div new_remote_video_call
+                    if(document.getElementById('remote_video_call_'+ user.uid)){
+                        document.getElementById('remote_video_call_'+ user.uid).remove();
+                    }
+
                     let new_remote_video_call = document.createElement('div');
                         new_remote_video_call.setAttribute('class' , 'my-4 col-12 col-md-6 col-lg-6');
                         new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
@@ -718,95 +722,103 @@
     <script>
         function aboutTime(){
 
+            //=========================
+            // เวลาปัจจุบันของประเทศไทย
+            //=========================
+            var formattedString = "";
+            var nowTimeTH = "";
+            var realTime = document.createElement('button');
+                realTime.id = "realTime";
+                realTime.classList.add('btn','btn-dark','mr-2');
 
-                    //=========================
-                    // เวลาปัจจุบันของประเทศไทย
-                    //=========================
-                    var formattedString = "";
-                    var nowTimeTH = "";
-                    var realTime = document.createElement('button');
-                        realTime.id = "realTime";
-                        realTime.classList.add('btn', 'btn-success');
+            const timeDiv = document.createElement('div');
+                timeDiv.classList.add('col-12');
+                timeDiv.id = "timeDiv";
 
-                    const timeDiv = document.createElement('div');
-                        timeDiv.classList.add('col-12');
-                        timeDiv.id = "timeDiv";
+            const timeButton = document.createElement('button');
+                timeButton.id = "timeButton";
+                timeButton.classList.add('btn','btn-dark','mr-2');
+                timeButton.innerHTML = '<i class="fa-duotone fa-record-vinyl fa-fade" style="--fa-primary-color: #d70f0f; --fa-secondary-color: #181616; font-size: 20px; padding-left: 3px"></i>';
 
-                    const timeButton = document.createElement('button');
-                        timeButton.id = "timeButton";
-                        timeButton.classList.add('btn',  'btn-success','order-first');
-                        timeButton.innerHTML = '<i class="fa-duotone fa-record-vinyl fa-fade" style="--fa-primary-color: #d70f0f; --fa-secondary-color: #181616; font-size: 20px; padding-left: 3px"></i>';
-                    refreshTime()
+            refreshTime()
 
-                    function refreshTime() {
-                            nowTimeTH = new Date().toLocaleTimeString("en-US", {
-                            timeZone: "Asia/Bangkok",
-                            hour12: false,
-                            hour: "2-digit",
-                            minute: "2-digit"
-                        });
-                        formattedString = nowTimeTH.replace(", ", " - ");
-                        formattedString += " น.";
-                        realTime.innerHTML = formattedString;
-                    }
+            function refreshTime() {
+                const nowTimeTH = new Date();
+                const date = {
+                    timeZone: 'Asia/Bangkok',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                };
+                const time = {
+                    timeZone: 'Asia/Bangkok',
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
 
-                    setInterval(refreshTime, 1000); // อัพเดทเวลาทุก ๆ 1 วินาที
+                };
+                const formattedStringDate = nowTimeTH.toLocaleDateString('th-TH', date);
+                const formattedStringTime = nowTimeTH.toLocaleTimeString('th-TH', time);
+                realTime.innerHTML = formattedStringDate + '<br>' + formattedStringTime;
+            }
+
+            setInterval(refreshTime, 1000); // อัพเดทเวลาทุก ๆ 1 วินาที
 
 
-                    timeDiv.appendChild(realTime);
+            timeDiv.appendChild(realTime);
 
-                    timeDiv.appendChild(timeButton);
-                    div_for_videoCall.insertBefore(timeDiv, div_for_videoCall.firstChild);
+            timeDiv.appendChild(timeButton);
+            div_for_videoCall.insertBefore(timeDiv, div_for_videoCall.firstChild);
 
-                    //================
-                    //    ตัวจับเวลา
-                    //================
+            //================
+            //    ตัวจับเวลา
+            //================
 
-                    // ตรวจสอบว่าเวลาเก่าถูกเก็บไว้ใน localStorage หรือไม่
-                    let storedTime = localStorage.getItem("storedTime");
+            // ตรวจสอบว่าเวลาเก่าถูกเก็บไว้ใน localStorage หรือไม่
+            let storedTime = localStorage.getItem("storedTime");
 
-                    // ถ้าเวลาเก่าไม่มีอยู่ใน localStorage ให้ใช้เวลาปัจจุบัน
-                    if (!storedTime) {
-                    storedTime = new Date().getTime();
-                    localStorage.setItem("storedTime", storedTime);
-                    }
+            // ถ้าเวลาเก่าไม่มีอยู่ใน localStorage ให้ใช้เวลาปัจจุบัน
+            if (!storedTime) {
+            storedTime = new Date().getTime();
+            localStorage.setItem("storedTime", storedTime);
+            }
 
-                    const minutes = document.createElement('div');
-                        minutes.id = "minutes";
-                        minutes.innerHTML = '00';
+            const minutes = document.createElement('div');
+                minutes.id = "minutes";
+                minutes.innerHTML = '00';
 
-                    const seconds = document.createElement('div');
-                        seconds.id = "seconds";
-                        seconds.innerHTML = '00';
+            const seconds = document.createElement('div');
+                seconds.id = "seconds";
+                seconds.innerHTML = '00';
 
-                    const minutesLabel = document.createElement('span');
-                        minutesLabel.innerHTML = ':';
+            const minutesLabel = document.createElement('span');
+                minutesLabel.innerHTML = ':';
 
-                    var totalSeconds = 0;
+            var totalSeconds = 0;
 
-                    setInterval(setTime, 1000);
+            setInterval(setTime, 1000);
 
-                    function setTime() {
-                        ++totalSeconds;
-                        seconds.innerHTML = pad(totalSeconds % 60);
-                        minutes.innerHTML = pad(parseInt(totalSeconds / 60));
-                    }
+            function setTime() {
+                ++totalSeconds;
+                seconds.innerHTML = pad(totalSeconds % 60);
+                minutes.innerHTML = pad(parseInt(totalSeconds / 60));
+            }
 
-                    function pad(val) {
-                        var valString = val + "";
-                        if (valString.length < 2) {
-                            return "0" + valString;
-                        } else {
-                            return valString;
-                        }
-                    }
+            function pad(val) {
+                var valString = val + "";
+                if (valString.length < 2) {
+                    return "0" + valString;
+                } else {
+                    return valString;
+                }
+            }
 
-                    // const textMinutes = document.createTextNode(" นาที");
+            // const textMinutes = document.createTextNode(" นาที");
 
-                    // timeDiv.appendChild(timeButton);
-                    timeButton.insertBefore(minutes,timeButton.firstChild);
-                    timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
-                    timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
+            // timeDiv.appendChild(timeButton);
+            timeButton.insertBefore(minutes,timeButton.firstChild);
+            timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
+            timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
         }
 
 

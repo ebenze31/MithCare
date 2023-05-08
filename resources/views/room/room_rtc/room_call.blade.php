@@ -103,7 +103,7 @@
         .buttonVideo button{
             margin-right: 0.5rem;
         }
-        .btn-old{
+        .btn-old{ /* ปุ่มทั้งหมด */
             border-radius: 50% !important;
             width: 3.5rem !important;
             height: 3.5rem !important;
@@ -111,10 +111,10 @@
             background-color: rgba(0,0,0,0.6);
             color: #ffffff;
         }
-        .btn-old i{
+        .btn-old i{ /* ไอคอนในปุ่มทั้งหมด*/
             margin-top: .5rem !important;
         }
-        #leave{ /* ปุ่มวางสาย*/
+        #leaveVideoCall{ /* ปุ่มวางสาย*/
             background-color: #db2d2e !important;
             color: #ffffff;
         }
@@ -127,9 +127,9 @@
         =======================================*/
 
         .localVideoCallDiv div div{
-                width: 100% !important;
-                height: 100% !important;
-                border-radius:  10px!important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius:  10px!important;
         }
         .imgdivLocal{  /* div รูปภาพของ local */
             width: 50px;
@@ -145,12 +145,16 @@
             width: 100% !important;
         }
         .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
-            height: 100px !important;
-            width: 100px !important;
+            height: 200px !important;
+            width: 150px !important;
             position: absolute;
             top: 0;
             right: 0;
             z-index: 1;
+            margin: 1rem;
+        }
+        .localAfterSubscribe div {
+            border-radius: 10px;
         }
         /*=======================================
                 remotePlayer CSS Mobile
@@ -177,8 +181,11 @@
     }
     </style>
 
-    <div id='localVideoMain' class="localPlayerVideoCall"></div>
-    {{-- <div id='remoteVideoMain' class="remotePlayerVideoCall"></div> --}}
+    <div id='MainVideoDiv' class="localPlayerVideoCall">
+        <div id='localVideoMain' class="localPlayerVideoCall "></div>
+        <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
+    </div>
+
     <div id='app'></div>
     <button class="btn btn-primary d-none" type="button" id="join">เข้าร่วม</button>
     {{-- <center>
@@ -243,6 +250,8 @@
 
         // var div_for_videoCall = document.querySelector('#div_for_videoCall');
 
+        var MainVideoDiv = document.querySelector('#MainVideoDiv');
+
         // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด แชร์หน้าจอ
         var isSharingEnabled = false;
 
@@ -279,6 +288,7 @@
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
             const remotePlayerContainer = document.getElementById('remoteVideoMain');
+
             // Dynamically create a container in the form of a DIV element to play the local video track.
             const localPlayerContainer = document.getElementById('localVideoMain');
             // Specify the ID of the DIV container. You can use the uid of the local user.
@@ -324,18 +334,13 @@
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
 
-            localPlayerContainer.appendChild(divForVideoButton);
+            MainVideoDiv.appendChild(divForVideoButton);
             //สร้างปุ่ม แชร์หน้าจอ
             const shareScreenButton = document.createElement('button');
                 shareScreenButton.type = "button";
                 shareScreenButton.id = "shareScreen";
                 shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2');
                 shareScreenButton.innerHTML = '<i class="fa-solid fa-screencast"></i>';
-
-                // shareScreenButton.style.position = 'absolute'; // Set position to absolute for the mute button
-                // shareScreenButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-                // shareScreenButton.style.left = '40%'; // Set the distance from the left of the container
-                // shareScreenButton.style.transform = 'translateX(-40%)'; // Center the button horizontally
 
             divForVideoButton.appendChild(shareScreenButton);
 
@@ -346,11 +351,6 @@
                 muteButton.classList.add('btn-old', 'btn-primary', 'mt-2');
                 muteButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
 
-                // muteButton.style.position = 'absolute'; // Set position to absolute for the mute button
-                // muteButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-                // muteButton.style.left = '50%'; // Set the distance from the left of the container
-                // muteButton.style.transform = 'translateX(-50%)'; // Center the button horizontally
-
             divForVideoButton.appendChild(muteButton);
 
             //สร้างปุ่ม เปิด-ปิด วิดีโอ
@@ -360,24 +360,14 @@
                 muteVideoButton.classList.add('btn-old', 'btn-success', 'mt-2');
                 muteVideoButton.innerHTML = '<i class="fa-solid fa-video"></i>';
 
-                // muteVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
-                // muteVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-                // muteVideoButton.style.left = '60%'; // Set the distance from the left of the container
-                // muteVideoButton.style.transform = 'translateX(-60%)'; // Center the button horizontally
-
             divForVideoButton.appendChild(muteVideoButton);
 
               //สร้างปุ่ม ออกสาย
             const leaveVideoButton = document.createElement('button');
                 leaveVideoButton.type = "button";
-                leaveVideoButton.id = "leave";
+                leaveVideoButton.id = "leaveVideoCall";
                 leaveVideoButton.classList.add('btn-old', 'btn-danger', 'mt-2');
                 leaveVideoButton.innerHTML = '<i class="fa-solid fa-phone"></i>';
-
-                // leaveVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
-                // leaveVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-                // leaveVideoButton.style.left = '70%'; // Set the distance from the left of the container
-                // leaveVideoButton.style.transform = 'translateX(-70%)'; // Center the button horizontally
 
             divForVideoButton.appendChild(leaveVideoButton);
 
@@ -474,7 +464,7 @@
                 }
 
                 // Listen to the Leave button click event.
-                leaveVideoButton.addEventListener('click', async function() {
+                document.querySelector('#leaveVideoCall').addEventListener('click', async function() {
                     // Destroy the local audio and video tracks.
                     channelParameters.localAudioTrack.close();
                     channelParameters.localVideoTrack.close();
@@ -488,8 +478,8 @@
                     await agoraEngine.leave();
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
-                    window.onload();
-                    // window.history.back();
+                    // window.onload();
+                    window.history.back();
                 })
 
             }
@@ -519,62 +509,61 @@
                 //======================
                 //   Profile Remote
                 //======================
-                const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
-                // console.log(urlRemoteUser);
-                axios.get(urlRemoteUser).then((response) => {
-                    // console.log("===========================");
-                    // console.log(response['data']);
-                    const userRemote = response['data'];
+                // const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
+                // // console.log(urlRemoteUser);
+                // axios.get(urlRemoteUser).then((response) => {
+                //     // console.log("===========================");
+                //     // console.log(response['data']);
+                //     const userRemote = response['data'];
 
-                    // สร้าง element รูปภาพ
-                    const imgRemote = document.createElement('img');
-                    if(userRemote['avatar']){
-                        imgRemote.src = userRemote['avatar'];
-                        imgRemote.classList.add('imgRemoteHeight');
+                //     // สร้าง element รูปภาพ
+                //     const imgRemote = document.createElement('img');
+                //     if(userRemote['avatar']){
+                //         imgRemote.src = userRemote['avatar'];
+                //         imgRemote.classList.add('imgRemoteHeight');
 
-                    }else{
-                        imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
-                        imgRemote.classList.add('imgRemoteHeight');
-                    }
-                    // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
-
-
-                    const nameRemote = document.createElement('div');
-                    nameRemote.innerHTML = userRemote['name'];
-                    const statusRemote = document.createElement('div');
-                    if(userRemote['memberStatus'] === 'patient'){
-                        statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
-                    }else if(userRemote['memberStatus'] === 'owner'){
-                        statusRemote.innerHTML = "เจ้าของบ้าน";
-                    }else if(userRemote['memberStatus'] === 'member'){
-                        statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
-                    }else{
-                        statusRemote.innerHTML = "สมาชิก";
-                    }
-                    // สร้าง element div สำหรับรอบรูปภาพ
-                    const imgdivRemote = document.createElement('div');
-                    imgdivRemote.classList.add('imgdivRemote');
+                //     }else{
+                //         imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
+                //         imgRemote.classList.add('imgRemoteHeight');
+                //     }
+                //     // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
 
 
-                    // เพิ่ม element รูปภาพเข้าไปยัง element div
-                    imgdivRemote.appendChild(imgRemote);
-                    imgdivRemote.appendChild(nameRemote);
-                    imgdivRemote.appendChild(statusRemote);
-                    remotePlayerContainer.appendChild(imgdivRemote);
+                //     const nameRemote = document.createElement('div');
+                //     nameRemote.innerHTML = userRemote['name'];
+                //     const statusRemote = document.createElement('div');
+                //     if(userRemote['memberStatus'] === 'patient'){
+                //         statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
+                //     }else if(userRemote['memberStatus'] === 'owner'){
+                //         statusRemote.innerHTML = "เจ้าของบ้าน";
+                //     }else if(userRemote['memberStatus'] === 'member'){
+                //         statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
+                //     }else{
+                //         statusRemote.innerHTML = "สมาชิก";
+                //     }
+                //     // สร้าง element div สำหรับรอบรูปภาพ
+                //     const imgdivRemote = document.createElement('div');
+                //     imgdivRemote.classList.add('imgdivRemote');
 
-                })
-                .catch((error) => {
-                    console.log("ERROR HERE");
-                    console.log(error);
 
-                });
+                //     // เพิ่ม element รูปภาพเข้าไปยัง element div
+                //     imgdivRemote.appendChild(imgRemote);
+                //     imgdivRemote.appendChild(nameRemote);
+                //     imgdivRemote.appendChild(statusRemote);
+                //     remotePlayerContainer.appendChild(imgdivRemote);
+
+                // })
+                // .catch((error) => {
+                //     console.log("ERROR HERE");
+                //     console.log(error);
+
+                // });
                 //======================
                 // END Profile Remote
                 //======================
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
-
 
                     // Retrieve the remote video track.
                     channelParameters.remoteVideoTrack = user.videoTrack;
@@ -584,13 +573,13 @@
                     channelParameters.remoteUid = user.uid.toString();
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
                     remotePlayerContainer.id = user.uid.toString();
-                    channelParameters.remoteUid = user.uid.toString();
 
                     // ชื่อ RemotePlayer
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
 
                     // สลับ local ไปเป็นจอเล็กแล้วให้อยู่ขวาบน
-                    let local_STR = document.getElementById('localVideoMain');
+                    let local_STR = localPlayerContainer;
+                    // let local_STR = document.getElementById('localVideoMain');
                         local_STR.classList.add('localAfterSubscribe');
                         local_STR.classList.remove('localPlayerVideoCall');
 
@@ -608,8 +597,8 @@
 
                         remoteVideoMain.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
 
-                    document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
-
+                    // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
+                    remotePlayerContainer.append(remoteVideoMain);
                     // Play the remote video track.
 
                 }
@@ -686,11 +675,13 @@
 
             // ออกจากห้อง
             agoraEngine.on("user-left", function (evt) {
-                // console.log("remove id = "+evt.uid);
+                console.log("remove id = "+evt.uid);
                 document.getElementById(evt.uid).remove();
-                document.getElementById("remote_video_call_" + evt.uid).remove();
 
-                let local_FULL = document.getElementById('localVideoMain');
+                // document.getElementById("remote_video_call_" + evt.uid).remove();
+
+                console.log("ลบ local_FULL");
+                let local_FULL = localPlayerContainer;
                     local_FULL.classList.add('localPlayerVideoCall');
                     local_FULL.classList.remove('localAfterSubscribe');
 

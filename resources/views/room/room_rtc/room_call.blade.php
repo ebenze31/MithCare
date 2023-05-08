@@ -182,8 +182,8 @@
     </style>
 
     <div id='MainVideoDiv' class="localPlayerVideoCall">
-        <div id='localVideoMain' class="localPlayerVideoCall "></div>
-        <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
+        <div id='localVideoMain' class="localPlayerVideoCall"></div>
+        <div id='remoteVideoMain' class="remotePlayerVideoCall"></div>
     </div>
 
     <div id='app'></div>

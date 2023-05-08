@@ -30,20 +30,74 @@
             max-height: 100%;
             overflow: hidden;
         }
-        /* .avatar {
-            vertical-align: middle;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        } */
-        /* .videoHeight{
-            height: 450px;
-        } */
+        .MainVideoDiv{
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            padding: 2rem;
+        }
+        .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
+            /* background-color: #051407; */
+            position: absolute;
+            bottom: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .buttonVideo button{
+            margin-right: 0.5rem;
+        }
+        .btn-old{ /* ปุ่มทั้งหมด */
+            border-radius: 50% !important;
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            font-size: 1rem !important;
+            background-color: rgba(0,0,0,0.6);
+            color: #ffffff;
+        }
+        .btn-old i{ /* ไอคอนในปุ่มทั้งหมด*/
+            margin-top: .5rem !important;
+        }
+        .btn-disabled{ /* ปุ่มขณะถูกปิด ขึ้นสีแดง*/
+            background-color: #db2d2e !important;
+            color: #ffffff;
+        }
+        #muteAudio2 {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0.5;
+        }
+        #muteVideo2{
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0.8;
+        }
 
         /*=======================================
                 localPlayer css Computer
         =======================================*/
-
+        .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
+            height: 400px !important;
+            width: 60% !important;
+            margin-right: auto!important;
+	        margin-left: auto!important;
+            margin-top: auto!important;
+	        margin-bottom: auto!important;
+        }
+        .localPlayerVideoCall div {
+            border-radius: 10px;
+        }
+        .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
+            height: 500px !important;
+            width: 60% !important;
+            margin-right: auto!important;
+	        margin-left: auto!important;
+            margin-top: auto!important;
+	        margin-bottom: auto!important;
+        }
+        .localAfterSubscribe div {
+            border-radius: 10px;
+        }
         .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
             width: 100px;
             height: 100px;
@@ -60,8 +114,21 @@
             max-width: 100%;
         }
 
+        /*=======================================
+                remotePlayer css Computer
+        =======================================*/
 
-
+        .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
+            height: 500px !important;
+            width: 60% !important;
+            margin-right: auto!important;
+	        margin-left: auto!important;
+            margin-top: auto!important;
+	        margin-bottom: auto!important;
+        }
+        .remotePlayerVideoCall div {
+            border-radius: 10px;
+        }
         .imgdivRemote{  /*กรอบรูปโปรไฟล์ remote*/
             width: 100px;
             height: 100px;
@@ -114,6 +181,10 @@
         .btn-old i{ /* ไอคอนในปุ่มทั้งหมด*/
             margin-top: .5rem !important;
         }
+        .btn-disabled{ /* ปุ่มขณะถูกปิด ขึ้นสีแดง*/
+            background-color: #db2d2e !important;
+            color: #ffffff;
+        }
         #leaveVideoCall{ /* ปุ่มวางสาย*/
             background-color: #db2d2e !important;
             color: #ffffff;
@@ -121,7 +192,12 @@
         .agora_video_player{ /*class ตัววิดีโอของ local */
             background-color: gray;
         }
-
+        #muteAudio2 {
+            display: none;
+        }
+        #muteVideo2{
+            display: none;
+        }
         /*=======================================
                 localPlayer CSS Mobile
         =======================================*/
@@ -181,7 +257,7 @@
     }
     </style>
 
-    <div id='MainVideoDiv' class="localPlayerVideoCall">
+    <div id='MainVideoDiv' class="MainVideoDiv">
         <div id='localVideoMain' class="localPlayerVideoCall"></div>
         <div id='remoteVideoMain' class="remotePlayerVideoCall"></div>
     </div>
@@ -348,7 +424,7 @@
             const muteButton = document.createElement('button');
                 muteButton.type = "button";
                 muteButton.id = "muteAudio";
-                muteButton.classList.add('btn-old', 'btn-primary', 'mt-2');
+                muteButton.classList.add('btn-old','mt-2');
                 muteButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
 
             divForVideoButton.appendChild(muteButton);
@@ -357,7 +433,7 @@
             const muteVideoButton = document.createElement('button');
                 muteVideoButton.type = "button";
                 muteVideoButton.id = "muteVideo";
-                muteVideoButton.classList.add('btn-old', 'btn-success', 'mt-2');
+                muteVideoButton.classList.add('btn-old','mt-2');
                 muteVideoButton.innerHTML = '<i class="fa-solid fa-video"></i>';
 
             divForVideoButton.appendChild(muteVideoButton);
@@ -377,8 +453,8 @@
                     channelParameters.localVideoTrack.setEnabled(false);
                     // Update the button text.
                     document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                    muteVideoButton.classList.add('btn-danger');
-                    muteVideoButton.classList.remove('btn-success');
+                    muteVideoButton.classList.add('btn-disabled');
+                    // muteVideoButton.classList.remove('btn-success');
                     isMuteVideo = true;
 
 
@@ -387,8 +463,8 @@
                     channelParameters.localVideoTrack.setEnabled(true);
                     // Update the button text.
                     document.getElementById(`muteVideo`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                    muteVideoButton.classList.add('btn-success');
-                    muteVideoButton.classList.remove('btn-danger');
+                    // muteVideoButton.classList.add('btn-success');
+                    muteVideoButton.classList.remove('btn-disabled');
                     isMuteVideo = false;
 
 
@@ -401,16 +477,16 @@
                     channelParameters.localAudioTrack.setEnabled(false);
                     // Update the button text.
                     document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                    muteButton.classList.add('btn-danger');
-                    muteButton.classList.remove('btn-primary');
+                    muteButton.classList.add('btn-disabled');
+                    // muteButton.classList.remove('btn-primary');
                     isMuteAudio = true;
                 } else {
                     // Unmute the local video.
                     channelParameters.localAudioTrack.setEnabled(true);
                     // Update the button text.
                     document.getElementById(`muteAudio`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
-                    muteButton.classList.add('btn-primary');
-                    muteButton.classList.remove('btn-danger');
+                    // muteButton.classList.add('btn-primary');
+                    muteButton.classList.remove('btn-disabled');
                     isMuteAudio = false;
                 }
             }

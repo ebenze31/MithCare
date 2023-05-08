@@ -195,6 +195,12 @@
                                         @endif
 
                                     </div>
+                                    <div class="col-12 mt-3">
+                                        <a href="{{ url('/room_lobby/') }}?room_id={{ $item->room->id }}" class="btn-old btn-info btn-sm btn-block main-shadow main-radius">
+                                            <!-- <i class="fa-solid fa-magnifying-glass"></i>  -->
+                                            ห้องสนทนา
+                                        </a>
+                                    </div>
                                     <div class="col-12">
                                         <hr>
                                         <p class="pricing__title text-center mt-2 p-2 h3" style="color: #4170A2;">{{$item->room->name}}</p>

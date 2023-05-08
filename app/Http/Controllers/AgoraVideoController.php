@@ -13,11 +13,14 @@ use App\Events\MakeAgoraCall;
 
 class AgoraVideoController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,$room_id,$user_id)
     {
+        $requestData = $request->all();
+
         // fetch all users apart from the authenticated user
-        $users = User::where('id', '<>', Auth::id())->get();
-        return view('test.test_video_2', compact('users'));
+        // $users = User::where('id', '<>', Auth::id())->get();
+
+        return view('room.room_rtc.room_call', compact('user_id','room_id'));
     }
 
     public function token(Request $request)

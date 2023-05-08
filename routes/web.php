@@ -56,11 +56,6 @@ Route::get('video_call', 'TestController@video_call');
 // });
 
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/agora-chat', 'AgoraVideoController@index');
-    Route::post('/agora/token', 'AgoraVideoController@token');
-    Route::post('/agora/call-user', 'AgoraVideoController@callUser');
-});
 
 
 //========================
@@ -108,6 +103,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('room_join', 'RoomController@room_join')->name('room_join');
     Route::patch('member_of_room_edit/{id}', 'RoomController@member_of_room_edit')->name('member_of_room_edit');
     // Route::get('room_find/{id}/edit', 'RoomController@room_edit')->name('room_find_edit');
+
+    /// Room_RTC //////
+    Route::get('room_lobby', 'RoomRTCController@index')->name('room_lobby');
+
+    Route::get('/room_call/{room_id}/{user_id}', 'AgoraVideoController@index');
+    Route::post('/agora/token', 'AgoraVideoController@token');
+    Route::post('/agora/call-user', 'AgoraVideoController@callUser');
+
+
+
     //========================
     //     MEMBER_OF_ROOM
     //========================

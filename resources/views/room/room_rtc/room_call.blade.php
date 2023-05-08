@@ -2,10 +2,13 @@
 
 @section('content')
     <style>
+        /*=======================================
+                    global css Computer
+         =======================================*/
         .bg-black{
             background-color: black;
         }
-        .videoCallArea{
+        .videoCallArea{ /* div ใหญ่ที่ใส่ local remote container*/
 
             min-height: 40rem;
             max-height: 100%;
@@ -15,20 +18,7 @@
             background-color: #acd2f1;
             margin: 2px;
         }
-        #remoteUserBackground{
-            border-color: #3490dc;
-            border-style: solid;
-
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-
-            overflow: hidden;
-        }
-        video{
+        video{ /* ตกแต่ง tag video ที่ agora สร้างมา*/
             border-color: #3490dc;
             border-style: solid;
             border-radius: 10px;
@@ -40,22 +30,21 @@
             max-height: 100%;
             overflow: hidden;
         }
-        .avatar {
+        /* .avatar {
             vertical-align: middle;
             width: 50px;
             height: 50px;
             border-radius: 50%;
-        }
-        .videoHeight{
+        } */
+        /* .videoHeight{
             height: 450px;
+        } */
 
-        }
-            @media (max-width: 576px) {
-                .videoHeight{
-                    height: 300px;
-                }
-            }
-        .imgdivLocal{
+        /*=======================================
+                localPlayer css Computer
+        =======================================*/
+
+        .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
             width: 100px;
             height: 100px;
             border: 1px solid black;
@@ -64,115 +53,142 @@
             bottom: 0;
             z-index: 1;
         }
-            @media (max-width: 576px) {
-                .imgdivLocal{
-                    width: 50px;
-                    height: 50px;
-                    border: 1px solid black;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    z-index: 1;
-                }
-            }
-        .imgdivRemote{
-            width: 100px;
-            height: 100px;
-            max-height: 100px;
-            border: 1px solid black;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-            @media (max-width: 576px) {
-                .imgdivRemote{
-                    width: 50px;
-                    height: 50px;
-                    border: 1px solid black;
-                    position: absolute;
-                    left: 0;
-                    bottom: 0;
-                    z-index: 1;
-                }
-            }
-        .imgLocalHeight{
+        .imgLocalHeight{ /*ความกว้างและสูง กรอบรูปโปรไฟล์ local*/
             height: 100%;
             max-height: 100%;
             width: 100%;
             max-width: 100%;
         }
 
-        .imgRemoteHeight{
+
+
+        .imgdivRemote{  /*กรอบรูปโปรไฟล์ remote*/
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+
+        .imgRemoteHeight{ /*ความกว้างและสูง กรอบรูปโปรไฟล์ remote*/
             height: 100%;
             max-height: 100%;
             width: 100%;
             max-width: 100%;
         }
-        #remotePlayerContainer {
+        #remotePlayerContainer { /*พื้นหลังดำ ??*/
             background-color: black;
             visibility: hidden;
         }
 
+    /*=======================================
+            CSS สำหรับหน้าจอมือถือ
+    =======================================*/
+
     @media screen and (max-width: 768px) {
-    /* CSS สำหรับหน้าจอมือถือ */
-        body,html{
+
+        body,html,main{
             width: 100%;
             height: 100%;
         }
+        .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
+            /* background-color: #051407; */
+            position: absolute;
+            bottom: 1rem;
+            left: 19%;
+        }
+        .buttonVideo button{
+            margin-right: 0.5rem;
+        }
+        .btn-old{
+            border-radius: 50% !important;
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            font-size: 1rem !important;
+            background-color: rgba(0,0,0,0.6);
+            color: #ffffff;
+        }
+        .btn-old i{
+            margin-top: .5rem !important;
+        }
+        #leave{ /* ปุ่มวางสาย*/
+            background-color: #db2d2e !important;
+            color: #ffffff;
+        }
+        .agora_video_player{ /*class ตัววิดีโอของ local */
+            background-color: gray;
+        }
+
+        /*=======================================
+                localPlayer CSS Mobile
+        =======================================*/
+
+        .localVideoCallDiv div div{
+                width: 100% !important;
+                height: 100% !important;
+                border-radius:  10px!important;
+        }
+        .imgdivLocal{  /* div รูปภาพของ local */
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
+            height: 100% !important;
+            width: 100% !important;
+        }
+        .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
+            height: 100px !important;
+            width: 100px !important;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+        }
+        /*=======================================
+                remotePlayer CSS Mobile
+        =======================================*/
         .remoteVideoCallDiv div div{
                 width: 100% !important;
                 height: 100% !important;
                 border-radius:  10px!important;
         }
+        .imgdivRemote{
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
+            height: 100% !important;
+            width: 100% !important;
+        }
+
     }
-
-
     </style>
-    <input class="d-none" type="text" id="textbox" />
 
+    <div id='localVideoMain' class="localPlayerVideoCall"></div>
+    {{-- <div id='remoteVideoMain' class="remotePlayerVideoCall"></div> --}}
     <div id='app'></div>
-    <center>
+    <button class="btn btn-primary d-none" type="button" id="join">เข้าร่วม</button>
+    {{-- <center>
         <div class="container-fluid">
-
-            <h3 class="text-center">Mithcare Video Call</h3>
-            <div class="row d-flex justify-content-center ">
-                <div >
-                    <button class="btn btn-primary" type="button" id="join">เข้าร่วม</button>
-                    <button class="btn btn-danger" type="button" id="leave">ออก</button>
-
-                </div>
-            </div>
-
             <div id="div_for_videoCall" class="row mt-2 videoCallArea">
-                {{-- <p id="time"></p> --}}
-
                 <div class="my-4 col-12 col-md-6 col-lg-6 mx-auto" id="data_video_call"></div>
-
-                <!-- <div class="my-4 col-12 col-md-6 col-lg-6 " id="remote_video_call">
-                    {{-- <div class="col-12 col-md-6 col-lg-6 videoHeight" style="position: relative; max-width: 100%; padding: 15px 5px 5px;">
-                        <div id="agora-video-player-track-video-6-client-a8909_4a7dc" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">
-                            <video id="video_track-video-6-client-a8909_4a7dc" class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>
-                        </div>
-                    </div> --}}
-                </div> -->
-
             </div>
-
-
         </div>
-{{--
-        <div class="container">
-            <div class="row">
-              <div class="col-6 video-container2" style="background-color: #3de253">
-                <video id="video1"></video>
-              </div>
-              <div class="col-6 video-container2" style="background-color: #dcaf34">
-                <video id="video2"></video>
-              </div>
-            </div>
-        </div> --}}
-    </center>
+
+    </center> --}}
 
     <!--เรียกใช้ axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -208,7 +224,7 @@
                 axios.get(url).then((response) => {
                         // console.log(response['data']);
                         options['token'] = response['data'];
-
+                        document.getElementById("join").click();
                     })
                     .catch((error) => {
                         console.log("ERROR HERE");
@@ -222,10 +238,10 @@
 
     <script>
         // import AgoraRTC from "agora-rtc-sdk-ng"
-        var show_data_video = document.querySelector('#data_video_call');
-            show_data_video.innerHTML = "";
+        // var show_data_video = document.querySelector('#data_video_call');
+        //     show_data_video.innerHTML = "";
 
-        var div_for_videoCall = document.querySelector('#div_for_videoCall');
+        // var div_for_videoCall = document.querySelector('#div_for_videoCall');
 
         // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด แชร์หน้าจอ
         var isSharingEnabled = false;
@@ -262,19 +278,12 @@
             });
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
-            const remotePlayerContainer = document.createElement("div");
+            const remotePlayerContainer = document.getElementById('remoteVideoMain');
             // Dynamically create a container in the form of a DIV element to play the local video track.
-            const localPlayerContainer = document.createElement('div');
+            const localPlayerContainer = document.getElementById('localVideoMain');
             // Specify the ID of the DIV container. You can use the uid of the local user.
             localPlayerContainer.id = options.uid;
             // Set the textContent property of the local video container to the local user id.
-
-             // ชื่อ LocalPlayer
-            // localPlayerContainer.textContent = "Local user " + options.uid;
-
-            // Set the local video container size.
-            remotePlayerContainer.style.position = 'relative'; // Set position to relative for the container
-            localPlayerContainer.style.position = 'relative'; // Set position to relative for the container
 
             // *************************************************************************** //
             // ******************************** local ************************************ //
@@ -285,75 +294,92 @@
             //======================
 
             // ดึงข้อมูลผู้ใช้งานจาก auth
-            const user = {!! json_encode(auth()->user()) !!};
+            // const user = {!! json_encode(auth()->user()) !!};
 
-            // สร้าง element รูปภาพ
-            const imgLocal = document.createElement('img');
-            if(user.avatar){
-                imgLocal.src = "{{ Auth::user()->avatar }}";
-                imgLocal.classList.add('imgLocalHeight');
+            // // สร้าง element รูปภาพ
+            // const imgLocal = document.createElement('img');
+            // if(user.avatar){
+            //     imgLocal.src = "{{ Auth::user()->avatar }}";
+            //     imgLocal.classList.add('imgLocalHeight');
 
-            }else{
-                imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
-                imgLocal.classList.add('imgLocalHeight');
-            }
+            // }else{
+            //     imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+            //     imgLocal.classList.add('imgLocalHeight');
+            // }
 
-            const nameLocal = document.createElement('div');
-            nameLocal.innerHTML = user.name;
-            // สร้าง element div สำหรับรอบรูปภาพ
-            const imgdivLocal = document.createElement('div');
-                imgdivLocal.classList.add('imgdivLocal');
+            // const nameLocal = document.createElement('div');
+            // nameLocal.innerHTML = user.name;
+            // // สร้าง element div สำหรับรอบรูปภาพ
+            // const imgdivLocal = document.createElement('div');
+            //     imgdivLocal.classList.add('imgdivLocal');
 
-            // เพิ่ม element รูปภาพเข้าไปยัง element div
-            imgdivLocal.appendChild(imgLocal);
-            imgdivLocal.appendChild(nameLocal);
-            localPlayerContainer.appendChild(imgdivLocal);
+            // // เพิ่ม element รูปภาพเข้าไปยัง element div
+            // imgdivLocal.appendChild(imgLocal);
+            // imgdivLocal.appendChild(nameLocal);
+            // localPlayerContainer.appendChild(imgdivLocal);
 
             //======================
             // END Profile Local
             //======================
+            const divForVideoButton = document.createElement('div');
+            divForVideoButton.classList.add('buttonVideo');
 
+            localPlayerContainer.appendChild(divForVideoButton);
             //สร้างปุ่ม แชร์หน้าจอ
             const shareScreenButton = document.createElement('button');
-            shareScreenButton.type = "button";
-            shareScreenButton.id = "shareScreen";
-            shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2');
-            shareScreenButton.innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                shareScreenButton.type = "button";
+                shareScreenButton.id = "shareScreen";
+                shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2');
+                shareScreenButton.innerHTML = '<i class="fa-solid fa-screencast"></i>';
 
-            shareScreenButton.style.position = 'absolute'; // Set position to absolute for the mute button
-            shareScreenButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-            shareScreenButton.style.left = '40%'; // Set the distance from the left of the container
-            shareScreenButton.style.transform = 'translateX(-40%)'; // Center the button horizontally
+                // shareScreenButton.style.position = 'absolute'; // Set position to absolute for the mute button
+                // shareScreenButton.style.bottom = '10px'; // Set the distance from the bottom of the container
+                // shareScreenButton.style.left = '40%'; // Set the distance from the left of the container
+                // shareScreenButton.style.transform = 'translateX(-40%)'; // Center the button horizontally
 
-            localPlayerContainer.appendChild(shareScreenButton);
+            divForVideoButton.appendChild(shareScreenButton);
 
             //สร้างปุ่ม เปิด-ปิด เสียง
             const muteButton = document.createElement('button');
-            muteButton.type = "button";
-            muteButton.id = "muteAudio";
-            muteButton.classList.add('btn-old', 'btn-primary', 'mt-2');
-            muteButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+                muteButton.type = "button";
+                muteButton.id = "muteAudio";
+                muteButton.classList.add('btn-old', 'btn-primary', 'mt-2');
+                muteButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
 
-            muteButton.style.position = 'absolute'; // Set position to absolute for the mute button
-            muteButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-            muteButton.style.left = '50%'; // Set the distance from the left of the container
-            muteButton.style.transform = 'translateX(-50%)'; // Center the button horizontally
+                // muteButton.style.position = 'absolute'; // Set position to absolute for the mute button
+                // muteButton.style.bottom = '10px'; // Set the distance from the bottom of the container
+                // muteButton.style.left = '50%'; // Set the distance from the left of the container
+                // muteButton.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
-            localPlayerContainer.appendChild(muteButton);
+            divForVideoButton.appendChild(muteButton);
 
             //สร้างปุ่ม เปิด-ปิด วิดีโอ
             const muteVideoButton = document.createElement('button');
-            muteVideoButton.type = "button";
-            muteVideoButton.id = "muteVideo";
-            muteVideoButton.classList.add('btn-old', 'btn-success', 'mt-2');
-            muteVideoButton.innerHTML = '<i class="fa-solid fa-video"></i>';
+                muteVideoButton.type = "button";
+                muteVideoButton.id = "muteVideo";
+                muteVideoButton.classList.add('btn-old', 'btn-success', 'mt-2');
+                muteVideoButton.innerHTML = '<i class="fa-solid fa-video"></i>';
 
-            muteVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
-            muteVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
-            muteVideoButton.style.left = '60%'; // Set the distance from the left of the container
-            muteVideoButton.style.transform = 'translateX(-60%)'; // Center the button horizontally
+                // muteVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
+                // muteVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
+                // muteVideoButton.style.left = '60%'; // Set the distance from the left of the container
+                // muteVideoButton.style.transform = 'translateX(-60%)'; // Center the button horizontally
 
-            localPlayerContainer.appendChild(muteVideoButton);
+            divForVideoButton.appendChild(muteVideoButton);
+
+              //สร้างปุ่ม ออกสาย
+            const leaveVideoButton = document.createElement('button');
+                leaveVideoButton.type = "button";
+                leaveVideoButton.id = "leave";
+                leaveVideoButton.classList.add('btn-old', 'btn-danger', 'mt-2');
+                leaveVideoButton.innerHTML = '<i class="fa-solid fa-phone"></i>';
+
+                // leaveVideoButton.style.position = 'absolute'; // Set position to absolute for the mute button
+                // leaveVideoButton.style.bottom = '10px'; // Set the distance from the bottom of the container
+                // leaveVideoButton.style.left = '70%'; // Set the distance from the left of the container
+                // leaveVideoButton.style.transform = 'translateX(-70%)'; // Center the button horizontally
+
+            divForVideoButton.appendChild(leaveVideoButton);
 
             muteVideoButton.onclick = async function() {
                 if (isMuteVideo == false) {
@@ -365,7 +391,7 @@
                     muteVideoButton.classList.remove('btn-success');
                     isMuteVideo = true;
 
-                    // document.querySelector('#remoteUserBackground').classList.toggle('d-none');
+
                 } else {
                     // Unmute the local video.
                     channelParameters.localVideoTrack.setEnabled(true);
@@ -375,7 +401,7 @@
                     muteVideoButton.classList.remove('btn-danger');
                     isMuteVideo = false;
 
-                    // document.querySelector('#remoteUserBackground').classList.toggle('d-none');
+
                 }
             }
 
@@ -409,19 +435,15 @@
                     // Create a local video track from the video captured by a camera.[]
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 
-                    let isAboutTimeCalled = false;
-                    if (isAboutTimeCalled == false) {
-                        aboutTime();
-                        isAboutTimeCalled = true;
-                    }
-
-                    //ทำให้ตัววิดีโอ มีขอบมน
-                    // const elementVideo = document.querySelector('[id*="agora-video-player-track-cam"]');
-                    // // elementVideo.style.borderRadius = '10px';
-                    // elementVideo.classList.add('main-radius');
+                    // let isAboutTimeCalled = false;
+                    // if (isAboutTimeCalled == false) {
+                    //     aboutTime();
+                    //     isAboutTimeCalled = true;
+                    // }
 
                     // Append the local video container to the page body.
-                    show_data_video.append(localPlayerContainer);
+                    // show_data_video.append(localPlayerContainer);
+
                     // Publish the local audio and video tracks in the channel.
                     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
 
@@ -452,7 +474,7 @@
                 }
 
                 // Listen to the Leave button click event.
-                document.getElementById('leave').onclick = async function() {
+                leaveVideoButton.addEventListener('click', async function() {
                     // Destroy the local audio and video tracks.
                     channelParameters.localAudioTrack.close();
                     channelParameters.localVideoTrack.close();
@@ -466,16 +488,12 @@
                     await agoraEngine.leave();
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
-                    window.location.reload();
-                }
+                    window.onload();
+                    // window.history.back();
+                })
 
             }
 
-
-
-            localPlayerContainer.classList.add('col-12','col-md-12','col-lg-12','videoHeight');
-            localPlayerContainer.style.maxWidth = '100%';
-            // localPlayerContainer.style.padding = "15px 5px 5px 5px";
 
             // *************************************************************************** //
             // ******************************** END local ******************************** //
@@ -488,9 +506,7 @@
             // ****************************** remotePlayer ******************************* //
             // *************************************************************************** //
 
-            remotePlayerContainer.classList.add('col-12','col-md-12','col-lg-12','videoHeight');
-            remotePlayerContainer.style.maxWidth = '100%';
-            // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
+
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
@@ -573,7 +589,10 @@
                     // ชื่อ RemotePlayer
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
 
-
+                    // สลับ local ไปเป็นจอเล็กแล้วให้อยู่ขวาบน
+                    let local_STR = document.getElementById('localVideoMain');
+                        local_STR.classList.add('localAfterSubscribe');
+                        local_STR.classList.remove('localPlayerVideoCall');
 
                     // สร้าง element div new_remote_video_call
                     if(document.getElementById('remote_video_call_'+ user.uid)){
@@ -581,13 +600,15 @@
                     }
 
                     let new_remote_video_call = document.createElement('div');
-                        new_remote_video_call.setAttribute('class' , 'my-4 col-12 col-md-6 col-lg-6 mx-auto remoteVideoCallDiv');
+                        new_remote_video_call.setAttribute('class' , 'remotePlayerVideoCall');
                         new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
 
-                    let div_for_videoCall = document.querySelector('#div_for_videoCall');
-                        div_for_videoCall.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
+                    let remoteVideoMain = document.createElement('div');
+                        remoteVideoMain.setAttribute('id' , 'remoteVideoMain' + user.uid);
 
-                    document.querySelector('#remote_video_call_' + user.uid).append(remotePlayerContainer);
+                        remoteVideoMain.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
+
+                    document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
 
                     // Play the remote video track.
 
@@ -665,9 +686,13 @@
 
             // ออกจากห้อง
             agoraEngine.on("user-left", function (evt) {
-                console.log("remove id = "+evt.uid);
+                // console.log("remove id = "+evt.uid);
                 document.getElementById(evt.uid).remove();
                 document.getElementById("remote_video_call_" + evt.uid).remove();
+
+                let local_FULL = document.getElementById('localVideoMain');
+                    local_FULL.classList.add('localPlayerVideoCall');
+                    local_FULL.classList.remove('localAfterSubscribe');
 
                 // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
                 if(document.querySelector('#video_trackRemoteDiv')){
@@ -723,7 +748,7 @@
                         //เพิ่มแท็กวิดีโอที่มีพื้นหลังแค่สีดำ
                         let remote_video_call = document.getElementById(user.uid.toString());
                             closeVideoHTML  =
-                                               ' <div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: black;">' +
+                                               ' <div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
                                                     '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
                                                 '</div>' ;
                         remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด

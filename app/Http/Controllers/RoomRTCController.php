@@ -26,7 +26,7 @@ class RoomRTCController extends Controller
                 ->where('name', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $lobby_room = Member_of_room::where('room_id',$room_id)->where('status','member')->latest()->paginate($perPage);
+            $lobby_room = Member_of_room::where('room_id',$room_id)->where('status','!=','patient')->latest()->paginate($perPage);
         }
 
         return view('room.room_rtc.room_rtc_index', compact('lobby_room'));

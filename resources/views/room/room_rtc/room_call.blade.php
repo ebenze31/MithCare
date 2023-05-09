@@ -371,7 +371,7 @@
             });
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
-            const remotePlayerContainer = document.getElementById('remoteVideoMain');
+            const remotePlayerContainer = document.querySelector('.remotePlayerVideoCall');
 
             // Dynamically create a container in the form of a DIV element to play the local video track.
             const localPlayerContainer = document.getElementById('localVideoMain');
@@ -656,7 +656,7 @@
                     // Save the remote user id for reuse.
                     channelParameters.remoteUid = user.uid.toString();
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
-                    remotePlayerContainer.id = user.uid.toString();
+                    // remotePlayerContainer.id = user.uid.toString();
 
                     // ชื่อ RemotePlayer
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
@@ -672,17 +672,17 @@
                         document.getElementById('remote_video_call_'+ user.uid).remove();
                     }
 
-                    let new_remote_video_call = document.createElement('div');
-                        new_remote_video_call.setAttribute('class' , 'remotePlayerVideoCall');
-                        new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
+                    // let new_remote_video_call = document.createElement('div');
+                    //     new_remote_video_call.setAttribute('class' , 'remotePlayerVideoCall');
+                    //     new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
 
-                    let remoteVideoMain = document.createElement('div');
-                        remoteVideoMain.setAttribute('id' , 'remoteVideoMain' + user.uid);
+                    // let remoteVideoMain = document.createElement('div');
+                    //     remoteVideoMain.setAttribute('id' , 'remoteVideoMain' + user.uid);
 
-                        remoteVideoMain.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
+                    //     remoteVideoMain.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
 
-                    // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
-                    remotePlayerContainer.append(remoteVideoMain);
+                    // // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
+                    // remotePlayerContainer.append(remoteVideoMain);
                     // Play the remote video track.
 
                 }
@@ -695,7 +695,8 @@
                     channelParameters.remoteAudioTrack.play();
 
                 }
-
+                console.log("channelParameters ----------------------------");
+                console.log(channelParameters);
 
                 // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
                 if(document.querySelector('#video_trackRemoteDiv')){

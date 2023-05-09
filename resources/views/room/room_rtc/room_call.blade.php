@@ -371,7 +371,7 @@
             });
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
-            const remotePlayerContainer = document.querySelector('.remotePlayerVideoCall');
+            const remotePlayerContainer = document.getElementById('remoteVideoMain');
 
             // Dynamically create a container in the form of a DIV element to play the local video track.
             const localPlayerContainer = document.getElementById('localVideoMain');
@@ -656,7 +656,7 @@
                     // Save the remote user id for reuse.
                     channelParameters.remoteUid = user.uid.toString();
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
-                    // remotePlayerContainer.id = user.uid.toString();
+                    remotePlayerContainer.id = user.uid.toString();
 
                     // ชื่อ RemotePlayer
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
@@ -695,8 +695,7 @@
                     channelParameters.remoteAudioTrack.play();
 
                 }
-                console.log("channelParameters ----------------------------");
-                console.log(channelParameters);
+
 
                 // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
                 if(document.querySelector('#video_trackRemoteDiv')){

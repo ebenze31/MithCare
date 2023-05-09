@@ -759,8 +759,10 @@
 
             // ออกจากห้อง
             agoraEngine.on("user-left", function (evt) {
+
                 console.log("remove id = "+evt.uid);
-                document.getElementById(evt.uid).remove();
+
+                // document.getElementById(evt.uid).remove();
 
                 document.getElementById("remote_video_call_" + evt.uid).remove();
 

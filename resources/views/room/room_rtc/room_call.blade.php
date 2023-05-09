@@ -5,6 +5,7 @@
         /*=======================================
                     global css Computer
          =======================================*/
+    @media screen (min-width: 1024px){
         .bg-black{
             background-color: black;
         }
@@ -150,22 +151,28 @@
             background-color: black;
             visibility: hidden;
         }
-
+    }
     /*=======================================
             CSS สำหรับหน้าจอมือถือ
     =======================================*/
 
     @media screen and (max-width: 768px) {
 
-        body,html,main{
+        body,html,main,.MainVideoDiv{
             width: 100%;
             height: 100%;
+        }
+        .MainVideoDiv{
+            padding: 0;
+            margin: 0;
         }
         .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
             /* background-color: #051407; */
             position: absolute;
             bottom: 1rem;
-            left: 19%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
         .buttonVideo button{
             margin-right: 0.5rem;
@@ -219,6 +226,7 @@
         .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
             height: 100% !important;
             width: 100% !important;
+            /* border-radius:  0px!important; */
         }
         .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
             height: 200px !important;
@@ -754,7 +762,7 @@
                 console.log("remove id = "+evt.uid);
                 document.getElementById(evt.uid).remove();
 
-                // document.getElementById("remote_video_call_" + evt.uid).remove();
+                document.getElementById("remote_video_call_" + evt.uid).remove();
 
                 console.log("ลบ local_FULL");
                 let local_FULL = localPlayerContainer;
@@ -797,8 +805,8 @@
 
                         let muteVideoButton2 = document.getElementById(`muteVideo2`);
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video"></i>';
-                        muteVideoButton2.classList.add('btn-success');
-                        muteVideoButton2.classList.remove('btn-danger');
+                        // muteVideoButton2.classList.add('btn-success');
+                        muteVideoButton2.classList.remove('btn-disabled');
 
 
                     }else{
@@ -806,8 +814,8 @@
 
                         let muteVideoButton2 = document.getElementById(`muteVideo2`);
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
-                        muteVideoButton2.classList.add('btn-danger');
-                        muteVideoButton2.classList.remove('btn-success');
+                        muteVideoButton2.classList.add('btn-disabled');
+                        // muteVideoButton2.classList.remove('btn-success');
 
                         if(document.getElementById('video_trackRemoteDiv')){
                             document.getElementById('video_trackRemoteDiv').remove();
@@ -831,14 +839,14 @@
                         console.log("ไมค์ >> 'เปิด' อยู่");
                         let muteButton2 = document.getElementById(`muteAudio2`);
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone"></i>';
-                        muteButton2.classList.add('btn-primary');
-                        muteButton2.classList.remove('btn-danger');
+                        // muteButton2.classList.add('btn-primary');
+                        muteButton2.classList.remove('btn-disabled');
                     }else{
                         console.log("ไมค์ >> 'ปิด' อยู่");
                         let muteButton2 = document.getElementById(`muteAudio2`);
                         document.getElementById(`muteAudio2`).innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-                        muteButton2.classList.add('btn-danger');
-                        muteButton2.classList.remove('btn-primary');
+                        muteButton2.classList.add('btn-disabled');
+                        // muteButton2.classList.remove('btn-primary');
                     }
                 }
 

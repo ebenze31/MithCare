@@ -97,7 +97,7 @@
 
                             </div><!-- /.member-info -->
                             <center>
-                                <a class="btn-old btn-info m-2 col-9" href="{{ url('/room_call'. '/' . $item->room_id . '/' . $item->user_id) }}">เข้าร่มห้องสนทนา</a>
+                                <a class="btn-old btn-info m-2 col-9" href="{{ url('/room_call'. '/' . $item->room_id . '/' . $item->user_id) }}">เข้าร่วมห้องสนทนา</a>
                             </center>
                     </div><!-- /.member -->
                     </a>

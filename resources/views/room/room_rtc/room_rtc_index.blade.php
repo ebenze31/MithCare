@@ -94,9 +94,8 @@
                                 <p id="amount_id_{{$item->id}}" class="text-primary h5">ห้องสนทนาของ {{$item->user->name}}</p>
                                 <hr>
                                 @php
-                                    // $dataRoomRTC = App\Models\RoomRTC::where('room_id',$item->room_id)->where('room_of_members',$item->user_id)->first() ?? null;
-
-                                    $dataRoomRTC = null;
+                                    $dataRoomRTC = App\Models\RoomRTC::where('room_id',$item->room_id)->where('room_of_members',$item->user_id)->first();
+                                    $dataRoomRTC = $dataRoomRTC ?? null;
                                 @endphp
                                 @if ($dataRoomRTC !== null)
                                     @if (!empty($dataRoomRTC->current_people))

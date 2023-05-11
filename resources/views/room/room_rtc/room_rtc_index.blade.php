@@ -93,7 +93,17 @@
                                 {{-- <h4 class="member__name"><a href="{{$item->link}}" target="_blank" onclick="click_game('{{$item->id}}')">{{$item->name}}</a></h4> --}}
                                 <p id="amount_id_{{$item->id}}" class="text-primary h5">ห้องสนทนาของ {{$item->user->name}}</p>
                                 <hr>
-                                <p class="h5">จำนวนคนในห้อง : 0</p>
+                                @foreach ($RoomData as $videoCallofRoom)
+                                    @if (!empty($videoCallofRoom->room_of_members) && $videoCallofRoom->room_of_members == $item->user_id)
+                                        @if($videoCallofRoom->currentPeople)
+                                            <p class="h5">จำนวนคนในห้อง : {{ $videoCallofRoom->currentPeople }}</p>
+                                        @else
+                                            <p class="h5">จำนวนคนในห้อง : 0</p>
+                                        @endif
+                                    @endif
+                                @endforeach
+
+
 
                             </div><!-- /.member-info -->
                             <center>

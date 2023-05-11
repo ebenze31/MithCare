@@ -23,4 +23,8 @@ class Room extends Model
         return $this->hasMany('App\Models\Member_of_room','room_id','id');
     }
 
+    public function rooms(){
+        return $this->hasMany('App\Models\RoomRTC','room_id','id');
+    }
+
 }

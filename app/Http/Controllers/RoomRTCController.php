@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Models\Room;
 use App\Models\Member_of_room;
+use App\Models\RoomRTC;
 
 class RoomRTCController extends Controller
 {
@@ -19,7 +20,7 @@ class RoomRTCController extends Controller
         $keyword = $request->get('search');
         $perPage = 6;
 
-        // $user = User::findOrFail($id);
+        $RoomData = RoomRTC::where('room_id',$room_id)->get();
 
         if (!empty($keyword)) {
             $lobby_room = Member_of_room::where('room',$room_id)
@@ -29,7 +30,7 @@ class RoomRTCController extends Controller
             $lobby_room = Member_of_room::where('room_id',$room_id)->where('status','!=','patient')->latest()->paginate($perPage);
         }
 
-        return view('room.room_rtc.room_rtc_index', compact('lobby_room'));
+        return view('room.room_rtc.room_rtc_index', compact('lobby_room','RoomData'));
     }
 
 }

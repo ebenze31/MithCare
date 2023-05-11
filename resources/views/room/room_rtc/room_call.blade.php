@@ -5,25 +5,27 @@
         /*=======================================
                     global css Computer
          =======================================*/
-    @media screen (min-width: 1024px){
+    @media screen and (min-width: 1024px){
+        body,html,main{
+            width: 100%;
+            height: 100%;
+        }
         .bg-black{
             background-color: black;
         }
-        .videoCallArea{ /* div ใหญ่ที่ใส่ local remote container*/
-
+        /* .videoCallArea{  div ใหญ่ที่ใส่ local remote container
             min-height: 40rem;
             max-height: 100%;
-            /* border-color: #ade9d2;
-            border-style: solid; */
+             border-color: #ade9d2;
+            border-style: solid;
             border-radius: 10px;
             background-color: #acd2f1;
             margin: 2px;
-        }
+        } */
         video{ /* ตกแต่ง tag video ที่ agora สร้างมา*/
             border-color: #3490dc;
             border-style: solid;
             border-radius: 10px;
-
             position: relative;
             width: 100%;
             height: 100%;
@@ -34,16 +36,21 @@
         .MainVideoDiv{
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             margin-right: -15px;
             margin-left: -15px;
             padding: 2rem;
+
+            width: 100%;
+            height: 100%;
         }
         .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
             /* background-color: #051407; */
             position: absolute;
-            bottom: 0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 1rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
         .buttonVideo button{
             margin-right: 0.5rem;
@@ -63,38 +70,28 @@
             background-color: #db2d2e !important;
             color: #ffffff;
         }
-        #muteAudio2 {
-            position: absolute;
-            bottom: 0.5rem;
-            left: 0.5;
+        #leaveVideoCall{ /* ปุ่มวางสาย*/
+            background-color: #db2d2e !important;
+            color: #ffffff;
         }
-        #muteVideo2{
-            position: absolute;
-            bottom: 0.5rem;
-            left: 0.8;
-        }
+
 
         /*=======================================
                 localPlayer css Computer
         =======================================*/
         .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-            height: 400px !important;
+            height: 45% !important;
             width: 60% !important;
-            margin-right: auto!important;
-	        margin-left: auto!important;
-            margin-top: auto!important;
-	        margin-bottom: auto!important;
+            margin-right: auto !important;
+            margin-left: auto !important;
         }
         .localPlayerVideoCall div {
             border-radius: 10px;
         }
         .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
-            height: 500px !important;
+            height: 45% !important;
             width: 60% !important;
-            margin-right: auto!important;
-	        margin-left: auto!important;
-            margin-top: auto!important;
-	        margin-bottom: auto!important;
+
         }
         .localAfterSubscribe div {
             border-radius: 10px;
@@ -120,12 +117,9 @@
         =======================================*/
 
         .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
-            height: 500px !important;
+            position: relative;
+            height: 45% !important;
             width: 60% !important;
-            margin-right: auto!important;
-	        margin-left: auto!important;
-            margin-top: auto!important;
-	        margin-bottom: auto!important;
         }
         .remotePlayerVideoCall div {
             border-radius: 10px;
@@ -138,6 +132,37 @@
             left: 0;
             bottom: 0;
             z-index: 1;
+        }
+        .buttonVideo2{
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+        }
+        .buttonVideo2 div{
+          margin-right: 0.5rem;
+          font-size: 0.8rem !important;
+          padding: 0 !important;
+          width: 2.5rem !important;
+          height: 2.5rem !important;
+        }
+        .buttonVideo2 div i{
+          margin-top: 0.1 !important;
+        }
+        .unmuteRemote{
+            border-radius: 50% !important;
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            font-size: 1rem !important;
+            background-color: rgba(0,0,0,0.6);
+            color: #ffffff;
+        }
+        .muteRemote{
+            border-radius: 50% !important;
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            font-size: 1rem !important;
+            background-color: #db2d2e !important;
+            color: #ffffff;
         }
 
 
@@ -265,13 +290,16 @@
     }
     </style>
 
-    <div id='MainVideoDiv' class="MainVideoDiv">
+    <div id='MainVideoDiv' class="MainVideoDiv ">
         <div id='localVideoMain' class="localPlayerVideoCall"></div>
-        <div id='remoteVideoMain' class="remotePlayerVideoCall"></div>
+        <div id='remoteVideoMain' class="remotePlayerVideoCall">
+            {{-- <div id="statusRemotePlayer"></div> --}}
+        </div>
     </div>
 
     <div id='app'></div>
     <button class="btn btn-primary d-none" type="button" id="join">เข้าร่วม</button>
+    <button type="button" id="statistics">Show Statistics</button><br>
     {{-- <center>
         <div class="container-fluid">
             <div id="div_for_videoCall" class="row mt-2 videoCallArea">
@@ -289,6 +317,9 @@
 
    <script>
         var options;
+        const homeId = '{{ $room_id }}';
+        const user_id_from_room = '{{ $user_id }}';
+        const channelName = "MithCare" + homeId + user_id_from_room;
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
 
@@ -299,7 +330,7 @@
                     appCertificate: '{{ env('AGORA_APP_CERTIFICATE') }}',
 
                     // Set the channel name.
-                    channel: 'MithCare',
+                    channel: channelName,
 
                     uid: '{{ Auth::user()->id }}',
 
@@ -308,10 +339,7 @@
                     token: "",
                 };
 
-                console.log('----------------------------------------------------------');
-                console.log(channelParameters.localVideoTrack);
-
-                const url = "{{ url('/') }}/api/video_call";
+                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
                 axios.get(url).then((response) => {
                         // console.log(response['data']);
                         options['token'] = response['data'];
@@ -365,10 +393,28 @@
             console.log("-------------------- startBasicCall ------------------");
             // console.log(newToken);
 
+
             const agoraEngine = AgoraRTC.createClient({
                 mode: "rtc",
                 codec: "vp8"
             });
+
+            //===================================
+            //       บันทึก stats Video Call
+            //===================================
+
+            var rtcStats = agoraEngine.getRTCStats();
+
+            function StatsVideoUpdate(){
+                const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
+                axios.get(urlStatsVideo).then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log("ERROR HERE");
+                    console.log(error);
+                });
+            }
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
             const remotePlayerContainer = document.getElementById('remoteVideoMain');
@@ -382,6 +428,7 @@
             // *************************************************************************** //
             // ******************************** local ************************************ //
             // *************************************************************************** //
+
 
             //======================
             //   Profile Local
@@ -508,6 +555,10 @@
                     channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
                     // Create a local video track from the video captured by a camera.[]
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+                    // Enable dual-stream mode.
+                    agoraEngine.enableDualStream();
+
+                    StatsVideoUpdate();
 
                     // let isAboutTimeCalled = false;
                     // if (isAboutTimeCalled == false) {
@@ -708,24 +759,26 @@
                 if( document.querySelector('#muteVideo2') ){
                     document.querySelector('#muteVideo2').remove();
                 }
+                const divForVideoButton2 = document.createElement('div');
+                divForVideoButton2.classList.add('buttonVideo2');
                 // สร้างปุ่ม เปิด-ปิด เสียง
                 var muteButton2 = document.createElement('div');
                     muteButton2.id = "muteAudio2";
 
                     if(user.audioTrack){
-                        muteButton2.classList.add('btn-old', 'btn-success', 'mt-2');
+                        muteButton2.classList.add('btn-old','unmuteRemote', 'mt-2');
                         muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
                     }else{
-                        muteButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
+                        muteButton2.classList.add('btn-old','muteRemote', 'mt-2');
                         muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                     }
 
-                    muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    muteButton2.style.left = '50%'; // Set the distance from the left of the container
-                    muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+                    // muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                    // muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                    // muteButton2.style.left = '50%'; // Set the distance from the left of the container
+                    // muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
-                    remotePlayerContainer.appendChild(muteButton2);
+                    divForVideoButton2.appendChild(muteButton2);
 
                 // สร้างปุ่ม เปิด-ปิด วิดีโอ
                 var muteVideoButton2 = document.createElement('div');
@@ -737,12 +790,13 @@
                         muteVideoButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
                         muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                     }
-                    muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
-                    muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
+                    // muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
+                    // muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
+                    // muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
+                    // muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
-                    remotePlayerContainer.appendChild(muteVideoButton2);
+                    divForVideoButton2.appendChild(muteVideoButton2);
+                    document.querySelector('.remotePlayerVideoCall').appendChild(divForVideoButton2);
 
                     if (channelParameters.remoteVideoTrack !== null) { // ตรวจสอบว่าตัวแปร video ไม่เป็น null ก่อนเรียกใช้เมธอด play()
                         channelParameters.remoteVideoTrack.play(remotePlayerContainer);
@@ -975,10 +1029,6 @@
             timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
             timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
         }
-
-
-
-
     </script>
 
 @endsection

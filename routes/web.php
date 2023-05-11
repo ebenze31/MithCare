@@ -47,7 +47,7 @@ Route::get('test_doc', 'TestController@test_doc');
 //========================
 //     Video_Call Test
 //========================
-Route::get('video_call', 'TestController@video_call');
+// Route::get('video_call', 'TestController@video_call');
 // Route::get('/video_call', function () {
 //     return view('/test/video_call');
 // });

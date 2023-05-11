@@ -96,11 +96,16 @@
                                 @php
                                     $dataRoomRTC = App\Models\RoomRTC::where('room_id',$item->room_id)->where('room_of_members',$item->user_id)->first();
                                 @endphp
-                                @if (!empty($dataRoomRTC->current_people))
-                                    <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : {{ $dataRoomRTC->current_people }}</p>
+                                @if ($dataRoomRTC !== null)
+                                    @if (!empty($dataRoomRTC->current_people))
+                                        <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : {{ $dataRoomRTC->current_people }}</p>
+                                    @else
+                                        <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : 0</p>
+                                    @endif
                                 @else
-                                    <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : 0</p>
+                                    <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">ยังไม่เคยเริ่มการสนทนา</p>
                                 @endif
+
 
                             </div><!-- /.member-info -->
                             <center>

@@ -319,7 +319,8 @@
         var options;
         const homeId = '{{ $room_id }}';
         const user_id_from_room = '{{ $user_id }}';
-        const channelName = "MithCare" + homeId + user_id_from_room;
+        //const channelName = "MithCare" + homeId + user_id_from_room;
+        const channelName = "MithCare";
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
 
@@ -816,9 +817,12 @@
 
                 console.log("remove id = "+evt.uid);
 
-                // document.getElementById(evt.uid).remove();
-
-                document.getElementById("remote_video_call_" + evt.uid).remove();
+                if(document.getElementById(evt.uid)){
+                    document.getElementById(evt.uid).remove();
+                }
+                if(document.getElementById("remote_video_call_" + evt.uid)){
+                    document.getElementById("remote_video_call_" + evt.uid).remove();
+                }
 
                 console.log("ลบ local_FULL");
                 let local_FULL = localPlayerContainer;

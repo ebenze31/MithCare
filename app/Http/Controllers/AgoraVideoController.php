@@ -33,7 +33,8 @@ class AgoraVideoController extends Controller
 
         $appID = 'acb41870f41c48d4a42b7b0ef1532351';
         $appCertificate = '41aa313ac49f4e3d81f1a3056e122ca0';
-        $channelName = 'MithCare'.$room_id.$user_id;
+        // $channelName = 'MithCare'.$room_id.$user_id;
+        $channelName = 'MithCare';
         $user = $login_id;
         $role = RtcTokenBuilder::RoleAttendee;
         $expireTimeInSeconds = 900;
@@ -102,6 +103,17 @@ class AgoraVideoController extends Controller
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 
         return $roomVideocallStats;
+    }
+
+    public function checkPeopleInRoom(Request $request)
+    {
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+
+        $dataRoomRTC = RoomRTC::where('room_id', $room_id)->get();
+
+        return $dataRoomRTC;
     }
 
 }

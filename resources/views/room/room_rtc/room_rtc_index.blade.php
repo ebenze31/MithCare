@@ -93,17 +93,14 @@
                                 {{-- <h4 class="member__name"><a href="{{$item->link}}" target="_blank" onclick="click_game('{{$item->id}}')">{{$item->name}}</a></h4> --}}
                                 <p id="amount_id_{{$item->id}}" class="text-primary h5">ห้องสนทนาของ {{$item->user->name}}</p>
                                 <hr>
-                                @foreach ($RoomData as $videoCallofRoom)
-                                    @if (!empty($videoCallofRoom->room_of_members) && $videoCallofRoom->room_of_members == $item->user_id)
-                                        @if($videoCallofRoom->currentPeople)
-                                            <p class="h5">จำนวนคนในห้อง : {{ $videoCallofRoom->currentPeople }}</p>
-                                        @else
-                                            <p class="h5">จำนวนคนในห้อง : 0</p>
-                                        @endif
-                                    @endif
-                                @endforeach
-
-
+                                @php
+                                    $dataRoomRTC = App\Models\RoomRTC::where('room_id',$item->room_id)->where('room_of_members',$item->user_id)->first();
+                                @endphp
+                                @if (!empty($dataRoomRTC->current_people))
+                                    <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : {{ $dataRoomRTC->current_people }}</p>
+                                @else
+                                    <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">จำนวนคนในห้อง : 0</p>
+                                @endif
 
                             </div><!-- /.member-info -->
                             <center>
@@ -137,6 +134,25 @@
 
     });
     // window.addEventListener("DOMContentLoaded", document, false);
+</script>
+
+<script>
+    setInterval(() => {
+
+        const urlCheckPeople = "{{ url('/') }}/api/urlCheckPeople?room_id=" + '{{$room_id}}' ;
+        axios.get(urlCheckPeople).then((response) => {
+            // console.log(response['data']);
+            for (let item of response['data']) {
+                // console.log(item.room_of_members);
+                document.querySelector('#showPeopleCurrent_' + item.room_of_members).innerHTML = "จำนวนคนในห้อง : " + item.current_people;
+            }
+        })
+        .catch((error) => {
+            console.log("ERROR HERE");
+            console.log(error);
+        });
+
+    }, 5000);
 </script>
 
 @endsection

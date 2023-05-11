@@ -103,6 +103,7 @@
     <main>
         @yield('content')
     </main>
-
+   <!--เรียกใช้ axios -->
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>

@@ -87,3 +87,4 @@ Route::get('/getUserRemote', 'AgoraVideoController@getUserRemote');
 
 //ส่ง ข้อมูล videoCall ไปเก็บในฐานข้อมูล
 Route::get('/urlStatsVideo', 'AgoraVideoController@store');
+Route::get('/urlCheckPeople', 'AgoraVideoController@checkPeopleInRoom');

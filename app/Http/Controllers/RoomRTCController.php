@@ -22,6 +22,11 @@ class RoomRTCController extends Controller
 
         $RoomData = RoomRTC::where('room_id',$room_id)->get();
 
+        // echo"<pre>";
+        // print_r( $RoomData);
+        // echo"</pre>";
+        // exit();
+
         if (!empty($keyword)) {
             $lobby_room = Member_of_room::where('room',$room_id)
                 ->where('name', 'LIKE', "%$keyword%")
@@ -30,7 +35,7 @@ class RoomRTCController extends Controller
             $lobby_room = Member_of_room::where('room_id',$room_id)->where('status','!=','patient')->latest()->paginate($perPage);
         }
 
-        return view('room.room_rtc.room_rtc_index', compact('lobby_room','RoomData'));
+        return view('room.room_rtc.room_rtc_index', compact('lobby_room','RoomData','room_id'));
     }
 
 }

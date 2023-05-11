@@ -376,7 +376,8 @@
     </div><!-- /.wrapper -->
 
 
-
+    <!--เรียกใช้ axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{ asset('mithcare/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('mithcare/js/plugins.js') }}"></script>
     <script src="{{ asset('mithcare/js/main.js') }}"></script>

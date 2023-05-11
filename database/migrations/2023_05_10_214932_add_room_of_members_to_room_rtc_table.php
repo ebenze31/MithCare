@@ -14,7 +14,7 @@ class AddRoomOfMembersToRoomRtcTable extends Migration
     public function up()
     {
         Schema::table('room_rtc', function (Blueprint $table) {
-            //
+            $table->string('room_of_members')->nullable();
         });
     }
 

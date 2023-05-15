@@ -289,7 +289,7 @@
 
     }
     </style>
-
+    <div  id="timeCountVideo"></div><br>
     <div id='MainVideoDiv' class="MainVideoDiv ">
         <div id='localVideoMain' class="localPlayerVideoCall"></div>
         <div id='remoteVideoMain' class="remotePlayerVideoCall">
@@ -404,12 +404,25 @@
             //       บันทึก stats Video Call
             //===================================
 
-            var rtcStats = agoraEngine.getRTCStats();
+            // เรียกใช้ฟังก์ชันทุกๆ 1 วินาที
+            setInterval(function() {
+                // คำนวณเวลาที่ผ่านไป
+                var timeCountVideo = document.getElementById("timeCountVideo");
+
+                let statCountTime = agoraEngine.getRTCStats();
+                let countTime1 = statCountTime.Duration;
+
+            // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
+                timeCountVideo.innerHTML = countTime1 + " seconds";
+            }, 1000);
 
             function StatsVideoUpdate(){
+                let rtcStats = agoraEngine.getRTCStats();
+                // console.log(rtcStats);
                 const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
                 axios.get(urlStatsVideo).then((response) => {
-                    console.log(response);
+                    console.log(response['data']);
+
                 })
                 .catch((error) => {
                     console.log("ERROR HERE");
@@ -614,8 +627,27 @@
                     await agoraEngine.leave();
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
+
+                    const interval = setInterval(function() {
+                        let rtcStats = agoraEngine.getRTCStats();
+                        let currentPeople = rtcStats.currentPeople;
+
+                        // เมื่อไม่มีคนอยู่ในห้อง หรือการเชื่อมต่อไม่ดี
+                        if (currentPeople === 0 || rtcStats.lastmileQuality !== 'good') {
+                            clearInterval(interval); // Stop the interval
+
+                            const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
+                            axios.get(urlStatsVideo).then((response) => {
+                                console.log(response['data']);
+                                goBack();
+                            });
+                        }
+                    }, 1000);
+
                     // window.onload();
-                    window.history.back();
+                    function goBack(){
+                        window.history.back();
+                    }
                 })
 
             }
@@ -641,7 +673,6 @@
                 console.log("------------------- published ------------------");
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
-
                 //======================
                 //   Profile Remote
                 //======================
@@ -736,6 +767,7 @@
                     // // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
                     // remotePlayerContainer.append(remoteVideoMain);
                     // Play the remote video track.
+                    StatsVideoUpdate();
 
                 }
 
@@ -845,7 +877,9 @@
                 channelParameters.remoteAudioTrack = null;
                 channelParameters.remoteUid = null;
 
+                // StatsVideoUpdate();
             });
+
 
             // ปิด ไมค์ กล้อง
             agoraEngine.on("user-unpublished", async (user, mediaType) => {

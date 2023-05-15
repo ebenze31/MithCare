@@ -116,4 +116,33 @@ class AgoraVideoController extends Controller
         return $dataRoomRTC;
     }
 
+    public function leaveChannel(Request $request)
+    {
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+        $room_of_members = $requestData['room_of_members'];
+
+        $roomFinder = Room::where('id',$room_id)->first();
+
+        $room_data = [
+            "room_id" => $room_id,
+            "room_of_members" => $room_of_members,
+        ];
+
+        $roomVideocallStats = [
+            // "room_name" => $roomFinder['name'],
+            // "time_start" => $requestData['time_start'],
+            "current_people" => $requestData['current_people'] - 1,
+            // "total_timemeet" => $requestData['total_timemeet'],
+            // "amount_meet" => $requestData['current_people'],
+
+            // เพิ่ม field อื่นๆ ตามต้องการ
+        ];
+
+        RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
+
+        return $roomVideocallStats;
+    }
+
 }

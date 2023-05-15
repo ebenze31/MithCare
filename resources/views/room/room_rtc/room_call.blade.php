@@ -13,15 +13,11 @@
         .bg-black{
             background-color: black;
         }
-        /* .videoCallArea{  div ใหญ่ที่ใส่ local remote container
-            min-height: 40rem;
-            max-height: 100%;
-             border-color: #ade9d2;
-            border-style: solid;
-            border-radius: 10px;
-            background-color: #acd2f1;
-            margin: 2px;
-        } */
+        .clockDuration{
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+        }
         video{ /* ตกแต่ง tag video ที่ agora สร้างมา*/
             border-color: #3490dc;
             border-style: solid;
@@ -37,6 +33,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
             margin-right: -15px;
             margin-left: -15px;
             padding: 2rem;
@@ -46,7 +43,8 @@
         }
         .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
             /* background-color: #051407; */
-            position: absolute;
+            position: relative;
+            margin-top: 1rem;
             bottom: 1rem;
             width: 100%;
             display: flex;
@@ -75,15 +73,13 @@
             color: #ffffff;
         }
 
-
         /*=======================================
                 localPlayer css Computer
         =======================================*/
         .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-            height: 45% !important;
-            width: 60% !important;
-            margin-right: auto !important;
-            margin-left: auto !important;
+            height: 65% !important;
+            width: 80% !important;
+            position: relative;
         }
         .localPlayerVideoCall div {
             border-radius: 10px;
@@ -91,7 +87,7 @@
         .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
             height: 45% !important;
             width: 60% !important;
-
+            position: relative;
         }
         .localAfterSubscribe div {
             border-radius: 10px;
@@ -101,15 +97,28 @@
             height: 100px;
             border: 1px solid black;
             position: absolute;
-            left: 0;
-            bottom: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* border-radius: 50% !important; */
             z-index: 1;
         }
-        .imgLocalHeight{ /*ความกว้างและสูง กรอบรูปโปรไฟล์ local*/
-            height: 100%;
-            max-height: 100%;
-            width: 100%;
-            max-width: 100%;
+        .imgdivLocal img{  /*รูปโปรไฟล์ local*/
+            border-radius: 50% !important;
+        }
+        .profileNameLocal{
+            color: #ffffff;
+            text-align: center;
+        }
+        .namedivLocal{
+            background-color: #343336;
+            position: absolute;
+            padding: 0.2rem !important;
+            right: 1rem !important;
+            bottom: 1rem !important;
+            /* transform: translate(-50%, -50%); */
+            border-radius: 2px !important;
+            z-index: 1;
         }
 
         /*=======================================
@@ -117,21 +126,12 @@
         =======================================*/
 
         .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
-            position: relative;
             height: 45% !important;
             width: 60% !important;
+            position: relative;
         }
         .remotePlayerVideoCall div {
             border-radius: 10px;
-        }
-        .imgdivRemote{  /*กรอบรูปโปรไฟล์ remote*/
-            width: 100px;
-            height: 100px;
-            border: 1px solid black;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
         }
         .buttonVideo2{
             position: absolute;
@@ -139,14 +139,14 @@
             left: 1rem;
         }
         .buttonVideo2 div{
-          margin-right: 0.5rem;
-          font-size: 0.8rem !important;
-          padding: 0 !important;
-          width: 2.5rem !important;
-          height: 2.5rem !important;
+            margin-right: 0.5rem;
+            font-size: 0.8rem !important;
+            padding: 0 !important;
+            width: 2.5rem !important;
+            height: 2.5rem !important;
         }
         .buttonVideo2 div i{
-          margin-top: 0.1 !important;
+            margin-top: 0.1 !important;
         }
         .unmuteRemote{
             border-radius: 50% !important;
@@ -164,14 +164,38 @@
             background-color: #db2d2e !important;
             color: #ffffff;
         }
-
-
-        .imgRemoteHeight{ /*ความกว้างและสูง กรอบรูปโปรไฟล์ remote*/
-            height: 100%;
-            max-height: 100%;
-            width: 100%;
-            max-width: 100%;
+        .imgdivRemote{  /*กรอบรูปโปรไฟล์ local*/
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50% !important;
+            z-index: 1;
         }
+        .imgdivRemote img{  /*รูปโปรไฟล์ local*/
+            border-radius: 50% !important;
+            width: 100%;
+            height: 100%;
+        }
+        .profileNameRemote{
+            color: #ffffff;
+            text-align: center;
+        }
+        .namedivRemote{
+            background-color: #343336;
+            position: absolute;
+            padding: 0.2rem !important;
+            right: 1rem !important;
+            bottom: 1rem !important;
+            /* transform: translate(-50%, -50%); */
+            border-radius: 2px !important;
+            z-index: 1;
+        }
+
+
         #remotePlayerContainer { /*พื้นหลังดำ ??*/
             background-color: black;
             visibility: hidden;
@@ -289,25 +313,14 @@
 
     }
     </style>
-    <div  id="timeCountVideo"></div><br>
     <div id='MainVideoDiv' class="MainVideoDiv ">
+        <div id="timeCountVideo" class="clockDuration"></div><br>
         <div id='localVideoMain' class="localPlayerVideoCall"></div>
-        <div id='remoteVideoMain' class="remotePlayerVideoCall">
-            {{-- <div id="statusRemotePlayer"></div> --}}
-        </div>
+        <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
     </div>
 
     <div id='app'></div>
     <button class="btn btn-primary d-none" type="button" id="join">เข้าร่วม</button>
-    <button type="button" id="statistics">Show Statistics</button><br>
-    {{-- <center>
-        <div class="container-fluid">
-            <div id="div_for_videoCall" class="row mt-2 videoCallArea">
-                <div class="my-4 col-12 col-md-6 col-lg-6 mx-auto" id="data_video_call"></div>
-            </div>
-        </div>
-
-    </center> --}}
 
     <!--เรียกใช้ axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -344,7 +357,10 @@
                 axios.get(url).then((response) => {
                         // console.log(response['data']);
                         options['token'] = response['data'];
-                        document.getElementById("join").click();
+                        // setTimeout(() => {
+
+                            document.getElementById("join").click();
+                        // }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
                     })
                     .catch((error) => {
                         console.log("ERROR HERE");
@@ -409,8 +425,8 @@
                 // คำนวณเวลาที่ผ่านไป
                 var timeCountVideo = document.getElementById("timeCountVideo");
 
-                let statCountTime = agoraEngine.getRTCStats();
-                let countTime1 = statCountTime.Duration;
+                var statCountTime = agoraEngine.getRTCStats();
+                var countTime1 = statCountTime.Duration;
 
             // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
                 timeCountVideo.innerHTML = countTime1 + " seconds";
@@ -443,39 +459,30 @@
             // ******************************** local ************************************ //
             // *************************************************************************** //
 
+            // ชื่อ local ขวาล่าง //
+            const roleLocalStatus = '{{ $roomData->status }}';
+            const nameLocal = document.createElement('div');
+                    nameLocal.classList.add('profileNameLocal');
+                    nameLocal.innerHTML = "{{ Auth::user()->name }}";
+            const roleLocal = document.createElement('div');
+                    roleLocal.classList.add('profileNameLocal');
+                if(roleLocalStatus === 'patient'){
+                    roleLocal.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
+                }else if(roleLocalStatus === 'owner'){
+                    roleLocal.innerHTML = "เจ้าของบ้าน";
+                }else if(roleLocalStatus === 'member'){
+                    roleLocal.innerHTML = "สมาชิก(ผู้ดูแล)";
+                }else{
+                    statusRemote.innerHTML = "สมาชิก";
+                }
+            const namedivLocal = document.createElement('div');
+                        namedivLocal.classList.add('namedivLocal');
+                        namedivLocal.appendChild(nameLocal);
+                        namedivLocal.appendChild(roleLocal);
 
-            //======================
-            //   Profile Local
-            //======================
+            localPlayerContainer.appendChild(namedivLocal);
+            //END ชื่อ local ขวาล่าง //
 
-            // ดึงข้อมูลผู้ใช้งานจาก auth
-            // const user = {!! json_encode(auth()->user()) !!};
-
-            // // สร้าง element รูปภาพ
-            // const imgLocal = document.createElement('img');
-            // if(user.avatar){
-            //     imgLocal.src = "{{ Auth::user()->avatar }}";
-            //     imgLocal.classList.add('imgLocalHeight');
-
-            // }else{
-            //     imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
-            //     imgLocal.classList.add('imgLocalHeight');
-            // }
-
-            // const nameLocal = document.createElement('div');
-            // nameLocal.innerHTML = user.name;
-            // // สร้าง element div สำหรับรอบรูปภาพ
-            // const imgdivLocal = document.createElement('div');
-            //     imgdivLocal.classList.add('imgdivLocal');
-
-            // // เพิ่ม element รูปภาพเข้าไปยัง element div
-            // imgdivLocal.appendChild(imgLocal);
-            // imgdivLocal.appendChild(nameLocal);
-            // localPlayerContainer.appendChild(imgdivLocal);
-
-            //======================
-            // END Profile Local
-            //======================
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
 
@@ -526,7 +533,36 @@
                     // muteVideoButton.classList.remove('btn-success');
                     isMuteVideo = true;
 
+                    //======================
+                    //   Profile Local
+                    //======================
 
+                    //ดึงข้อมูลผู้ใช้งานจาก auth
+                    const user = '{{ json_encode(auth()->user()) }}';
+
+                    // สร้าง element รูปภาพ
+                    const imgLocal = document.createElement('img');
+                    if(user.avatar !== '' && user.photo === ''){
+                        imgLocal.src = "{{ Auth::user()->avatar }}";
+                    }else if(user.photo !== ''){
+                        imgLocal.src = "{{ url('/storage') }}" + "/" + "{{ Auth::user()->photo }}";
+                    }else if(user.avatar === '' && user.photo === ''){
+                        imgLocal.src = "https://www.mithcare.com/img/%E0%B8%AA%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%AD%E0%B8%A3%E0%B9%8C%20Mithcare/01.png";
+                    }
+
+                    // สร้าง element div สำหรับรอบรูปภาพ
+                    const imgdivLocal = document.createElement('div');
+                        imgdivLocal.classList.add('imgdivLocal');
+
+                    // เพิ่ม element รูปภาพเข้าไปยัง element div
+                    imgdivLocal.appendChild(imgLocal);
+
+                    localPlayerContainer.appendChild(imgdivLocal);
+
+
+                    //======================
+                    // END Profile Local
+                    //======================
                 } else {
                     // Unmute the local video.
                     channelParameters.localVideoTrack.setEnabled(true);
@@ -536,7 +572,8 @@
                     muteVideoButton.classList.remove('btn-disabled');
                     isMuteVideo = false;
 
-
+                    document.querySelector('.imgdivLocal').remove();
+                    // document.querySelector('.namedivLocal').remove();
                 }
             }
 
@@ -621,6 +658,9 @@
                     removeVideoDiv(remotePlayerContainer.id);
                     removeVideoDiv(localPlayerContainer.id);
 
+                    //กดซ่อนปุ่มตอนออกเพื่อ ความสวยงาม
+                    divForVideoButton.classList.add('d-none');
+
                     // document.getElementById('timeDiv').remove();
 
                     // Leave the channel
@@ -673,61 +713,8 @@
                 console.log("------------------- published ------------------");
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
-                //======================
-                //   Profile Remote
-                //======================
-                // const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid;
-                // // console.log(urlRemoteUser);
-                // axios.get(urlRemoteUser).then((response) => {
-                //     // console.log("===========================");
-                //     // console.log(response['data']);
-                //     const userRemote = response['data'];
 
-                //     // สร้าง element รูปภาพ
-                //     const imgRemote = document.createElement('img');
-                //     if(userRemote['avatar']){
-                //         imgRemote.src = userRemote['avatar'];
-                //         imgRemote.classList.add('imgRemoteHeight');
-
-                //     }else{
-                //         imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
-                //         imgRemote.classList.add('imgRemoteHeight');
-                //     }
-                //     // กำหนดความสูง imgRemote ไม่ให้เกิน imgdivRemote
-
-
-                //     const nameRemote = document.createElement('div');
-                //     nameRemote.innerHTML = userRemote['name'];
-                //     const statusRemote = document.createElement('div');
-                //     if(userRemote['memberStatus'] === 'patient'){
-                //         statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
-                //     }else if(userRemote['memberStatus'] === 'owner'){
-                //         statusRemote.innerHTML = "เจ้าของบ้าน";
-                //     }else if(userRemote['memberStatus'] === 'member'){
-                //         statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
-                //     }else{
-                //         statusRemote.innerHTML = "สมาชิก";
-                //     }
-                //     // สร้าง element div สำหรับรอบรูปภาพ
-                //     const imgdivRemote = document.createElement('div');
-                //     imgdivRemote.classList.add('imgdivRemote');
-
-
-                //     // เพิ่ม element รูปภาพเข้าไปยัง element div
-                //     imgdivRemote.appendChild(imgRemote);
-                //     imgdivRemote.appendChild(nameRemote);
-                //     imgdivRemote.appendChild(statusRemote);
-                //     remotePlayerContainer.appendChild(imgdivRemote);
-
-                // })
-                // .catch((error) => {
-                //     console.log("ERROR HERE");
-                //     console.log(error);
-
-                // });
-                //======================
-                // END Profile Remote
-                //======================
+                StatsVideoUpdate();
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
@@ -741,6 +728,7 @@
                     // Specify the ID of the DIV container. You can use the uid of the remote user.
                     remotePlayerContainer.id = user.uid.toString();
 
+                    remotePlayerContainer.classList.remove('d-none');
                     // ชื่อ RemotePlayer
                     // remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
 
@@ -753,6 +741,9 @@
                     // สร้าง element div new_remote_video_call
                     if(document.getElementById('remote_video_call_'+ user.uid)){
                         document.getElementById('remote_video_call_'+ user.uid).remove();
+                    }
+                    if(document.querySelector('#imgdivRemote'+ user.uid)){
+                        document.querySelector('#imgdivRemote'+ user.uid).remove();
                     }
 
                     // let new_remote_video_call = document.createElement('div');
@@ -767,7 +758,57 @@
                     // // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
                     // remotePlayerContainer.append(remoteVideoMain);
                     // Play the remote video track.
-                    StatsVideoUpdate();
+
+                    //======================
+                    //   Profile Remote
+                    //======================
+
+                    const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid + "&room_id=" + homeId;
+                    // console.log(urlRemoteUser);
+                    axios.get(urlRemoteUser).then((response) => {
+                        // console.log("===========================");
+                        // console.log(response['data']);
+
+                        if(document.querySelector('namedivRemote'+ user.uid)){
+                            document.querySelector('namedivRemote'+ user.uid).remove();
+                        }
+
+                        const userRemote = response['data'];
+
+
+                        const nameRemote = document.createElement('div');
+                            nameRemote.innerHTML = userRemote['name'];
+                            nameRemote.classList.add('profileNameRemote')
+                        const statusRemote = document.createElement('div');
+                            statusRemote.classList.add('profileNameRemote')
+                        if(userRemote['memberStatus'] === 'patient'){
+                            statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
+                        }else if(userRemote['memberStatus'] === 'owner'){
+                            statusRemote.innerHTML = "เจ้าของบ้าน";
+                        }else if(userRemote['memberStatus'] === 'member'){
+                            statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
+                        }else{
+                            statusRemote.innerHTML = "สมาชิก";
+                        }
+                        // สร้าง element div สำหรับใส่ชื่อ
+                        const namedivRemote = document.createElement('div');
+                            namedivRemote.classList.add('namedivRemote');
+                            namedivRemote.id = 'namedivRemote'+ user.uid;
+                        // เพิ่ม element รูปภาพเข้าไปยัง element div
+                        namedivRemote.appendChild(nameRemote);
+                        namedivRemote.appendChild(statusRemote);
+
+                        remotePlayerContainer.appendChild(namedivRemote);
+
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
+
+                    });
+                    //======================
+                    // END Profile Remote
+                    //======================
 
                 }
 
@@ -806,11 +847,6 @@
                         muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                     }
 
-                    // muteButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    // muteButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    // muteButton2.style.left = '50%'; // Set the distance from the left of the container
-                    // muteButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
-
                     divForVideoButton2.appendChild(muteButton2);
 
                 // สร้างปุ่ม เปิด-ปิด วิดีโอ
@@ -823,10 +859,6 @@
                         muteVideoButton2.classList.add('btn-old', 'btn-danger', 'mt-2');
                         muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                     }
-                    // muteVideoButton2.style.position = 'absolute'; // Set position to absolute for the mute button
-                    // muteVideoButton2.style.bottom = '10px'; // Set the distance from the bottom of the container
-                    // muteVideoButton2.style.right = '50%'; // Set the distance from the left of the container
-                    // muteVideoButton2.style.transform = 'translateX(-50%)'; // Center the button horizontally
 
                     divForVideoButton2.appendChild(muteVideoButton2);
                     document.querySelector('.remotePlayerVideoCall').appendChild(divForVideoButton2);
@@ -838,8 +870,6 @@
 
 
             });
-
-
 
             // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
             // ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ //
@@ -877,7 +907,6 @@
                 channelParameters.remoteAudioTrack = null;
                 channelParameters.remoteUid = null;
 
-                // StatsVideoUpdate();
             });
 
 
@@ -887,9 +916,6 @@
                 console.log("------------------- unpublished ------------------");
                 console.log("user_id >> " + user.uid);
                 console.log("unpublished >> " + mediaType);
-
-
-
 
                 if(mediaType == "video"){
 
@@ -921,6 +947,51 @@
                                                     '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
                                                 '</div>' ;
                         remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
+
+                         //======================
+                    //   Profile Remote
+                    //======================
+
+                    const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid + "&room_id=" + homeId;
+                    // console.log(urlRemoteUser);
+                    axios.get(urlRemoteUser).then((response) => {
+
+                        if(document.querySelector('imgdivRemote'+ user.uid)){
+                            document.querySelector('imgdivRemote'+ user.uid).remove();
+                        }
+
+                        const userRemote = response['data'];
+
+                        // สร้าง element รูปภาพ
+                        const imgRemote = document.createElement('img');
+                        if(userRemote['avatar']){
+                            imgRemote.src = userRemote['avatar'];
+                            // imgRemote.classList.add('imgdivRemote');
+                        }else{
+                            imgRemote.src = "{{ url('/storage') }}" + "/" + userRemote['photo'];
+                            // imgRemote.classList.add('imgdivRemote');
+                        }
+
+                        // สร้าง element div สำหรับกรอบรูปภาพ
+                        const imgdivRemote = document.createElement('div');
+                            imgdivRemote.classList.add('imgdivRemote');
+                            imgdivRemote.id = 'imgdivRemote'+ user.uid;
+
+                        // เพิ่ม element รูปภาพเข้าไปยัง element div
+                        imgdivRemote.appendChild(imgRemote);
+
+                        remotePlayerContainer.appendChild(imgdivRemote);
+
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
+
+                    });
+                    //======================
+                    // END Profile Remote
+                    //======================
+
                     }
 
                 }

@@ -20,8 +20,9 @@ class AgoraVideoController extends Controller
 
         // fetch all users apart from the authenticated user
         // $users = User::where('id', '<>', Auth::id())->get();
+        $roomData = Member_of_room::where('room_id',$room_id)->where('user_id',$user_id)->first();
 
-        return view('room.room_rtc.room_call', compact('user_id','room_id'));
+        return view('room.room_rtc.room_call', compact('user_id','room_id','roomData'));
     }
 
     public function token(Request $request)
@@ -66,9 +67,10 @@ class AgoraVideoController extends Controller
     public function getUserRemote(Request $request)
     {
         $requestData = $request->all();
-        $users = User::where('id', $requestData['userId'])->first();
+        // $users = User::where('id', $requestData['userId'])->first();
 
         $users = User::join('member_of_rooms', 'users.id', '=', 'member_of_rooms.user_id')
+                // ->where('member_of_rooms.room_id', $requestData['homeId'])
                 ->where('users.id', $requestData['userId'])
                 ->select('users.*','member_of_rooms.status as memberStatus','member_of_rooms.lv_of_caretaker as memberLv')
                 ->first();

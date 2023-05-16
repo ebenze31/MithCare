@@ -422,17 +422,17 @@
             //       บันทึก stats Video Call
             //===================================
 
-            // เรียกใช้ฟังก์ชันทุกๆ 1 วินาที
-            setInterval(function() {
-                // คำนวณเวลาที่ผ่านไป
-                var timeCountVideo = document.getElementById("timeCountVideo");
+            // // เรียกใช้ฟังก์ชันทุกๆ 1 วินาที
+            // setInterval(function() {
+            //     // คำนวณเวลาที่ผ่านไป
+            //     var timeCountVideo = document.getElementById("timeCountVideo");
 
-                var statCountTime = agoraEngine.getRTCStats();
-                var countTime1 = statCountTime.Duration;
+            //     var statCountTime = agoraEngine.getRTCStats();
+            //     var countTime1 = statCountTime.Duration;
 
-            // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
-                timeCountVideo.innerHTML = countTime1 + " seconds";
-            }, 1000);
+            // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
+            //     timeCountVideo.innerHTML = countTime1 + " seconds";
+            // }, 1000);
 
             function StatsVideoUpdate(){
                 console.log("StatsVideoUpdate ทำงานนนนนนนนนน");
@@ -441,7 +441,38 @@
                 const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
                 axios.get(urlStatsVideo).then((response) => {
                     console.log(response['data']);
+                    setInterval(() => {
+                        var timeCountVideo = document.getElementById("timeCountVideo");
+                        // วันที่และเวลาปัจจุบัน
+                        var currentDate = new Date();
+                        var currentTime = currentDate.getTime();
 
+                        // วันที่และเวลาที่กำหนด
+                        var targetDate = new Date(response['data']);
+                        var targetTime = targetDate.getTime();
+
+                        // คำนวณเวลาที่ผ่านไปในมิลลิวินาที
+                        var elapsedTime = currentTime - targetTime;
+                        var elapsedMinutes = Math.floor(elapsedTime / (1000 * 60));
+
+                        // แปลงเวลาที่ผ่านไปให้เป็นรูปแบบชั่วโมง:นาที:วินาที
+                        var hours = Math.floor(elapsedMinutes / 60);
+                        var minutes = elapsedMinutes % 60;
+                        var seconds = Math.floor((elapsedTime / 1000) % 60);
+
+                        let showTimeCountVideo;
+                        // แสดงผลลัพธ์
+                        if (hours > 0) {
+                        // console.log(hours + ':' + minutes + ':' + seconds);
+                        showTimeCountVideo = hours + ':' + minutes + ':' + seconds;
+                        } else {
+                        // console.log(minutes + ':' + seconds);
+                        showTimeCountVideo = minutes + ':' + seconds;
+                        }
+
+                        // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
+                        timeCountVideo.innerHTML = showTimeCountVideo;
+                    }, 1000);
                 })
                 .catch((error) => {
                     console.log("ERROR HERE");

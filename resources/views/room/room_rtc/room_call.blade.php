@@ -437,7 +437,7 @@
             function StatsVideoUpdate(){
                 console.log("StatsVideoUpdate ทำงานนนนนนนนนน");
                 let rtcStats = agoraEngine.getRTCStats();
-                // console.log(rtcStats);
+                console.log(rtcStats);
                 const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
                 axios.get(urlStatsVideo).then((response) => {
                     console.log(response['data']);
@@ -644,12 +644,6 @@
                     agoraEngine.enableDualStream();
 
                     StatsVideoUpdate();
-
-                    setTimeout(() => {
-                        let rtcStats = agoraEngine.getRTCStats();
-                        console.log("rtcStats ข้อมูลห้อง ------------------");
-                        console.log(rtcStats);
-                    }, 2000);
 
                     // let isAboutTimeCalled = false;
                     // if (isAboutTimeCalled == false) {

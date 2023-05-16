@@ -458,30 +458,38 @@
             // *************************************************************************** //
             // ******************************** local ************************************ //
             // *************************************************************************** //
+            const localPlayerURL = "{{ url('/') }}/api/localPlayerData?room_id=" + homeId + "&user_id=" + '{{ Auth::user()->id }}';
+                axios.get(localPlayerURL).then((response) => {
+                    var localPlayerData = response['data'];
 
-            // ชื่อ local ขวาล่าง //
-            const roleLocalStatus = '{{ $roomData->status }}';
-            const nameLocal = document.createElement('div');
-                    nameLocal.classList.add('profileNameLocal');
-                    nameLocal.innerHTML = "{{ Auth::user()->name }}";
-            const roleLocal = document.createElement('div');
-                    roleLocal.classList.add('profileNameLocal');
-                if(roleLocalStatus === 'patient'){
-                    roleLocal.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
-                }else if(roleLocalStatus === 'owner'){
-                    roleLocal.innerHTML = "เจ้าของบ้าน";
-                }else if(roleLocalStatus === 'member'){
-                    roleLocal.innerHTML = "สมาชิก(ผู้ดูแล)";
-                }else{
-                    statusRemote.innerHTML = "สมาชิก";
-                }
-            const namedivLocal = document.createElement('div');
-                        namedivLocal.classList.add('namedivLocal');
-                        namedivLocal.appendChild(nameLocal);
-                        namedivLocal.appendChild(roleLocal);
+                            // ชื่อ local ขวาล่าง //
+                    const nameLocal = document.createElement('div');
+                            nameLocal.classList.add('profileNameLocal');
+                            nameLocal.innerHTML = "{{ Auth::user()->name }}";
+                    const roleLocal = document.createElement('div');
+                            roleLocal.classList.add('profileNameLocal');
+                        if(localPlayerData['status'] === "patient"){
+                            roleLocal.innerHTML = "ผู้ป่วยระดับ " + localPlayerData['lv_of_caretaker'];
+                        }else if(localPlayerData['status'] === "owner"){
+                            roleLocal.innerHTML = "เจ้าของบ้าน";
+                        }else if(localPlayerData['status'] === "member"){
+                            roleLocal.innerHTML = "สมาชิก(ผู้ดูแล)";
+                        }else{
+                            roleLocal.innerHTML = "สมาชิก";
+                        }
+                    const namedivLocal = document.createElement('div');
+                                namedivLocal.classList.add('namedivLocal');
+                                namedivLocal.appendChild(nameLocal);
+                                namedivLocal.appendChild(roleLocal);
 
-            localPlayerContainer.appendChild(namedivLocal);
-            //END ชื่อ local ขวาล่าง //
+                    localPlayerContainer.appendChild(namedivLocal);
+                    //END ชื่อ local ขวาล่าง //
+                })
+                .catch((error) => {
+                    console.log("ERROR HERE localPlayerData มีปัญหา");
+                    console.log(error);
+                    console.log("ERROR HERE localPlayerData มีปัญหา");
+                });
 
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
@@ -713,6 +721,7 @@
                 console.log("------------------- published ------------------");
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
+
 
                 StatsVideoUpdate();
 
@@ -948,7 +957,7 @@
                                                 '</div>' ;
                         remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
 
-                         //======================
+                    //======================
                     //   Profile Remote
                     //======================
 

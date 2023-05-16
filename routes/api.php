@@ -95,3 +95,5 @@ Route::get('/urlStatsVideo', 'AgoraVideoController@store');
 Route::get('/urlCheckPeople', 'AgoraVideoController@checkPeopleInRoom');
 //เมื่อ leaveChannel ส่งข้อมูล videoCall ไปเก็บในฐานข้อมูล
 Route::get('/leaveChannel', 'AgoraVideoController@leaveChannel');
+//หาข้อมูล localPlayer videoCall
+Route::get('/localPlayerData', 'AgoraVideoController@localPlayerData');

@@ -20,7 +20,7 @@ class AgoraVideoController extends Controller
 
         // fetch all users apart from the authenticated user
         // $users = User::where('id', '<>', Auth::id())->get();
-        $roomData = Member_of_room::where('room_id',$room_id)->where('user_id',$user_id)->first();
+        $roomData = Member_of_room::where('room_id',$room_id)->get();
 
         return view('room.room_rtc.room_call', compact('user_id','room_id','roomData'));
     }
@@ -145,6 +145,18 @@ class AgoraVideoController extends Controller
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 
         return $roomVideocallStats;
+    }
+
+    public function localPlayerData(Request $request)
+    {
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+        $user_id = $requestData['user_id'];
+
+        $localPlayer = Member_of_room::where('room_id',$room_id)->where('user_id',$user_id)->first();
+
+        return $localPlayer;
     }
 
 }

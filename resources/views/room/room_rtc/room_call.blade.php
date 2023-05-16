@@ -728,10 +728,11 @@
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
 
+                StatsVideoUpdate();
+
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
 
-                    StatsVideoUpdate();
                     // Retrieve the remote video track.
                     channelParameters.remoteVideoTrack = user.videoTrack;
                     // Retrieve the remote audio track.

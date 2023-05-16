@@ -403,6 +403,8 @@
             remoteVideoTrack: null,
             // A variable to hold the remote user id.s
             remoteUid: null,
+            // A variable to hold the screen track
+            // screenTrack: false,
         };
 
         async function startBasicCall() {
@@ -445,6 +447,8 @@
                     console.log(error);
                 });
             }
+
+
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
             const remotePlayerContainer = document.getElementById('remoteVideoMain');
@@ -605,6 +609,27 @@
                 }
             }
 
+               // ShareScreen
+               document.getElementById('shareScreen').onclick = async function () {
+                        if(isSharingEnabled == false) {
+                            // Create a screen track for screen sharing.
+                            channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+                            // Replace the video track with the screen track.
+                            await channelParameters.localVideoTrack.replaceTrack(channelParameters.screenTrack, true);
+                            // Update the button text.
+                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                            // Update the screen sharing state.
+                            isSharingEnabled = true;
+                        } else {
+                            // Replace the screen track with the local video track.
+                            await channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
+                            // Update the button text.
+                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                            // Update the screen sharing state.
+                            isSharingEnabled = false;
+                        }
+                    }
+
             window.onload = function() {
                 // Listen to the Join button click event.
                 document.getElementById("join").onclick = async function() {
@@ -635,26 +660,7 @@
                     channelParameters.localVideoTrack.play(localPlayerContainer);
                     console.log("publish success!");
 
-                    // ShareScreen
-                    document.getElementById('shareScreen').onclick = async function () {
-                        if(isSharingEnabled == false) {
-                            // Create a screen track for screen sharing.
-                            channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
-                            // Replace the video track with the screen track.
-                            await channelParameters.localVideoTrack.replaceTrack(channelParameters.screenTrack, true);
-                            // Update the button text.
-                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
-                            // Update the screen sharing state.
-                            isSharingEnabled = true;
-                        } else {
-                            // Replace the screen track with the local video track.
-                            await channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
-                            // Update the button text.
-                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
-                            // Update the screen sharing state.
-                            isSharingEnabled = false;
-                        }
-                    }
+
                 }
 
                 // Listen to the Leave button click event.
@@ -722,12 +728,10 @@
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
 
-
-                StatsVideoUpdate();
-
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
 
+                    StatsVideoUpdate();
                     // Retrieve the remote video track.
                     channelParameters.remoteVideoTrack = user.videoTrack;
                     // Retrieve the remote audio track.

@@ -132,10 +132,14 @@ class AgoraVideoController extends Controller
             "room_of_members" => $room_of_members,
         ];
 
+        $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+
+        $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+
         $roomVideocallStats = [
             // "room_name" => $roomFinder['name'],
             // "time_start" => $requestData['time_start'],
-            "current_people" => $requestData['current_people'] - 1,
+            "current_people" => $updateDataRoomRTC,
             // "total_timemeet" => $requestData['total_timemeet'],
             // "amount_meet" => $requestData['current_people'],
 

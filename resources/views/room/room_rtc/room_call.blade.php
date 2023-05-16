@@ -645,6 +645,11 @@
 
                     StatsVideoUpdate();
 
+                    setTimeout(() => {
+                        let rtcStats = agoraEngine.getRTCStats();
+                        console.log(rtcStats);
+                    }, 2000);
+
                     // let isAboutTimeCalled = false;
                     // if (isAboutTimeCalled == false) {
                     //     aboutTime();
@@ -691,10 +696,10 @@
                         if (currentPeople === 0 || rtcStats.lastmileQuality !== 'good') {
                             clearInterval(interval); // Stop the interval
 
-                            const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
+                            const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
                             axios.get(urlStatsVideo).then((response) => {
                                 console.log(response['data']);
-                                goBack();
+                                // goBack();
                             });
                         }
                     }, 1000);
@@ -732,6 +737,7 @@
                 setTimeout(() => {
                     StatsVideoUpdate();
                 }, 2500);
+
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {

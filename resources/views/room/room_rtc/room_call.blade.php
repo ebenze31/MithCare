@@ -435,6 +435,7 @@
             }, 1000);
 
             function StatsVideoUpdate(){
+                console.log("StatsVideoUpdate ทำงานนนนนนนนนน");
                 let rtcStats = agoraEngine.getRTCStats();
                 // console.log(rtcStats);
                 const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
@@ -728,11 +729,14 @@
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
 
-
+                if(user.uid){
+                    console.log("เข้า อีฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ");
+                    StatsVideoUpdate();
+                }
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
-                    StatsVideoUpdate();
+
                     // Retrieve the remote video track.
                     channelParameters.remoteVideoTrack = user.videoTrack;
                     // Retrieve the remote audio track.

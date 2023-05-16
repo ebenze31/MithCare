@@ -647,6 +647,7 @@
 
                     setTimeout(() => {
                         let rtcStats = agoraEngine.getRTCStats();
+                        console.log("rtcStats ข้อมูลห้อง ------------------");
                         console.log(rtcStats);
                     }, 2000);
 

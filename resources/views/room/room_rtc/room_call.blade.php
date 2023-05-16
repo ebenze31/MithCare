@@ -694,7 +694,7 @@
                             const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
                             axios.get(urlStatsVideo).then((response) => {
                                 console.log(response['data']);
-                                // goBack();
+                                goBack();
                             });
                         }
                     }, 1000);

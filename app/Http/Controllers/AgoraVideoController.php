@@ -8,7 +8,7 @@ use App\Models\Room;
 use App\Models\RoomRTC;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 use App\Events\MakeAgoraCall;
 use App\Models\Member_of_room;
 
@@ -92,6 +92,21 @@ class AgoraVideoController extends Controller
             "room_of_members" => $room_of_members,
         ];
 
+        $dateNow = date("Y-m-d H:i:s");
+        $rtcTimeStart = "";
+        $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+        if($dataRoomRTC->time_start == null){
+            DB::table('room_rtc')
+                ->where('room_id', $room_id)
+                ->where('room_of_members', $room_of_members)
+                ->update([
+                    'time_start' => $dateNow,
+            ]);
+            $rtcTimeStart = $dateNow;
+        }else{
+            $rtcTimeStart = $dataRoomRTC->time_start;
+        }
+
         $roomVideocallStats = [
             "room_name" => $roomFinder['name'],
             // "time_start" => $requestData['time_start'],
@@ -104,7 +119,7 @@ class AgoraVideoController extends Controller
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 
-        return $roomVideocallStats;
+        return $rtcTimeStart;
     }
 
     public function checkPeopleInRoom(Request $request)
@@ -135,6 +150,15 @@ class AgoraVideoController extends Controller
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
 
         $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+
+        if($updateDataRoomRTC == 0){
+            DB::table('room_rtc')
+                ->where('room_id', $room_id)
+                ->where('room_of_members', $room_of_members)
+                ->update([
+                    'time_start' => null,
+            ]);
+        }
 
         $roomVideocallStats = [
             // "room_name" => $roomFinder['name'],

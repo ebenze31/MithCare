@@ -729,10 +729,9 @@
                 console.log("user_id >> " + user.uid);
                 console.log("subscribe >> " + mediaType + " << success");
 
-                if(user.uid){
-                    console.log("เข้า อีฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ");
+                setTimeout(() => {
                     StatsVideoUpdate();
-                }
+                }, 2500);
 
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {

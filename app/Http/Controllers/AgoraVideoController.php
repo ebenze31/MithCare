@@ -95,12 +95,20 @@ class AgoraVideoController extends Controller
         $dateNow = date("Y-m-d H:i:s");
         $rtcTimeStart = "";
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+
+        if($dataRoomRTC->amount_meet == null){
+            $newAmountMeet = 1;
+        }else{
+            $newAmountMeet = (int)$dataRoomRTC->amount_meet + 1;
+        }
+
         if($dataRoomRTC->time_start == null){
             DB::table('room_rtc')
                 ->where('room_id', $room_id)
                 ->where('room_of_members', $room_of_members)
                 ->update([
                     'time_start' => $dateNow,
+                    'amount_meet' => $newAmountMeet,
             ]);
             $rtcTimeStart = $dateNow;
         }else{
@@ -148,15 +156,35 @@ class AgoraVideoController extends Controller
         ];
 
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
-
-        $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+        if((int)$dataRoomRTC->current_people <= 1){
+            $updateDataRoomRTC = 0;
+        }else{
+            $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+        }
 
         if($updateDataRoomRTC == 0){
+            // วันที่และเวลาปัจจุบัน
+            $currentTime = time();
+
+            // วันที่และเวลาที่กำหนด
+            $targetDateTime = $dataRoomRTC->time_start;
+            $targetTime = strtotime($targetDateTime);
+
+            // คำนวณเวลาที่ผ่านไปในวินาที
+            $elapsedTime = $currentTime - $targetTime;
+
+            if($dataRoomRTC->total_timemeet == null){
+                $updateTotalTimeMeet = $elapsedTime;
+            }else{
+                $updateTotalTimeMeet = (int)$elapsedTime + (int)$dataRoomRTC->total_timemeet;
+            }
+
             DB::table('room_rtc')
                 ->where('room_id', $room_id)
                 ->where('room_of_members', $room_of_members)
                 ->update([
                     'time_start' => null,
+                    'total_timemeet' => $updateTotalTimeMeet,
             ]);
         }
 

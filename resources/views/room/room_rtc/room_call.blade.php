@@ -10,13 +10,29 @@
             width: 100%;
             height: 100%;
         }
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden; /* เพื่อไม่ให้เกิดการเลื่อนเมาส์เพื่อดูเนื้อหาในส่วนล่าง */
+        }
         .bg-black{
             background-color: black;
         }
         .clockDuration{
-            position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
+            font-size: 18px;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .DateTimeDiv{
+            font-size: 18px;
+            text-align: right;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         video{ /* ตกแต่ง tag video ที่ agora สร้างมา*/
             border-color: #3490dc;
@@ -31,24 +47,26 @@
         }
         .MainVideoDiv{
             display: flex;
+            flex-direction: column;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            margin-right: -15px;
-            margin-left: -15px;
-            padding: 2rem;
-
             width: 100%;
-            height: 100%;
+            height: 90%;
+        }
+        .ButtonDiv{
+            background-color: #343336 !important;
+            display: flex;
+            flex-direction: row;
+            /* align-items: center; */
+            width: 100%;
+            height: 10%;
         }
         .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
-            /* background-color: #051407; */
-            position: relative;
-            margin-top: 1rem;
-            bottom: 1rem;
-            width: 100%;
+            width: 80%;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
         .buttonVideo button{
             margin-right: 0.5rem;
@@ -72,12 +90,15 @@
             background-color: #db2d2e !important;
             color: #ffffff;
         }
+        .VoiceLocalEffect{
+            box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+        }
 
         /*=======================================
                 localPlayer css Computer
         =======================================*/
         .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-            height: 65% !important;
+            height: 75% !important;
             width: 80% !important;
             position: relative;
         }
@@ -86,15 +107,15 @@
         }
         .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
             height: 45% !important;
-            width: 60% !important;
+            width: 50% !important;
             position: relative;
         }
         .localAfterSubscribe div {
             border-radius: 10px;
         }
         .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
-            width: 100px;
-            height: 100px;
+            width: 250px;
+            height: 250px;
             border: 1px solid black;
             position: absolute;
             left: 50%;
@@ -105,6 +126,8 @@
         }
         .imgdivLocal img{  /*รูปโปรไฟล์ local*/
             border-radius: 50% !important;
+            width: 250px;
+            height: 250px;
         }
         .profileNameLocal{
             color: #ffffff;
@@ -127,8 +150,9 @@
 
         .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
             height: 45% !important;
-            width: 60% !important;
+            width: 50% !important;
             position: relative;
+            margin-top: 1rem;
         }
         .remotePlayerVideoCall div {
             border-radius: 10px;
@@ -165,8 +189,8 @@
             color: #ffffff;
         }
         .imgdivRemote{  /*กรอบรูปโปรไฟล์ local*/
-            width: 100px;
-            height: 100px;
+            width: 250px;
+            height: 250px;
             border: 1px solid black;
             position: absolute;
             left: 50%;
@@ -177,8 +201,8 @@
         }
         .imgdivRemote img{  /*รูปโปรไฟล์ local*/
             border-radius: 50% !important;
-            width: 100%;
-            height: 100%;
+            width: 250px;
+            height: 250px;
         }
         .profileNameRemote{
             color: #ffffff;
@@ -313,10 +337,15 @@
 
     }
     </style>
-    <div id='MainVideoDiv' class="MainVideoDiv ">
-        <div id="timeCountVideo" class="clockDuration"></div><br>
-        <div id='localVideoMain' class="localPlayerVideoCall"></div>
-        <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
+
+    <div class="video-container">
+        <div id='MainVideoDiv' class="MainVideoDiv">
+            <div id='localVideoMain' class="localPlayerVideoCall"></div>
+            <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
+        </div>
+        <div id='ButtonDiv' class="ButtonDiv">
+            <div id="timeCountVideo" class="clockDuration"></div>
+        </div>
     </div>
 
     <div id='app'></div>
@@ -373,12 +402,10 @@
    </script>
 
     <script>
-        // import AgoraRTC from "agora-rtc-sdk-ng"
         // var show_data_video = document.querySelector('#data_video_call');
         //     show_data_video.innerHTML = "";
 
-        // var div_for_videoCall = document.querySelector('#div_for_videoCall');
-
+        var ButtonDiv = document.querySelector('#ButtonDiv');
         var MainVideoDiv = document.querySelector('#MainVideoDiv');
 
         // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด แชร์หน้าจอ
@@ -422,18 +449,6 @@
             //       บันทึก stats Video Call
             //===================================
 
-            // // เรียกใช้ฟังก์ชันทุกๆ 1 วินาที
-            // setInterval(function() {
-            //     // คำนวณเวลาที่ผ่านไป
-            //     var timeCountVideo = document.getElementById("timeCountVideo");
-
-            //     var statCountTime = agoraEngine.getRTCStats();
-            //     var countTime1 = statCountTime.Duration;
-
-            // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
-            //     timeCountVideo.innerHTML = countTime1 + " seconds";
-            // }, 1000);
-
             function StatsVideoUpdate(){
                 console.log("StatsVideoUpdate ทำงานนนนนนนนนน");
                 let rtcStats = agoraEngine.getRTCStats();
@@ -471,7 +486,7 @@
                         }
 
                         // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
-                        timeCountVideo.innerHTML = showTimeCountVideo;
+                        timeCountVideo.innerHTML = '<i class="fa-regular fa-clock fa-fade" style="color: #11b06b; font-size: 30px;"></i>&nbsp;' + ": " + showTimeCountVideo;
                     }, 1000);
                 })
                 .catch((error) => {
@@ -479,8 +494,6 @@
                     console.log(error);
                 });
             }
-
-
 
             // Dynamically create a container in the form of a DIV element to play the remote video track.
             const remotePlayerContainer = document.getElementById('remoteVideoMain');
@@ -490,6 +503,24 @@
             // Specify the ID of the DIV container. You can use the uid of the local user.
             localPlayerContainer.id = options.uid;
             // Set the textContent property of the local video container to the local user id.
+
+            agoraEngine.enableAudioVolumeIndicator();
+
+            agoraEngine.on("volume-indicator", volumes => {
+                volumes.forEach((volume, index) => {
+                    if (options.uid == volume.uid && volume.level > 50) {
+                        console.log("ได้ยินเสียงแล้ววววววววววววววววววว");
+                        console.log(volume.uid);
+                        console.log(volume.level);
+
+                        localPlayerContainer.classList.add('VoiceLocalEffect');
+                    } else if (options.uid == volume.uid && volume.level < 50) {
+                        console.log("ไม่มีเสียง");
+                        console.log(volume.level);
+                        localPlayerContainer.classList.remove('VoiceLocalEffect');
+                    }
+                });
+            })
 
             // *************************************************************************** //
             // ******************************** local ************************************ //
@@ -530,7 +561,7 @@
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
 
-            MainVideoDiv.appendChild(divForVideoButton);
+            ButtonDiv.appendChild(divForVideoButton);
             //สร้างปุ่ม แชร์หน้าจอ
             const shareScreenButton = document.createElement('button');
                 shareScreenButton.type = "button";
@@ -558,7 +589,7 @@
 
             divForVideoButton.appendChild(muteVideoButton);
 
-              //สร้างปุ่ม ออกสาย
+            //สร้างปุ่ม ออกสาย
             const leaveVideoButton = document.createElement('button');
                 leaveVideoButton.type = "button";
                 leaveVideoButton.id = "leaveVideoCall";
@@ -566,6 +597,30 @@
                 leaveVideoButton.innerHTML = '<i class="fa-solid fa-phone"></i>';
 
             divForVideoButton.appendChild(leaveVideoButton);
+
+            // div สำหรับแสดงวันที่-เวลาปัจจุบัน
+            var currentDate = new Date();
+
+            var currentDay = currentDate.getDate();
+            var currentMonth = currentDate.getMonth() + 1; // เดือนเริ่มต้นที่ 0, ต้องบวก 1 เพื่อให้เป็นเดือนจริง
+            var currentYear = currentDate.getFullYear();
+
+            var currentHours = currentDate.getHours();
+            var currentMinutes = currentDate.getMinutes();
+            // เพิ่มเลข 0 ข้างหน้านาทีเมื่อนาทีเป็นเลขเดียว
+            if (currentMinutes < 10) {
+                currentMinutes = '0' + currentMinutes;
+            }
+            var formattedDate = currentDay + '/' + currentMonth + '/' + currentYear;
+            var formattedTime = currentHours + ':' + currentMinutes;
+
+            var DateTimeDiv = document.createElement('div');
+                DateTimeDiv.classList.add('DateTimeDiv');
+                DateTimeDiv.innerHTML = formattedTime + '<br>' + formattedDate;
+
+            ButtonDiv.insertBefore(DateTimeDiv, divForVideoButton.nextSibling); // เพิ่ม DateTimeDiv หลังจาก div2
+
+
 
             muteVideoButton.onclick = async function() {
                 if (isMuteVideo == false) {
@@ -676,15 +731,6 @@
 
                     StatsVideoUpdate();
 
-                    // let isAboutTimeCalled = false;
-                    // if (isAboutTimeCalled == false) {
-                    //     aboutTime();
-                    //     isAboutTimeCalled = true;
-                    // }
-
-                    // Append the local video container to the page body.
-                    // show_data_video.append(localPlayerContainer);
-
                     // Publish the local audio and video tracks in the channel.
                     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
 
@@ -764,7 +810,6 @@
                     StatsVideoUpdate();
                 }, 2500);
 
-
                 // Subscribe and play the remote video in the container If the remote user publishes a video track.
                 if (mediaType == "video") {
 
@@ -795,18 +840,6 @@
                         document.querySelector('#imgdivRemote'+ user.uid).remove();
                     }
 
-                    // let new_remote_video_call = document.createElement('div');
-                    //     new_remote_video_call.setAttribute('class' , 'remotePlayerVideoCall');
-                    //     new_remote_video_call.setAttribute('id' , 'remote_video_call_' + user.uid);
-
-                    // let remoteVideoMain = document.createElement('div');
-                    //     remoteVideoMain.setAttribute('id' , 'remoteVideoMain' + user.uid);
-
-                    //     remoteVideoMain.insertAdjacentHTML('beforeend', new_remote_video_call.outerHTML);
-
-                    // // document.querySelector('#remoteVideoMain' + user.uid).append(remotePlayerContainer);
-                    // remotePlayerContainer.append(remoteVideoMain);
-                    // Play the remote video track.
 
                     //======================
                     //   Profile Remote
@@ -867,6 +900,22 @@
                     channelParameters.remoteAudioTrack = user.audioTrack;
                     // Play the remote audio track. No need to pass any DOM element.
                     channelParameters.remoteAudioTrack.play();
+
+                    agoraEngine.on("volume-indicator", volumes => {
+                        volumes.forEach((volume, index) => {
+                            if (channelParameters.remoteUid == volume.uid && volume.level > 50) {
+                                console.log("ได้ยินเสียงแล้ววววววววววววววววววว");
+                                console.log(volume.uid);
+                                console.log(volume.level);
+
+                                remotePlayerContainer.classList.add('VoiceLocalEffect');
+                            } else if (channelParameters.remoteUid == volume.uid && volume.level < 50) {
+                                console.log("ไม่มีเสียง");
+                                console.log(volume.level);
+                                remotePlayerContainer.classList.remove('VoiceLocalEffect');
+                            }
+                        });
+                    })
 
                 }
 
@@ -1084,109 +1133,6 @@
                 Div.remove();
             }
         };
-    </script>
-
-    <script>
-        function aboutTime(){
-
-            //=========================
-            // เวลาปัจจุบันของประเทศไทย
-            //=========================
-            var formattedString = "";
-            var nowTimeTH = "";
-            var realTime = document.createElement('button');
-                realTime.id = "realTime";
-                realTime.classList.add('btn','btn-dark','mr-2');
-
-            const timeDiv = document.createElement('div');
-                timeDiv.classList.add('col-12','mt-2');
-                timeDiv.id = "timeDiv";
-
-            const timeButton = document.createElement('button');
-                timeButton.id = "timeButton";
-                timeButton.classList.add('btn','btn-dark','mr-2');
-                timeButton.innerHTML = '<i class="fa-duotone fa-record-vinyl fa-fade" style="--fa-primary-color: #d70f0f; --fa-secondary-color: #181616; font-size: 20px; padding-left: 3px"></i>';
-
-            refreshTime()
-
-            function refreshTime() {
-                const nowTimeTH = new Date();
-                const date = {
-                    timeZone: 'Asia/Bangkok',
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                };
-                const time = {
-                    timeZone: 'Asia/Bangkok',
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-
-                };
-                const formattedStringDate = nowTimeTH.toLocaleDateString('th-TH', date);
-                const formattedStringTime = nowTimeTH.toLocaleTimeString('th-TH', time);
-                realTime.innerHTML = formattedStringDate + '<br>' + formattedStringTime;
-            }
-
-            setInterval(refreshTime, 1000); // อัพเดทเวลาทุก ๆ 1 วินาที
-
-
-            timeDiv.appendChild(realTime);
-
-            timeDiv.appendChild(timeButton);
-            div_for_videoCall.insertBefore(timeDiv, div_for_videoCall.firstChild);
-
-            //================
-            //    ตัวจับเวลา
-            //================
-
-            // ตรวจสอบว่าเวลาเก่าถูกเก็บไว้ใน localStorage หรือไม่
-            let storedTime = localStorage.getItem("storedTime");
-
-            // ถ้าเวลาเก่าไม่มีอยู่ใน localStorage ให้ใช้เวลาปัจจุบัน
-            if (!storedTime) {
-            storedTime = new Date().getTime();
-            localStorage.setItem("storedTime", storedTime);
-            }
-
-            const minutes = document.createElement('div');
-                minutes.id = "minutes";
-                minutes.innerHTML = '00';
-
-            const seconds = document.createElement('div');
-                seconds.id = "seconds";
-                seconds.innerHTML = '00';
-
-            const minutesLabel = document.createElement('span');
-                minutesLabel.innerHTML = ':';
-
-            var totalSeconds = 0;
-
-            setInterval(setTime, 1000);
-
-            function setTime() {
-                ++totalSeconds;
-                seconds.innerHTML = pad(totalSeconds % 60);
-                minutes.innerHTML = pad(parseInt(totalSeconds / 60));
-            }
-
-            function pad(val) {
-                var valString = val + "";
-                if (valString.length < 2) {
-                    return "0" + valString;
-                } else {
-                    return valString;
-                }
-            }
-
-            // const textMinutes = document.createTextNode(" นาที");
-
-            // timeDiv.appendChild(timeButton);
-            timeButton.insertBefore(minutes,timeButton.firstChild);
-            timeButton.insertBefore(seconds,timeButton.firstChild.nextSibling);
-            timeButton.insertBefore(minutesLabel, timeButton.firstChild.nextSibling);
-        }
     </script>
 
 @endsection

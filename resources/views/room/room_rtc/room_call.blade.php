@@ -431,7 +431,7 @@
             // A variable to hold the remote user id.s
             remoteUid: null,
             // A variable to hold the screen track
-            // screenTrack: false,
+            screenTrack: null,
         };
 
         async function startBasicCall() {
@@ -509,14 +509,14 @@
             agoraEngine.on("volume-indicator", volumes => {
                 volumes.forEach((volume, index) => {
                     if (options.uid == volume.uid && volume.level > 50) {
-                        console.log("ได้ยินเสียงแล้ววววววววววววววววววว");
-                        console.log(volume.uid);
-                        console.log(volume.level);
+                        // console.log("ได้ยินเสียงแล้ววววววววววววววววววว");
+                        // console.log(volume.uid);
+                        // console.log(volume.level);
 
                         localPlayerContainer.classList.add('VoiceLocalEffect');
                     } else if (options.uid == volume.uid && volume.level < 50) {
-                        console.log("ไม่มีเสียง");
-                        console.log(volume.level);
+                        // console.log("ไม่มีเสียง");
+                        // console.log(volume.level);
                         localPlayerContainer.classList.remove('VoiceLocalEffect');
                     }
                 });
@@ -525,8 +525,9 @@
             // *************************************************************************** //
             // ******************************** local ************************************ //
             // *************************************************************************** //
-            const localPlayerURL = "{{ url('/') }}/api/localPlayerData?room_id=" + homeId + "&user_id=" + '{{ Auth::user()->id }}';
-                axios.get(localPlayerURL).then((response) => {
+            function nameRoleLocal (){
+                const localPlayerURL = "{{ url('/') }}/api/localPlayerData?room_id=" + homeId + "&user_id=" + '{{ Auth::user()->id }}';
+                    axios.get(localPlayerURL).then((response) => {
                     var localPlayerData = response['data'];
 
                             // ชื่อ local ขวาล่าง //
@@ -557,6 +558,8 @@
                     console.log(error);
                     console.log("ERROR HERE localPlayerData มีปัญหา");
                 });
+            }
+
 
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
@@ -599,28 +602,48 @@
             divForVideoButton.appendChild(leaveVideoButton);
 
             // div สำหรับแสดงวันที่-เวลาปัจจุบัน
-            var currentDate = new Date();
 
-            var currentDay = currentDate.getDate();
-            var currentMonth = currentDate.getMonth() + 1; // เดือนเริ่มต้นที่ 0, ต้องบวก 1 เพื่อให้เป็นเดือนจริง
-            var currentYear = currentDate.getFullYear();
+            var intervalId; // สร้างตัวแปรเพื่อเก็บ ID ของ setInterval
 
-            var currentHours = currentDate.getHours();
-            var currentMinutes = currentDate.getMinutes();
-            // เพิ่มเลข 0 ข้างหน้านาทีเมื่อนาทีเป็นเลขเดียว
-            if (currentMinutes < 10) {
-                currentMinutes = '0' + currentMinutes;
+            function updateDateTime() {
+
+                if(document.querySelector('.DateTimeDiv')){
+                    document.querySelector('.DateTimeDiv').remove();
+                }
+
+                var currentDate = new Date();
+
+                var currentDay = currentDate.getDate();
+                var currentMonth = currentDate.getMonth() + 1;
+                var currentYear = currentDate.getFullYear();
+
+                var currentHours = currentDate.getHours();
+                var currentMinutes = currentDate.getMinutes();
+                if (currentMinutes < 10) {
+                    currentMinutes = '0' + currentMinutes;
+                }
+
+                var formattedDate = currentDay + '/' + currentMonth + '/' + currentYear;
+                var formattedTime = currentHours + ':' + currentMinutes;
+
+                var DateTimeDiv = document.createElement('div');
+                    DateTimeDiv.classList.add('DateTimeDiv')
+                if (DateTimeDiv) {
+                    DateTimeDiv.innerHTML = formattedTime + '<br>' + formattedDate;
+                }
+                ButtonDiv.insertBefore(DateTimeDiv, divForVideoButton.nextSibling);
             }
-            var formattedDate = currentDay + '/' + currentMonth + '/' + currentYear;
-            var formattedTime = currentHours + ':' + currentMinutes;
 
-            var DateTimeDiv = document.createElement('div');
-                DateTimeDiv.classList.add('DateTimeDiv');
-                DateTimeDiv.innerHTML = formattedTime + '<br>' + formattedDate;
+            function startUpdatingDateTime() {
+                clearInterval(intervalId); // หยุดการอัปเดตเวลา (หากมีการอัปเดตที่กำลังทำงานอยู่)
 
-            ButtonDiv.insertBefore(DateTimeDiv, divForVideoButton.nextSibling); // เพิ่ม DateTimeDiv หลังจาก div2
+                updateDateTime(); // อัปเดตเวลาและวันที่ครั้งแรก
 
+                intervalId = setInterval(updateDateTime, 60000); // เริ่มต้นการอัปเดตเวลาทุกๆ 1 นาที (60000 มีเซกันด์)
+            }
 
+            // เรียกใช้งานฟังก์ชัน startUpdatingDateTime เพื่อเริ่มต้นการอัปเดตเวลา
+            startUpdatingDateTime();
 
             muteVideoButton.onclick = async function() {
                 if (isMuteVideo == false) {
@@ -733,7 +756,7 @@
 
                     // Publish the local audio and video tracks in the channel.
                     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
-
+                    await nameRoleLocal();
                     // Play the local video track.
                     channelParameters.localVideoTrack.play(localPlayerContainer);
                     console.log("publish success!");
@@ -751,7 +774,7 @@
                     removeVideoDiv(localPlayerContainer.id);
 
                     //กดซ่อนปุ่มตอนออกเพื่อ ความสวยงาม
-                    divForVideoButton.classList.add('d-none');
+                    ButtonDiv.classList.add('d-none');
 
                     // document.getElementById('timeDiv').remove();
 

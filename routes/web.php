@@ -107,6 +107,8 @@ Route::middleware(['auth'])->group(function () {
     /// Room_RTC //////
     Route::get('room_lobby', 'RoomRTCController@index')->name('room_lobby');
 
+    Route::get('/before/room_call/{room_id}/{user_id}', 'RoomRTCController@beforeJoin')->name('beforeJoin');
+
     Route::get('/room_call/{room_id}/{user_id}', 'AgoraVideoController@index');
     Route::post('/agora/token', 'AgoraVideoController@token');
     Route::post('/agora/call-user', 'AgoraVideoController@callUser');

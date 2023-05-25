@@ -17,12 +17,13 @@ class AgoraVideoController extends Controller
     public function index(Request $request,$room_id,$user_id)
     {
         $requestData = $request->all();
-
+        $videoTrack = $requestData['videoTrack'];
+        $audioTrack = $requestData['audioTrack'];
         // fetch all users apart from the authenticated user
         // $users = User::where('id', '<>', Auth::id())->get();
         $roomData = Member_of_room::where('room_id',$room_id)->get();
 
-        return view('room.room_rtc.room_call', compact('user_id','room_id','roomData'));
+        return view('room.room_rtc.room_call', compact('user_id','room_id','roomData','videoTrack','audioTrack'));
     }
 
     public function token(Request $request)
@@ -38,7 +39,7 @@ class AgoraVideoController extends Controller
         $channelName = 'MithCare';
         $user = $login_id;
         $role = RtcTokenBuilder::RoleAttendee;
-        $expireTimeInSeconds = 900;
+        $expireTimeInSeconds = 600;
         $currentTimestamp = now()->getTimestamp();
         $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
 

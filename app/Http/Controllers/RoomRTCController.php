@@ -22,11 +22,6 @@ class RoomRTCController extends Controller
 
         $RoomData = RoomRTC::where('room_id',$room_id)->get();
 
-        // echo"<pre>";
-        // print_r( $RoomData);
-        // echo"</pre>";
-        // exit();
-
         if (!empty($keyword)) {
             $lobby_room = Member_of_room::where('room',$room_id)
                 ->where('name', 'LIKE', "%$keyword%")
@@ -36,6 +31,29 @@ class RoomRTCController extends Controller
         }
 
         return view('room.room_rtc.room_rtc_index', compact('lobby_room','RoomData','room_id'));
+    }
+
+    public function beforeJoin(Request $request, $room_id,$user_id){
+        // $requestData = $request->all();
+        // $room_id = $requestData['room_id'];
+        // $user_id = $requestData['user_id'];
+
+        $RoomData = RoomRTC::where('room_id',$room_id)->where('room_of_members',$user_id)->first();
+
+        $user_DB = User::where('id',$user_id)->first();
+
+        return view('room.room_rtc.room_before_join', compact('user_DB','RoomData','room_id','user_id'));
+    }
+
+    public function getStatRoom(Request $request){
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+        $user_id = $requestData['room_of_members'];
+
+        $RoomStat = RoomRTC::where('room_id',$room_id)->where('room_of_members',$user_id)->first();
+
+        return $RoomStat;
     }
 
 }

@@ -1,342 +1,9 @@
 @extends('layouts.mithcare_outbar')
 
 @section('content')
-    <style>
-        /*=======================================
-                    global css Computer
-         =======================================*/
-    @media screen and (min-width: 1024px){
-        body,html,main{
-            width: 100%;
-            height: 100%;
-        }
-        .video-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden; /* เพื่อไม่ให้เกิดการเลื่อนเมาส์เพื่อดูเนื้อหาในส่วนล่าง */
-        }
-        .bg-black{
-            background-color: black;
-        }
-        .clockDuration{
-            font-size: 18px;
-            width: 10%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .DateTimeDiv{
-            font-size: 18px;
-            text-align: right;
-            width: 10%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        video{ /* ตกแต่ง tag video ที่ agora สร้างมา*/
-            border-color: #3490dc;
-            border-style: solid;
-            border-radius: 10px;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 100%;
-            max-height: 100%;
-            overflow: hidden;
-        }
-        .MainVideoDiv{
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 90%;
-        }
-        .ButtonDiv{
-            background-color: #343336 !important;
-            display: flex;
-            flex-direction: row;
-            /* align-items: center; */
-            width: 100%;
-            height: 10%;
-        }
-        .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
-            width: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .buttonVideo button{
-            margin-right: 0.5rem;
-        }
-        .btn-old{ /* ปุ่มทั้งหมด */
-            border-radius: 50% !important;
-            width: 3.5rem !important;
-            height: 3.5rem !important;
-            font-size: 1rem !important;
-            background-color: rgba(0,0,0,0.6);
-            color: #ffffff;
-        }
-        .btn-old i{ /* ไอคอนในปุ่มทั้งหมด*/
-            margin-top: .5rem !important;
-        }
-        .btn-disabled{ /* ปุ่มขณะถูกปิด ขึ้นสีแดง*/
-            background-color: #db2d2e !important;
-            color: #ffffff;
-        }
-        #leaveVideoCall{ /* ปุ่มวางสาย*/
-            background-color: #db2d2e !important;
-            color: #ffffff;
-        }
-        .VoiceLocalEffect{
-            box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
-        }
 
-        /*=======================================
-                localPlayer css Computer
-        =======================================*/
-        .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-            height: 75% !important;
-            width: 80% !important;
-            position: relative;
-        }
-        .localPlayerVideoCall div {
-            border-radius: 10px;
-        }
-        .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
-            height: 45% !important;
-            width: 50% !important;
-            position: relative;
-        }
-        .localAfterSubscribe div {
-            border-radius: 10px;
-        }
-        .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
-            width: 250px;
-            height: 250px;
-            border: 1px solid black;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            /* border-radius: 50% !important; */
-            z-index: 1;
-        }
-        .imgdivLocal img{  /*รูปโปรไฟล์ local*/
-            border-radius: 50% !important;
-            width: 250px;
-            height: 250px;
-        }
-        .profileNameLocal{
-            color: #ffffff;
-            text-align: center;
-        }
-        .namedivLocal{
-            background-color: #343336;
-            position: absolute;
-            padding: 0.2rem !important;
-            right: 1rem !important;
-            bottom: 1rem !important;
-            /* transform: translate(-50%, -50%); */
-            border-radius: 2px !important;
-            z-index: 1;
-        }
+    <link href="{{ asset('mithcare/css/for_video_call.css') }}" rel="stylesheet">
 
-        /*=======================================
-                remotePlayer css Computer
-        =======================================*/
-
-        .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
-            height: 45% !important;
-            width: 50% !important;
-            position: relative;
-            margin-top: 1rem;
-        }
-        .remotePlayerVideoCall div {
-            border-radius: 10px;
-        }
-        .buttonVideo2{
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-        }
-        .buttonVideo2 div{
-            margin-right: 0.5rem;
-            font-size: 0.8rem !important;
-            padding: 0 !important;
-            width: 2.5rem !important;
-            height: 2.5rem !important;
-        }
-        .buttonVideo2 div i{
-            margin-top: 0.1 !important;
-        }
-        .unmuteRemote{
-            border-radius: 50% !important;
-            width: 3.5rem !important;
-            height: 3.5rem !important;
-            font-size: 1rem !important;
-            background-color: rgba(0,0,0,0.6);
-            color: #ffffff;
-        }
-        .muteRemote{
-            border-radius: 50% !important;
-            width: 3.5rem !important;
-            height: 3.5rem !important;
-            font-size: 1rem !important;
-            background-color: #db2d2e !important;
-            color: #ffffff;
-        }
-        .imgdivRemote{  /*กรอบรูปโปรไฟล์ local*/
-            width: 250px;
-            height: 250px;
-            border: 1px solid black;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50% !important;
-            z-index: 1;
-        }
-        .imgdivRemote img{  /*รูปโปรไฟล์ local*/
-            border-radius: 50% !important;
-            width: 250px;
-            height: 250px;
-        }
-        .profileNameRemote{
-            color: #ffffff;
-            text-align: center;
-        }
-        .namedivRemote{
-            background-color: #343336;
-            position: absolute;
-            padding: 0.2rem !important;
-            right: 1rem !important;
-            bottom: 1rem !important;
-            /* transform: translate(-50%, -50%); */
-            border-radius: 2px !important;
-            z-index: 1;
-        }
-
-
-        #remotePlayerContainer { /*พื้นหลังดำ ??*/
-            background-color: black;
-            visibility: hidden;
-        }
-    }
-    /*=======================================
-            CSS สำหรับหน้าจอมือถือ
-    =======================================*/
-
-    @media screen and (max-width: 768px) {
-
-        body,html,main,.MainVideoDiv{
-            width: 100%;
-            height: 100%;
-        }
-        .MainVideoDiv{
-            padding: 0;
-            margin: 0;
-        }
-        .buttonVideo{ /*Div ใหญ่ ของเหล่า ปุ่ม */
-            /* background-color: #051407; */
-            position: absolute;
-            bottom: 1rem;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .buttonVideo button{
-            margin-right: 0.5rem;
-        }
-        .btn-old{ /* ปุ่มทั้งหมด */
-            border-radius: 50% !important;
-            width: 3.5rem !important;
-            height: 3.5rem !important;
-            font-size: 1rem !important;
-            background-color: rgba(0,0,0,0.6);
-            color: #ffffff;
-        }
-        .btn-old i{ /* ไอคอนในปุ่มทั้งหมด*/
-            margin-top: .5rem !important;
-        }
-        .btn-disabled{ /* ปุ่มขณะถูกปิด ขึ้นสีแดง*/
-            background-color: #db2d2e !important;
-            color: #ffffff;
-        }
-        #leaveVideoCall{ /* ปุ่มวางสาย*/
-            background-color: #db2d2e !important;
-            color: #ffffff;
-        }
-        .agora_video_player{ /*class ตัววิดีโอของ local */
-            background-color: gray;
-        }
-        #muteAudio2 {
-            display: none;
-        }
-        #muteVideo2{
-            display: none;
-        }
-        /*=======================================
-                localPlayer CSS Mobile
-        =======================================*/
-
-        .localVideoCallDiv div div{
-            width: 100% !important;
-            height: 100% !important;
-            border-radius:  10px!important;
-        }
-        .imgdivLocal{  /* div รูปภาพของ local */
-            width: 50px;
-            height: 50px;
-            border: 1px solid black;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-        .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-            height: 100% !important;
-            width: 100% !important;
-            /* border-radius:  0px!important; */
-        }
-        .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
-            height: 200px !important;
-            width: 150px !important;
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 1;
-            margin: 1rem;
-        }
-        .localAfterSubscribe div {
-            border-radius: 10px;
-        }
-        /*=======================================
-                remotePlayer CSS Mobile
-        =======================================*/
-        .remoteVideoCallDiv div div{
-                width: 100% !important;
-                height: 100% !important;
-                border-radius:  10px!important;
-        }
-        .imgdivRemote{
-            width: 50px;
-            height: 50px;
-            border: 1px solid black;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-        .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
-            height: 100% !important;
-            width: 100% !important;
-        }
-
-    }
-    </style>
 
     <div class="video-container">
         <div id='MainVideoDiv' class="MainVideoDiv">
@@ -415,7 +82,6 @@
         var isMuteVideo = false;
         var isMuteAudio = false;
 
-
         // ใช้สำหรับ สร้าง bg สีดำให้วิดีโอ
         var closeVideoHTML;
 
@@ -478,11 +144,9 @@
                         let showTimeCountVideo;
                         // แสดงผลลัพธ์
                         if (hours > 0) {
-                        // console.log(hours + ':' + minutes + ':' + seconds);
-                        showTimeCountVideo = hours + ':' + minutes + ':' + seconds;
+                            showTimeCountVideo = hours + ':' + minutes + ':' + seconds + "&nbsp;/ 10 นาที";
                         } else {
-                        // console.log(minutes + ':' + seconds);
-                        showTimeCountVideo = minutes + ':' + seconds;
+                            showTimeCountVideo = minutes + ':' + seconds + "&nbsp;/ 10 นาที";
                         }
 
                         // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
@@ -719,26 +383,54 @@
                 }
             }
 
-               // ShareScreen
-               document.getElementById('shareScreen').onclick = async function () {
-                        if(isSharingEnabled == false) {
-                            // Create a screen track for screen sharing.
-                            channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
-                            // Replace the video track with the screen track.
-                            await channelParameters.localVideoTrack.replaceTrack(channelParameters.screenTrack, true);
-                            // Update the button text.
-                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
-                            // Update the screen sharing state.
-                            isSharingEnabled = true;
-                        } else {
-                            // Replace the screen track with the local video track.
-                            await channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
-                            // Update the button text.
-                            document.getElementById(`shareScreen`).innerHTML = '<i class="fa-solid fa-screencast"></i>';
-                            // Update the screen sharing state.
-                            isSharingEnabled = false;
-                        }
+            //ShareScreen
+            document.getElementById('shareScreen').onclick = async function () {
+                if (isSharingEnabled == false) {
+                    try {
+                        // Create a screen track for screen sharing.
+                        channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+                        // Get the MediaStreamTrack object from the screen track.
+                        const screenMediaStreamTrack = await channelParameters.screenTrack.getMediaStreamTrack();
+                        // Replace the video track with the screen track.
+                        await channelParameters.localVideoTrack.replaceTrack(screenMediaStreamTrack, true);
+                        document.querySelector('.namedivLocal').classList.add('d-none');
+                        document.querySelector('.localPlayerVideoCall').classList.add('shareScreen');
+                        // Update the button text.
+                        document.getElementById('shareScreen').innerHTML = '<i class="fa-solid fa-square-xmark"></i>';
+                        // Update the screen sharing state.
+                        isSharingEnabled = true;
+                        console.log("if นะ");
+                        console.log(isSharingEnabled);
+                        console.log(channelParameters.localVideoTrack);
+                    } catch (error) {
+                        console.error('Failed to start screen sharing:', error);
                     }
+                } else {
+                    try {
+
+                        channelParameters.screenTrack.setEnabled(false);
+                         // Replace the screen track with the local video track.
+                        channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
+
+                        // const videoMediaStreamTrack = await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
+                        // await channelParameters.localVideoTrack.replaceTrack(videoMediaStreamTrack, true);
+
+                        // channelParameters.localVideoTrack.play(localPlayerContainer);
+
+                        document.querySelector('.namedivLocal').classList.remove('d-none');
+                        document.querySelector('.localPlayerVideoCall').classList.remove('shareScreen');
+                        // Update the button text.
+                        document.getElementById('shareScreen').innerHTML = '<i class="fa-solid fa-screencast"></i>';
+                        // Update the screen sharing state.
+                        isSharingEnabled = false;
+                        console.log("else นะ");
+                        console.log(isSharingEnabled);
+                        console.log(channelParameters.localVideoTrack);
+                    } catch (error) {
+                        console.error('Failed to stop screen sharing:', error);
+                    }
+                }
+            };
 
             window.onload = function() {
                 // Listen to the Join button click event.
@@ -751,6 +443,27 @@
                     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
                     // Enable dual-stream mode.
                     agoraEngine.enableDualStream();
+
+                    if('{{$videoTrack}}' == "open"){
+                        // เข้าห้องด้วย->สถานะเปิดกล้อง
+                        isMuteVideo = true;
+                        muteVideoButton.click();
+                    }else{
+                        // เข้าห้องด้วย->สถานะปิดกล้อง
+                        isMuteVideo = false;
+                        muteVideoButton.click();
+
+                    }
+
+                    if('{{$audioTrack}}' == "open"){
+                        // เข้าห้องด้วย->สถานะเปิดไมค์
+                        isMuteAudio = true;
+                        muteButton.click();
+                    }else{
+                        // เข้าห้องด้วย->สถานะปิดไมค์
+                        isMuteAudio = false;
+                        muteButton.click();
+                    }
 
                     StatsVideoUpdate();
 

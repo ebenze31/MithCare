@@ -86,6 +86,13 @@ Route::get('/video_call', 'AgoraVideoController@token');
 Route::get('/getUserRemote', 'AgoraVideoController@getUserRemote');
 
 //========================
+// Before Video Call
+//========================
+
+//ส่ง ข้อมูล videoCall ไปเก็บในฐานข้อมูล
+Route::get('/getStatRoom', 'RoomRTCController@getStatRoom');
+
+//========================
 //  videoCall
 //========================
 

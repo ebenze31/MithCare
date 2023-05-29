@@ -88,19 +88,26 @@ Route::get('/getUserRemote', 'AgoraVideoController@getUserRemote');
 //========================
 // Before Video Call
 //========================
+// ทำการ upadate สถานะ ว่ามีคนอยู่ในห้องกี่คน ทุก 5 วิ --> room_rtc.index.blade
+Route::get('/urlCheckPeople', 'AgoraVideoController@checkPeopleInRoom');
 
 //ส่ง ข้อมูล videoCall ไปเก็บในฐานข้อมูล
 Route::get('/getStatRoom', 'RoomRTCController@getStatRoom');
-
+Route::get('/getMember_form_id', 'RoomRTCController@getMember_form_id');
 //========================
 //  videoCall
 //========================
 
 //ส่ง ข้อมูล videoCall ไปเก็บในฐานข้อมูล
 Route::get('/urlStatsVideo', 'AgoraVideoController@store');
+Route::get('/urlMemberVideo', 'AgoraVideoController@member_in_room');
 
-Route::get('/urlCheckPeople', 'AgoraVideoController@checkPeopleInRoom');
 //เมื่อ leaveChannel ส่งข้อมูล videoCall ไปเก็บในฐานข้อมูล
 Route::get('/leaveChannel', 'AgoraVideoController@leaveChannel');
+Route::get('/userLeave', 'AgoraVideoController@userLeave');
+
 //หาข้อมูล localPlayer videoCall
 Route::get('/localPlayerData', 'AgoraVideoController@localPlayerData');
+
+
+

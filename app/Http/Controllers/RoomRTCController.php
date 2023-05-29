@@ -56,4 +56,14 @@ class RoomRTCController extends Controller
         return $RoomStat;
     }
 
+    public function getMember_form_id(Request $request){
+        $requestData = $request->all();
+
+        $user_id = $requestData['user_id'];
+
+        $Member_form_Id = User::where('id',$user_id)->first();
+
+        return $Member_form_Id;
+    }
+
 }

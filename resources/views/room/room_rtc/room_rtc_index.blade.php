@@ -93,7 +93,7 @@
                                 {{-- <h4 class="member__name"><a href="{{$item->link}}" target="_blank" onclick="click_game('{{$item->id}}')">{{$item->name}}</a></h4> --}}
                                 <p id="amount_id_{{$item->id}}" class="text-primary h5">ห้องสนทนาของ {{$item->user->name}}</p>
                                 <hr>
-                                @php
+                                {{-- @php
                                     $dataRoomRTC = App\Models\RoomRTC::where('room_id',$item->room_id)->where('room_of_members',$item->user_id)->first();
 
                                 @endphp
@@ -105,7 +105,7 @@
                                     @endif
                                 @else
                                     <p id="showPeopleCurrent_{{$item->user_id}}" class="h5">ยังไม่เคยเริ่มการสนทนา</p>
-                                @endif
+                                @endif --}}
 
 
                             </div><!-- /.member-info -->
@@ -142,7 +142,7 @@
     // window.addEventListener("DOMContentLoaded", document, false);
 </script>
 
-<script>
+{{-- <script>
     setInterval(() => {
 
         const urlCheckPeople = "{{ url('/') }}/api/urlCheckPeople?room_id=" + '{{$room_id}}' ;
@@ -159,7 +159,7 @@
         });
 
     }, 5000);
-</script>
+</script> --}}
 
 @endsection
 

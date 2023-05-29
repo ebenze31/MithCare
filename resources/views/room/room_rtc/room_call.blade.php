@@ -103,23 +103,35 @@
         async function startBasicCall() {
             // Create an instance of the Agora Engine
             console.log("-------------------- startBasicCall ------------------");
-            // console.log(newToken);
-
 
             const agoraEngine = AgoraRTC.createClient({
                 mode: "rtc",
                 codec: "vp8"
             });
-
+            console.log("agoraEngine");
+            console.log(agoraEngine);
             //===================================
             //       บันทึก stats Video Call
             //===================================
 
+            function MemberInRoomUpdate(member_id){
+
+                const urlStatsVideo = "{{ url('/') }}/api/urlMemberVideo?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + member_id;
+
+                axios.get(urlStatsVideo).then((response) => {
+                    console.log(response['data']);
+                })
+                .catch((error) => {
+                    console.log("ERROR HERE");
+                    console.log(error);
+                });
+            }
+
             function StatsVideoUpdate(){
-                console.log("StatsVideoUpdate ทำงานนนนนนนนนน");
                 let rtcStats = agoraEngine.getRTCStats();
-                console.log(rtcStats);
+                console.log(options.uid);
                 const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
+
                 axios.get(urlStatsVideo).then((response) => {
                     console.log(response['data']);
                     setInterval(() => {
@@ -358,8 +370,9 @@
                     muteVideoButton.classList.remove('btn-disabled');
                     isMuteVideo = false;
 
-                    document.querySelector('.imgdivLocal').remove();
-                    // document.querySelector('.namedivLocal').remove();
+                    if(document.querySelector('.imgdivLocal')){
+                        document.querySelector('.imgdivLocal').remove();
+                    }
                 }
             }
 
@@ -465,6 +478,7 @@
                         muteButton.click();
                     }
 
+                    MemberInRoomUpdate(options.uid);
                     StatsVideoUpdate();
 
                     // Publish the local audio and video tracks in the channel.
@@ -473,7 +487,6 @@
                     // Play the local video track.
                     channelParameters.localVideoTrack.play(localPlayerContainer);
                     console.log("publish success!");
-
 
                 }
 
@@ -496,21 +509,34 @@
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
 
-                    const interval = setInterval(function() {
-                        let rtcStats = agoraEngine.getRTCStats();
-                        let currentPeople = rtcStats.currentPeople;
+                    closeVideoCall();
 
-                        // เมื่อไม่มีคนอยู่ในห้อง หรือการเชื่อมต่อไม่ดี
-                        if (currentPeople === 0 || rtcStats.lastmileQuality !== 'good') {
-                            clearInterval(interval); // Stop the interval
+                    function closeVideoCall() {
+                        const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + options.uid;
+                        axios.get(urlStatsVideo).then((response) => {
+                            console.log("ไอดีที่ออกจากห้อง");
+                            console.log(response['data']);
+                            goBack();
+                        });
+                    }
 
-                            const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
-                            axios.get(urlStatsVideo).then((response) => {
-                                console.log(response['data']);
-                                goBack();
-                            });
-                        }
-                    }, 1000);
+                    // const interval = setInterval(function() {
+                    //     let rtcStats = agoraEngine.getRTCStats();
+                    //     let currentPeople = rtcStats.currentPeople;
+
+                    //     // เมื่อไม่มีคนอยู่ในห้อง หรือการเชื่อมต่อไม่ดี
+                    //     if (currentPeople === 0 || rtcStats.lastmileQuality !== 'good') {
+                    //         clearInterval(interval); // Stop the interval
+
+                    //         const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
+                    //         axios.get(urlStatsVideo).then((response) => {
+                    //             console.log(response['data']);
+                    //             console.log(rtcStats);
+
+                    //             goBack();
+                    //         });
+                    //     }
+                    // }, 1000);
 
                     // window.onload();
                     function goBack(){
@@ -861,6 +887,7 @@
 
         }
 
+
         // Remove the video stream from the container.
         function removeVideoDiv(elementId) {
             // console.log("Removing " + elementId + "Div");
@@ -869,6 +896,54 @@
                 Div.remove();
             }
         };
+
+        // window.onbeforeunload = function(){
+        //     return 'Are you sure you want to leave?';
+        //     closeVideoCall();
+        // };
+
+        // window.addEventListener('beforeunload', function(event) {
+        //     // ทำสิ่งที่คุณต้องการเมื่อแท็บถูกปิด
+        //     // ตัวอย่างเช่นส่งคำร้องขอหรือบันทึกข้อมูลก่อนที่ผู้ใช้จะออกจากหน้าเว็บ
+        //     alert("ต้องการปิดหรือไม่");
+        //     // เพื่อให้เบราว์เซอร์แสดงข้อความออกจากต้องการปิดแท็บ (ไม่ใช่ทุกเบราว์เซอร์รองรับ)
+        //     event.preventDefault();
+
+        //     closeVideoCall();
+
+        //     // Google Chrome ต้องการให้คืนค่าพิเศษไปยัง event.returnValue เพื่อทำให้ข้อความที่กำหนดถูกแสดง
+        //     event.returnValue = '';
+        // });
+
+        // window.addEventListener('unload', function(event) {
+        //     // ทำสิ่งที่คุณต้องการเมื่อแท็บถูกปิด
+        //     // ตัวอย่างเช่นบันทึกข้อมูลสถานะของผู้ใช้หรือทำคำสั่งสุดท้ายก่อนปิดแท็บ
+
+        //     // โปรดทราบว่าไม่สามารถใช้ event.preventDefault() ได้ในเหตุการณ์ 'unload'
+        //     // และไม่สามารถยกเลิกการปิดแท็บได้
+        // });
+
+        // window.addEventListener("beforeunload", function(event) {
+        // // ตรวจสอบว่าเวลาปิดแท็บหรือไม่
+        //     if (!event.target.activeElement) {
+        //         // แสดง Alert
+        //         event.returnValue = "คุณกำลังปิดแท็บ";
+        //         return "คุณกำลังปิดแท็บ";
+        //     }
+        // });
+
+        // ตรวจสอบเวลาปิดแท็บ
+        window.addEventListener("beforeunload", function (event) {
+        // ใช้งาน event.returnValue เพื่อให้เว็บบราวเซอร์แสดงกล่องข้อความแจ้งเตือน
+        event.returnValue = "คุณกำลังออกจากเว็บไซต์นี้";
+        });
+
+        // ตรวจสอบเมื่อผู้ใช้กำลังพยายามปิดแท็บ
+        window.addEventListener("unload", function (event) {
+        // แสดงกล่องข้อความแจ้งเตือน
+        alert("ขอบคุณที่เยี่ยมชมเว็บไซต์!");
+        });
+
     </script>
 
 @endsection

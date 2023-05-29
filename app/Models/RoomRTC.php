@@ -12,7 +12,7 @@ class RoomRTC extends Model
     protected $primaryKey = 'id';
 
 
-    protected $fillable = ['room_id', 'room_name' ,'time_start','current_people','total_timemeet','amount_meet','room_of_members'];
+    protected $fillable = ['room_id', 'room_name' ,'time_start','current_people','total_timemeet','amount_meet','room_of_members','members_in_room'];
 
 
     public function user(){

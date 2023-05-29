@@ -147,9 +147,8 @@
             <div class="col-4 row d-flex align-items-center">
                 <span class="col-12 d-flex justify-content-center logo_mithcare"><img src="{{ url('/img/logo_mithcare/x-icon.png') }}"></span>
                 <span id="timeStart" class="col-12 d-flex justify-content-center" style="font-size: 18px;"></span>
-                <div class="col-12 d-flex justify-content-center align-items-center" style="font-size: 18px;">
-                    <img class="itemPeople" src="{{ url('storage/'.$user_DB->photo )}}">&nbsp;User07
-                </div>
+                <div id="members_in_room" class="col-12 d-flex justify-content-center align-items-center" style="font-size: 18px;"></div>
+
                 <a id="btnJoinRoom" href="{{ url('/room_call'. '/' . $room_id . '/' . $user_id ) }}?videoTrack=open&audioTrack=open" class="col-12 btn btn-info" style="font-size: 18px;">เข้าร่วมห้องสนทนา</a>
             </div>
         </div>
@@ -493,6 +492,48 @@
     // ฟังก์ชันสำหรับแปลงค่าในช่วงเดิมให้เป็นค่าในช่วงใหม่
     function mapRange(value, min1, max1, min2, max2) {
         return min2 + ((value - min1) * (max2 - min2)) / (max1 - min1);
+    }
+
+</script>
+
+<script>
+    const members_in_room = '{{$RoomData->members_in_room}}'; // สตริงที่ต้องการแยก
+    console.log("members_in_room");
+    console.log(members_in_room);
+    const memberInRoomDiv = document.querySelector('#members_in_room');
+
+    // แยกสตริงด้วยตัวคั่น ','
+    const membersArray = members_in_room.split(',');
+    console.log("membersArray");
+    console.log(membersArray);
+    // วนลูปในอาร์เรย์และแสดงค่าที่ได้
+
+    if(members_in_room !== null){
+        console.log("เข้า มาทำงานนะ")
+        membersArray.forEach((member) => {
+        const url_getMember_form_id = "{{ url('/') }}/api/getMember_form_id?user_id=" + member;
+                axios.get(url_getMember_form_id).then((response) => {
+                        // console.log(response['data']);
+                        let Member_form_Id = response['data'];
+                        console.log("Member_form_Id");
+
+                        if(Member_form_Id){
+                            const memberDiv = document.createElement('div');
+                                memberDiv.setAttribute('id',Member_form_Id['id']);
+                            const memberImg = document.createElement('img');
+                                memberImg.setAttribute('class','itemPeople');
+                                memberImg.src = "{{ url('storage')}}"+ "/" +Member_form_Id['photo'];
+
+                                memberDiv.appendChild(memberImg);
+                                memberInRoomDiv.appendChild(memberDiv);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
+                    });
+
+        });
     }
 
 </script>

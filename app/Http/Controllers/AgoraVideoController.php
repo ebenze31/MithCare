@@ -79,13 +79,52 @@ class AgoraVideoController extends Controller
         return $users;
     }
 
+    public function member_in_room(Request $request)
+    {
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+        $room_of_members = $requestData['room_of_members'];
+        $members_in_room = $requestData['members_in_room'];
+
+        $room_data = [
+            "room_id" => $room_id,
+            "room_of_members" => $room_of_members,
+        ];
+
+        $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+
+        $memberInData = $dataRoomRTC->members_in_room;
+        $memberInData_ep = explode(",",$memberInData);
+
+         // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ไม่ต้องอัพเดทอะไร
+        foreach ($memberInData_ep as $exp => $exp_value){
+            if($exp_value == $members_in_room){
+                // ไม่ต้องทำอะไร
+            }else{
+                if($dataRoomRTC->members_in_room == null){
+                    $memberData = $members_in_room;
+                }else{
+                    $memberData = $dataRoomRTC->members_in_room . "," . $members_in_room;
+                }
+
+                $roomVideocallStats = [
+                    "members_in_room" => $memberData,
+                ];
+
+                RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
+            }
+        }
+
+        return $members_in_room;
+    }
+
     public function store(Request $request)
     {
         $requestData = $request->all();
 
         $room_id = $requestData['room_id'];
         $room_of_members = $requestData['room_of_members'];
-
         $roomFinder = Room::where('id',$room_id)->first();
 
         $room_data = [
@@ -118,12 +157,7 @@ class AgoraVideoController extends Controller
 
         $roomVideocallStats = [
             "room_name" => $roomFinder['name'],
-            // "time_start" => $requestData['time_start'],
             "current_people" => $requestData['current_people'],
-            // "total_timemeet" => $requestData['total_timemeet'],
-            // "amount_meet" => $requestData['current_people'],
-
-            // เพิ่ม field อื่นๆ ตามต้องการ
         ];
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
@@ -157,10 +191,97 @@ class AgoraVideoController extends Controller
         ];
 
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
-        if((int)$dataRoomRTC->current_people <= 1){
+        // if((int)$dataRoomRTC->current_people <= 1){
+        //     $updateDataRoomRTC = 0;
+        // }else{
+        //     $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+        // }
+
+        // if($updateDataRoomRTC == 0){
+        //     // วันที่และเวลาปัจจุบัน
+        //     $currentTime = time();
+
+        //     // วันที่และเวลาที่กำหนด
+        //     $targetDateTime = $dataRoomRTC->time_start;
+        //     $targetTime = strtotime($targetDateTime);
+
+        //     // คำนวณเวลาที่ผ่านไปในวินาที
+        //     $elapsedTime = $currentTime - $targetTime;
+
+        //     if($dataRoomRTC->total_timemeet == null){
+        //         $updateTotalTimeMeet = $elapsedTime;
+        //     }else{
+        //         $updateTotalTimeMeet = (int)$elapsedTime + (int)$dataRoomRTC->total_timemeet;
+        //     }
+
+        //     DB::table('room_rtc')
+        //         ->where('room_id', $room_id)
+        //         ->where('room_of_members', $room_of_members)
+        //         ->update([
+        //             'time_start' => null,
+        //             'total_timemeet' => $updateTotalTimeMeet,
+        //     ]);
+        // }
+
+        $roomVideocallStats = [
+            // "room_name" => $roomFinder['name'],
+            // "time_start" => $requestData['time_start'],
+            // "current_people" => $updateDataRoomRTC,
+            // "total_timemeet" => $requestData['total_timemeet'],
+            // "amount_meet" => $requestData['current_people'],
+
+        ];
+
+        RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
+
+        return $roomVideocallStats;
+    }
+
+    public function userLeave(Request $request)
+    {
+        $requestData = $request->all();
+
+        $room_id = $requestData['room_id'];
+        $room_of_members = $requestData['room_of_members'];
+        $members_in_room = $requestData['members_in_room'];
+        $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+
+        $room_data = [
+            "room_id" => $room_id,
+            "room_of_members" => $room_of_members,
+        ];
+
+        $memberInData = $dataRoomRTC->members_in_room;
+        $memberInData_ep = explode(",",$memberInData);
+
+
+        // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ลบไอดี array ตัวที่ตรงกับไอดี ของ user ที่ออกจากห้อง
+        foreach ($memberInData_ep as $exp => $exp_value){
+            if($exp_value == $members_in_room){
+                unset($memberInData_ep[$exp]);
+            }
+        }
+
+        //นับจำนวน index ใน array ที่เหลืออยู่
+        $count_ep = count($memberInData_ep);
+
+        // นำผลของ memberInData_ep ทึ่ได้มา set ค่า
+        $new_memberData = null;
+        if($memberInData_ep){
+            foreach ($memberInData_ep as $exp_update => $exp_value_update){
+                if($new_memberData == null){// set ให้ว่าง
+                    $new_memberData = $exp_value_update ;
+                }else{// set ให้ได้ผลลัพท์ ที่เหลืออยู่
+                    $new_memberData = $new_memberData . "," . $exp_value_update ;
+                }
+            }
+        }
+
+        //เช็ค array ว่าได้ไอดี กี่ตัว
+        if($count_ep == null){
             $updateDataRoomRTC = 0;
         }else{
-            $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
+            $updateDataRoomRTC = $count_ep;
         }
 
         if($updateDataRoomRTC == 0){
@@ -190,18 +311,13 @@ class AgoraVideoController extends Controller
         }
 
         $roomVideocallStats = [
-            // "room_name" => $roomFinder['name'],
-            // "time_start" => $requestData['time_start'],
+            "members_in_room" => $new_memberData,
             "current_people" => $updateDataRoomRTC,
-            // "total_timemeet" => $requestData['total_timemeet'],
-            // "amount_meet" => $requestData['current_people'],
-
-            // เพิ่ม field อื่นๆ ตามต้องการ
         ];
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 
-        return $roomVideocallStats;
+        return $members_in_room;
     }
 
     public function localPlayerData(Request $request)

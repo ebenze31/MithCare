@@ -4,6 +4,13 @@
 
     <link href="{{ asset('mithcare/css/for_video_call.css') }}" rel="stylesheet">
 
+    <!-- สำหรับ bubble message -->
+    <div class="containerAlert">
+        <div class="alertStatus">
+            <span id="iconAlert"></span>
+            <span id="detailAlert"></span>
+        </div>
+    </div>
 
     <div class="video-container">
         <div id='MainVideoDiv' class="MainVideoDiv">
@@ -18,18 +25,87 @@
     <div id='app'></div>
     <button class="btn btn-primary d-none" type="button" id="join">เข้าร่วม</button>
 
+        <!-- Button trigger modal -->
+        <button id="modalToStart" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#staticBackdrop">
+            Modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">ยินดีต้อนรับ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="LoadVideoData();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                -------------------------------------------------------
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ตกลง</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div> --}}
+            </div>
+            </div>
+        </div>
+
     <!--เรียกใช้ axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
-   <script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById("modalToStart").click();
+
+            options = {
+                    // Pass your App ID here.
+                    appId: '{{ env('AGORA_APP_ID') }}',
+
+                    appCertificate: '{{ env('AGORA_APP_CERTIFICATE') }}',
+
+                    // Set the channel name.
+                    channel: channelName,
+
+                    uid: '{{ Auth::user()->id }}',
+
+                    token: "",
+                };
+
+                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
+                axios.get(url).then((response) => {
+                        console.log("================= TOKEN =====================");
+                        console.log(response['data']);
+                        options['token'] = response['data'];
+                        // setTimeout(() => {
+
+
+                        // }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
+                    });
+
+                startBasicCall();
+        });
+    </script> --}}
+
+    <script>
         var options;
         const homeId = '{{ $room_id }}';
         const user_id_from_room = '{{ $user_id }}';
+        const localUser_id = '{{ Auth::user()->id }}';
         //const channelName = "MithCare" + homeId + user_id_from_room;
         const channelName = "MithCare";
+
+        // function LoadVideoData(){
+        //          console.log("เข้า start แล้ววววววววววววววววววววววววววววววววววววว");
+        //          document.getElementById("join").click();
+        // }
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
 
@@ -68,6 +144,7 @@
             });
    </script>
 
+
     <script>
         // var show_data_video = document.querySelector('#data_video_call');
         //     show_data_video.innerHTML = "";
@@ -104,12 +181,15 @@
             // Create an instance of the Agora Engine
             console.log("-------------------- startBasicCall ------------------");
 
+            // checkBrowserStatus();
+
             const agoraEngine = AgoraRTC.createClient({
                 mode: "rtc",
                 codec: "vp8"
             });
             console.log("agoraEngine");
             console.log(agoraEngine);
+
             //===================================
             //       บันทึก stats Video Call
             //===================================
@@ -127,13 +207,13 @@
                 });
             }
 
+            //function สำหรับ คำนวนเวลาของห้อง ตรวจสอบจำนวนคนในห้อง ว่ามีกี่คน และใครบ้าง
             function StatsVideoUpdate(){
-                let rtcStats = agoraEngine.getRTCStats();
-                console.log(options.uid);
-                const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&current_people=" + rtcStats.UserCount + "&room_of_members=" + user_id_from_room;
-
+                const urlStatsVideo = "{{ url('/') }}/api/urlStatsVideo?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
                 axios.get(urlStatsVideo).then((response) => {
-                    console.log(response['data']);
+                    // console.log(response['data']);
+
+
                     setInterval(() => {
                         var timeCountVideo = document.getElementById("timeCountVideo");
                         // วันที่และเวลาปัจจุบัน
@@ -156,14 +236,67 @@
                         let showTimeCountVideo;
                         // แสดงผลลัพธ์
                         if (hours > 0) {
-                            showTimeCountVideo = hours + ':' + minutes + ':' + seconds + "&nbsp;/ 10 นาที";
+                            if (minutes < 10) {  // ใส่ 0 ข้างหน้า นาที กรณีเลขยังไม่ถึง 10
+                                showTimeCountVideo = hours + ':' + '0' + minutes + ':' + seconds + "&nbsp;/ 10 นาที";
+                            }else{
+                                showTimeCountVideo = hours + ':' + minutes + ':' + seconds + "&nbsp;/ 10 นาที";
+                            }
                         } else {
-                            showTimeCountVideo = minutes + ':' + seconds + "&nbsp;/ 10 นาที";
+                            if(seconds < 10){  // ใส่ 0 ข้างหน้า วินาที กรณีเลขยังไม่ถึง 10
+                                showTimeCountVideo =  minutes + ':' + '0' + seconds + "&nbsp;/ 10 นาที";
+                            }else{
+                                showTimeCountVideo = minutes + ':' + seconds + "&nbsp;/ 10 นาที";
+                            }
+                        }
+
+                        // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
+                        if (seconds === 10) {
+                            // สร้าง message bubble
+                            let secondsRemaining;
+
+                            function countdown(minutes) {
+                                let seconds = minutes * 60;
+
+                                const countdownInterval = setInterval(function() {
+                                    // const minutesRemaining = Math.floor(seconds / 60);
+                                    secondsRemaining = seconds % 60;
+
+                                    // console.log((secondsRemaining < 10 ? "0" : "") + secondsRemaining);
+
+                                    if (seconds === 0) {
+                                        clearInterval(countdownInterval);
+                                    }
+
+                                    seconds--;
+                                }, 1000);
+                            }
+                            countdown(1);
+
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 1 นาที');
+
+                            // alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก ' + (secondsRemaining < 10 ? "0" : "") + secondsRemaining + ' นาที');
+
+                            // ลบ message bubble ออกเมื่อเสร็จสิ้นการแสดงผล
+                            // setTimeout(() => {
+                            //     timeShow.removeChild(messageBubble);
+                            // }, 60000); // เปลี่ยนเวลาตามความต้องการ (หน่วงเวลาก่อนลบ message bubble ออก)
+                        }
+
+                        // เมื่อผ่านไป 10 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 2) {
+                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+
+                            var leaveButton = document.getElementById("leaveVideoCall");
+                            if (leaveButton) {
+                                leaveButton.click();
+                            }
                         }
 
                         // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
                         timeCountVideo.innerHTML = '<i class="fa-regular fa-clock fa-fade" style="color: #11b06b; font-size: 30px;"></i>&nbsp;' + ": " + showTimeCountVideo;
                     }, 1000);
+
+
                 })
                 .catch((error) => {
                     console.log("ERROR HERE");
@@ -235,7 +368,6 @@
                     console.log("ERROR HERE localPlayerData มีปัญหา");
                 });
             }
-
 
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
@@ -457,6 +589,7 @@
                     // Enable dual-stream mode.
                     agoraEngine.enableDualStream();
 
+
                     if('{{$videoTrack}}' == "open"){
                         // เข้าห้องด้วย->สถานะเปิดกล้อง
                         isMuteVideo = true;
@@ -478,6 +611,37 @@
                         muteButton.click();
                     }
 
+                    // if (user === remotePlayer && mediaType.hasVideo) {
+                    //     let remote_video_call_join = document.getElementById(remoteUid.toString());
+                    //         closeVideoHTML_Join  =
+                    //                             '<div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
+                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
+                    //                             '</div>' ;
+                    //         remote_video_call_join.insertAdjacentHTML('beforeend', closeVideoHTML_Join); // แทรกล่างสุด
+                    // }
+
+                    // if (user === remotePlayer && !mediaType.hasVideo) {
+                    //     let remote_video_call_join = document.getElementById(remoteUid.toString());
+                    //         closeVideoHTML_Join  =
+                    //                             '<div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
+                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
+                    //                             '</div>' ;
+                    //         remote_video_call_join.insertAdjacentHTML('beforeend', closeVideoHTML_Join); // แทรกล่างสุด
+                    // }
+
+                        // ตรวจสอบสถานะผู้ใช้งานในห้องสนทนา
+
+                    // const user = agoraEngine.getRemoteVideoTrackStats().find((track) => track.uid === uid);
+                    // if (user && !user.hasVideo) {
+                    //     // สร้างตัวเล่นวิดีโอสำหรับคนแรกที่ปิดไมค์และกล้อง
+                    //     let remote_video_call = document.getElementById(user.uid.toString());
+                    //         closeVideoHTML  =
+                    //                            ' <div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
+                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
+                    //                             '</div>' ;
+                    //     remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
+                    // }
+
                     MemberInRoomUpdate(options.uid);
                     StatsVideoUpdate();
 
@@ -492,6 +656,7 @@
 
                 // Listen to the Leave button click event.
                 document.querySelector('#leaveVideoCall').addEventListener('click', async function() {
+                    // window.removeEventListener('beforeunload');
                     // Destroy the local audio and video tracks.
                     channelParameters.localAudioTrack.close();
                     channelParameters.localVideoTrack.close();
@@ -512,7 +677,7 @@
                     closeVideoCall();
 
                     function closeVideoCall() {
-                        const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + options.uid;
+                        const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + '{{ Auth::user()->id }}';
                         axios.get(urlStatsVideo).then((response) => {
                             console.log("ไอดีที่ออกจากห้อง");
                             console.log(response['data']);
@@ -546,19 +711,15 @@
 
             }
 
-
             // *************************************************************************** //
             // ******************************** END local ******************************** //
             // *************************************************************************** //
 
             // --------------------------------------------------------------------------- //
 
-
             // *************************************************************************** //
             // ****************************** remotePlayer ******************************* //
             // *************************************************************************** //
-
-
 
             // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
             agoraEngine.on("user-published", async (user, mediaType) => {
@@ -610,7 +771,7 @@
                     const urlRemoteUser = "{{ url('/') }}/api/getUserRemote" + "?userId=" + user.uid + "&room_id=" + homeId;
                     // console.log(urlRemoteUser);
                     axios.get(urlRemoteUser).then((response) => {
-                        // console.log("===========================");
+                        // console.log("=========== urlRemoteUser ================");
                         // console.log(response['data']);
 
                         if(document.querySelector('namedivRemote'+ user.uid)){
@@ -626,7 +787,7 @@
                         const statusRemote = document.createElement('div');
                             statusRemote.classList.add('profileNameRemote')
                         if(userRemote['memberStatus'] === 'patient'){
-                            statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLV'];
+                            statusRemote.innerHTML = "ผู้ป่วยระดับ " + userRemote['memberLv'];
                         }else if(userRemote['memberStatus'] === 'owner'){
                             statusRemote.innerHTML = "เจ้าของบ้าน";
                         }else if(userRemote['memberStatus'] === 'member'){
@@ -773,6 +934,8 @@
             // ปิด ไมค์ กล้อง
             agoraEngine.on("user-unpublished", async (user, mediaType) => {
 
+                // await agoraEngine.subscribe(user, mediaType);
+
                 console.log("------------------- unpublished ------------------");
                 console.log("user_id >> " + user.uid);
                 console.log("unpublished >> " + mediaType);
@@ -791,6 +954,8 @@
 
                     }else{
                         console.log("กล้อง >> 'ปิด' อยู่");
+                        // remotePlayerContainer.muteVideo();
+                        // channelParameters.localVideoTrack.muteVideo();
 
                         let muteVideoButton2 = document.getElementById(`muteVideo2`);
                         document.getElementById(`muteVideo2`).innerHTML = '<i class="fa-solid fa-video-slash"></i>';
@@ -896,54 +1061,87 @@
                 Div.remove();
             }
         };
+        // Check if browser is closed
+        // const checkBrowserStatus = () => {
+        //     window.addEventListener('beforeunload', () => {
+        //         event.preventDefault();
+        //         event.returnValue = '';
 
-        // window.onbeforeunload = function(){
-        //     return 'Are you sure you want to leave?';
-        //     closeVideoCall();
+        //         closeVideoCall();
+        //     });
         // };
 
-        // window.addEventListener('beforeunload', function(event) {
-        //     // ทำสิ่งที่คุณต้องการเมื่อแท็บถูกปิด
-        //     // ตัวอย่างเช่นส่งคำร้องขอหรือบันทึกข้อมูลก่อนที่ผู้ใช้จะออกจากหน้าเว็บ
-        //     alert("ต้องการปิดหรือไม่");
-        //     // เพื่อให้เบราว์เซอร์แสดงข้อความออกจากต้องการปิดแท็บ (ไม่ใช่ทุกเบราว์เซอร์รองรับ)
-        //     event.preventDefault();
+        // window.onbeforeunload = function() {
+        //     return "คุณแน่ใจหรือไม่ว่าต้องการออกจากเว็บไซต์?";
 
-        //     closeVideoCall();
+        // };
+    //    // Check if browser is closed
+    //     const checkBrowserStatus = () => {
+    //         window.addEventListener('beforeunload', () => {
+    //             event.preventDefault();
+    //             event.returnValue = '';
 
-        //     // Google Chrome ต้องการให้คืนค่าพิเศษไปยัง event.returnValue เพื่อทำให้ข้อความที่กำหนดถูกแสดง
-        //     event.returnValue = '';
-        // });
+    //             var confirmationMessage = 'คุณแน่ใจหรือไม่ว่าต้องการออกจากเว็บไซต์?';
 
-        // window.addEventListener('unload', function(event) {
-        //     // ทำสิ่งที่คุณต้องการเมื่อแท็บถูกปิด
-        //     // ตัวอย่างเช่นบันทึกข้อมูลสถานะของผู้ใช้หรือทำคำสั่งสุดท้ายก่อนปิดแท็บ
+    //             // ใช้คำสั่ง confirm เพื่อแสดงกล่องโต้ตอบ
+    //             var result = confirm(confirmationMessage);
 
-        //     // โปรดทราบว่าไม่สามารถใช้ event.preventDefault() ได้ในเหตุการณ์ 'unload'
-        //     // และไม่สามารถยกเลิกการปิดแท็บได้
-        // });
+    //             if (result) {
+    //                 // ผู้ใช้เลือก "ปิด" ดำเนินการต่อ (ไม่ต้องทำอะไร)
+    //                 closeVideoCall();
+    //             } else {
+    //                 window.location.reload();
+    //             }
+    //         });
+    //     };
 
-        // window.addEventListener("beforeunload", function(event) {
-        // // ตรวจสอบว่าเวลาปิดแท็บหรือไม่
-        //     if (!event.target.activeElement) {
-        //         // แสดง Alert
-        //         event.returnValue = "คุณกำลังปิดแท็บ";
-        //         return "คุณกำลังปิดแท็บ";
-        //     }
-        // });
-
-        // ตรวจสอบเวลาปิดแท็บ
-        window.addEventListener("beforeunload", function (event) {
-        // ใช้งาน event.returnValue เพื่อให้เว็บบราวเซอร์แสดงกล่องข้อความแจ้งเตือน
-        event.returnValue = "คุณกำลังออกจากเว็บไซต์นี้";
-        });
-
-        // ตรวจสอบเมื่อผู้ใช้กำลังพยายามปิดแท็บ
-        window.addEventListener("unload", function (event) {
-        // แสดงกล่องข้อความแจ้งเตือน
-        alert("ขอบคุณที่เยี่ยมชมเว็บไซต์!");
+        window.addEventListener('beforeunload', function(event) {
+            const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;
+                        axios.get(urlStatsVideo).then((response) => {
+                            // console.log("ไอดีที่ออกจากห้อง");
+                            // console.log(response['data']);
+                            // goBack();
+                        });
         });
 
     </script>
+
+    <script>
+        function alertNoti(Icon, Detail) {
+            const alertElement = document.querySelector('.containerAlert');
+            const iconElement = document.querySelector('#iconAlert');
+            const detailElement = document.querySelector('#detailAlert');
+
+            if (alertElement) {
+                alertElement.classList.remove('scaleUpDown');
+                alertElement.remove();
+            }
+
+            const newAlertElement = document.createElement('div');
+            newAlertElement.classList.add('containerAlert');
+            newAlertElement.classList.add('scaleUpDown');
+
+            newAlertElement.classList.add('scaleUpDown');
+
+            const alertStatus = document.createElement('span');
+            alertStatus.classList.add('alertStatus');
+
+
+            const newIconElement = document.createElement('span');
+            newIconElement.id = 'iconAlert';
+            newIconElement.innerHTML = Icon;
+
+            const newDetailElement = document.createElement('span');
+            newDetailElement.id = 'detailAlert';
+            newDetailElement.innerHTML = Detail;
+
+            alertStatus.appendChild(newIconElement);
+            alertStatus.appendChild(newDetailElement);
+
+            newAlertElement.appendChild(alertStatus);
+
+            document.body.appendChild(newAlertElement);
+        }
+   </script>
 
 @endsection

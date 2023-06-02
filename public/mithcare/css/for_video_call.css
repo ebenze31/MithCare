@@ -90,6 +90,57 @@
         box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
         border-radius: 10px;
     }
+    .containerAlert {
+        transform: scale(0);
+        position: absolute;
+        bottom: 7rem;
+        /* เปลี่ยนจาก top: 10px; เป็น top: 50%; */
+        /* outline: #000 1px solid; */
+        margin-left: 1rem;
+        /* width: 100%; */
+        display: flex !important;
+        justify-content: start !important;
+        align-items: center !important;
+        color: #85e260 !important;
+    }
+    .alertStatus {
+        /* transform: scale(0); */
+        font-size: 20px;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        color: #fff !important;
+        padding: 3px 10px !important;
+        border-radius: 1rem !important;
+    }
+
+    #iconAlert {
+        margin-right: .5rem;
+    }
+    .scaleUpDown {
+        animation-name: sacleupanddown;
+        animation-duration: 60s;
+        transform: scale(0);
+    }
+
+    @keyframes sacleupanddown {
+        0% {
+            transform: scale(0);
+        }
+    /* Change the percentage here to make it faster */
+        /* 40% {
+            transform: scale(1);
+        } */
+
+    /* Change the percentage here to make it stay down for longer */
+        /* 70% {
+            transform: scale(1);
+        } */
+
+    /* Keep this at the end */
+        100% {
+            transform: scale(0);
+        }
+    }
+
 
     /*=======================================
             localPlayer css Computer

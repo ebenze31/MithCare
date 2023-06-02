@@ -69,11 +69,11 @@
             width: 100%;
         }
         body{
-            height: 100vh;
+            height: 70%;
             overflow: hidden;
         }
         main{
-            height: 70%;
+            height: 100%;
         }
         footer{
             height: 30%;
@@ -85,7 +85,6 @@
 </head>
 
 <body>
-
     <main>
         @yield('content')
     </main>

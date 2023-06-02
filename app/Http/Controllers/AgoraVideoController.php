@@ -19,8 +19,6 @@ class AgoraVideoController extends Controller
         $requestData = $request->all();
         $videoTrack = $requestData['videoTrack'];
         $audioTrack = $requestData['audioTrack'];
-        // fetch all users apart from the authenticated user
-        // $users = User::where('id', '<>', Auth::id())->get();
         $roomData = Member_of_room::where('room_id',$room_id)->get();
 
         return view('room.room_rtc.room_call', compact('user_id','room_id','roomData','videoTrack','audioTrack'));
@@ -136,11 +134,18 @@ class AgoraVideoController extends Controller
         $rtcTimeStart = "";
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
 
+        //เช็คจำนวนครั้ง ของ การใช้ videoCall ในห้องตาม room_id และ room_of_members
         if($dataRoomRTC->amount_meet == null){
             $newAmountMeet = 1;
         }else{
             $newAmountMeet = (int)$dataRoomRTC->amount_meet + 1;
         }
+
+        // สำหรับใช้เช็ค current_people
+        $memberInData = $dataRoomRTC->members_in_room;
+        $memberInData_ep = explode(",",$memberInData);
+        //นับจำนวน index ใน array ที่เหลืออยู่
+        $count_ep = count($memberInData_ep);
 
         if($dataRoomRTC->time_start == null){
             DB::table('room_rtc')
@@ -157,7 +162,7 @@ class AgoraVideoController extends Controller
 
         $roomVideocallStats = [
             "room_name" => $roomFinder['name'],
-            "current_people" => $requestData['current_people'],
+            "current_people" => $count_ep,
         ];
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
@@ -254,7 +259,6 @@ class AgoraVideoController extends Controller
         $memberInData = $dataRoomRTC->members_in_room;
         $memberInData_ep = explode(",",$memberInData);
 
-
         // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ลบไอดี array ตัวที่ตรงกับไอดี ของ user ที่ออกจากห้อง
         foreach ($memberInData_ep as $exp => $exp_value){
             if($exp_value == $members_in_room){
@@ -265,12 +269,21 @@ class AgoraVideoController extends Controller
         //นับจำนวน index ใน array ที่เหลืออยู่
         $count_ep = count($memberInData_ep);
 
+        echo"<pre>";
+        print_r($count_ep);
+        echo"</pre>";
+
         // นำผลของ memberInData_ep ทึ่ได้มา set ค่า
         $new_memberData = null;
         if($memberInData_ep){
             foreach ($memberInData_ep as $exp_update => $exp_value_update){
                 if($new_memberData == null){// set ให้ว่าง
-                    $new_memberData = $exp_value_update ;
+                    if(!empty($exp_value_update)){
+                        $new_memberData = $exp_value_update;
+                    }else{
+                        $new_memberData = null;
+                    }
+                    // $new_memberData = $exp_value_update;
                 }else{// set ให้ได้ผลลัพท์ ที่เหลืออยู่
                     $new_memberData = $new_memberData . "," . $exp_value_update ;
                 }
@@ -278,7 +291,7 @@ class AgoraVideoController extends Controller
         }
 
         //เช็ค array ว่าได้ไอดี กี่ตัว
-        if($count_ep == null){
+        if(empty($count_ep) || $count_ep == 0){
             $updateDataRoomRTC = 0;
         }else{
             $updateDataRoomRTC = $count_ep;

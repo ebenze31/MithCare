@@ -35,14 +35,14 @@
     }
     #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
         width: 100% !important;
-        height: 370px !important;
+        height: 24rem !important;
         border: 1px solid black;
         object-fit: cover;
     }
     .itemPeople{
         border-radius: 50% !important;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
     }
     .logo_mithcare{
         border-radius: 50% !important;
@@ -51,8 +51,8 @@
     }
     .logo_mithcare img{
         border-radius: 50% !important;
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
     }
     .buttonDiv{
         position: absolute;
@@ -125,15 +125,16 @@
         background-color: #4caf50;
         height: 100% !important;
     }
+
 </style>
+
     <div class="container">
         <div id='br_header' class="row br_header">
             <div class="col-3 d-flex justify-content-center">
                 <img class="imgdiv" src="{{ url('storage/'.$user_DB->photo )}}">
             </div>
-            <div class="col-9 d-flex align-items-center">
+            <div id="TestBubble" class="col-9 d-flex align-items-center">
                 <span style="font-size: 35px;">ห้องสนทนาของ {{$user_DB->name}}</span>
-
             </div>
         </div>
         <div id='br_section' class="row br_section">
@@ -145,11 +146,11 @@
                 </div>
             </div>
             <div class="col-4 row d-flex align-items-center">
-                <span class="col-12 d-flex justify-content-center logo_mithcare"><img src="{{ url('/img/logo_mithcare/x-icon.png') }}"></span>
-                <span id="timeStart" class="col-12 d-flex justify-content-center" style="font-size: 18px;"></span>
-                <div id="members_in_room" class="col-12 d-flex justify-content-center align-items-center" style="font-size: 18px;"></div>
+                <span class="col-12 d-flex justify-content-center align-items-center logo_mithcare" style="font-size: 1.5rem;"><img src="{{ url('/img/logo_mithcare/x-icon.png') }}">&nbsp;MithCare</span>
+                <span id="timeStart" class="col-12 d-flex justify-content-center" style="font-size: 1rem;"></span>
+                <div id="members_in_room" class="col-12 d-flex justify-content-center align-items-center" style="font-size: 1.2rem"></div>
 
-                <a id="btnJoinRoom" href="{{ url('/room_call'. '/' . $room_id . '/' . $user_id ) }}?videoTrack=open&audioTrack=open" class="col-12 btn btn-info" style="font-size: 18px;">เข้าร่วมห้องสนทนา</a>
+                <a id="btnJoinRoom" href="{{ url('/room_call'. '/' . $room_id . '/' . $user_id ) }}?videoTrack=open&audioTrack=open" class="col-12 btn btn-info" style="font-size: 1rem;">เข้าร่วมห้องสนทนา</a>
             </div>
         </div>
         <div class="col-8 d-flex justify-content-between">
@@ -522,7 +523,7 @@
                                 memberDiv.setAttribute('id',Member_form_Id['id']);
                             const memberImg = document.createElement('img');
                                 memberImg.setAttribute('class','itemPeople');
-                                memberImg.src = "{{ url('storage')}}"+ "/" +Member_form_Id['photo'];
+                                memberImg.src = "{{ url('storage')}}"+ "/" + Member_form_Id['photo'];
 
                                 memberDiv.appendChild(memberImg);
                                 memberInRoomDiv.appendChild(memberDiv);
@@ -537,6 +538,45 @@
     }
 
 </script>
+
+<script>
+    function alertNoti(Icon, Detail) {
+       const alertElement = document.querySelector('.containerAlert');
+       const iconElement = document.querySelector('#iconAlert');
+       const detailElement = document.querySelector('#detailAlert');
+
+       if (alertElement) {
+         alertElement.classList.remove('scaleUpDown');
+         alertElement.remove();
+       }
+
+       const newAlertElement = document.createElement('div');
+       newAlertElement.classList.add('containerAlert');
+       newAlertElement.classList.add('scaleUpDown');
+
+       newAlertElement.classList.add('scaleUpDown');
+
+       const alertStatus = document.createElement('span');
+       alertStatus.classList.add('alertStatus');
+
+
+       const newIconElement = document.createElement('span');
+       newIconElement.id = 'iconAlert';
+       newIconElement.innerHTML = Icon;
+
+       const newDetailElement = document.createElement('span');
+       newDetailElement.id = 'detailAlert';
+       newDetailElement.innerHTML = Detail;
+
+       alertStatus.appendChild(newIconElement);
+       alertStatus.appendChild(newDetailElement);
+
+       newAlertElement.appendChild(alertStatus);
+
+       document.body.appendChild(newAlertElement);
+
+     }
+   </script>
 
 @endsection
 

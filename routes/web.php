@@ -43,7 +43,7 @@ Route::get('/log_in_ask_for_help_rate_help/{id_sos_map}', 'Ask_for_helpControlle
 Route::get('test', 'TestController@test');
 Route::get('test_doc', 'TestController@test_doc');
 // Route::get('test_room', 'TestController@sentLineTest');
-
+Route::get('test_naja', 'TestController@test_naja');
 //========================
 //     Video_Call Test
 //========================

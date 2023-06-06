@@ -26,6 +26,23 @@ class TestController extends Controller
         return view('test.video_call' , compact('user'));
     }
 
+    public function test_naja(){
+        $array = '1';
+
+        // $memberInData = $dataRoomRTC->members_in_room;
+        $memberInData_ep = explode(",",$array);
+        foreach ($memberInData_ep as $exp => $exp_value){
+            if($exp_value == '1'){
+                unset($memberInData_ep[$exp]);
+            }
+        }
+
+        $countArr = count($memberInData_ep);
+
+        echo $countArr;
+        dd($memberInData_ep);
+    }
+
 
 
 

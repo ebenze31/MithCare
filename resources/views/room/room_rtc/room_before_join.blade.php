@@ -3,7 +3,6 @@
 @section('content')
 
 <style>
-
     .video-container {
         /* display: flex;
         flex-direction: column;
@@ -12,53 +11,6 @@
     }
     .bg_div{
         background-color: gray;
-    }
-    .br_header{
-        height: 20%;
-        margin: 2rem;
-        padding: 1rem;
-    }
-    .br_section{
-        height: 80%;
-        margin-top: 2rem;
-        padding: 1rem;
-    }
-    .br_section div video{
-        height: 400px;
-        width: 100% !important;
-    }
-    .imgdiv{  /*รูปโปรไฟล์ local*/
-        border: 1px solid black;
-        border-radius: 50% !important;
-        width: 200px;
-        height: 200px;
-    }
-    #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
-        width: 100% !important;
-        height: 24rem !important;
-        border: 1px solid black;
-        object-fit: cover;
-    }
-    .itemPeople{
-        border-radius: 50% !important;
-        width: 50px;
-        height: 50px;
-    }
-    .logo_mithcare{
-        border-radius: 50% !important;
-        width: 100px;
-        height: 100px;
-    }
-    .logo_mithcare img{
-        border-radius: 50% !important;
-        width: 80px;
-        height: 80px;
-    }
-    .buttonDiv{
-        position: absolute;
-        left: 40%;
-        bottom: 1rem;
-        transform: translate(-40%,);
     }
     .toggleCameraButton{
         border-radius: 50%;
@@ -125,35 +77,219 @@
         background-color: #4caf50;
         height: 100% !important;
     }
+    /*============================
+            Class Computer
+    =============================*/
+
+    @media screen and (min-width: 1024px)  {
+        .imgdiv{  /*รูปโปรไฟล์ local*/
+            border: 1px solid black;
+            border-radius: 50% !important;
+            width: 150px;
+            height: 150px;
+            margin-right: 1rem;
+        }
+        .br_header{
+            display: inline-flex;
+            height: 20%;
+            margin: 1rem;
+            padding: 1rem;
+        }
+        .br_section{
+            display: flex;
+            justify-content: center;
+            height: 80%;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+        .br_section div video{
+            height: 30% !important;
+            width: 100% !important;
+        }
+        .logo_mithcare{
+            border-radius: 50% !important;
+            width: 100px;
+            height: 100px;
+        }
+        .logo_mithcare img{
+            border-radius: 50% !important;
+            width: 80px;
+            height: 80px;
+        }
+        .itemPeople{
+            border-radius: 50% !important;
+            width: 50px;
+            height: 50px;
+        }
+        #TestBubble span{
+            font-size: 40px;
+        }
+        #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
+            width: 100% !important;
+            height: 24rem !important;
+            border: 1px solid black;
+            object-fit: cover;
+        }
+        .buttonDiv{
+            position: absolute;
+            left: 40%;
+            bottom: 1rem;
+            transform: translate(-40%,);
+        }
+    }
+
+    /*============================
+            Class Tablet
+    =============================*/
+
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+        .imgdiv{  /*รูปโปรไฟล์ local*/
+            border: 1px solid black;
+            border-radius: 50% !important;
+            width: 150px;
+            height: 150px;
+        }
+        .br_header{
+            display: inline-flex;
+            height: 20%;
+            margin: 2rem;
+            padding: 1rem;
+        }
+        .br_section{
+            height: 80%;
+            margin-top: 2rem;
+            padding: 1rem;
+
+        }
+        .br_section div video{
+            height: 400px;
+            width: 100% !important;
+        }
+        .logo_mithcare{
+            border-radius: 50% !important;
+            width: 100px;
+            height: 100px;
+        }
+        .logo_mithcare img{
+            border-radius: 50% !important;
+            width: 80px;
+            height: 80px;
+        }
+        .itemPeople{
+            border-radius: 50% !important;
+            width: 1rem;
+            height: 1rem;
+        }
+        #TestBubble span{
+            font-size: 30px;
+        }
+        #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
+            width: 100% !important;
+            height: 24rem !important;
+            border: 1px solid black;
+            object-fit: cover;
+        }
+        .buttonDiv{
+            position: absolute;
+            left: 40%;
+            bottom: 1rem;
+            transform: translate(-40%,);
+        }
+    }
+
+    /*============================
+            Class mobile
+    =============================*/
+    @media screen and (max-width: 768px) {
+        .mobile_d_none{ /* d-none แค่ mobile*/
+            display: none !important;
+        }
+        .imgdiv{  /*รูปโปรไฟล์ local*/
+            border: 1px solid black;
+            border-radius: 50% !important;
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1rem;
+        }
+        .br_section{
+            display: flex;
+            justify-content: center;
+            height: 80%;
+            margin-top: 0.5rem;
+            padding: 1rem;
+        }
+        .br_section div video{
+            height: 400px;
+            width: 100% !important;
+        }
+        .br_header{
+            display: flex;
+            justify-content: center;
+            height: 20%;
+            margin: 0.5rem;
+            padding: 1rem;
+        }
+        .logo_mithcare img{
+            border-radius: 50% !important;
+            width: 50px;
+            height: 50px;
+            font-size: 1rem;
+        }
+        .itemPeople{
+            border-radius: 50% !important;
+            width: 3rem;
+            height: 3rem;
+        }
+        #TestBubble span{
+            font-size: 25px;
+        }
+        #members_in_room{
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
+            width: 100% !important;
+            height: 22rem !important;
+            border: 1px solid black;
+            object-fit: cover;
+        }
+        .buttonDiv{
+            position: absolute;
+            left: 30%;
+            bottom: 1rem;
+            transform: translate(-30%,);
+        }
+
+    }
 
 </style>
 
     <div class="container">
         <div id='br_header' class="row br_header">
-            <div class="col-3 d-flex justify-content-center">
+            <div>
                 <img class="imgdiv" src="{{ url('storage/'.$user_DB->photo )}}">
             </div>
-            <div id="TestBubble" class="col-9 d-flex align-items-center">
-                <span style="font-size: 35px;">ห้องสนทนาของ {{$user_DB->name}}</span>
+            <div id="TestBubble" class="d-flex align-items-center">
+                <span>ห้องสนทนาของ {{$user_DB->name}}</span>
             </div>
         </div>
         <div id='br_section' class="row br_section">
-            <div class="col-8 mr-4 d-flex justify-content-center ">
+            <div class="col-sm-12 col-md-8 col-lg-8 d-flex justify-content-center ">
                 <video id="videoDiv" autoplay></video>
                 <div class="buttonDiv d-flex align-items-center">
                     <button id="toggleCameraButton" class="toggleCameraButton mr-3"></button>
                     <button id="toggleMicrophoneButton" class="toggleMicrophoneButton"></button>
                 </div>
             </div>
-            <div class="col-4 row d-flex align-items-center">
-                <span class="col-12 d-flex justify-content-center align-items-center logo_mithcare" style="font-size: 1.5rem;"><img src="{{ url('/img/logo_mithcare/x-icon.png') }}">&nbsp;MithCare</span>
-                <span id="timeStart" class="col-12 d-flex justify-content-center" style="font-size: 1rem;"></span>
-                <div id="members_in_room" class="col-12 d-flex justify-content-center align-items-center" style="font-size: 1.2rem"></div>
+            <div class="col-sm-12 col-md-4 col-lg-4 row d-flex align-items-center">
+                <span class="col-12 d-flex justify-content-center align-items-center logo_mithcare mt-2 mobile_d_none" ><img src="{{ url('/img/logo_mithcare/x-icon.png') }}">&nbsp;MithCare</span>
+                <span id="timeStart" class="col-12 d-flex justify-content-center mt-2" style="font-size: 1rem;"></span>
+                <div id="members_in_room" class="col-12 d-flex justify-content-center align-items-center" ></div>
 
-                <a id="btnJoinRoom" href="{{ url('/room_call'. '/' . $room_id . '/' . $user_id ) }}?videoTrack=open&audioTrack=open" class="col-12 btn btn-info" style="font-size: 1rem;">เข้าร่วมห้องสนทนา</a>
+                <a id="btnJoinRoom" href="{{ url('/room_call'. '/' . $room_id . '/' . $user_id ) }}?videoTrack=open&audioTrack=open" class="col-12 btn btn-info mt-2" style="font-size: 1rem;">เข้าร่วมห้องสนทนา</a>
             </div>
         </div>
-        <div class="col-8 d-flex justify-content-between">
+        <div class="col-8 d-flex justify-content-between mobile_d_none">
             <div class="dropdown col-4">
                 <button class="dropdown-button">ไมโครโฟน</button>
                 <div class="dropdown-content">
@@ -189,8 +325,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+
 
     <!--เรียกใช้ axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

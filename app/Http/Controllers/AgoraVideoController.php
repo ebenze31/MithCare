@@ -31,8 +31,9 @@ class AgoraVideoController extends Controller
         $room_id = $requestData['room_id'];
         $user_id = $requestData['user_id'];
 
-        $appID = 'acb41870f41c48d4a42b7b0ef1532351';
-        $appCertificate = '41aa313ac49f4e3d81f1a3056e122ca0';
+        $appID = $requestData['appId'];
+        $appCertificate = $requestData['appCertificate'];
+
         // $channelName = 'MithCare'.$room_id.$user_id;
         $channelName = 'MithCare';
         $user = $login_id;
@@ -251,84 +252,85 @@ class AgoraVideoController extends Controller
         $members_in_room = $requestData['members_in_room'];
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
 
-        $room_data = [
-            "room_id" => $room_id,
-            "room_of_members" => $room_of_members,
-        ];
+        // $room_data = [
+        //     "room_id" => $room_id,
+        //     "room_of_members" => $room_of_members,
+        // ];
 
         $memberInData = $dataRoomRTC->members_in_room;
-        $memberInData_ep = explode(",",$memberInData);
 
-        // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ลบไอดี array ตัวที่ตรงกับไอดี ของ user ที่ออกจากห้อง
-        foreach ($memberInData_ep as $exp => $exp_value){
-            if($exp_value == $members_in_room){
-                unset($memberInData_ep[$exp]);
-            }
-        }
+        if(!empty($memberInData)){
+            $memberInData_ep = explode(",",$memberInData);
 
-        //นับจำนวน index ใน array ที่เหลืออยู่
-        $count_ep = count($memberInData_ep);
-
-        echo"<pre>";
-        print_r($count_ep);
-        echo"</pre>";
-
-        // นำผลของ memberInData_ep ทึ่ได้มา set ค่า
-        $new_memberData = null;
-        if($memberInData_ep){
-            foreach ($memberInData_ep as $exp_update => $exp_value_update){
-                if($new_memberData == null){// set ให้ว่าง
-                    if(!empty($exp_value_update)){
-                        $new_memberData = $exp_value_update;
-                    }else{
-                        $new_memberData = null;
-                    }
-                    // $new_memberData = $exp_value_update;
-                }else{// set ให้ได้ผลลัพท์ ที่เหลืออยู่
-                    $new_memberData = $new_memberData . "," . $exp_value_update ;
+            // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ลบไอดี array ตัวที่ตรงกับไอดี ของ user ที่ออกจากห้อง
+            foreach ($memberInData_ep as $exp => $exp_value){
+                if($exp_value == $members_in_room){
+                    unset($memberInData_ep[$exp]);
                 }
             }
-        }
 
-        //เช็ค array ว่าได้ไอดี กี่ตัว
-        if(empty($count_ep) || $count_ep == 0){
-            $updateDataRoomRTC = 0;
-        }else{
+            //นับจำนวน index ใน array ที่เหลืออยู่
+            $count_ep = count($memberInData_ep);
+
+            // นำผลของ memberInData_ep ทึ่ได้มา set ค่า
+            $new_memberData = '';
+
             $updateDataRoomRTC = $count_ep;
-        }
 
-        if($updateDataRoomRTC == 0){
-            // วันที่และเวลาปัจจุบัน
-            $currentTime = time();
+            if($count_ep == 0){
+                $new_memberData = null;
 
-            // วันที่และเวลาที่กำหนด
-            $targetDateTime = $dataRoomRTC->time_start;
-            $targetTime = strtotime($targetDateTime);
+                $currentTime = time();
 
-            // คำนวณเวลาที่ผ่านไปในวินาที
-            $elapsedTime = $currentTime - $targetTime;
+                // วันที่และเวลาที่กำหนด
+                $targetDateTime = $dataRoomRTC->time_start;
+                $targetTime = strtotime($targetDateTime);
 
-            if($dataRoomRTC->total_timemeet == null){
-                $updateTotalTimeMeet = $elapsedTime;
+                // คำนวณเวลาที่ผ่านไปในวินาที
+                $elapsedTime = $currentTime - $targetTime;
+
+                if($dataRoomRTC->total_timemeet == null){
+                    $updateTotalTimeMeet = $elapsedTime;
+                }else{
+                    $updateTotalTimeMeet = (int)$elapsedTime + (int)$dataRoomRTC->total_timemeet;
+                }
+
+                DB::table('room_rtc')
+                    ->where('room_id', $room_id)
+                    ->where('room_of_members', $room_of_members)
+                    ->update([
+                        'time_start' => null,
+                        'total_timemeet' => $updateTotalTimeMeet,
+                ]);
+
             }else{
-                $updateTotalTimeMeet = (int)$elapsedTime + (int)$dataRoomRTC->total_timemeet;
+                if($count_ep == 1){
+                    $new_memberData = $memberInData_ep[0];
+                }else{
+                    for ($i=0; $i < $count_ep; $i++) {
+                        $new_memberData = $new_memberData . "," . $memberInData_ep[$i] ;
+                    }
+                }
             }
 
             DB::table('room_rtc')
-                ->where('room_id', $room_id)
-                ->where('room_of_members', $room_of_members)
-                ->update([
-                    'time_start' => null,
-                    'total_timemeet' => $updateTotalTimeMeet,
+            ->where('room_id', $room_id)
+            ->where('room_of_members', $room_of_members)
+            ->update([
+                'members_in_room' => $new_memberData,
+                'current_people' => $updateDataRoomRTC,
+            ]);
+
+        }else{
+            DB::table('room_rtc')
+            ->where('room_id', $room_id)
+            ->where('room_of_members', $room_of_members)
+            ->update([
+                'members_in_room' => null,
+                'current_people' => 0,
+                'time_start' => null,
             ]);
         }
-
-        $roomVideocallStats = [
-            "members_in_room" => $new_memberData,
-            "current_people" => $updateDataRoomRTC,
-        ];
-
-        RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 
         return $members_in_room;
     }

@@ -102,6 +102,7 @@
         justify-content: start !important;
         align-items: center !important;
         color: #85e260 !important;
+        z-index: 999;
     }
     .alertStatus {
         /* transform: scale(0); */
@@ -126,14 +127,14 @@
             transform: scale(0);
         }
     /* Change the percentage here to make it faster */
-        /* 40% {
+        3% {
             transform: scale(1);
-        } */
+        }
 
     /* Change the percentage here to make it stay down for longer */
-        /* 70% {
+        99% {
             transform: scale(1);
-        } */
+        }
 
     /* Keep this at the end */
         100% {
@@ -282,11 +283,13 @@
 
 @media screen and (max-width: 768px) {
 
-    body,html,main,.MainVideoDiv{
+    body,html,main{
         width: 100%;
         height: 100%;
     }
     .MainVideoDiv{
+        width: 100vh;
+        height: 100vh;
         padding: 0;
         margin: 0;
     }
@@ -329,6 +332,9 @@
     #muteVideo2{
         display: none;
     }
+    .mobile_d_none{ /* d-none แค่ mobile*/
+        display: none !important;
+    }
     /*=======================================
             localPlayer CSS Mobile
     =======================================*/
@@ -337,15 +343,6 @@
         width: 100% !important;
         height: 100% !important;
         border-radius:  10px!important;
-    }
-    .imgdivLocal{  /* div รูปภาพของ local */
-        width: 50px;
-        height: 50px;
-        border: 1px solid black;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        z-index: 1;
     }
     .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
         height: 100% !important;
@@ -364,6 +361,23 @@
     .localAfterSubscribe div {
         border-radius: 10px;
     }
+    .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
+        display: flex;
+        align-items: center;
+        border: 1px solid black;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50% !important;
+        z-index: 1;
+    }
+    .imgdivLocal img{  /*รูปโปรไฟล์ local*/
+        border-radius: 50% !important;
+        width: 100%;
+        height: 50%;
+    }
+
     /*=======================================
             remotePlayer CSS Mobile
     =======================================*/
@@ -373,13 +387,20 @@
             border-radius:  10px!important;
     }
     .imgdivRemote{
-        width: 50px;
-        height: 50px;
+        display: flex;
+        align-items: center;
         border: 1px solid black;
         position: absolute;
-        left: 0;
-        bottom: 0;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50% !important;
         z-index: 1;
+    }
+    .imgdivRemote img{  /*รูปโปรไฟล์ local*/
+        border-radius: 50% !important;
+        width: 100%;
+        height: 50%;
     }
     .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
         height: 100% !important;

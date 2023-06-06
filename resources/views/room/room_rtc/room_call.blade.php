@@ -5,7 +5,7 @@
     <link href="{{ asset('mithcare/css/for_video_call.css') }}" rel="stylesheet">
 
     <!-- สำหรับ bubble message -->
-    <div class="containerAlert">
+    <div class="containerAlert mobile_d_none">
         <div class="alertStatus">
             <span id="iconAlert"></span>
             <span id="detailAlert"></span>
@@ -18,7 +18,7 @@
             <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
         </div>
         <div id='ButtonDiv' class="ButtonDiv">
-            <div id="timeCountVideo" class="clockDuration"></div>
+            <div id="timeCountVideo" class="clockDuration mobile_d_none"></div>
         </div>
     </div>
 
@@ -57,43 +57,6 @@
     <script src="{{ asset('Agora_Web_SDK_FULL/AgoraRTC_N-4.17.0.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById("modalToStart").click();
-
-            options = {
-                    // Pass your App ID here.
-                    appId: '{{ env('AGORA_APP_ID') }}',
-
-                    appCertificate: '{{ env('AGORA_APP_CERTIFICATE') }}',
-
-                    // Set the channel name.
-                    channel: channelName,
-
-                    uid: '{{ Auth::user()->id }}',
-
-                    token: "",
-                };
-
-                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
-                axios.get(url).then((response) => {
-                        console.log("================= TOKEN =====================");
-                        console.log(response['data']);
-                        options['token'] = response['data'];
-                        // setTimeout(() => {
-
-
-                        // }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
-                    })
-                    .catch((error) => {
-                        console.log("ERROR HERE");
-                        console.log(error);
-                    });
-
-                startBasicCall();
-        });
-    </script> --}}
-
     <script>
         var options;
         const homeId = '{{ $room_id }}';
@@ -102,14 +65,7 @@
         //const channelName = "MithCare" + homeId + user_id_from_room;
         const channelName = "MithCare";
 
-        // function LoadVideoData(){
-        //          console.log("เข้า start แล้ววววววววววววววววววววววววววววววววววววว");
-        //          document.getElementById("join").click();
-        // }
-        document.addEventListener('DOMContentLoaded', (event) => {
-                // console.log("START");
-
-                options = {
+        options = {
                     // Pass your App ID here.
                     appId: '{{ env('AGORA_APP_ID') }}',
 
@@ -125,19 +81,34 @@
                     token: "",
                 };
 
-                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
+        document.addEventListener('DOMContentLoaded', (event) => {
+                // console.log("START");
+                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room + "&appId=" + options.appId + "&appCertificate=" + options.appCertificate;
                 axios.get(url).then((response) => {
-                        // console.log(response['data']);
-                        options['token'] = response['data'];
-                        // setTimeout(() => {
+                    // console.log(response['data']);
+                    options['token'] = response['data'];
 
-                            document.getElementById("join").click();
-                        // }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
-                    })
-                    .catch((error) => {
-                        console.log("ERROR HERE");
-                        console.log(error);
-                    });
+                    setTimeout(() => {
+                        document.getElementById("join").click();
+                    }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
+                })
+                .catch((error) => {
+                    console.log("ERROR HERE");
+                    console.log(error);
+                    alert("คุณดำเนินการเร็วเกินไป");
+                    window.history.back();
+                });
+
+                // fetch(url)
+                //     .then(response => response.text())
+                //     .then(result => {
+                //         console.log(result);
+                //         options['token'] = result;
+
+                //         setTimeout(() => {
+                //             document.getElementById("join").click();
+                //         }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
+                // });
 
                 startBasicCall();
 
@@ -146,8 +117,6 @@
 
 
     <script>
-        // var show_data_video = document.querySelector('#data_video_call');
-        //     show_data_video.innerHTML = "";
 
         var ButtonDiv = document.querySelector('#ButtonDiv');
         var MainVideoDiv = document.querySelector('#MainVideoDiv');
@@ -249,8 +218,37 @@
                             }
                         }
 
+                        // เมื่อผ่านไป 5 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 5) {
+                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 5 นาที');
+
+                            setTimeout(() => {
+                                alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 5 นาที');
+                            }, 5000);
+                        }
+
+                        // เมื่อผ่านไป 6 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 6) {
+                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+
+                        }
+
+                        // เมื่อผ่านไป 7 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 7) {
+                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+
+                        }
+
+                        // เมื่อผ่านไป 8 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 8) {
+                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+
+                        }
+
                         // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
-                        if (seconds === 10) {
+                        if (elapsedMinutes === 9) {
+
                             // สร้าง message bubble
                             let secondsRemaining;
 
@@ -267,23 +265,19 @@
                                         clearInterval(countdownInterval);
                                     }
 
+                                    if(secondsRemaining !== 0){
+                                        document.getElementById('showSecondRemaining').innerHTML = (secondsRemaining < 10 ? "0" : "") + secondsRemaining;
+                                    }
                                     seconds--;
                                 }, 1000);
                             }
                             countdown(1);
 
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 1 นาที');
-
-                            // alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก ' + (secondsRemaining < 10 ? "0" : "") + secondsRemaining + ' นาที');
-
-                            // ลบ message bubble ออกเมื่อเสร็จสิ้นการแสดงผล
-                            // setTimeout(() => {
-                            //     timeShow.removeChild(messageBubble);
-                            // }, 60000); // เปลี่ยนเวลาตามความต้องการ (หน่วงเวลาก่อนลบ message bubble ออก)
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก ' + '<span id="showSecondRemaining">60</span>' + ' วินาที');
                         }
 
                         // เมื่อผ่านไป 10 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 2) {
+                        if (elapsedMinutes === 10) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
 
                             var leaveButton = document.getElementById("leaveVideoCall");
@@ -355,7 +349,7 @@
                             roleLocal.innerHTML = "สมาชิก";
                         }
                     const namedivLocal = document.createElement('div');
-                                namedivLocal.classList.add('namedivLocal');
+                                namedivLocal.classList.add('namedivLocal','mobile_d_none');
                                 namedivLocal.appendChild(nameLocal);
                                 namedivLocal.appendChild(roleLocal);
 
@@ -377,7 +371,7 @@
             const shareScreenButton = document.createElement('button');
                 shareScreenButton.type = "button";
                 shareScreenButton.id = "shareScreen";
-                shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2');
+                shareScreenButton.classList.add('btn-old', 'btn-info', 'mt-2','mobile_d_none');
                 shareScreenButton.innerHTML = '<i class="fa-solid fa-screencast"></i>';
 
             divForVideoButton.appendChild(shareScreenButton);
@@ -435,7 +429,7 @@
                 var formattedTime = currentHours + ':' + currentMinutes;
 
                 var DateTimeDiv = document.createElement('div');
-                    DateTimeDiv.classList.add('DateTimeDiv')
+                    DateTimeDiv.classList.add('DateTimeDiv','mobile_d_none');
                 if (DateTimeDiv) {
                     DateTimeDiv.innerHTML = formattedTime + '<br>' + formattedDate;
                 }
@@ -483,6 +477,10 @@
                     // สร้าง element div สำหรับรอบรูปภาพ
                     const imgdivLocal = document.createElement('div');
                         imgdivLocal.classList.add('imgdivLocal');
+
+                    // if(document.querySelector('.imgdivLocalAfterSubscribe')){
+                    //     document.querySelector('.imgdivLocalAfterSubscribe').remove();
+                    // }
 
                     // เพิ่ม element รูปภาพเข้าไปยัง element div
                     imgdivLocal.appendChild(imgLocal);
@@ -589,7 +587,6 @@
                     // Enable dual-stream mode.
                     agoraEngine.enableDualStream();
 
-
                     if('{{$videoTrack}}' == "open"){
                         // เข้าห้องด้วย->สถานะเปิดกล้อง
                         isMuteVideo = true;
@@ -598,7 +595,6 @@
                         // เข้าห้องด้วย->สถานะปิดกล้อง
                         isMuteVideo = false;
                         muteVideoButton.click();
-
                     }
 
                     if('{{$audioTrack}}' == "open"){
@@ -610,37 +606,6 @@
                         isMuteAudio = false;
                         muteButton.click();
                     }
-
-                    // if (user === remotePlayer && mediaType.hasVideo) {
-                    //     let remote_video_call_join = document.getElementById(remoteUid.toString());
-                    //         closeVideoHTML_Join  =
-                    //                             '<div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
-                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                    //                             '</div>' ;
-                    //         remote_video_call_join.insertAdjacentHTML('beforeend', closeVideoHTML_Join); // แทรกล่างสุด
-                    // }
-
-                    // if (user === remotePlayer && !mediaType.hasVideo) {
-                    //     let remote_video_call_join = document.getElementById(remoteUid.toString());
-                    //         closeVideoHTML_Join  =
-                    //                             '<div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
-                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                    //                             '</div>' ;
-                    //         remote_video_call_join.insertAdjacentHTML('beforeend', closeVideoHTML_Join); // แทรกล่างสุด
-                    // }
-
-                        // ตรวจสอบสถานะผู้ใช้งานในห้องสนทนา
-
-                    // const user = agoraEngine.getRemoteVideoTrackStats().find((track) => track.uid === uid);
-                    // if (user && !user.hasVideo) {
-                    //     // สร้างตัวเล่นวิดีโอสำหรับคนแรกที่ปิดไมค์และกล้อง
-                    //     let remote_video_call = document.getElementById(user.uid.toString());
-                    //         closeVideoHTML  =
-                    //                            ' <div id="video_trackRemoteDiv" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray;">' +
-                    //                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                    //                             '</div>' ;
-                    //     remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
-                    // }
 
                     MemberInRoomUpdate(options.uid);
                     StatsVideoUpdate();
@@ -674,34 +639,17 @@
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
 
-                    closeVideoCall();
+                    // closeVideoCall();
+                    goBack();
 
-                    function closeVideoCall() {
-                        const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + '{{ Auth::user()->id }}';
-                        axios.get(urlStatsVideo).then((response) => {
-                            console.log("ไอดีที่ออกจากห้อง");
-                            console.log(response['data']);
-                            goBack();
-                        });
-                    }
-
-                    // const interval = setInterval(function() {
-                    //     let rtcStats = agoraEngine.getRTCStats();
-                    //     let currentPeople = rtcStats.currentPeople;
-
-                    //     // เมื่อไม่มีคนอยู่ในห้อง หรือการเชื่อมต่อไม่ดี
-                    //     if (currentPeople === 0 || rtcStats.lastmileQuality !== 'good') {
-                    //         clearInterval(interval); // Stop the interval
-
-                    //         const urlStatsVideo = "{{ url('/') }}/api/leaveChannel?room_id=" + homeId + "&room_of_members=" + user_id_from_room;
-                    //         axios.get(urlStatsVideo).then((response) => {
-                    //             console.log(response['data']);
-                    //             console.log(rtcStats);
-
-                    //             goBack();
-                    //         });
-                    //     }
-                    // }, 1000);
+                    // function closeVideoCall() {
+                    // const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + '{{ Auth::user()->id }}';
+                    // axios.get(urlStatsVideo).then((response) => {
+                    //     // console.log("ไอดีที่ออกจากห้อง");
+                    //     // console.log(response['data']);
+                    //     // goBack();
+                    // });
+                    // }
 
                     // window.onload();
                     function goBack(){
@@ -710,6 +658,8 @@
                 })
 
             }
+
+
 
             // *************************************************************************** //
             // ******************************** END local ******************************** //
@@ -763,7 +713,6 @@
                         document.querySelector('#imgdivRemote'+ user.uid).remove();
                     }
 
-
                     //======================
                     //   Profile Remote
                     //======================
@@ -797,7 +746,7 @@
                         }
                         // สร้าง element div สำหรับใส่ชื่อ
                         const namedivRemote = document.createElement('div');
-                            namedivRemote.classList.add('namedivRemote');
+                            namedivRemote.classList.add('namedivRemote','mobile_d_none');
                             namedivRemote.id = 'namedivRemote'+ user.uid;
                         // เพิ่ม element รูปภาพเข้าไปยัง element div
                         namedivRemote.appendChild(nameRemote);
@@ -973,6 +922,16 @@
                                                 '</div>' ;
                         remote_video_call.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
 
+                        //เพิ่มรูปภาพโปรไฟล์ตอนปิดกล้อง ขนาด * หลังจากsubscribe
+                        // const imgdivLocalAfterSubscribe = document.createElement('div');
+                        // imgdivLocalAfterSubscribe.classList.add('imgdivLocalAfterSubscribe');
+
+                        // if(document.querySelector('.imgdivLocal')){
+                        //     document.querySelector('.imgdivLocal').remove();
+                        // }
+
+                        // localPlayerContainer.appendChild(imgdivLocalAfterSubscribe);
+
                     //======================
                     //   Profile Remote
                     //======================
@@ -1061,39 +1020,6 @@
                 Div.remove();
             }
         };
-        // Check if browser is closed
-        // const checkBrowserStatus = () => {
-        //     window.addEventListener('beforeunload', () => {
-        //         event.preventDefault();
-        //         event.returnValue = '';
-
-        //         closeVideoCall();
-        //     });
-        // };
-
-        // window.onbeforeunload = function() {
-        //     return "คุณแน่ใจหรือไม่ว่าต้องการออกจากเว็บไซต์?";
-
-        // };
-    //    // Check if browser is closed
-    //     const checkBrowserStatus = () => {
-    //         window.addEventListener('beforeunload', () => {
-    //             event.preventDefault();
-    //             event.returnValue = '';
-
-    //             var confirmationMessage = 'คุณแน่ใจหรือไม่ว่าต้องการออกจากเว็บไซต์?';
-
-    //             // ใช้คำสั่ง confirm เพื่อแสดงกล่องโต้ตอบ
-    //             var result = confirm(confirmationMessage);
-
-    //             if (result) {
-    //                 // ผู้ใช้เลือก "ปิด" ดำเนินการต่อ (ไม่ต้องทำอะไร)
-    //                 closeVideoCall();
-    //             } else {
-    //                 window.location.reload();
-    //             }
-    //         });
-    //     };
 
         window.addEventListener('beforeunload', function(event) {
             const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;

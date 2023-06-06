@@ -68,15 +68,35 @@
             position: relative;
             width: 100%;
         }
-        body{
-            height: 70%;
-            overflow: hidden;
+                /* คอม */
+        @media screen and (min-width: 1024px) {
+            body{
+                height: 100% !important;
+                /* overflow: hidden; */
+            }
+            main{
+                height: 70% !important;
+            }
+            footer{
+                height: 30% !important;
+            }
         }
-        main{
-            height: 100%;
-        }
-        footer{
-            height: 30%;
+                /* มือถือ */
+        @media screen and (max-width: 768px) {
+            main{
+                height: 100%;
+            }
+            body{
+                height: 85%;
+                overflow: hidden;
+            }
+            footer{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 25%; /* ความสูงของ Footer */
+            }
         }
 
     </style>

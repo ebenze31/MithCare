@@ -117,7 +117,6 @@
 
 
     <script>
-
         var ButtonDiv = document.querySelector('#ButtonDiv');
         var MainVideoDiv = document.querySelector('#MainVideoDiv');
 
@@ -222,28 +221,45 @@
                         if (elapsedMinutes === 5) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 5 นาที');
-
-                            setTimeout(() => {
-                                alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 5 นาที');
-                            }, 5000);
+                            if(document.querySelector('.containerAlert')){
+                                const alertNotiElement = document.querySelector('.containerAlert');
+                                    alertNotiElement.classList.remove('scaleUpDown');
+                                    alertNotiElement.classList.add('scaleUpDownV2');
+                            }
                         }
 
                         // เมื่อผ่านไป 6 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 6) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 4 นาที');
+                            if(document.querySelector('.containerAlert')){
+                                const alertNotiElement = document.querySelector('.containerAlert');
+                                    alertNotiElement.classList.remove('scaleUpDown');
+                                    alertNotiElement.classList.add('scaleUpDownV2');
+                            }
 
                         }
 
                         // เมื่อผ่านไป 7 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 7) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 3 นาที');
+                            if(document.querySelector('.containerAlert')){
+                                const alertNotiElement = document.querySelector('.containerAlert');
+                                    alertNotiElement.classList.remove('scaleUpDown');
+                                    alertNotiElement.classList.add('scaleUpDownV2');
+                            }
                         }
 
                         // เมื่อผ่านไป 8 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 8) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 2 นาที');
+                            if(document.querySelector('.containerAlert')){
+                                const alertNotiElement = document.querySelector('.containerAlert');
+                                    alertNotiElement.classList.remove('scaleUpDown');
+                                    alertNotiElement.classList.add('scaleUpDownV2');
+                            }
                         }
 
                         // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
@@ -363,6 +379,16 @@
                 });
             }
 
+            //สร้างปุ่ม แชร์หน้าจอ
+            const switchCameraFR = document.createElement('button');
+                switchCameraFR.type = "button";
+                switchCameraFR.id = "switchCameraFR";
+                switchCameraFR.classList.add('btn-old', 'btn-info','switchCameraFR');
+                switchCameraFR.innerHTML = '<i class="fa-regular fa-camera-rotate"></i>';
+
+            localPlayerContainer.appendChild(switchCameraFR);
+
+            //============== เมนูปุ่มด้านล่าง ==============
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
 
@@ -574,6 +600,28 @@
                     }
                 }
             };
+
+            // สลับกล้องหน้าและกล้องหลัง
+            switchCameraFR.onclick = async function () {
+                const devices = await AgoraRTC.getDevices();
+                const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+
+                if (videoDevices.length < 2) {
+                    console.log('ไม่พบกล้องหน้าหรือกล้องหลังที่สามารถใช้งานได้');
+                    return;
+                }
+
+                const currentDeviceId = videoSource.getCurrentDevice().deviceId;
+                const nextDeviceId = currentDeviceId === videoDevices[0].deviceId ? videoDevices[1].deviceId : videoDevices[0].deviceId;
+
+                videoSource.switchDevice(nextDeviceId, function() {
+                    console.log('สลับกล้องเรียบร้อยแล้ว');
+                }, function(err) {
+                    console.log('เกิดข้อผิดพลาดในการสลับกล้อง: ' + err);
+                });
+            }
+
+
 
             window.onload = function() {
                 // Listen to the Join button click event.

@@ -388,7 +388,8 @@
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // รองรับการเข้าถึงกล้อง
-            navigator.mediaDevices.getUserMedia({ video: true })
+            var constraints = { video: { facingMode: 'user' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
+            navigator.mediaDevices.getUserMedia(constraints)
             .then(function(videoStream) {
                 // ได้รับสตรีมวิดีโอสำเร็จ
                 document.querySelector('#toggleCameraButton').innerHTML = '<i style="font-size: 25px;" class="fa-regular fa-camera"></i>'

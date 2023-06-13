@@ -197,45 +197,11 @@ class AgoraVideoController extends Controller
         ];
 
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
-        // if((int)$dataRoomRTC->current_people <= 1){
-        //     $updateDataRoomRTC = 0;
-        // }else{
-        //     $updateDataRoomRTC = (int)$dataRoomRTC->current_people - 1;
-        // }
-
-        // if($updateDataRoomRTC == 0){
-        //     // วันที่และเวลาปัจจุบัน
-        //     $currentTime = time();
-
-        //     // วันที่และเวลาที่กำหนด
-        //     $targetDateTime = $dataRoomRTC->time_start;
-        //     $targetTime = strtotime($targetDateTime);
-
-        //     // คำนวณเวลาที่ผ่านไปในวินาที
-        //     $elapsedTime = $currentTime - $targetTime;
-
-        //     if($dataRoomRTC->total_timemeet == null){
-        //         $updateTotalTimeMeet = $elapsedTime;
-        //     }else{
-        //         $updateTotalTimeMeet = (int)$elapsedTime + (int)$dataRoomRTC->total_timemeet;
-        //     }
-
-        //     DB::table('room_rtc')
-        //         ->where('room_id', $room_id)
-        //         ->where('room_of_members', $room_of_members)
-        //         ->update([
-        //             'time_start' => null,
-        //             'total_timemeet' => $updateTotalTimeMeet,
-        //     ]);
-        // }
 
         $roomVideocallStats = [
-            // "room_name" => $roomFinder['name'],
-            // "time_start" => $requestData['time_start'],
-            // "current_people" => $updateDataRoomRTC,
-            // "total_timemeet" => $requestData['total_timemeet'],
-            // "amount_meet" => $requestData['current_people'],
-
+            "time_start" => null,
+            "current_people" => 0,
+            "members_in_room" => null,
         ];
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);

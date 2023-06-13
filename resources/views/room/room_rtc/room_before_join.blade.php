@@ -388,7 +388,8 @@
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // รองรับการเข้าถึงกล้อง
-            var constraints = { video: { facingMode: 'user' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
+            // var constraints = { video: { facingMode: 'user' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
+            var constraints = { video: { facingMode: 'environment' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
             navigator.mediaDevices.getUserMedia(constraints)
             .then(function(videoStream) {
                 // ได้รับสตรีมวิดีโอสำเร็จ

@@ -135,6 +135,15 @@ class AgoraVideoController extends Controller
         $rtcTimeStart = "";
         $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
 
+        if(empty($dataRoomRTC)){
+            $requestData_RoomRTC['room_of_members'] = $room_of_members;
+            $requestData_RoomRTC['room_id'] = $room_id;
+            //สร้าง Member_of_room ต่อจาก Room
+            RoomRTC::create($requestData_RoomRTC);
+            //ค้นหาใหม่
+            $dataRoomRTC = RoomRTC::where('room_id',$room_id)->where('room_of_members',$room_of_members)->first();
+        }
+
         //เช็คจำนวนครั้ง ของ การใช้ videoCall ในห้องตาม room_id และ room_of_members
         if($dataRoomRTC->amount_meet == null){
             $newAmountMeet = 1;
@@ -165,6 +174,11 @@ class AgoraVideoController extends Controller
             "room_name" => $roomFinder['name'],
             "current_people" => $count_ep,
         ];
+
+        echo"<pre>";
+        print_r($roomVideocallStats);
+        echo"</pre>";
+
 
         RoomRTC::updateOrCreate($room_data, $roomVideocallStats);
 

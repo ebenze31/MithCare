@@ -34,9 +34,7 @@ class RoomRTCController extends Controller
     }
 
     public function beforeJoin(Request $request, $room_id,$user_id){
-        // $requestData = $request->all();
-        // $room_id = $requestData['room_id'];
-        // $user_id = $requestData['user_id'];
+
 
         $RoomData = RoomRTC::where('room_id',$room_id)->where('room_of_members',$user_id)->first();
 

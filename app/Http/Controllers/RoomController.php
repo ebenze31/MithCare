@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\User;
 use App\Models\Room;
 use App\Models\Member_of_room;
+use App\Models\RoomRTC;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -76,8 +77,13 @@ class RoomController extends Controller
         $requestData_Room['status'] = "owner";
         $requestData_Room['user_id'] = $requestData['owner_id'];
         $requestData_Room['room_id'] = $room->id;
-
+        //สร้าง Member_of_room ต่อจาก Room,.
         Member_of_room::create($requestData_Room);
+
+        // $requestData_RoomRTC['room_of_members'] = $requestData['owner_id'];
+        // $requestData_RoomRTC['room_id'] = $room->id;
+        // //สร้าง Member_of_room ต่อจาก Room
+        // RoomRTC::create($requestData_RoomRTC);
 
         return redirect('room')->with('flash_message', 'Room added!');
     }
@@ -391,7 +397,11 @@ class RoomController extends Controller
            Member_of_room::where('id','=',$items->id)->delete();
         }
 
-
+        // หา id เพื่อลบ
+        $find_member_of_RoomRTC = RoomRTC::where('room_id','=',$id)->get();
+        foreach($find_member_of_RoomRTC as $items){
+            RoomRTC::where('id','=',$items->id)->delete();
+        }
 
         return redirect('room')->with('flash_message', 'Room deleted!');
         // return back();

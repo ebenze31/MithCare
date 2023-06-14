@@ -635,47 +635,50 @@
 
 </script>
 
-<script>
-    const members_in_room = '{{$RoomData->members_in_room}}'; // สตริงที่ต้องการแยก
-    console.log("members_in_room");
-    console.log(members_in_room);
-    const memberInRoomDiv = document.querySelector('#members_in_room');
+@if (!empty($RoomData))
+    <script>
+        const members_in_room = '{{$RoomData->members_in_room}}'; // สตริงที่ต้องการแยก
+        console.log("members_in_room");
+        console.log(members_in_room);
+        const memberInRoomDiv = document.querySelector('#members_in_room');
 
-    // แยกสตริงด้วยตัวคั่น ','
-    const membersArray = members_in_room.split(',');
-    console.log("membersArray");
-    console.log(membersArray);
-    // วนลูปในอาร์เรย์และแสดงค่าที่ได้
+        // แยกสตริงด้วยตัวคั่น ','
+        const membersArray = members_in_room.split(',');
+        console.log("membersArray");
+        console.log(membersArray);
+        // วนลูปในอาร์เรย์และแสดงค่าที่ได้
 
-    if(members_in_room !== null){
-        console.log("เข้า มาทำงานนะ")
-        membersArray.forEach((member) => {
-        const url_getMember_form_id = "{{ url('/') }}/api/getMember_form_id?user_id=" + member;
-                axios.get(url_getMember_form_id).then((response) => {
-                        // console.log(response['data']);
-                        let Member_form_Id = response['data'];
-                        console.log("Member_form_Id");
+        if(members_in_room !== null){
+            console.log("เข้า มาทำงานนะ")
+            membersArray.forEach((member) => {
+            const url_getMember_form_id = "{{ url('/') }}/api/getMember_form_id?user_id=" + member;
+                    axios.get(url_getMember_form_id).then((response) => {
+                            // console.log(response['data']);
+                            let Member_form_Id = response['data'];
+                            console.log("Member_form_Id");
 
-                        if(Member_form_Id){
-                            const memberDiv = document.createElement('div');
-                                memberDiv.setAttribute('id',Member_form_Id['id']);
-                            const memberImg = document.createElement('img');
-                                memberImg.setAttribute('class','itemPeople');
-                                memberImg.src = "{{ url('storage')}}"+ "/" + Member_form_Id['photo'];
+                            if(Member_form_Id){
+                                const memberDiv = document.createElement('div');
+                                    memberDiv.setAttribute('id',Member_form_Id['id']);
+                                const memberImg = document.createElement('img');
+                                    memberImg.setAttribute('class','itemPeople');
+                                    memberImg.src = "{{ url('storage')}}"+ "/" + Member_form_Id['photo'];
 
-                                memberDiv.appendChild(memberImg);
-                                memberInRoomDiv.appendChild(memberDiv);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log("ERROR HERE");
-                        console.log(error);
-                    });
+                                    memberDiv.appendChild(memberImg);
+                                    memberInRoomDiv.appendChild(memberDiv);
+                            }
+                        })
+                        .catch((error) => {
+                            console.log("ERROR HERE");
+                            console.log(error);
+                        });
 
-        });
-    }
+            });
+        }
 
-</script>
+    </script>
+@endif
+
 
 <script>
     function alertNoti(Icon, Detail) {

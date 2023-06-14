@@ -660,8 +660,6 @@
                     // console.log(agoraEngine._users.uid);
                     // console.log(agoraEngine.remoteUsers.length);
 
-
-
                     // Publish the local audio and video tracks in the channel.
                     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
                     await nameRoleLocal();

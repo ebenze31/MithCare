@@ -101,7 +101,7 @@ tl.add(function(){
 }, 0.2)
 
 function animateCopy() {
-  mySplitText.split({type:"chars, words"}) 
+  mySplitText.split({type:"chars, words"})
   splitTextTimeline.staggerFrom(mySplitText.chars, 0.001, {autoAlpha:0, ease:Back.easeInOut.config(1.7), onComplete: function(){
     animateHandle()
   }}, 0.05);
@@ -124,3 +124,4 @@ function goBack() {
             window.history.back()
         }
 </script>
+

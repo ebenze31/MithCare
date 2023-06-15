@@ -72,7 +72,7 @@
         @media screen and (min-width: 1024px) {
             body{
                 height: 100% !important;
-                /* overflow: hidden; */
+                overflow: hidden;
             }
             main{
                 height: 70% !important;

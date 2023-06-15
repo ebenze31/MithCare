@@ -308,7 +308,7 @@
 
 @media screen and (max-width: 768px) {
 
-    body,html,main{
+    body,html,main,.video-container{
         width: 100% !important;
         height: 100% !important;
     }
@@ -370,7 +370,7 @@
         border-radius:  10px!important;
     }
     .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
-        height: 100vh !important;
+        height: 100% !important;
         width: 100% !important;
         background-color: #85e260 !important;
         /* border-radius:  0px!important; */

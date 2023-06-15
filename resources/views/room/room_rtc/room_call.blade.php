@@ -90,7 +90,7 @@
 
                     setTimeout(() => {
                         document.getElementById("join").click();
-                    }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
+                    }, 3000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
                 })
                 .catch((error) => {
                     console.log("ERROR HERE");
@@ -130,6 +130,9 @@
         // ใช้สำหรับ สร้าง bg สีดำให้วิดีโอ
         var closeVideoHTML;
 
+        // ใช้สำหรับ เช็คไม่ให้ฟังก์ชันออกห้องทำงานซ้ำ
+        var leaveChannel = false;
+
         var channelParameters = {
             // A variable to hold a local audio track.
             localAudioTrack: null,
@@ -156,7 +159,13 @@
                 codec: "vp8"
             });
             console.log("agoraEngine");
+            // setInterval(() => {
+            //     var rtcStats = agoraEngine.getRTCStats();
+            //     console.log(rtcStats);
+            // }, 5000);
             console.log(agoraEngine);
+
+
 
             //===================================
             //       บันทึก stats Video Call
@@ -345,8 +354,9 @@
 
                             // ชื่อ local ขวาล่าง //
                     const nameLocal = document.createElement('div');
-                            nameLocal.classList.add('profileNameLocal');
-                            nameLocal.innerHTML = "{{ Auth::user()->name }}";
+                        nameLocal.classList.add('profileNameLocal');
+                        nameLocal.innerHTML = "{{ Auth::user()->name }}";
+                            // โรล local ขวาล่าง //
                     const roleLocal = document.createElement('div');
                             roleLocal.classList.add('profileNameLocal');
                         if(localPlayerData['status'] === "patient"){
@@ -358,10 +368,11 @@
                         }else{
                             roleLocal.innerHTML = "สมาชิก";
                         }
+
                     const namedivLocal = document.createElement('div');
-                                namedivLocal.classList.add('namedivLocal','mobile_d_none');
-                                namedivLocal.appendChild(nameLocal);
-                                namedivLocal.appendChild(roleLocal);
+                        namedivLocal.classList.add('namedivLocal','mobile_d_none');
+                        namedivLocal.appendChild(nameLocal);
+                        namedivLocal.appendChild(roleLocal);
 
                     localPlayerContainer.appendChild(namedivLocal);
                     //END ชื่อ local ขวาล่าง //
@@ -697,15 +708,20 @@
                     console.log("You left the channel -----------------------> ออกแล้วนะ");
                     // Refresh the page for reuse
 
-                    // const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;
-                    //     axios.get(urlStatsVideo).then((response) => {
-                    //         // console.log("ไอดีที่ออกจากห้อง");
-                    //         // console.log(response['data']);
-                    //         goBack();
-                    //     });
+                    if(leaveChannel == false){
+                        const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;
+                        axios.get(urlStatsVideo).then((response) => {
+                            // console.log("ไอดีที่ออกจากห้อง");
+                            // console.log(response['data']);
+                            leaveChannel = true;
+                            window.history.back();
+                        });
 
-                    goBack();
-                    // window.onload();
+                    }
+
+
+                    // goBack();
+
                     function goBack(){
                         window.history.back();
                     }
@@ -944,10 +960,44 @@
                                         document.querySelector('f_imgdivRemote'+ f_remoteID).remove();
                                     }
 
+                                    if(document.querySelector('f_namedivRemote'+ f_remoteID)){
+                                        document.querySelector('f_namedivRemote'+ f_remoteID).remove();
+                                    }
+
                                     const f_userRemote = response['data'];
 
-                                    // สร้าง element รูปภาพ
+                                    //=======================
+                                    // สร้างชื่อจากโปรไฟล์ ใส่ bg
+                                    // ======================
+                                    const f_nameRemote = document.createElement('div');
+                                        f_nameRemote.innerHTML = f_userRemote['name'];
+                                        f_nameRemote.classList.add('profileNameRemote')
+                                    const f_statusRemote = document.createElement('div');
+                                        f_statusRemote.classList.add('profileNameRemote')
+                                    if(f_userRemote['memberStatus'] === 'patient'){
+                                        f_statusRemote.innerHTML = "ผู้ป่วยระดับ " + f_userRemote['memberLv'];
+                                    }else if(f_userRemote['memberStatus'] === 'owner'){
+                                        f_statusRemote.innerHTML = "เจ้าของบ้าน";
+                                    }else if(f_userRemote['memberStatus'] === 'member'){
+                                        f_statusRemote.innerHTML = "สมาชิก(ผู้ดูแล)";
+                                    }else{
+                                        f_statusRemote.innerHTML = "สมาชิก";
+                                    }
+                                    // สร้าง element div สำหรับใส่ชื่อ
+                                    const f_namedivRemote = document.createElement('div');
+                                    f_namedivRemote.classList.add('namedivRemote','mobile_d_none');
+                                    f_namedivRemote.id = 'f_namedivRemote'+ f_remoteID;
+                                    // เพิ่ม element รูปภาพเข้าไปยัง element div
+                                    f_namedivRemote.appendChild(f_nameRemote);
+                                    f_namedivRemote.appendChild(f_statusRemote);
+
+                                    unrealDiv.appendChild(f_namedivRemote);
+
+                                    //=======================
+                                    // สร้างรูปภาพโปรไฟล์ ใส่ bg
+                                    // ======================
                                     const f_imgRemote = document.createElement('img');
+
                                     if(f_userRemote['avatar']){
                                         f_imgRemote.src = f_userRemote['avatar'];
                                         // f_imgRemote.classList.add('imgdivRemote');
@@ -1007,170 +1057,10 @@
 
                                     f_divForVideoButton2.appendChild(f_muteVideoButton2);
                                     unrealDiv.appendChild(f_divForVideoButton2);
-
-                                //===========================
-                                // Icon Camera & Microphone
-                                //===========================
                             }
                         }
                     }
                 }
-
-                // setTimeout(function() {
-                //         // console.log('========================================');
-                //         // console.log('>>>>>> Get User <<<<<<');
-                //         // console.log('========================================');
-
-                //         // console.log(agoraEngine);
-                //         // console.log(agoraEngine['remoteUsers']);
-                //         // console.log(agoraEngine['remoteUsers'][0]);
-                //         // console.log(agoraEngine['remoteUsers']['length']);
-
-
-                //         if(agoraEngine['remoteUsers'][0]){
-
-                //             if( agoraEngine['remoteUsers']['length'] != 0 ){
-                //                 for(let c_uid = 0; c_uid < agoraEngine['remoteUsers']['length']; c_uid++){
-                //                 // console.log('USER_ID ==>> ' + agoraEngine['remoteUsers'][c_uid]['uid']);
-                //                 // console.log('ไมค์ ==>> ' + agoraEngine['remoteUsers'][c_uid]['hasAudio']);
-                //                 // console.log('กล้อง ==>> ' + agoraEngine['remoteUsers'][c_uid]['hasVideo']);
-
-                //                 const f_remoteID = agoraEngine['remoteUsers'][c_uid]['uid'];
-
-                //                     if(agoraEngine['remoteUsers'][c_uid]['hasVideo'] == false){
-                //                         //เพิ่มแท็กวิดีโอที่มีพื้นหลังแค่สีดำ
-                //                         console.log("สร้างพื้นหลังดำ");
-                //                         let local_STR = localPlayerContainer;
-                //                         local_STR.setAttribute('class','localAfterSubscribe');
-                //                             closeVideoHTML  =
-                //                                             ' <div id="unreal'+ f_remoteID + '" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray; border-radius: 10px;" class="remotePlayerVideoCall">' +
-                //                                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                //                                             '</div>' ;
-                //                             MainVideoDiv.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
-
-                //                             //======================
-                //                             //   Profile Remote
-                //                             //======================
-
-                //                             let unrealDiv = document.querySelector('#unreal' + f_remoteID);
-                //                             const urlRemoteUserUnreal = "{{ url('/') }}/api/getUserRemote" + "?userId=" + f_remoteID + "&room_id=" + homeId;
-                //                             // console.log(urlRemoteUser);
-                //                             axios.get(urlRemoteUserUnreal).then((response) => {
-
-                //                                 if(document.querySelector('f_imgdivRemote'+ f_remoteID)){
-                //                                     document.querySelector('f_imgdivRemote'+ f_remoteID).remove();
-                //                                 }
-
-                //                                 const f_userRemote = response['data'];
-
-                //                                 // สร้าง element รูปภาพ
-                //                                 const f_imgRemote = document.createElement('img');
-                //                                 if(f_userRemote['avatar']){
-                //                                     f_imgRemote.src = f_userRemote['avatar'];
-                //                                     // f_imgRemote.classList.add('imgdivRemote');
-                //                                 }else{
-                //                                     f_imgRemote.src = "{{ url('/storage') }}" + "/" + f_userRemote['photo'];
-                //                                     // f_imgRemote.classList.add('imgdivRemote');
-                //                                 }
-
-                //                                 // สร้าง element div สำหรับกรอบรูปภาพ
-                //                                 const f_imgdivRemote = document.createElement('div');
-                //                                     f_imgdivRemote.classList.add('imgdivRemote');
-                //                                     f_imgdivRemote.id = 'f_imgdivRemote'+ f_remoteID;
-
-                //                                 // เพิ่ม element รูปภาพเข้าไปยัง element div
-                //                                 f_imgdivRemote.appendChild(f_imgRemote);
-
-                //                                 unrealDiv.appendChild(f_imgdivRemote);
-
-                //                             })
-                //                             .catch((error) => {
-                //                                 console.log("ERROR HERE");
-                //                                 console.log(error);
-
-                //                             });
-
-                //                             //======================
-                //                             // END Profile Remote
-                //                             //======================
-                //                     }
-                //                 }
-
-                //             }
-
-                //         }else{
-                //             setTimeout(function() {
-                //                 if( agoraEngine['remoteUsers']['length'] != 0 ){
-                //                     for(let c_uid = 0; c_uid < agoraEngine['remoteUsers']['length']; c_uid++){
-
-                //                         const f_remoteID = agoraEngine['remoteUsers'][c_uid]['uid'];
-
-                //                         if(agoraEngine['remoteUsers'][c_uid]['hasVideo'] == false){
-                //                             //เพิ่มแท็กวิดีโอที่มีพื้นหลังแค่สีดำ
-                //                             console.log("สร้างพื้นหลังดำ");
-                //                             let local_STR = localPlayerContainer;
-                //                             local_STR.setAttribute('class','localAfterSubscribe');
-                //                             closeVideoHTML  =
-                //                                             ' <div id="unreal'+ f_remoteID + '" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray; border-radius: 10px;" class="remotePlayerVideoCall">' +
-                //                                                 '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                //                                             '</div>' ;
-                //                             MainVideoDiv.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
-                //                             // MainVideoDiv.appendChild(remote_video_call_unreal);
-
-                //                             //======================
-                //                             //   Profile Remote
-                //                             //======================
-                //                             let unrealDiv = document.querySelector('#unreal' + f_remoteID);
-                //                             const urlRemoteUserUnreal = "{{ url('/') }}/api/getUserRemote" + "?userId=" + f_remoteID + "&room_id=" + homeId;
-                //                             // console.log(urlRemoteUser);
-                //                             axios.get(urlRemoteUserUnreal).then((response) => {
-
-                //                                 if(document.querySelector('f_imgdivRemote'+ f_remoteID)){
-                //                                     document.querySelector('f_imgdivRemote'+ f_remoteID).remove();
-                //                                 }
-
-                //                                 const f_userRemote = response['data'];
-
-                //                                 // สร้าง element รูปภาพ
-                //                                 const f_imgRemote = document.createElement('img');
-                //                                 if(f_userRemote['avatar']){
-                //                                     f_imgRemote.src = f_userRemote['avatar'];
-                //                                     // f_imgRemote.classList.add('imgdivRemote');
-                //                                 }else{
-                //                                     f_imgRemote.src = "{{ url('/storage') }}" + "/" + f_userRemote['photo'];
-                //                                     // f_imgRemote.classList.add('imgdivRemote');
-                //                                 }
-
-                //                                 // สร้าง element div สำหรับกรอบรูปภาพ
-                //                                 const f_imgdivRemote = document.createElement('div');
-                //                                     f_imgdivRemote.classList.add('imgdivRemote');
-                //                                     f_imgdivRemote.id = 'f_imgdivRemote'+ f_remoteID;
-
-                //                                 // เพิ่ม element รูปภาพเข้าไปยัง element div
-                //                                 f_imgdivRemote.appendChild(f_imgRemote);
-
-                //                                 unrealDiv.appendChild(f_imgdivRemote);
-
-                //                             })
-                //                             .catch((error) => {
-                //                                 console.log("ERROR HERE");
-                //                                 console.log(error);
-
-                //                             });
-
-                //                             //======================
-                //                             // END Profile Remote
-                //                             //======================
-                //                         }
-                //                     }
-                //                 }
-                //             }, 1000);
-                //         }
-
-
-
-                //     }, 2000);
-
 
             });
 
@@ -1362,13 +1252,14 @@
             }
         };
 
+
         window.addEventListener('beforeunload', function(event) {
-            const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;
-                        axios.get(urlStatsVideo).then((response) => {
-                            // console.log("ไอดีที่ออกจากห้อง");
-                            // console.log(response['data']);
-                            // goBack();
-                        });
+            if(leaveChannel == false){
+                const urlStatsVideo = "{{ url('/') }}/api/userLeave?room_id=" + homeId + "&room_of_members=" + user_id_from_room + "&members_in_room=" + localUser_id;
+                            axios.get(urlStatsVideo).then((response) => {
+                                //ออกจากหน้านี้กรณีที่ไม่ได้กดออกเอง
+                            });
+            }
         });
 
     </script>

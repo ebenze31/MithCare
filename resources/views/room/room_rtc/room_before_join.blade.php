@@ -381,61 +381,79 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-
+        var CameraRetries = 0; // ตัวแปรเก็บจำนวนครั้งที่เรียกใช้งานกล้อง
+        var MicrophoneRetries = 0; // ตัวแปรเก็บจำนวนครั้งที่เรียกใช้งานไมค์
         //======================
         // เปิดกล้องตอนโหลดหน้านี้
         //======================
+        function openCamera() {
 
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            // รองรับการเข้าถึงกล้อง
-            // var constraints = { video: { facingMode: 'user' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
-            var constraints = { video: { facingMode: 'environment' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(function(videoStream) {
-                // ได้รับสตรีมวิดีโอสำเร็จ
-                document.querySelector('#toggleCameraButton').innerHTML = '<i style="font-size: 25px;" class="fa-regular fa-camera"></i>'
-                var videoElement = document.getElementById('videoDiv');
-                videoElement.srcObject = videoStream;
-                console.log(typeof videoStream);
-                console.log(videoStream);
-            })
-            .catch(function(error) {
-                // ไม่สามารถเข้าถึงกล้องได้ หรือผู้ใช้ไม่อนุญาต
-                console.error('เกิดข้อผิดพลาดในการเข้าถึงกล้อง:', error);
-            });
-        } else {
-            console.log('ไม่สนับสนุนการเข้าถึงกล้องในเบราว์เซอร์นี้');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // รองรับการเข้าถึงกล้อง
+                // var constraints = { video: { facingMode: 'user' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
+                var constraints = { video: { facingMode: 'environment' } }; // เพิ่มออปชัน facingMode เพื่อเลือกกล้องหน้า
+                navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(videoStream) {
+                    // ได้รับสตรีมวิดีโอสำเร็จ
+                    document.querySelector('#toggleCameraButton').innerHTML = '<i style="font-size: 25px;" class="fa-regular fa-camera"></i>'
+                    var videoElement = document.getElementById('videoDiv');
+                    videoElement.srcObject = videoStream;
+                    console.log(typeof videoStream);
+                    console.log(videoStream);
+                })
+                .catch(function(error) {
+                    // ไม่สามารถเข้าถึงกล้องได้ หรือผู้ใช้ไม่อนุญาต
+                    console.error('เกิดข้อผิดพลาดในการเข้าถึงกล้อง:', error);
+                    CameraRetries++;
+
+                    if(CameraRetries < 5){
+                        setTimeout(openCamera, 500);
+                    }
+
+                });
+            } else {
+                console.log('ไม่สนับสนุนการเข้าถึงกล้องในเบราว์เซอร์นี้');
+            }
         }
-
+        openCamera(); //เรียกฟังก์ชันเปิดกล้อง
         //======================
         // เปิดไมค์ตอนโหลดหน้านี้
         //======================
 
         // เพิ่มส่วนนี้เพื่อเรียกใช้ getUserMedia สำหรับไมโครโฟน
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(function(newAudioStream) {
-                audioStream = newAudioStream;
-                document.querySelector('#toggleMicrophoneButton').innerHTML = '<i style="font-size: 25px;" class="fa-regular fa-microphone"></i>'
-                console.log('เปิดสตรีมไมโครโฟน');
-                console.log(audioStream);
-            })
-            .catch(function(error) {
-                console.error('เกิดข้อผิดพลาดในการเข้าถึงไมโครโฟน:', error);
-            });
-        }
+        function openMicrophone() {
 
-        navigator.mediaDevices.enumerateDevices()
-        .then(function(devices) {
-            var microphones = devices.filter(function(device) {
-            return device.kind === 'audioinput';
-            });
-            console.log('จำนวนไมโครโฟนที่พบ:', microphones.length);
-            console.log(microphones);
-        })
-        .catch(function(error) {
-            console.error('เกิดข้อผิดพลาดในการตรวจสอบอุปกรณ์:', error);
-        });
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(newAudioStream) {
+                    audioStream = newAudioStream;
+                    document.querySelector('#toggleMicrophoneButton').innerHTML = '<i style="font-size: 25px;" class="fa-regular fa-microphone"></i>'
+                    console.log('เปิดสตรีมไมโครโฟน');
+                    console.log(audioStream);
+                })
+                .catch(function(error) {
+                    console.error('เกิดข้อผิดพลาดในการเข้าถึงไมโครโฟน:', error);
+                    MicrophoneRetries++;
+                    //เรียกฟังก์ชันเปิดไมค์ใหม่ 5 ครั้ง
+                    if(MicrophoneRetries < 5) {
+                        setTimeout(openMicrophone, 500);
+                    }
+                });
+            }
+        }
+        openMicrophone(); //เรียกฟังก์ชันเปิดไมค์
+
+        // navigator.mediaDevices.enumerateDevices()
+        // .then(function(devices) {
+        //     var microphones = devices.filter(function(device) {
+        //     return device.kind === 'audioinput';
+        //     });
+        //     console.log('จำนวนไมโครโฟนที่พบ:', microphones.length);
+        //     console.log(microphones);
+        // })
+        // .catch(function(error) {
+        //     console.error('เกิดข้อผิดพลาดในการตรวจสอบอุปกรณ์:', error);
+        // });
 
     });
 

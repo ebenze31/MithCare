@@ -227,27 +227,33 @@
                         }
 
                         // เมื่อผ่านไป 5 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 25) {
+                        if (elapsedMinutes === 5) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 5 นาที');
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 5 นาที</a></i>',
+                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
                         }
 
                         // เมื่อผ่านไป 6 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 6) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 4 นาที');
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 4 นาที</a></i>',
+                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
                         }
 
                         // เมื่อผ่านไป 7 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 7) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 3 นาที');
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 3 นาที</a></i>',
+                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
                         }
 
                         // เมื่อผ่านไป 8 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 8) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 2 นาที');
+                            // alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 2 นาที');
+
+                                alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 2 นาที</a></i>',
+                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
                         }
 
                         // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
@@ -277,12 +283,12 @@
                             }
                             countdown(1);
 
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก ' + '<span id="showSecondRemaining">60</span>' + ' วินาที');
-                            // if(document.querySelector('.containerAlert')){
-                            //     const alertNotiElement = document.querySelector('.containerAlert');
-                            //         alertNotiElement.classList.remove('scaleUpDown');
-                            //         alertNotiElement.classList.add('scaleUpDownV2');
-                            // }
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก <span id="showSecondRemaining">60</span> วินาที');
+                            if(document.querySelector('.containerAlert')){
+                                const alertNotiElement = document.querySelector('.containerAlert');
+                                    alertNotiElement.classList.remove('scaleUpDown');
+                                    alertNotiElement.classList.add('scaleUpDownV2');
+                            }
                         }
 
                         // เมื่อผ่านไป 10 นาทีแล้ว ให้กดปุ่ม "Leave"
@@ -1300,6 +1306,11 @@
 
             document.body.appendChild(newAlertElement);
         }
+
+        function alertClose() {
+            document.querySelector('.containerAlert').remove(); // ปิดตัว alertNoti เมื่อคลิกที่ปุ่มปิด
+        };
+
    </script>
 
 @endsection

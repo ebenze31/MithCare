@@ -121,11 +121,11 @@
         animation-duration: 10s;
         transform: scale(0);
     }
-    /* .scaleUpDownV2 {
+    .scaleUpDownV2 {
         animation-name: scaleupanddownV2;
         animation-duration: 60s;
         transform: scale(0);
-    } */
+    }
 
     @keyframes scaleupanddown {
         0% {
@@ -147,7 +147,7 @@
         }
     }
 
-    /* @keyframes scaleupanddownV2 {
+    @keyframes scaleupanddownV2 {
         0% {
             transform: scale(0);
         }
@@ -165,7 +165,7 @@
         100% {
             transform: scale(0);
         }
-    } */
+    }
 
     /*=======================================
             localPlayer css Computer

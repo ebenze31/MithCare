@@ -130,6 +130,7 @@
             height: 24rem !important;
             border: 1px solid black;
             object-fit: cover;
+            transform: scaleX(-1) !important;
         }
         .buttonDiv{
             position: absolute;
@@ -191,6 +192,7 @@
             height: 24rem !important;
             border: 1px solid black;
             object-fit: cover;
+            /* transform: scaleX(-1) !important; */
         }
         .buttonDiv{
             position: absolute;
@@ -255,6 +257,7 @@
             height: 22rem !important;
             border: 1px solid black;
             object-fit: cover;
+            /* transform: scaleX(-1) !important; */
         }
         .buttonDiv{
             position: absolute;
@@ -409,8 +412,8 @@
                     console.error('เกิดข้อผิดพลาดในการเข้าถึงกล้อง:', error);
                     CameraRetries++;
 
-                    if(CameraRetries < 5){
-                        setTimeout(openCamera, 500);
+                    if(CameraRetries < 7){
+                        setTimeout(openCamera, 1000);
                     }
 
                 });

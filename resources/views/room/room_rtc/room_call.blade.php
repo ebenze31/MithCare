@@ -22,6 +22,9 @@
             <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
         </div>
         <div id='ButtonDiv' class="ButtonDiv">
+                 <button class="btn btn-secondary" id="btn_switchCamera" onclick="switchCamera();">
+                             <i class="fa-solid fa-camera-rotate"></i>
+                 </button>
             <div id="timeCountVideo" class="clockDuration mobile_d_none"></div>
         </div>
     </div>
@@ -87,8 +90,8 @@
 
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
-                LoadingVideoCall();
 
+                LoadingVideoCall();
                 startBasicCall();
 
             });
@@ -233,18 +236,31 @@
                             }
                         }
 
-                        // เมื่อผ่านไป 5 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 5) {
-                            // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
-                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 5 นาที</a></i>',
-                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
+                        function playSoundNoti(){
+                            let audio_ringtone = new Audio("{{ asset('sound/achive-sound-132273.mp3') }}");
+                            let isPlaying_ringtone = false;
+
+                            if (!isPlaying_ringtone) {
+                                audio_ringtone.loop = false;
+                                audio_ringtone.play();
+                                isPlaying_ringtone = true;
+                            }
                         }
 
+                        // เมื่อผ่านไป 5 นาทีแล้ว ให้กดปุ่ม "Leave"
+                        if (elapsedMinutes === 5) {
+                            alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 5 นาที</a></i>',
+                            '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
+                            //เสียงแจ้งเตือน
+                            playSoundNoti();
+                        }
                         // เมื่อผ่านไป 6 นาทีแล้ว ให้กดปุ่ม "Leave"
                         if (elapsedMinutes === 6) {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 4 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
+                            //เสียงแจ้งเตือน
+                            playSoundNoti();
                         }
 
                         // เมื่อผ่านไป 7 นาทีแล้ว ให้กดปุ่ม "Leave"
@@ -252,6 +268,8 @@
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 3 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
+                            //เสียงแจ้งเตือน
+                            playSoundNoti();
                         }
 
                         // เมื่อผ่านไป 8 นาทีแล้ว ให้กดปุ่ม "Leave"
@@ -261,6 +279,8 @@
 
                                 alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 2 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
+                            //เสียงแจ้งเตือน
+                            playSoundNoti();
                         }
 
                         // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
@@ -296,6 +316,8 @@
                                     alertNotiElement.classList.remove('scaleUpDown');
                                     alertNotiElement.classList.add('scaleUpDownV2');
                             }
+                            //เสียงแจ้งเตือน
+                            playSoundNoti();
                         }
 
                         // เมื่อผ่านไป 10 นาทีแล้ว ให้กดปุ่ม "Leave"
@@ -306,7 +328,6 @@
                                 // console.log("ไอดีที่ออกจากห้อง");
                                 // console.log(response['data']);
                                 window.history.back();
-                                location.reload();
                             });
 
                         }
@@ -616,26 +637,26 @@
             };
 
             // สลับกล้องหน้าและกล้องหลัง
-            switchCameraFR.onclick = async function () {
-                const devices = await AgoraRTC.getDevices();
-                console.log("CAMERA HERE");
-                console.log(devices);
-                const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+            // switchCameraFR.onclick = async function () {
+            //     const devices = await AgoraRTC.getDevices();
+            //     console.log("CAMERA HERE");
+            //     console.log(devices);
+            //     const videoDevices = devices.filter((device) => device.kind === 'videoinput');
 
-                if (videoDevices.length < 2) {
-                    console.log('ไม่พบกล้องหน้าหรือกล้องหลังที่สามารถใช้งานได้');
-                    return;
-                }
+            //     if (videoDevices.length < 2) {
+            //         console.log('ไม่พบกล้องหน้าหรือกล้องหลังที่สามารถใช้งานได้');
+            //         return;
+            //     }
 
-                const currentDeviceId = videoSource.getCurrentDevice().deviceId;
-                const nextDeviceId = currentDeviceId === videoDevices[0].deviceId ? videoDevices[1].deviceId : videoDevices[0].deviceId;
+            //     const currentDeviceId = videoSource.getCurrentDevice().deviceId;
+            //     const nextDeviceId = currentDeviceId === videoDevices[0].deviceId ? videoDevices[1].deviceId : videoDevices[0].deviceId;
 
-                videoSource.switchDevice(nextDeviceId, function() {
-                    console.log('สลับกล้องเรียบร้อยแล้ว');
-                }, function(err) {
-                    console.log('เกิดข้อผิดพลาดในการสลับกล้อง: ' + err);
-                });
-            }
+            //     videoSource.switchDevice(nextDeviceId, function() {
+            //         console.log('สลับกล้องเรียบร้อยแล้ว');
+            //     }, function(err) {
+            //         console.log('เกิดข้อผิดพลาดในการสลับกล้อง: ' + err);
+            //     });
+            // }
 
 
 
@@ -1314,6 +1335,188 @@
             document.querySelector('.containerAlert').remove(); // ปิดตัว alertNoti เมื่อคลิกที่ปุ่มปิด
         };
 
+   </script>
+
+
+   <script>
+    // <button class="btn btn-secondary" id="btn_switchCamera" onclick="switchCamera();">
+    //             <i class="fa-solid fa-camera-rotate"></i>
+    // </button>
+    /////////////////////// ปุ่มสลับ กล้อง/////////////////////
+    const btn_switchCamera = document.querySelector('#btn_switchCamera');
+
+    function onChangeVideoDevice() {
+        const selectedVideoDeviceId = getCurrentVideoDeviceId();
+        // console.log('เปลี่ยนอุปกรณ์กล้องเป็น:', selectedVideoDeviceId);
+
+        // สร้าง local video track ใหม่โดยใช้กล้องที่คุณต้องการ
+        AgoraRTC.createCameraVideoTrack({ cameraId: selectedVideoDeviceId })
+            .then(newVideoTrack => {
+
+            // console.log('------------ newVideoTrack ------------');
+            // console.log(newVideoTrack);
+
+            // // หยุดการส่งภาพจากอุปกรณ์ปัจจุบัน
+            // channelParameters.localVideoTrack.setEnabled(false);
+            agoraEngine.unpublish([channelParameters.localVideoTrack]);
+
+            // ปิดการเล่นภาพวิดีโอกล้องเดิม
+            channelParameters.localVideoTrack.stop();
+            channelParameters.localVideoTrack.close();
+
+            // เปลี่ยน local video track เป็นอุปกรณ์ใหม่
+            channelParameters.localVideoTrack = newVideoTrack;
+
+            if (isMuteVideo == false) {
+
+                // เริ่มส่งภาพจากอุปกรณ์ใหม่
+                channelParameters.localVideoTrack.setEnabled(true);
+                // แสดงภาพวิดีโอใน <div>
+
+                try{
+                if (Screen_current == 'first'){
+                    channelParameters.localVideoTrack.play(localPlayerContainer);
+                    channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+                }else{
+                    channelParameters.localVideoTrack.play(remotePlayerContainer);
+                    channelParameters.remoteVideoTrack.play(localPlayerContainer);
+                }
+                }catch{
+                if (Screen_current == 'first'){
+                    channelParameters.localVideoTrack.play(localPlayerContainer);
+                    // channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+                }else{
+                    // channelParameters.localVideoTrack.play(remotePlayerContainer);
+                    channelParameters.remoteVideoTrack.play(localPlayerContainer);
+                }
+                }
+
+                // ส่ง local video track ใหม่ไปยังผู้ใช้คนที่สอง
+                agoraEngine.publish([channelParameters.localVideoTrack]);
+
+                // alert('เปลี่ยนอุปกรณ์กล้องสำเร็จ');
+                // console.log('เปลี่ยนอุปกรณ์กล้องสำเร็จ');
+            } else {
+                // alert('ปิด');
+                channelParameters.localVideoTrack.setEnabled(false);
+            }
+
+            })
+            .catch(error => {
+            // alert('ไม่สามารถเปลี่ยนกล้องได้');
+            alertNoti('<i class="fa-solid fa-triangle-exclamation fa-shake"></i>', 'ไม่สามารถเปลี่ยนกล้องได้');
+
+            setTimeout(function() {
+                document.querySelector('#btn_switchCamera').click();
+            }, 2000);
+
+            console.error('เกิดข้อผิดพลาดในการสร้าง local video track:', error);
+            });
+        }
+
+    function getCurrentVideoDeviceId() {
+        const videoDevices = document.getElementsByName('video-device');
+        for (let i = 0; i < videoDevices.length; i++) {
+            if (videoDevices[i].checked) {
+            return videoDevices[i].value;
+            }
+        }
+        return null;
+        }
+
+
+        var now_Mobile_Devices = 1;
+
+        btn_switchCamera.onclick = async function() {
+
+        console.log('btn_switchCamera');
+
+        console.log('activeVideoDeviceId');
+        console.log(activeVideoDeviceId);
+
+        // เรียกดูอุปกรณ์ทั้งหมด
+        const devices = await navigator.mediaDevices.enumerateDevices();
+
+        // เรียกดูอุปกรณ์ที่ใช้อยู่
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        });
+
+        // แยกอุปกรณ์ตามประเภท
+        let videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+            console.log('------- videoDevices -------');
+            console.log(videoDevices);
+            console.log('length ==>> ' + videoDevices.length);
+            console.log('------- ------- -------');
+
+        // สร้างรายการอุปกรณ์ส่งข้อมูลและเพิ่มลงในรายการ
+        let videoDeviceList = document.getElementById('video-device-list');
+            videoDeviceList.innerHTML = '';
+
+        let count_i = 1 ;
+
+        videoDevices.forEach(device => {
+            let radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.id = 'video-device-' + count_i;
+            radio.name = 'video-device';
+            radio.value = device.deviceId;
+            radio.checked = device.deviceId === activeVideoDeviceId;
+
+            let label = document.createElement('label');
+            label.classList.add('dropdown-item');
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(device.label || `อุปกรณ์ส่งข้อมูล ${videoDeviceList.children.length + 1}`));
+
+            videoDeviceList.appendChild(label);
+            radio.addEventListener('change', onChangeVideoDevice);
+
+            count_i = count_i + 1 ;
+        });
+
+        // ---------------------------
+
+        // เรียกใช้ฟังก์ชันและแสดงผลลัพธ์
+        const deviceType = checkDeviceType();
+        console.log("Device Type:", deviceType);
+
+        if (deviceType == 'PC'){
+            document.querySelector('.btn_for_select_video_device').click();
+        }else{
+            let check_videoDevices = document.getElementsByName('video-device');
+
+            if (now_Mobile_Devices == 1){
+            // console.log("now_Mobile_Devices == 1 // ให้คลิก ");
+            // console.log(check_videoDevices[1].id);
+            document.querySelector('#'+check_videoDevices[1].id).click();
+            now_Mobile_Devices = 2 ;
+            }else{
+            // console.log("now_Mobile_Devices == 2 // ให้คลิก ");
+            // console.log(check_videoDevices[0].id);
+            document.querySelector('#'+check_videoDevices[0].id).click();
+            now_Mobile_Devices = 1 ;
+            }
+        }
+
+        }
+
+        // ตรวจสอบอุปกรณ์ที่ใช้งาน
+        function checkDeviceType() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // ตรวจสอบชนิดของอุปกรณ์
+        if (/android/i.test(userAgent)) {
+            return "Mobile (Android)";
+        }
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "Mobile (iOS)";
+        }
+
+        return "PC";
+        }
    </script>
 
 @endsection

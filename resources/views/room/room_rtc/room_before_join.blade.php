@@ -180,8 +180,8 @@
         }
         .itemPeople{
             border-radius: 50% !important;
-            width: 1rem;
-            height: 1rem;
+            width: 4rem;
+            height: 4rem;
         }
         #TestBubble span{
             font-size: 30px;
@@ -194,9 +194,9 @@
         }
         .buttonDiv{
             position: absolute;
-            left: 40%;
+            left: 50%;
             bottom: 1rem;
-            transform: translate(-40%,);
+            transform: translate(-50%);
         }
     }
 
@@ -258,9 +258,9 @@
         }
         .buttonDiv{
             position: absolute;
-            left: 30%;
+            left: 45%;
             bottom: 1rem;
-            transform: translate(-30%,);
+            transform: translate(-45%);
         }
 
     }

@@ -167,8 +167,8 @@ Route::get('/sos_thank_submit_score/{user_id}', 'Ask_for_helpController@sos_than
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/Calendar_test', function () {
-    return view('Calendar_test');
+Route::get('/test_video_1', function () {
+    return view('test/test_video_1');
 });
 
 /////////////////////////

@@ -31,8 +31,8 @@ class AgoraVideoController extends Controller
         $room_id = $requestData['room_id'];
         $user_id = $requestData['user_id'];
 
-        $appID = $requestData['appId'];
-        $appCertificate = $requestData['appCertificate'];
+        $appID = env('AGORA_APP_ID');
+        $appCertificate = env('AGORA_APP_CERTIFICATE');
 
         // $channelName = 'MithCare'.$room_id.$user_id;
         $channelName = 'MithCare';

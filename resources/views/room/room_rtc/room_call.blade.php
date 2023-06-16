@@ -3,13 +3,17 @@
 @section('content')
 
     <link href="{{ asset('mithcare/css/for_video_call.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('mithcare/css/animation_for_videoCall.css') }}" rel="stylesheet">
     <!-- สำหรับ bubble message -->
     <div class="containerAlert mobile_d_none">
         <div class="alertStatus">
             <span id="iconAlert"></span>
             <span id="detailAlert"></span>
         </div>
+    </div>
+    <!-- สำหรับ loading ก่อนเข้า videocall -->
+    <div id="loadingAnime" class="preloader d-none">
+        <div class="loading"><span></span><span></span><span></span><span></span></div>
     </div>
 
     <div class="video-container">
@@ -83,36 +87,39 @@
 
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
-                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room + "&appId=" + options.appId + "&appCertificate=" + options.appCertificate;
-                axios.get(url).then((response) => {
-                    // console.log(response['data']);
-                    options['token'] = response['data'];
-
-                    setTimeout(() => {
-                        document.getElementById("join").click();
-                    }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
-                })
-                .catch((error) => {
-                    console.log("ERROR HERE");
-                    console.log(error);
-                    alert("คุณดำเนินการเร็วเกินไป");
-                    window.history.back();
-                });
-
-                // fetch(url)
-                //     .then(response => response.text())
-                //     .then(result => {
-                //         console.log(result);
-                //         options['token'] = result;
-
-                //         setTimeout(() => {
-                //             document.getElementById("join").click();
-                //         }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
-                // });
+                LoadingVideoCall();
 
                 startBasicCall();
 
             });
+
+            function LoadingVideoCall() {
+                // const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room + "&appId=" + options.appId + "&appCertificate=" + options.appCertificate;
+                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
+                const loadingAnime = document.getElementById('loadingAnime');
+
+                axios.get(url).then((response) => {
+                    options['token'] = response['data'];
+
+                    // เอาหน้าโหลดออก
+                    loadingAnime.remove();
+
+                    setTimeout(() => {
+                        document.getElementById("join").click();
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.log("ERROR HERE");
+                    console.log(error);
+
+                    loadingAnime.classList.remove('d-none');
+
+                    // เรียกใช้งานฟังก์ชัน retryFunction() อีกครั้งหลังจากเวลาหน่วงให้ผ่านไป
+                    setTimeout(() => {
+                        LoadingVideoCall();
+                    }, 3000);
+                });
+            }
    </script>
 
 
@@ -301,14 +308,7 @@
                                 window.history.back();
                                 location.reload();
                             });
-                            // var leaveButton = document.getElementById("leaveVideoCall");
-                            // if (leaveButton) {
-                            //     typeExit = "RoomExpire";
-                            //     leaveButton.click(typeExit);
-                            //     // leaveButton.addEventListener("click", function() {
-                            //     //     handleClick(typeExit);
-                            //     // });
-                            // }
+
                         }
 
                         // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
@@ -390,18 +390,21 @@
                 });
             }
 
-            //สร้างปุ่ม แชร์หน้าจอ
-            const switchCameraFR = document.createElement('button');
-                switchCameraFR.type = "button";
-                switchCameraFR.id = "switchCameraFR";
-                switchCameraFR.classList.add('switchCameraFR');
-                switchCameraFR.innerHTML = '<i style="color: green;" class="fa-regular fa-camera-rotate"></i>';
 
-            MainVideoDiv.appendChild(switchCameraFR);
 
             //============== เมนูปุ่มด้านล่าง ==============
             const divForVideoButton = document.createElement('div');
             divForVideoButton.classList.add('buttonVideo');
+
+            //สร้างปุ่ม สลับหน้าจอ
+            const switchCameraFR = document.createElement('button');
+                switchCameraFR.type = "button";
+                switchCameraFR.id = "switchCameraFR";
+                // switchCameraFR.classList.add('btn-old', 'btn-info', 'mt-2','switchCameraFR');
+                switchCameraFR.classList.add('btn-old', 'btn-info', 'mt-2');
+                switchCameraFR.innerHTML = '<i class="fa-regular fa-camera-rotate"></i>';
+
+            divForVideoButton.appendChild(switchCameraFR);
 
             ButtonDiv.appendChild(divForVideoButton);
             //สร้างปุ่ม แชร์หน้าจอ
@@ -948,7 +951,7 @@
                                 let local_STR = localPlayerContainer;
                                 local_STR.setAttribute('class','localAfterSubscribe');
                                     closeVideoHTML  =
-                                                    ' <div id="unreal'+ f_remoteID + '" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray; border-radius: 10px;" class="remotePlayerVideoCall">' +
+                                                    ' <div id="unreal'+ f_remoteID + '" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray; " class="remotePlayerVideoCall">' +
                                                         '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
                                                     '</div>' ;
                                     MainVideoDiv.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
@@ -1040,10 +1043,10 @@
                                     f_muteButton2.id = "f_muteAudio2";
 
                                     if(agoraEngine['remoteUsers'][c_uid]['hasAudio'] == true){
-                                        f_muteButton2.classList.add('btn-old','unmuteRemote', 'mt-2');
+                                        f_muteButton2.classList.add('btn-old','unmuteRemote', 'mt-2', 'mobile_d_none');
                                         f_muteButton2.innerHTML = '<i class="fa-solid fa-microphone"></i>';
                                     }else{
-                                        f_muteButton2.classList.add('btn-old','muteRemote', 'mt-2');
+                                        f_muteButton2.classList.add('btn-old','muteRemote', 'mt-2', 'mobile_d_none');
                                         f_muteButton2.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
                                     }
 
@@ -1054,10 +1057,10 @@
                                     f_muteVideoButton2.id = "f_muteVideo2";
 
                                     if(agoraEngine['remoteUsers'][c_uid]['hasVideo'] == true){
-                                        f_muteVideoButton2.classList.add('btn-old', 'unmuteRemote', 'mt-2');
+                                        f_muteVideoButton2.classList.add('btn-old', 'unmuteRemote', 'mt-2', 'mobile_d_none');
                                         f_muteVideoButton2.innerHTML = '<i class="fa-solid fa-video"></i>';
                                     }else{
-                                        f_muteVideoButton2.classList.add('btn-old', 'muteRemote', 'mt-2');
+                                        f_muteVideoButton2.classList.add('btn-old', 'muteRemote', 'mt-2', 'mobile_d_none');
                                         f_muteVideoButton2.innerHTML = '<i class="fa-solid fa-video-slash"></i>';
                                     }
 

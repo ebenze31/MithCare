@@ -90,7 +90,7 @@
 
                     setTimeout(() => {
                         document.getElementById("join").click();
-                    }, 3000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
+                    }, 1000); // รอเวลา 1 วินาทีก่อนเรียกใช้งาน
                 })
                 .catch((error) => {
                     console.log("ERROR HERE");
@@ -388,10 +388,10 @@
             const switchCameraFR = document.createElement('button');
                 switchCameraFR.type = "button";
                 switchCameraFR.id = "switchCameraFR";
-                switchCameraFR.classList.add('btn-old', 'btn-info','switchCameraFR');
-                switchCameraFR.innerHTML = '<i class="fa-regular fa-camera-rotate"></i>';
+                switchCameraFR.classList.add('switchCameraFR');
+                switchCameraFR.innerHTML = '<i style="color: green;" class="fa-regular fa-camera-rotate"></i>';
 
-            localPlayerContainer.appendChild(switchCameraFR);
+            MainVideoDiv.appendChild(switchCameraFR);
 
             //============== เมนูปุ่มด้านล่าง ==============
             const divForVideoButton = document.createElement('div');

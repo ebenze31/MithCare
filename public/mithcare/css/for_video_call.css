@@ -216,7 +216,7 @@
         border-radius: 2px !important;
         z-index: 1;
     }
-    .shareScreen{
+    .โ{
         transform: scaleX(-1);
     }
     .switchCameraFR{
@@ -372,7 +372,6 @@
     .localPlayerVideoCall{ /* วิดีโอจอใหญ่ของ local */
         height: 100% !important;
         width: 100% !important;
-        background-color: #85e260 !important;
         /* border-radius:  0px!important; */
     }
     .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */

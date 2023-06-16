@@ -75,10 +75,25 @@
                 overflow: hidden;
             }
             main{
-                height: 70% !important;
+                height: 100% !important;
             }
             footer{
-                height: 30% !important;
+                height: 100% !important;
+                margin-bottom: 1rem !important;
+            }
+        }
+            /* tablet */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            body{
+                height: 100% !important;
+                /* overflow: hidden; */
+            }
+            main{
+                height: 100% !important;
+            }
+            footer{
+                height: 100% !important;
+                margin-bottom: 1rem !important;
             }
         }
                 /* มือถือ */
@@ -115,7 +130,6 @@
 
     <footer class="footer">
         <hr width="90%">
-        <div class="footer-secondary">
             <div class="container">
                 <div class="row mb-40">
 
@@ -123,8 +137,8 @@
                             <div class="slick-carousel"
                             data-slick='{"slidesToShow": 3,
                             {{-- "infinite": true, --}}
-                            "slidesToScroll": 1,
-                            "autoplay": true,
+                            "slidesToScroll": 2,
+                            "autoplay": false,
                             "centerMode": true,
                             "variableWidth": true,
                             "arrows": false,
@@ -142,9 +156,10 @@
                                 @foreach($partner as $item)
                                     <div class="item">
                                         <!-- /.computer -->
-                                        <img class="d-none d-lg-block" src="{{ url('storage/'.$item->logo )}}" width="95px" alt="gallery img">
+                                        <img class="" src="{{ url('storage/'.$item->logo )}}"  width="40em" alt="gallery img">
+                                        {{-- <img class="d-none d-lg-block" src="{{ url('storage/'.$item->logo )}}" height="25rem" width="25rem" alt="gallery img"> --}}
                                         <!-- /.mobile -->
-                                        <img class="d-block d-md-none" src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img">
+                                        {{-- <img class="d-block d-md-none" src="{{ url('storage/'.$item->logo )}}" width="50px" alt="gallery img"> --}}
 
                                     </div>
                                 @endforeach
@@ -168,7 +183,6 @@
                 <!-- <a class="h6">เว็บไซต์นี้ อ้างอิงมาจากเว็บไซต์ www.princhealth.com เพื่อใช้ในการพัฒนาระบบเท่านั้น ไม่ได้มีเจตนาแสวงหาผลกำไร</a> -->
                 </center>
             </div><!-- /.container -->
-        </div><!-- /.footer-secondary -->
     </footer><!-- /.Footer -->
 
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

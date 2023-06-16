@@ -3,11 +3,11 @@
 @section('content')
 
 <style>
-    .video-container {
+    .container {
         /* display: flex;
         flex-direction: column;
-        height: 100vh;
-        overflow: hidden; เพื่อไม่ให้เกิดการเลื่อนเมาส์เพื่อดูเนื้อหาในส่วนล่าง */
+        height: 100%;
+        overflow: hidden; */
     }
     .bg_div{
         background-color: gray;
@@ -85,26 +85,27 @@
         .imgdiv{  /*รูปโปรไฟล์ local*/
             border: 1px solid black;
             border-radius: 50% !important;
-            width: 150px;
-            height: 150px;
+            width: 5rem !important;
+            height: 5rem !important;
             margin-right: 1rem;
         }
         .br_header{
             display: inline-flex;
-            height: 20%;
-            margin: 1rem;
+            height: 10%;
+            margin-top: 1rem;
+            margin-left: 1rem;
             padding: 1rem;
         }
         .br_section{
             display: flex;
             justify-content: center;
-            height: 80%;
-            margin-top: 2rem;
+            height: 60%;
+            margin-top: 0.5rem;
             padding: 1rem;
         }
         .br_section div video{
-            height: 30% !important;
-            width: 100% !important;
+            /* height: 30% !important; */
+            /* width: 100% !important; */
         }
         .logo_mithcare{
             border-radius: 50% !important;
@@ -124,7 +125,7 @@
         #TestBubble span{
             font-size: 40px;
         }
-        #videoDiv{  /*กรอบรูปโปรไฟล์ local*/
+        #videoDiv{
             width: 100% !important;
             height: 24rem !important;
             border: 1px solid black;
@@ -146,18 +147,20 @@
         .imgdiv{  /*รูปโปรไฟล์ local*/
             border: 1px solid black;
             border-radius: 50% !important;
-            width: 150px;
-            height: 150px;
+            width: 5rem !important;
+            height: 5rem !important;
+            margin-right: 1rem;
         }
         .br_header{
             display: inline-flex;
             height: 20%;
-            margin: 2rem;
+            margin-top: 1rem;
+            margin-left: 1rem;
             padding: 1rem;
         }
         .br_section{
             height: 80%;
-            margin-top: 2rem;
+            margin-top: .5rem;
             padding: 1rem;
 
         }

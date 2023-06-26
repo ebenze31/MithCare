@@ -47,6 +47,11 @@ Route::get('/caretaker_of_room', 'API\API_CaretakerControllerController@getCaret
 // เช็ค Password ห้องว่าตรงใน db หรือไม่
 Route::get('/check_password_of_room', 'RoomController@password_of_room');
 
+//========================
+//  Profile API
+//========================
+
+// Route::get('/SaveProfileImg', 'ProfileController@SaveProfileImg');
 
 //========================
 //  Ask_for_Help API

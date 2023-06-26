@@ -35,6 +35,17 @@ class AgoraVideoController extends Controller
         // $appCertificate =  $requestData['appCertificate'];
         $appCertificate = env('AGORA_APP_CERTIFICATE');
         $appID = env('AGORA_APP_ID');
+
+        $appIDLength = strlen($appID);
+        $appCertificateLength = strlen($appCertificate);
+
+        if($appIDLength < 32){
+            $appID = env('AGORA_APP_ID');
+        }
+
+        if($appCertificateLength < 32){
+            $appCertificate = env('AGORA_APP_CERTIFICATE');
+        }
         // $channelName = 'MithCare'.$room_id.$user_id;
         $channelName = 'MithCare';
         $user = $login_id;
@@ -99,9 +110,7 @@ class AgoraVideoController extends Controller
 
          // วนลูป แล้วเช็ค ถ้าตรงเงื่อนไขให้ไม่ต้องอัพเดทอะไร
         foreach ($memberInData_ep as $exp => $exp_value){
-            if($exp_value == $members_in_room){
-                // ไม่ต้องทำอะไร
-            }else{
+            if($exp_value !== $members_in_room){
                 if($dataRoomRTC->members_in_room == null){
                     $memberData = $members_in_room;
                 }else{

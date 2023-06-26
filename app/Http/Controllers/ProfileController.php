@@ -109,6 +109,21 @@ class ProfileController extends Controller
         return $user;
     }
 
+    // public function SaveProfileImg(Request $request){
+    //     $requestData = $request->all();
+
+    //     $user = User::findOrFail($requestData['user_id']);
+
+    //     $requestData['photo'] =  $requestData['imageData'];
+
+    //     if ($request->hasFile('photo')) {
+    //         $requestData['photo'] = $request->file('photo')->store('uploads', 'public');
+    //     }
+
+    //     $user->update($requestData['photo']);
+
+    //     return "Update Profile";
+    // }
 
 
 }

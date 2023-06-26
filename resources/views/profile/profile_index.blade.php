@@ -49,7 +49,7 @@
                 @endif --}}
                 @if(!empty($user->avatar) and empty($user->photo))
                 <a href="{{ $user->avatar }}" class="glightbox play-btn mb-4">
-                    <img alt="member img" height="300px" width="100%" src="{{ $user->avatar }}" data-original-title="Usuario">
+                    <img alt="member img" height="300px" width="100%"  src="{{ $user->avatar }}" data-original-title="Usuario">
                 </a>
                 @endif
                 @if(!empty($user->photo))

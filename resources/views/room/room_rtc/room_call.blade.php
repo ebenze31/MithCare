@@ -5,7 +5,7 @@
     <link href="{{ asset('mithcare/css/for_video_call.css') }}" rel="stylesheet">
     <link href="{{ asset('mithcare/css/animation_for_videoCall.css') }}" rel="stylesheet">
     <!-- สำหรับ bubble message -->
-    <div class="containerAlert mobile_d_none">
+    <div class="containerAlert ">
         <div class="alertStatus">
             <span id="iconAlert"></span>
             <span id="detailAlert"></span>
@@ -19,12 +19,13 @@
     <div class="video-container">
         <div id='MainVideoDiv' class="MainVideoDiv">
             <div id='localVideoMain' class="localPlayerVideoCall"></div>
+            {{-- <div id="Screen{{ $user_id }}" class="ShareScreenVideoCall d-none"></div> --}}
             <div id='remoteVideoMain' class="remotePlayerVideoCall d-none"></div>
         </div>
         <div id='ButtonDiv' class="ButtonDiv">
-                 <button class="btn btn-secondary" id="btn_switchCamera" onclick="switchCamera();">
-                             <i class="fa-solid fa-camera-rotate"></i>
-                 </button>
+            {{-- <button class="btn btn-secondary" id="btn_switchCamera" onclick="switchCamera();">
+                        <i class="fa-solid fa-camera-rotate"></i>
+            </button> --}}
             <div id="timeCountVideo" class="clockDuration mobile_d_none"></div>
         </div>
     </div>
@@ -66,6 +67,9 @@
 
     <script>
         var options;
+        var appId = '{{ env('AGORA_APP_ID') }}';
+        var appCertificate = '{{ env('AGORA_APP_CERTIFICATE') }}';
+
         const homeId = '{{ $room_id }}';
         const user_id_from_room = '{{ $user_id }}';
         const localUser_id = '{{ Auth::user()->id }}';
@@ -74,9 +78,9 @@
 
         options = {
                     // Pass your App ID here.
-                    appId: '{{ env('AGORA_APP_ID') }}',
+                    appId: appId,
 
-                    appCertificate: '{{ env('AGORA_APP_CERTIFICATE') }}',
+                    appCertificate: appCertificate,
 
                     // Set the channel name.
                     channel: channelName,
@@ -88,40 +92,56 @@
                     token: "",
                 };
 
+        let appIdLength = options.appId.length;
+        let appCertLength = options.appCertificate.length;
+        console.log(appIdLength);
+        console.log(appCertLength);
+
+        if(appIdLength < 32){
+            options.appId = '{{ env('AGORA_APP_ID') }}';
+        }
+        if(appCertLength < 32){
+            options.appCertificate = '{{ env('AGORA_APP_CERTIFICATE') }}';
+        }
+
         document.addEventListener('DOMContentLoaded', (event) => {
                 // console.log("START");
-
                 LoadingVideoCall();
                 startBasicCall();
 
             });
 
             function LoadingVideoCall() {
-                // const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room + "&appId=" + options.appId + "&appCertificate=" + options.appCertificate;
-                const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
-                const loadingAnime = document.getElementById('loadingAnime');
+                setTimeout(() => {
+                    // const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room + "&appId=" + options.appId + "&appCertificate=" + options.appCertificate;
+                    const url = "{{ url('/') }}/api/video_call?room_id=" + homeId + "&user_id=" + user_id_from_room;
+                    const loadingAnime = document.getElementById('loadingAnime');
 
-                axios.get(url).then((response) => {
-                    options['token'] = response['data'];
+                    axios.get(url).then((response) => {
+                        options['token'] = response['data'];
 
-                    // เอาหน้าโหลดออก
-                    loadingAnime.remove();
+                        // เอาหน้าโหลดออก
+                        loadingAnime.remove();
 
-                    setTimeout(() => {
-                        document.getElementById("join").click();
-                    }, 1000);
-                })
-                .catch((error) => {
-                    console.log("ERROR HERE");
-                    console.log(error);
+                        setTimeout(() => {
+                            document.getElementById("join").click();
+                        }, 1000);
+                    })
+                    .catch((error) => {
+                        console.log("ERROR HERE");
+                        console.log(error);
 
-                    loadingAnime.classList.remove('d-none');
+                        if(loadingAnime){
+                            loadingAnime.classList.remove('d-none');
+                        }
 
-                    // เรียกใช้งานฟังก์ชัน retryFunction() อีกครั้งหลังจากเวลาหน่วงให้ผ่านไป
-                    setTimeout(() => {
-                        LoadingVideoCall();
-                    }, 3000);
-                });
+                        // เรียกใช้งานฟังก์ชัน retryFunction() อีกครั้งหลังจากเวลาหน่วงให้ผ่านไป
+                        setTimeout(() => {
+                            LoadingVideoCall();
+                        }, 3000);
+                    });
+                }, 1000);
+
             }
    </script>
 
@@ -132,6 +152,9 @@
 
         // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด แชร์หน้าจอ
         var isSharingEnabled = false;
+
+        //div for sharescreen
+        // var ScreenDiv = document.querySelector('#Screen'+user_id_from_room);
 
         // ใช้สำหรับ เช็คสถานะของปุ่มเปิด-ปิด วิดีโอและเสียง
         var isMuteVideo = false;
@@ -169,13 +192,8 @@
                 codec: "vp8"
             });
             console.log("agoraEngine");
-            // setInterval(() => {
-            //     var rtcStats = agoraEngine.getRTCStats();
-            //     console.log(rtcStats);
-            // }, 5000);
             console.log(agoraEngine);
-
-
+            console.log(agoraEngine['remoteUsers'].length);
 
             //===================================
             //       บันทึก stats Video Call
@@ -200,7 +218,6 @@
                 axios.get(urlStatsVideo).then((response) => {
                     // console.log(response['data']);
 
-
                     setInterval(() => {
                         var timeCountVideo = document.getElementById("timeCountVideo");
                         // วันที่และเวลาปัจจุบัน
@@ -219,8 +236,13 @@
                         var hours = Math.floor(elapsedMinutes / 60);
                         var minutes = elapsedMinutes % 60;
                         var seconds = Math.floor((elapsedTime / 1000) % 60);
+                        var minsec = minutes + '.' + seconds;
+
+                        // console.log(minsec);
+                        // console.log(typeof(minsec));
 
                         let showTimeCountVideo;
+
                         // แสดงผลลัพธ์
                         if (hours > 0) {
                             if (minutes < 10) {  // ใส่ 0 ข้างหน้า นาที กรณีเลขยังไม่ถึง 10
@@ -236,55 +258,47 @@
                             }
                         }
 
-                        function playSoundNoti(){
-                            let audio_ringtone = new Audio("{{ asset('sound/achive-sound-132273.mp3') }}");
-                            let isPlaying_ringtone = false;
-
-                            if (!isPlaying_ringtone) {
-                                audio_ringtone.loop = false;
-                                audio_ringtone.play();
-                                isPlaying_ringtone = true;
-                            }
-                        }
+                        // เสียงแจ้งเตือน
+                        var audio_ringtone = new Audio("{{ asset('sound/achive-sound-132273.mp3') }}");
 
                         // เมื่อผ่านไป 5 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 5) {
+                        if (minsec === "5.0") {
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 5 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
                             //เสียงแจ้งเตือน
-                            playSoundNoti();
+                            audio_ringtone.play();
                         }
                         // เมื่อผ่านไป 6 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 6) {
+                        if (minsec === "6.0") {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 4 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
-                            //เสียงแจ้งเตือน
-                            playSoundNoti();
+                             //เสียงแจ้งเตือน
+                            audio_ringtone.play();
                         }
 
                         // เมื่อผ่านไป 7 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 7) {
+                        if (minsec === "7.0") {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 3 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
-                            //เสียงแจ้งเตือน
-                            playSoundNoti();
+                             //เสียงแจ้งเตือน
+                            audio_ringtone.play();
                         }
 
                         // เมื่อผ่านไป 8 นาทีแล้ว ให้กดปุ่ม "Leave"
-                        if (elapsedMinutes === 8) {
+                        if (minsec === "8.0") {
                             // ตรวจสอบว่ามีปุ่ม "Leave" อยู่ใน DOM หรือไม่ แล้วกดปุ่ม "Leave" โดยอัตโนมัติ
                             // alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก 2 นาที');
 
                                 alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;"><a style="color: white;">&nbsp;ห้องสนทนาเหลืออีก 2 นาที</a></i>',
                             '<i id="alertClose" class="fa-light fa-circle-xmark" onclick="alertClose();"></i>');
-                            //เสียงแจ้งเตือน
-                            playSoundNoti();
+                             //เสียงแจ้งเตือน
+                            audio_ringtone.play();
                         }
 
                         // เมื่อผ่านไป 9 นาทีแล้ว แสดง Alert "เหลือเวลา 1 นาที"
-                        if (elapsedMinutes === 9) {
+                        if (minsec === "9.0") {
 
                             // สร้าง message bubble
                             let secondsRemaining;
@@ -311,13 +325,16 @@
                             countdown(1);
 
                             alertNoti('<i class="fa-regular fa-clock" style="color: #11b06b;">', 'ห้องสนทนาเหลืออีก <span id="showSecondRemaining">60</span> วินาที');
+
+                                //เสียงแจ้งเตือน
+                            audio_ringtone.play();
+
                             if(document.querySelector('.containerAlert')){
                                 const alertNotiElement = document.querySelector('.containerAlert');
                                     alertNotiElement.classList.remove('scaleUpDown');
                                     alertNotiElement.classList.add('scaleUpDownV2');
                             }
-                            //เสียงแจ้งเตือน
-                            playSoundNoti();
+
                         }
 
                         // เมื่อผ่านไป 10 นาทีแล้ว ให้กดปุ่ม "Leave"
@@ -331,7 +348,6 @@
                             });
 
                         }
-
                         // // อัปเดตข้อความใน div ที่มี id เป็น timeCountVideo
                         timeCountVideo.innerHTML = '<i class="fa-regular fa-clock fa-fade" style="color: #11b06b; font-size: 30px;"></i>&nbsp;' + ": " + showTimeCountVideo;
                     }, 1000);
@@ -422,7 +438,7 @@
                 switchCameraFR.type = "button";
                 switchCameraFR.id = "switchCameraFR";
                 // switchCameraFR.classList.add('btn-old', 'btn-info', 'mt-2','switchCameraFR');
-                switchCameraFR.classList.add('btn-old', 'btn-info', 'mt-2');
+                switchCameraFR.classList.add('btn-old', 'btn-info', 'mt-2','computer_d_none');
                 switchCameraFR.innerHTML = '<i class="fa-regular fa-camera-rotate"></i>';
 
             divForVideoButton.appendChild(switchCameraFR);
@@ -593,114 +609,180 @@
                     try {
                         // Create a screen track for screen sharing.
                         channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
-                        // Get the MediaStreamTrack object from the screen track.
-                        const screenMediaStreamTrack = await channelParameters.screenTrack.getMediaStreamTrack();
-                        // Replace the video track with the screen track.
-                        await channelParameters.localVideoTrack.replaceTrack(screenMediaStreamTrack, true);
-                        document.querySelector('.namedivLocal').classList.add('d-none');
-                        document.querySelector('.localPlayerVideoCall').classList.add('shareScreen');
+
                         // Update the button text.
                         document.getElementById('shareScreen').innerHTML = '<i class="fa-solid fa-square-xmark"></i>';
-                        // Update the screen sharing state.
+
+                        if(agoraEngine['remoteUsers'][0]){
+                            //ตรวจเช็คว่ามี remote player มั้ย
+                            if(agoraEngine['remoteUsers'].length !== 0){
+                                for(let c_uid = 0; c_uid < agoraEngine['remoteUsers']['length']; c_uid++){
+                                    // f_remoteID ใช้สำหรับตรวจเช็ค id ของ remote player
+                                    let remoteID = agoraEngine['remoteUsers'][c_uid]['uid'];
+
+                                    if(document.querySelector('#unreal' + remoteID)){ //เมื่อผู้ใช้ยังไม่ได้เข้าสู่ user-published ให้แสดง unrealDiv และซ่อน remotePlayerContainer
+                                        // เปลี่ยน class unrealDiv ให้เป็นโหมดสำหรับแชร์หน้าจอ
+                                        let unrealDivInShareScreen = document.querySelector('#unreal' + remoteID);
+                                            unrealDivInShareScreen.setAttribute('class','RemotePlayerInScreenShare');
+                                        // เปลี่ยน class remotePlayerContainer ให้ซ่อนอยู่
+                                    }else{ // เมื่อมี remotePlayerContainer ให้ซ่อน unrealDiv
+                                        let remote_STR = remotePlayerContainer;
+                                        // เปลี่ยน class remotePlayerContainer ให้เป็นโหมดสำหรับแชร์หน้าจอ
+                                        remote_STR.setAttribute('class','RemotePlayerInScreenShare');
+                                    }
+                                }
+                            }
+                        }
+
+
+                        let local_STR = localPlayerContainer;
+                            local_STR.setAttribute('class','LocalPlayerInScreenShare');
+
+                        // Create a new <div> element to display the shared screen.
+                        const ScreenDiv = document.createElement('div');
+                        ScreenDiv.setAttribute('id', 'Screen'+ user_id_from_room);
+                        ScreenDiv.setAttribute('class', 'ShareScreenVideoCall');
+
+                        // ScreenDiv.classList.remove('d-none');
+                        await channelParameters.screenTrack.play(ScreenDiv);
+
+                        // Append the ScreenDiv to the main video container.
+                        const MainVideoDiv = document.getElementById('MainVideoDiv');
+                        MainVideoDiv.appendChild(ScreenDiv);
+
                         isSharingEnabled = true;
-                        console.log("if นะ");
-                        console.log(isSharingEnabled);
-                        console.log(channelParameters.localVideoTrack);
                     } catch (error) {
                         console.error('Failed to start screen sharing:', error);
                     }
                 } else {
                     try {
+                        // // หยุดการส่งภาพจากอุปกรณ์ปัจจุบัน
+                        // channelParameters.localVideoTrack.setEnabled(false);
+                        agoraEngine.unpublish([channelParameters.screenTrack]);
 
-                        channelParameters.screenTrack.setEnabled(false);
-                         // Replace the screen track with the local video track.
-                        channelParameters.screenTrack.replaceTrack(channelParameters.localVideoTrack, true);
+                        // ปิดการเล่นภาพวิดีโอกล้องเดิม
+                        channelParameters.screenTrack.stop();
+                        channelParameters.screenTrack.close();
 
-                        // const videoMediaStreamTrack = await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
-                        // await channelParameters.localVideoTrack.replaceTrack(videoMediaStreamTrack, true);
+                        if(agoraEngine['remoteUsers'][0]){
+                            //ตรวจเช็คว่ามี remote player มั้ย
+                            if(agoraEngine['remoteUsers'].length !== 0){
+                                for(let c_uid = 0; c_uid < agoraEngine['remoteUsers']['length']; c_uid++){
+                                    // remoteID ใช้สำหรับตรวจเช็ค id ของ remote player
+                                    let remoteID = agoraEngine['remoteUsers'][c_uid]['uid'];
 
-                        // channelParameters.localVideoTrack.play(localPlayerContainer);
+                                    if(document.querySelector('#unreal' + remoteID)){ //เมื่อผู้ใช้ยังไม่ได้เข้าสู่ user-published ให้แสดง unrealDiv และซ่อน remotePlayerContainer
+                                            // เปลี่ยน class unrealDiv ให้ใช้ class ตอนไม่แชร์หน้าจอ
+                                        let unrealDivInShareScreen = document.querySelector('#unreal' + remoteID);
+                                            unrealDivInShareScreen.setAttribute('class','remotePlayerVideoCall');
 
-                        document.querySelector('.namedivLocal').classList.remove('d-none');
-                        document.querySelector('.localPlayerVideoCall').classList.remove('shareScreen');
+                                            let local_STR = localPlayerContainer;
+                                            local_STR.setAttribute('class','localAfterSubscribe');
+
+                                    }else{
+                                        let remote_STR = remotePlayerContainer;
+                                        remote_STR.setAttribute('class','remotePlayerVideoCall','');
+
+                                        let local_STR = localPlayerContainer;
+                                            local_STR.setAttribute('class','localAfterSubscribe');
+                                    }
+                                }
+                            }
+                        }else{ //ถ้าไม่มี remote user
+                            let local_STR = localPlayerContainer;
+                            local_STR.setAttribute('class','localPlayerVideoCall');
+                        }
+
+                        //ลบ div ที่ใส่ sharescreenTrack ไว้
+                        document.querySelector('#Screen' + '{{Auth::user()->id}}').remove();
+
+                        // ScreenDiv.classList.add('d-none');
+
                         // Update the button text.
                         document.getElementById('shareScreen').innerHTML = '<i class="fa-solid fa-screencast"></i>';
                         // Update the screen sharing state.
                         isSharingEnabled = false;
-                        console.log("else นะ");
-                        console.log(isSharingEnabled);
-                        console.log(channelParameters.localVideoTrack);
+
                     } catch (error) {
                         console.error('Failed to stop screen sharing:', error);
                     }
                 }
             };
 
-            // สลับกล้องหน้าและกล้องหลัง
-            // switchCameraFR.onclick = async function () {
-            //     const devices = await AgoraRTC.getDevices();
-            //     console.log("CAMERA HERE");
-            //     console.log(devices);
-            //     const videoDevices = devices.filter((device) => device.kind === 'videoinput');
-
-            //     if (videoDevices.length < 2) {
-            //         console.log('ไม่พบกล้องหน้าหรือกล้องหลังที่สามารถใช้งานได้');
-            //         return;
-            //     }
-
-            //     const currentDeviceId = videoSource.getCurrentDevice().deviceId;
-            //     const nextDeviceId = currentDeviceId === videoDevices[0].deviceId ? videoDevices[1].deviceId : videoDevices[0].deviceId;
-
-            //     videoSource.switchDevice(nextDeviceId, function() {
-            //         console.log('สลับกล้องเรียบร้อยแล้ว');
-            //     }, function(err) {
-            //         console.log('เกิดข้อผิดพลาดในการสลับกล้อง: ' + err);
-            //     });
-            // }
-
-
-
             window.onload = function() {
                 // Listen to the Join button click event.
                 document.getElementById("join").onclick = async function() {
                     // Join a channel.
-                    await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
-                    // Create a local audio track from the audio sampled by a microphone.
-                    channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-                    // Create a local video track from the video captured by a camera.[]
-                    channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-                    // Enable dual-stream mode.
-                    agoraEngine.enableDualStream();
+                    try {
+                        await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
+                    } catch (error) {
+                        setTimeout(() => {
 
-                    if('{{$videoTrack}}' == "open"){
-                        // เข้าห้องด้วย->สถานะเปิดกล้อง
-                        isMuteVideo = true;
-                        muteVideoButton.click();
-                    }else{
-                        // เข้าห้องด้วย->สถานะปิดกล้อง
-                        isMuteVideo = false;
-                        muteVideoButton.click();
+                            window.location.reload(true);
+                        }, 2500);
+
+                    }
+                    // Create a local audio track from the audio sampled by a microphone.
+
+                    try {
+                        // สร้างเทร็กเสียงจากไมค์
+                        channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                    } catch (error) {
+                            // สร้างเทร็กเสียงจากไมค์
+                        channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
                     }
 
-                    if('{{$audioTrack}}' == "open"){
-                        // เข้าห้องด้วย->สถานะเปิดไมค์
-                        isMuteAudio = true;
-                        muteButton.click();
-                    }else{
-                        // เข้าห้องด้วย->สถานะปิดไมค์
-                        isMuteAudio = false;
-                        muteButton.click();
+                    let retryCreateCamera;
+
+                    try {
+                        // สร้างเทร็กวิดีโอจากกล้อง
+                        channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+                    } catch (error) {
+                        retryCreateCamera = setInterval(() => {
+                            console.log("Deer ======================================= DEER");
+                            console.log("Deer ======================================= DEER");
+                            console.log("Deer ======================================= DEER");
+                            try {
+                                // สร้างเทร็กวิดีโอจากกล้อง
+                                channelParameters.localVideoTrack = AgoraRTC.createCameraVideoTrack();
+                                console.log("RETRY -------------------------------");
+                                clearInterval(retryCreateCamera);
+                            } catch (error) {
+                                // สร้างเทร็กวิดีโอจากกล้อง
+                                channelParameters.localVideoTrack = AgoraRTC.createCameraVideoTrack();
+                            }
+                        }, 1000);
+                    }
+
+                    try {
+                        if('{{$videoTrack}}' == "open"){
+                            // เข้าห้องด้วย->สถานะเปิดกล้อง
+                            isMuteVideo = true;
+                            muteVideoButton.dispatchEvent(new MouseEvent('click')); // คลิกปุ่มโดยใช้เหตุการณ์
+                        }else{
+                            // เข้าห้องด้วย->สถานะปิดกล้อง
+                            isMuteVideo = false;
+                            muteVideoButton.dispatchEvent(new MouseEvent('click')); // คลิกปุ่มโดยใช้เหตุการณ์
+                        }
+
+                        if('{{$audioTrack}}' == "open"){
+                            // เข้าห้องด้วย->สถานะเปิดไมค์
+                            isMuteAudio = true;
+                            muteButton.dispatchEvent(new MouseEvent('click')); // คลิกปุ่มโดยใช้เหตุการณ์
+                        }else{
+                            // เข้าห้องด้วย->สถานะปิดไมค์
+                            isMuteAudio = false;
+                            muteButton.dispatchEvent(new MouseEvent('click')); // คลิกปุ่มโดยใช้เหตุการณ์
+                        }
+                    } catch (error) {
+
                     }
 
                     MemberInRoomUpdate(options.uid);
                     StatsVideoUpdate();
 
-
-                    // console.log("AGORA ENGINE HERE");
-                    // console.log(agoraEngine);
-                    // console.log(agoraEngine.remoteUsers);
-                    // console.log(agoraEngine._users.uid);
-                    // console.log(agoraEngine.remoteUsers.length);
+                    // Enable dual-stream mode.
+                    agoraEngine.enableDualStream();
 
                     // Publish the local audio and video tracks in the channel.
                     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack ]);
@@ -749,7 +831,6 @@
 
                     }
 
-
                     // goBack();
 
                     function goBack(){
@@ -758,7 +839,6 @@
                 })
 
             }
-
 
 
             // *************************************************************************** //
@@ -810,9 +890,9 @@
                     if(document.getElementById('unreal'+ user.uid)){
                         document.getElementById('unreal'+ user.uid).remove();
                     }
-                    if(document.getElementById('remote_video_call_'+ user.uid)){
-                        document.getElementById('remote_video_call_'+ user.uid).remove();
-                    }
+                    // if(document.getElementById('remote_video_call_'+ user.uid)){
+                    //     document.getElementById('remote_video_call_'+ user.uid).remove();
+                    // }
                     if(document.querySelector('#imgdivRemote'+ user.uid)){
                         document.querySelector('#imgdivRemote'+ user.uid).remove();
                     }
@@ -943,6 +1023,7 @@
                 // ---------------------- จบ สร้างปุ่ม เปิด-ปิด เสียง/วิดีโอ ---------------------- //
 
 
+
             });
 
             // ******************** remotePlayer ปิด ไมค์ กล้อง ออก ********************* //
@@ -969,19 +1050,24 @@
                             if(agoraEngine['remoteUsers'][c_uid]['hasVideo'] == false){
                                 //เพิ่มแท็กวิดีโอที่มีพื้นหลังแค่สีดำ
                                 console.log("สร้างพื้นหลังดำ");
+
+                                //ปรับให้ localPlayerContainer อยู่ในโหมดคุยกับ remote
                                 let local_STR = localPlayerContainer;
                                 local_STR.setAttribute('class','localAfterSubscribe');
-                                    closeVideoHTML  =
-                                                    ' <div id="unreal'+ f_remoteID + '" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: gray; " class="remotePlayerVideoCall">' +
-                                                        '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
-                                                    '</div>' ;
-                                    MainVideoDiv.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
+
+                                //สร้าง div unreal แล้วเอาไปไว้ใน MainVideoDiv ที่เดียวกับ localPlayerContainer,remotePlayerContainer
+                                closeVideoHTML  =
+                                                ' <div id="unreal'+ f_remoteID + '" class="remotePlayerVideoCall">' +
+                                                    '<video class="agora_video_player" playsinline="" muted="" style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; object-fit: cover;"></video>' +
+                                                '</div>' ;
+                                MainVideoDiv.insertAdjacentHTML('beforeend', closeVideoHTML); // แทรกล่างสุด
 
                                 //======================
                                 //   Profile Remote
                                 //======================
 
                                 var unrealDiv = document.querySelector('#unreal' + f_remoteID);
+
                                 const urlRemoteUserUnreal = "{{ url('/') }}/api/getUserRemote" + "?userId=" + f_remoteID + "&room_id=" + homeId;
                                 // console.log(urlRemoteUser);
                                 axios.get(urlRemoteUserUnreal).then((response) => {
@@ -1088,6 +1174,27 @@
                                     f_divForVideoButton2.appendChild(f_muteVideoButton2);
                                     unrealDiv.appendChild(f_divForVideoButton2);
                             }
+
+                            //===================//
+                            //  CheckShareScreen
+                            //===================//
+
+                            if(isSharingEnabled == true){ //ถ้ามีการแชร์หน้าจอ
+                                if(document.querySelector('#unreal' + f_remoteID)){ //ถ้ามี unrealDiv
+                                    unrealDiv.setAttribute('class','RemotePlayerInScreenShare');
+
+                                    // ปรับให้ localPlayerContainer อยู่ในโหมด shareScreen
+                                    let local_STR = localPlayerContainer;
+                                    local_STR.setAttribute('class','LocalPlayerInScreenShare');
+                                }else{
+                                    remotePlayerContainer.setAttribute('class','RemotePlayerInScreenShare');
+
+                                    // ปรับให้ localPlayerContainer อยู่ในโหมด shareScreen
+                                    let local_STR = localPlayerContainer;
+                                    local_STR.setAttribute('class','LocalPlayerInScreenShare');
+                                }
+                            }
+
                         }
                     }
                 }
@@ -1102,18 +1209,31 @@
                 if(document.getElementById(evt.uid)){
                     document.getElementById(evt.uid).remove();
                 }
-                if(document.getElementById("remote_video_call_" + evt.uid)){
-                    document.getElementById("remote_video_call_" + evt.uid).remove();
-                }
+                // if(document.getElementById("remote_video_call_" + evt.uid)){
+                //     document.getElementById("remote_video_call_" + evt.uid).remove();
+                // }
                 // ลบ div unreal ออก
                 if(document.getElementById("unreal" + evt.uid)){
                     document.getElementById("unreal" + evt.uid).remove();
                 }
+                // ลบ div ScreenShare ออก
+                if(document.getElementById("Screen" + user_id_from_room)){
+                    document.getElementById("Screen" + user_id_from_room).remove();
+                }
 
-                console.log("ลบ local_FULL");
-                let local_FULL = localPlayerContainer;
-                    local_FULL.classList.add('localPlayerVideoCall');
-                    local_FULL.classList.remove('localAfterSubscribe');
+                //===================
+                //  CheckShareScreen
+                //===================
+
+                if(isSharingEnabled == true){ //ถ้ามีการแชร์หน้าจอ
+                    let local_FULL = localPlayerContainer;
+                        local_FULL.classList.add('LocalPlayerInScreenShare');
+                        local_FULL.classList.remove('localAfterSubscribe');
+                }else{
+                    let local_FULL = localPlayerContainer;
+                        local_FULL.classList.add('localPlayerVideoCall');
+                        local_FULL.classList.remove('localAfterSubscribe');
+                }
 
                 // ---------------------- ลบ BackGround - วิดีโอ ---------------------- //
                 if(document.querySelector('#video_trackRemoteDiv')){
@@ -1338,7 +1458,7 @@
    </script>
 
 
-   <script>
+   {{-- <script>
     // <button class="btn btn-secondary" id="btn_switchCamera" onclick="switchCamera();">
     //             <i class="fa-solid fa-camera-rotate"></i>
     // </button>
@@ -1431,8 +1551,8 @@
 
         console.log('btn_switchCamera');
 
-        console.log('activeVideoDeviceId');
-        console.log(activeVideoDeviceId);
+        // console.log('activeVideoDeviceId');
+        // console.log(activeVideoDeviceId);
 
         // เรียกดูอุปกรณ์ทั้งหมด
         const devices = await navigator.mediaDevices.enumerateDevices();
@@ -1517,6 +1637,6 @@
 
         return "PC";
         }
-   </script>
+   </script> --}}
 
 @endsection

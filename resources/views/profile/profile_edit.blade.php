@@ -2,8 +2,7 @@
 
 @section('content')
 
-
-
+{{-- <link href="{{ asset('mithcare/css/profile_cropper.css') }}" rel="stylesheet"> --}}
      <!-- ========================
        page title
     =========================== -->
@@ -37,9 +36,6 @@
       </div><!-- /.container -->
     </section><!-- /.page-title -->
 
-
-
-
     <section class="pt-120 pb-80">
       <div class="container">
         <div class="row">
@@ -58,13 +54,13 @@
                     <center>
                         <div id="img_profile_old" class="m-2">
                             @if(!empty($user->avatar) and empty($user->photo))
-                                <img width="300" src="{{ $user->avatar }}" >
+                                <img height="300" width="300" src="{{ $user->avatar }}" >
                             @endif
                             @if(!empty($user->photo))
-                                <img  width="300" src="{{ url('storage')}}/{{ $user->photo }}" >
+                                <img height="300" width="300" src="{{ url('storage')}}/{{ $user->photo }}" >
                             @endif
                             @if(empty($user->avatar) and empty($user->photo))
-                                <img  width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
+                                <img height="300" width="300" src="https://www.viicheck.com/Medilab/img/icon.png" >
                             @endif
                         </div>
                         <div width="300" id="img_profile_new" class="m-2"></div>
@@ -171,127 +167,143 @@
       </div><!-- /.container -->
     </section>
 
+    <!--เรียกใช้ axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    {{-- กดอัพโหลดรูปโปรไฟล์->มองเห็นรูปที่เปลี่ยน --}}
+    <script type="text/javascript">
+        $(function () {
+            $("#photo").change(function () {
+                var img_profile_new = $("#img_profile_new");
+                img_profile_new.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var divImagePreview = $("<div/>");
+
+                        var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                        divImagePreview.append(hiddenRotation);
+
+
+                        var img = $("<img />");
+                        // img.attr("style", "border-radius: 50%;");
+                        // img.attr("class", "img-circle img-thumbnail isTooltip");
+                        img.attr("width", "100%");
+                        img.attr("src", e.target.result);
+                        console.log(img.attr("width", "100%"));
+                        var maxWidth = img.width();
+                        var maxHeight = maxWidth * 1; // สามารถเปลี่ยนค่าที่ต้องการได้ เช่น 0.8 หรือ 0.5 แทน 1
+
+                        if (img.height() > maxHeight) {
+                            img.css("height", maxHeight);
+                        } else {
+                            img.css("height", "auto");
+                        }
+
+                        divImagePreview.append(img);
+                        img_profile_new.append(divImagePreview);
+
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            });
+        });
+    </script>
+
+    {{-- กดอัพโหลดรูปบัตร 1->มองเห็นรูปที่เปลี่ยน --}}
+    <script type="text/javascript">
+        $(function () {
+            $("#health_card_1").change(function () {
+                var health_card_1_new = $("#health_card_1_new");
+                health_card_1_new.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var divImagePreview = $("<div/>");
+
+                        var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                        divImagePreview.append(hiddenRotation);
+
+                        var img = $("<img />");
+                        // img.attr("style", "border-radius: 50%;");
+                        // img.attr("class", "img-circle img-thumbnail isTooltip");
+                        img.attr("width", "100%");
+                        img.attr("src", e.target.result);
+                        divImagePreview.append(img);
+
+                        health_card_1_new.append(divImagePreview);
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            });
+        });
+    </script>
+
+    {{-- กดอัพโหลดรูปบัตร 2->มองเห็นรูปที่เปลี่ยน --}}
+    <script type="text/javascript">
+        $(function () {
+            $("#health_card_2").change(function () {
+                var health_card_2_new = $("#health_card_2_new");
+                health_card_2_new.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var divImagePreview = $("<div/>");
+
+                        var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                        divImagePreview.append(hiddenRotation);
+
+                        var img = $("<img />");
+                        // img.attr("style", "border-radius: 50%;");
+                        // img.attr("class", "img-circle img-thumbnail isTooltip");
+                        img.attr("width", "100%");
+                        img.attr("src", e.target.result);
+                        divImagePreview.append(img);
+
+                        health_card_2_new.append(divImagePreview);
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            });
+        });
+    </script>
+
+    {{-- กดอัพโหลดรูปบัตร 3->มองเห็นรูปที่เปลี่ยน --}}
+    <script type="text/javascript">
+        $(function () {
+            $("#health_card_3").change(function () {
+                var health_card_3_new = $("#health_card_3_new");
+                health_card_3_new.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var divImagePreview = $("<div/>");
+
+                        var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
+                        divImagePreview.append(hiddenRotation);
+
+                        var img = $("<img />");
+                        // img.attr("style", "border-radius: 50%;");
+                        // img.attr("class", "img-circle img-thumbnail isTooltip");
+                        img.attr("width", "100%");
+                        img.attr("src", e.target.result);
+                        divImagePreview.append(img);
+
+                        health_card_3_new.append(divImagePreview);
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            });
+        });
+    </script>
+
 @endsection
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- {{-- กดอัพโหลดรูปโปรไฟล์->มองเห็นรูปที่เปลี่ยน --}}
-<script type="text/javascript">
-    $(function () {
-        $("#photo").change(function () {
-            var img_profile_new = $("#img_profile_new");
-            img_profile_new.html("");
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var divImagePreview = $("<div/>");
 
-                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
-                    divImagePreview.append(hiddenRotation);
-
-                    var img = $("<img />");
-                    // img.attr("style", "border-radius: 50%;");
-                    // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "100%");
-                    img.attr("height", "300");
-                    img.attr("src", e.target.result);
-                    divImagePreview.append(img);
-
-                    img_profile_new.append(divImagePreview);
-                }
-                reader.readAsDataURL(file[0]);
-            });
-        });
-    });
-</script>
-
-{{-- กดอัพโหลดรูปบัตร 1->มองเห็นรูปที่เปลี่ยน --}}
-<script type="text/javascript">
-    $(function () {
-        $("#health_card_1").change(function () {
-            var health_card_1_new = $("#health_card_1_new");
-            health_card_1_new.html("");
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var divImagePreview = $("<div/>");
-
-                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
-                    divImagePreview.append(hiddenRotation);
-
-                    var img = $("<img />");
-                    // img.attr("style", "border-radius: 50%;");
-                    // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "100%");
-                    img.attr("src", e.target.result);
-                    divImagePreview.append(img);
-
-                    health_card_1_new.append(divImagePreview);
-                }
-                reader.readAsDataURL(file[0]);
-            });
-        });
-    });
-</script>
-
-{{-- กดอัพโหลดรูปบัตร 2->มองเห็นรูปที่เปลี่ยน --}}
-<script type="text/javascript">
-    $(function () {
-        $("#health_card_2").change(function () {
-            var health_card_2_new = $("#health_card_2_new");
-            health_card_2_new.html("");
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var divImagePreview = $("<div/>");
-
-                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
-                    divImagePreview.append(hiddenRotation);
-
-                    var img = $("<img />");
-                    // img.attr("style", "border-radius: 50%;");
-                    // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "100%");
-                    img.attr("src", e.target.result);
-                    divImagePreview.append(img);
-
-                    health_card_2_new.append(divImagePreview);
-                }
-                reader.readAsDataURL(file[0]);
-            });
-        });
-    });
-</script>
-
-{{-- กดอัพโหลดรูปบัตร 3->มองเห็นรูปที่เปลี่ยน --}}
-<script type="text/javascript">
-    $(function () {
-        $("#health_card_3").change(function () {
-            var health_card_3_new = $("#health_card_3_new");
-            health_card_3_new.html("");
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var divImagePreview = $("<div/>");
-
-                    var hiddenRotation = $("<input type='hidden' id='hfRotation' value='0' />");
-                    divImagePreview.append(hiddenRotation);
-
-                    var img = $("<img />");
-                    // img.attr("style", "border-radius: 50%;");
-                    // img.attr("class", "img-circle img-thumbnail isTooltip");
-                    img.attr("width", "100%");
-                    img.attr("src", e.target.result);
-                    divImagePreview.append(img);
-
-                    health_card_3_new.append(divImagePreview);
-                }
-                reader.readAsDataURL(file[0]);
-            });
-        });
-    });
-</script>

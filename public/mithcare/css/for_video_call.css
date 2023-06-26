@@ -90,10 +90,13 @@
         box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
         border-radius: 10px;
     }
+    .computer_d_none{ /* d-none แค่ pc*/
+        display: none !important;
+    }
     .containerAlert {
         transform: scale(0);
         position: absolute;
-        bottom: 7rem;
+        bottom: 8rem;
         /* เปลี่ยนจาก top: 10px; เป็น top: 50%; */
         /* outline: #000 1px solid; */
         margin-left: 1rem;
@@ -166,6 +169,23 @@
             transform: scale(0);
         }
     }
+    .ShareScreenVideoCall{ /* วิดีโอจอใหญ่ของ remote */
+        /* flex-grow: 1;
+        flex-basis: 50%; */
+        /* height: 70% !important;
+        width: 60% !important;
+        position: relative; */
+        margin: 1rem;
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        top: 2%;
+        display: flex;
+        justify-content: center;
+    }
+    .ShareScreenVideoCall div{
+        border-radius: 10px;
+    }
 
     /*=======================================
             localPlayer css Computer
@@ -179,28 +199,55 @@
         border-radius: 10px;
     }
     .localAfterSubscribe{ /* วิดีโอจอเล็กหลัง subscribe ของ local */
+        /* flex-grow: 1;
+        flex-basis: 50%; */
         height: 45% !important;
         width: 50% !important;
         position: relative;
+        margin: 1rem;
     }
     .localAfterSubscribe div {
         border-radius: 10px;
     }
-    .imgdivLocal{  /*กรอบรูปโปรไฟล์ local*/
-        width: 250px;
-        height: 250px;
-        border: 1px solid black;
+    .LocalPlayerInScreenShare{ /* วิดีโอจอเล็กหลัง จากมีการ ShareScreen ในห้อง */
+        margin: 1rem;
+        width: 15%;
+        height: 15%;
         position: absolute;
+        left: 50%;
+        bottom: 9%;
+        background-color: rgb(61, 168, 187);
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    .LocalPlayerInScreenShare div{
+        border-radius: 10px;
+    }
+    .imgdivLocal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 25%;
+        height: 35%;
+        /* width: calc(50% - 35%);
+        height: calc(60% - 20%);  */
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        /* border-radius: 50% !important; */
         z-index: 1;
+        /* aspect-ratio: 1 / 1; */
     }
-    .imgdivLocal img{  /*รูปโปรไฟล์ local*/
-        border-radius: 50% !important;
-        width: 250px;
-        height: 250px;
+    .imgdivLocal img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* width: max(50px, 30%, 100px);
+        height: max(50px, 30%, 100px); */
+        border-radius: 50%;
+        object-fit: cover;
+
     }
     .profileNameLocal{
         color: #ffffff;
@@ -216,9 +263,9 @@
         border-radius: 2px !important;
         z-index: 1;
     }
-    .โ{
+    /* .sharescreen{
         transform: scaleX(-1);
-    }
+    } */
     .switchCameraFR{
         display: none;
     }
@@ -228,13 +275,31 @@
     =======================================*/
 
     .remotePlayerVideoCall{ /* วิดีโอจอใหญ่ของ remote */
+        /* flex-grow: 1;
+        flex-basis: 50%; */
         height: 45% !important;
         width: 50% !important;
         position: relative;
-        margin-top: 1rem;
+        margin: 1rem;
         border-radius: 10px;
+        background-color: #000000;
     }
     .remotePlayerVideoCall div {
+        border-radius: 10px;
+    }
+    .RemotePlayerInScreenShare{ /* วิดีโอจอเล็กหลัง จากมีการ ShareScreen ในห้อง */
+        margin: 1rem;
+        width: 15%;
+        height: 15%;
+        position: absolute;
+        left: 34%;
+        bottom: 9%;
+        background-color: rgb(187, 61, 61);
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    .RemotePlayerInScreenShare div{
         border-radius: 10px;
     }
     .buttonVideo2{
@@ -269,8 +334,8 @@
         color: #ffffff;
     }
     .imgdivRemote{  /*กรอบรูปโปรไฟล์ local*/
-        width: 250px;
-        height: 250px;
+        width: 25%;
+        height: 35%;
         border: 1px solid black;
         position: absolute;
         left: 50%;
@@ -281,8 +346,8 @@
     }
     .imgdivRemote img{  /*รูปโปรไฟล์ local*/
         border-radius: 50% !important;
-        width: 250px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
     }
     .profileNameRemote{
         color: #ffffff;
@@ -361,6 +426,7 @@
     .mobile_d_none{ /* d-none แค่ mobile*/
         display: none !important;
     }
+
     /*=======================================
             localPlayer CSS Mobile
     =======================================*/

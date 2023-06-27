@@ -609,7 +609,6 @@
                     try {
                         // Create a screen track for screen sharing.
                         channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
-
                         // Update the button text.
                         document.getElementById('shareScreen').innerHTML = '<i class="fa-solid fa-square-xmark"></i>';
 
